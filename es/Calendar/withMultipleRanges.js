@@ -1,54 +1,19 @@
-'use strict';
-
-exports.__esModule = true;
-exports.withMultipleRanges = exports.enhanceDay = exports.EVENT_TYPES = undefined;
-
-var _withState2 = require('recompose/withState');
-
-var _withState3 = _interopRequireDefault(_withState2);
-
-var _withPropsOnChange2 = require('recompose/withPropsOnChange');
-
-var _withPropsOnChange3 = _interopRequireDefault(_withPropsOnChange2);
-
-var _withProps2 = require('recompose/withProps');
-
-var _withProps3 = _interopRequireDefault(_withProps2);
-
-var _compose2 = require('recompose/compose');
-
-var _compose3 = _interopRequireDefault(_compose2);
+import _withState from 'recompose/withState';
+import _withPropsOnChange from 'recompose/withPropsOnChange';
+import _withProps from 'recompose/withProps';
+import _compose from 'recompose/compose';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _classnames = require('classnames');
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _ = require('./');
-
-var _utils = require('../utils');
-
-var _is_before = require('date-fns/is_before');
-
-var _is_before2 = _interopRequireDefault(_is_before);
-
-var _withMultipleRanges = require('../Header/withMultipleRanges');
-
-var _withMultipleRanges2 = _interopRequireDefault(_withMultipleRanges);
-
-var _format = require('date-fns/format');
-
-var _format2 = _interopRequireDefault(_format);
-
-var _parse = require('date-fns/parse');
-
-var _parse2 = _interopRequireDefault(_parse);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
+import classNames from 'classnames';
+import { withDefaultProps } from './';
+import { sanitizeDate, withImmutableProps } from '../utils';
+import isBefore from 'date-fns/is_before';
+import enhanceHeader from '../Header/withMultipleRanges';
+import format from 'date-fns/format';
+import parse from 'date-fns/parse';
 var styles = {
   'root': 'Cal__Day__root',
   'enabled': 'Cal__Day__enabled',
@@ -69,7 +34,7 @@ var styles = {
 
 var isTouchDevice = false;
 
-var EVENT_TYPES = exports.EVENT_TYPES = {
+export var EVENT_TYPES = {
   DELETE: 4,
   END: 3,
   HOVER: 2,
@@ -83,7 +48,7 @@ var PositionTypes = {
 };
 
 // Enhance Day component to display selected state based on an array of selected dates
-var enhanceDay = exports.enhanceDay = (0, _withPropsOnChange3.default)(['selected'], function (_ref) {
+export var enhanceDay = _withPropsOnChange(['selected'], function (_ref) {
   var _classNames;
 
   var date = _ref.date,
@@ -99,22 +64,22 @@ var enhanceDay = exports.enhanceDay = (0, _withPropsOnChange3.default)(['selecte
   var style = isRange && (isStart && { backgroundColor: theme.accentColor } || isEnd && { borderColor: theme.accentColor });
 
   return {
-    className: isSelected && isRange && (0, _classnames2.default)(styles.range, (_classNames = {}, _classNames[styles.start] = isStart, _classNames[styles.betweenRange] = !isStart && !isEnd, _classNames[styles.end] = isEnd, _classNames)),
+    className: isSelected && isRange && classNames(styles.range, (_classNames = {}, _classNames[styles.start] = isStart, _classNames[styles.betweenRange] = !isStart && !isEnd, _classNames[styles.end] = isEnd, _classNames)),
     isSelected: isSelected,
     selectionStyle: style
   };
 });
 
 // Enhancer to handle selecting and displaying multiple dates
-var withMultipleRanges = (0, _compose3.default)(_.withDefaultProps, (0, _withState3.default)('displayIndex', 'setDisplayIndex', 0), (0, _withState3.default)('scrollDate', 'setScrollDate', getInitialDate), (0, _withState3.default)('displayKey', 'setDisplayKey', getInitialDate), (0, _withState3.default)('selectionStart', 'setSelectionStart', null), (0, _withState3.default)('selectionStartIdx', 'setSelectionStartIdx', null), (0, _utils.withImmutableProps)(function (_ref2) {
+var withMultipleRanges = _compose(withDefaultProps, _withState('displayIndex', 'setDisplayIndex', 0), _withState('scrollDate', 'setScrollDate', getInitialDate), _withState('displayKey', 'setDisplayKey', getInitialDate), _withState('selectionStart', 'setSelectionStart', null), _withState('selectionStartIdx', 'setSelectionStartIdx', null), withImmutableProps(function (_ref2) {
   var DayComponent = _ref2.DayComponent,
       HeaderComponent = _ref2.HeaderComponent,
       YearsComponent = _ref2.YearsComponent;
   return {
     DayComponent: enhanceDay(DayComponent),
-    HeaderComponent: (0, _withMultipleRanges2.default)(HeaderComponent)
+    HeaderComponent: enhanceHeader(HeaderComponent)
   };
-}), (0, _withProps3.default)(function (_ref3) {
+}), _withProps(function (_ref3) {
   var displayKey = _ref3.displayKey,
       passThrough = _ref3.passThrough,
       selected = _ref3.selected,
@@ -137,7 +102,7 @@ var withMultipleRanges = (0, _compose3.default)(_.withDefaultProps, (0, _withSta
         }
       },
       Years: {
-        selected: selected[displayIndex] && (0, _parse2.default)(selected[displayIndex][displayKey]),
+        selected: selected[displayIndex] && parse(selected[displayIndex][displayKey]),
         onSelect: function onSelect(date, e, callback) {
           return handleYearSelect(date, callback);
         }
@@ -152,19 +117,19 @@ var withMultipleRanges = (0, _compose3.default)(_.withDefaultProps, (0, _withSta
     }),
     selected: selected.map(function (dateObj) {
       return {
-        start: (0, _format2.default)(dateObj.start, 'YYYY-MM-DD'),
-        end: (0, _format2.default)(dateObj.end, 'YYYY-MM-DD')
+        start: format(dateObj.start, 'YYYY-MM-DD'),
+        end: format(dateObj.end, 'YYYY-MM-DD')
       };
     })
   };
 }));
 
-exports.withMultipleRanges = withMultipleRanges;
+export { withMultipleRanges };
 function getSortedSelection(_ref4) {
   var start = _ref4.start,
       end = _ref4.end;
 
-  return (0, _is_before2.default)(start, end) ? { start: start, end: end } : { start: end, end: start };
+  return isBefore(start, end) ? { start: start, end: end } : { start: end, end: start };
 }
 
 function handleSelect(date, _ref5) {
@@ -223,7 +188,7 @@ function handleMouseOver(e, _ref7) {
       selected = _ref7.selected;
 
   var dateStr = e.target.getAttribute('data-date');
-  var date = dateStr && (0, _parse2.default)(dateStr);
+  var date = dateStr && parse(dateStr);
 
   if (!date) {
     return;
@@ -242,7 +207,7 @@ function handleMouseOver(e, _ref7) {
 }
 
 function handleYearSelect(date, callback) {
-  callback((0, _parse2.default)(date));
+  callback(parse(date));
 }
 
 function getInitialDate(_ref8) {
@@ -266,12 +231,12 @@ function determineIfDateAlreadySelected(date, selected) {
   };
   selected.forEach(function (dateObj, idx) {
     if (date < dateObj.start || date > dateObj.end) return;
-    if ((0, _format2.default)(date, 'YYYY-MM-DD') === (0, _format2.default)(dateObj.start, 'YYYY-MM-DD')) {
+    if (format(date, 'YYYY-MM-DD') === format(dateObj.start, 'YYYY-MM-DD')) {
       returnVal.value = PositionTypes.START;
       returnVal.index = idx;
       return;
     }
-    if ((0, _format2.default)(date, 'YYYY-MM-DD') === (0, _format2.default)(dateObj.end, 'YYYY-MM-DD')) {
+    if (format(date, 'YYYY-MM-DD') === format(dateObj.end, 'YYYY-MM-DD')) {
       returnVal.value = PositionTypes.END;
       returnVal.index = idx;
       return;
