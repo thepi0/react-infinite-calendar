@@ -83,9 +83,10 @@ function handleYearSelect(date, callback) {
 }
 
 function getInitialDate(_ref5) {
-  var selected = _ref5.selected;
+  var selected = _ref5.selected,
+      initialSelectedDate = _ref5.initialSelectedDate;
 
-  return selected.length ? selected[0] : new Date();
+  return selected.length ? initialSelectedDate || selected[0] : new Date();
 }
 //why is this needed when it could all technically be housed within this HOC's handle select function
 export function defaultMultipleDateInterpolation(date, selected) {
