@@ -9,7 +9,6 @@
   height: $rowHeight - 4px;
   margin-top: -0.5 * ($rowHeight - 4px);
   margin-left: -0.5 * ($rowHeight - 4px);
-  //border-radius: 50%;
 }
 
 .root {
@@ -140,7 +139,6 @@
       margin-top: -0.5 * ($rowHeight - 4px);
       border-top: 2px solid $borderColor;
       border-bottom: 2px solid $borderColor;
-      //box-shadow: inset $rowHeight $rowHeight;
     }
   }
 
