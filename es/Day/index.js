@@ -68,7 +68,6 @@ var Day = function (_PureComponent) {
         className: styles.selection,
         'data-date': date,
         style: _extends({
-          backgroundColor: this.selectionColor,
           color: textColor.active
         }, selectionStyle)
       },

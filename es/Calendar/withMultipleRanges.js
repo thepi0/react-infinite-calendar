@@ -61,7 +61,7 @@ export var enhanceDay = _withPropsOnChange(['selected'], function (_ref) {
   var isEnd = positionOfDate.value === PositionTypes.END;
   var isRange = !(isStart && isEnd);
 
-  var style = isRange && (isStart && { backgroundColor: theme.accentColor } || isEnd && { borderColor: theme.accentColor });
+  var style = isRange && (isStart && {} || isEnd && {});
 
   return {
     className: isSelected && isRange && classNames(styles.range, (_classNames = {}, _classNames[styles.start] = isStart, _classNames[styles.betweenRange] = !isStart && !isEnd, _classNames[styles.end] = isEnd, _classNames)),
