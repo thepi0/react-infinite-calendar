@@ -9,7 +9,7 @@
   height: $rowHeight - 4px;
   margin-top: -0.5 * ($rowHeight - 4px);
   margin-left: -0.5 * ($rowHeight - 4px);
-  border-radius: 50%;
+  //border-radius: 50%;
 }
 
 .root {
@@ -64,6 +64,7 @@
 
       &:before {
           @include circle();
+          border-radius: $rowHeight / 2;
           box-shadow: inset 0 0 0 1px;
           z-index: -1;
       }
@@ -87,6 +88,7 @@
       @include circle();
       line-height: $rowHeight;
       z-index: 2;
+      background-color: #FFFFFF;
 
       .month {
         top: 9px;
@@ -136,7 +138,9 @@
       width: 50%;
       height: $rowHeight - 4px;
       margin-top: -0.5 * ($rowHeight - 4px);
-      box-shadow: inset $rowHeight $rowHeight;
+      border-top: 2px solid $borderColor;
+      border-bottom: 2px solid $borderColor;
+      //box-shadow: inset $rowHeight $rowHeight;
     }
   }
 
@@ -152,9 +156,15 @@
   }
 
   &.start {
+
+
     .selection {
-      border-top-left-radius: 50%;
-      border-bottom-left-radius: 50%;
+      border-top-left-radius: $rowHeight / 2;
+      border-bottom-left-radius: $rowHeight / 2;
+      border-left: 2px solid $borderColor;
+      border-top: 2px solid $borderColor;
+      border-bottom: 2px solid $borderColor;
+      border-right: 0;
     }
 
     &:after {
@@ -175,6 +185,10 @@
       justify-content: center;
       align-items: center;
       border-radius: 0;
+      border-right: 0;
+      border-top: 2px solid $borderColor;
+      border-bottom: 2px solid $borderColor;
+      border-left: 0;
     }
     .day {
       top: 0;
@@ -190,13 +204,12 @@
     }
 
     .selection {
-      border-top-right-radius: 50%;
-      border-bottom-right-radius: 50%;
-
-      color: inherit !important;
-      background-color: #FFF !important;
-      border: 2px solid;
-      box-sizing: border-box;
+        border-top-right-radius: $rowHeight / 2;
+        border-bottom-right-radius: $rowHeight / 2;
+        border-right: 2px solid $borderColor;
+        border-top: 2px solid $borderColor;
+        border-bottom: 2px solid $borderColor;
+        border-left: 0;
 
       .day {
         top: 4px;

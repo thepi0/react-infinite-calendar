@@ -28,7 +28,6 @@ export default class Day extends PureComponent {
         className={styles.selection}
         data-date={date}
         style={{
-          backgroundColor: this.selectionColor,
           color: textColor.active,
           ...selectionStyle,
         }}
@@ -40,7 +39,7 @@ export default class Day extends PureComponent {
       </div>
     );
   }
-  
+
   render() {
     const {
       className,

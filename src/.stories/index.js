@@ -68,14 +68,17 @@ storiesOf('Higher Order Components', module)
   ))
   .add('Multiple Range selection', () => (
     <InfiniteCalendar
+      width={Math.min(window.innerWidth, 900)}
+      height={Math.min(window.innerHeight, 900)}
+      rowHeight={70}
       selected={[{
-        start: addDays(today, 2),
-        end: addDays(today, 5),
+        start: new Date(2017, 11, 5),
+        end: new Date(2017, 11, 7),
       }, {
-          start: addDays(today, 45),
-          end: addDays(today, 50),
+          start: new Date(2017, 10, 22),
+          end: new Date(2017, 10, 24),
       }]}
-      initialSelectedDate={addDays(today, 45)}
+      initialSelectedDate={new Date()}
       locale={{
         headerFormat: 'MMM Do',
       }}
