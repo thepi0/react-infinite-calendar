@@ -71,16 +71,39 @@ storiesOf('Higher Order Components', module)
       width={Math.min(window.innerWidth, 900)}
       height={Math.min(window.innerHeight, 900)}
       rowHeight={70}
-      selected={[{
-        start: new Date(2017, 11, 5),
-        end: new Date(2017, 11, 7),
-      }, {
-          start: new Date(2017, 10, 22),
-          end: new Date(2017, 10, 24),
-      }]}
+      selected={[
+          {
+              start: new Date(2017, 11, 5),
+              end: new Date(2017, 11, 7),
+              child: 123
+          }, {
+              start: new Date(2017, 10, 22),
+              end: new Date(2017, 10, 24),
+              child: 123
+          }
+      ]}
       initialSelectedDate={new Date()}
+      disabledDays={[6,7]}
+      displayOptions={{
+          hideYearsOnSelect: true,
+          layout: 'portrait',
+          overscanMonthCount: 2,
+          showHeader: false,
+          showMonthsForYears: false,
+          showOverlay: false,
+          showTodayHelper: false,
+          showWeekdays: false,
+          todayHelperRowOffset: 4,
+      }}
       locale={{
-        headerFormat: 'MMM Do',
+          locale: require('date-fns/locale/fi'),
+          blank: 'Valitse päivämäärä(t)',
+          headerFormat: 'ddd, MMM Do',
+          todayLabel: {
+            long: 'Tänään',
+          },
+          weekdays: ['Su', 'Ma', 'Ti', 'Ke', 'To', 'Pe', 'La'],
+          weekStartsOn: 1,
       }}
       Component={withMultipleRanges(Calendar)}
     />

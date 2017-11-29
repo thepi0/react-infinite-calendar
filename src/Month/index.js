@@ -4,6 +4,8 @@ import {getDateString} from '../utils';
 import format from 'date-fns/format';
 import getDay from 'date-fns/get_day';
 import isSameYear from 'date-fns/is_same_year';
+import isThisMonth from 'date-fns/is_this_month';
+import isThisYear from 'date-fns/is_this_year';
 import styles from './Month.scss';
 
 export default class Month extends PureComponent {
@@ -97,12 +99,20 @@ export default class Month extends PureComponent {
   render() {
     const {locale: {locale}, monthDate, today, rows, rowHeight, showOverlay, style, theme} = this.props;
     const dateFormat = isSameYear(monthDate, today) ? 'MMMM' : 'MMMM YYYY';
+    const isCurrentMonth = isThisMonth(monthDate) && isThisYear(monthDate);
 
     return (
       <div className={styles.root} style={{...style, lineHeight: `${rowHeight}px`}}>
+
+              <div className={classNames(styles.indicator, { [styles.partialFirstRow]: rows[0].length !== 7, }, {[styles.indicatorCurrent] : isCurrentMonth })}
+                  style={{backgroundColor: theme.overlayColor}}>
+                  <span className="month">{format(monthDate, 'MMMM', {locale})}</span>
+                  <span className="year">{format(monthDate, 'YYYY', {locale})}</span>
+              </div>
+
   				<div className={styles.rows}>
   					{this.renderRows()}
-  					{showOverlay &&
+  					{/*{showOverlay &&
   						<label
                 className={classNames(styles.label, {
                   [styles.partialFirstRow]: rows[0].length !== 7,
@@ -111,7 +121,11 @@ export default class Month extends PureComponent {
               >
                 <span>{format(monthDate, dateFormat, {locale})}</span>
               </label>
-  					}
+  					}*/}
+
+
+
+
   				</div>
   			</div>
     );

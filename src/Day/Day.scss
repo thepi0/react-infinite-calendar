@@ -11,6 +11,18 @@
   margin-left: -0.5 * ($rowHeight - 4px);
 }
 
+@mixin todayCircle() {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: $rowHeight - 4px;
+  height: $rowHeight - 4px;
+  margin-top: -0.5 * ($rowHeight - 4px);
+  margin-left: -0.5 * ($rowHeight - 4px);
+  background-color: rgba(44, 177, 216, 0.2);
+}
+
 .root {
   display: inline-block;
   box-sizing: border-box;
@@ -31,6 +43,7 @@
 
       &:before {
         @include circle();
+        border-radius: 50%;
 
         background-color: $cellHoverBg;
         z-index: -1;
@@ -62,9 +75,8 @@
       }
 
       &:before {
-          @include circle();
+          @include todayCircle();
           border-radius: $rowHeight / 2;
-          box-shadow: inset 0 0 0 1px;
           z-index: -1;
       }
 
@@ -90,14 +102,14 @@
       background-color: #FFFFFF;
 
       .month {
-        top: 9px;
+        //top: 9px;
       }
       .day {
         position: relative;
-        top: 5px;
+        //top: 5px;
 
-        font-weight: bold;
-        font-size: 18px;
+        //font-weight: bold;
+        //font-size: 18px;
       }
     }
   }
@@ -147,8 +159,8 @@
       background-color: #EEE !important;
 
       .day, .month {
-        color: #AAA;
-        font-weight: 300;
+        color: $textColorDisabled;
+        //font-weight: 300;
       }
     }
   }
@@ -189,8 +201,8 @@
       border-left: 0;
     }
     .day {
-      top: 0;
-      font-size: 16px;
+      //top: 0;
+      //font-size: 16px;
     }
     .month {
       display: none;
@@ -210,7 +222,7 @@
         border-left: 0;
 
       .day {
-        top: 4px;
+        //top: 4px;
       }
     }
   }

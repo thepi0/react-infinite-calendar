@@ -32,9 +32,9 @@ export default class Day extends PureComponent {
           ...selectionStyle,
         }}
       >
-        <span className={styles.month}>
+        {/*<span className={styles.month}>
           {isToday ? todayLabel.short || todayLabel.long : monthShort}
-        </span>
+        </span>*/}
         <span className={styles.day}>{day}</span>
       </div>
     );
@@ -79,11 +79,11 @@ export default class Day extends PureComponent {
         data-date={date}
         {...handlers}
       >
-        {day === 1 && <span className={styles.month}>{monthShort}</span>}
+        {/*{day === 1 && <span className={styles.month}>{monthShort}</span>}*/}
         {isToday ? <span>{day}</span> : day}
-        {day === 1 &&
+        {/*{day === 1 &&
           currentYear !== year &&
-          <span className={styles.year}>{year}</span>}
+          <span className={styles.year}>{year}</span>}*/}
         {isSelected && this.renderSelection()}
       </li>
     );
