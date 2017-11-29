@@ -70,7 +70,7 @@ storiesOf('Higher Order Components', module)
     <InfiniteCalendar
       width={Math.min(window.innerWidth, 900)}
       height={Math.min(window.innerHeight, 900)}
-      rowHeight={70}
+      rowHeight={60}
       selected={[
           {
               start: new Date(2017, 11, 5),
@@ -79,6 +79,10 @@ storiesOf('Higher Order Components', module)
           }, {
               start: new Date(2017, 10, 22),
               end: new Date(2017, 10, 24),
+              child: 123
+          }, {
+              start: new Date(2017, 11, 21),
+              end: new Date(2017, 11, 26),
               child: 123
           }
       ]}

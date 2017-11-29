@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import {getDateString} from '../utils';
 import format from 'date-fns/format';
 import getDay from 'date-fns/get_day';
+import addDays from 'date-fns/add_days';
 import isSameYear from 'date-fns/is_same_year';
 import isThisMonth from 'date-fns/is_this_month';
 import isThisYear from 'date-fns/is_this_year';
@@ -32,8 +33,10 @@ export default class Month extends PureComponent {
     const monthRows = [];
     let day = 0;
     let isDisabled = false;
+    let nextDisabled = false;
+    let prevDisabled = false;
     let isToday = false;
-    let date, days, dow, row;
+    let date, days, dow, nextdow, prevdow, row;
 
     // Used for faster comparisons
     const _today = format(today, 'YYYY-MM-DD');
@@ -51,12 +54,22 @@ export default class Month extends PureComponent {
 
         date = getDateString(year, month, day);
         isToday = (date === _today);
+        nextdow = dow + 1;
+        prevdow = dow === 1 ? 7 : dow - 1;
 
         isDisabled = (
 					minDate && date < _minDate ||
 					maxDate && date > _maxDate ||
 					disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 ||
 					disabledDates && disabledDates.length && disabledDates.indexOf(date) !== -1
+				);
+
+        prevDisabled = (
+					disabledDays && disabledDays.length && disabledDays.indexOf(prevdow) !== -1
+				);
+
+        nextDisabled = (
+					disabledDays && disabledDays.length && disabledDays.indexOf(nextdow) !== -1
 				);
 
         days[k] = (
@@ -66,6 +79,8 @@ export default class Month extends PureComponent {
 						date={date}
 						day={day}
             selected={selected}
+            nextDisabled={nextDisabled}
+            prevDisabled={prevDisabled}
 						isDisabled={isDisabled}
 						isToday={isToday}
 						locale={locale}

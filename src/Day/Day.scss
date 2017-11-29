@@ -97,7 +97,7 @@
 
     .selection {
       @include circle();
-      line-height: $rowHeight;
+      line-height: $rowHeight - 9;
       z-index: 2;
       background-color: #FFFFFF;
 
@@ -112,6 +112,32 @@
         //font-size: 18px;
       }
     }
+  }
+  &.nextdisabled {
+      color: brown;
+
+      &.enabled {
+        &.highlighted, &:active, &:hover {
+
+          &:before {
+            border-top: 0;
+            border-bottom: 0;
+          }
+        }
+      }
+  }
+  &.prevdisabled {
+      color: red;
+
+      &.enabled {
+        &.highlighted, &:active, &:hover {
+
+          &:before {
+            border-top: 0;
+            border-bottom: 0;
+          }
+        }
+      }
   }
   &.disabled {
     color: $textColorDisabled;
@@ -154,9 +180,28 @@
     }
   }
 
+  &.nextdisabled {
+      &.start, &.end {
+        &:after {
+          border-top: 0;
+          border-bottom: 0;
+        }
+      }
+  }
+
+  &.prevdisabled {
+      &.start, &.end {
+        &:after {
+          border-top: 0;
+          border-bottom: 0;
+        }
+      }
+  }
+
   &.disabled {
     .selection.selection {
-      background-color: #EEE !important;
+        // background-color: #EEE !important;
+        border: 0;
 
       .day, .month {
         color: $textColorDisabled;
@@ -184,6 +229,7 @@
     &.end:after {
       display: none;
     }
+
   }
   &.betweenRange {
     .selection {
@@ -193,13 +239,13 @@
       margin-left: 0;
       display: flex;
       justify-content: center;
-      align-items: center;
       border-radius: 0;
       border-right: 0;
       border-top: 2px solid $borderColor;
       border-bottom: 2px solid $borderColor;
       border-left: 0;
     }
+
     .day {
       //top: 0;
       //font-size: 16px;
@@ -207,6 +253,20 @@
     .month {
       display: none;
     }
+  }
+  &.prevdisabled {
+      .selection {
+          border-left: 2px solid $borderColor;
+          border-top-left-radius: $rowHeight / 2;
+          border-bottom-left-radius: $rowHeight / 2;
+      }
+  }
+  &.nextdisabled {
+      .selection {
+          border-right: 2px solid $borderColor;
+          border-top-right-radius: $rowHeight / 2;
+          border-bottom-right-radius: $rowHeight / 2;
+      }
   }
   &.end {
     &:after {
@@ -225,5 +285,22 @@
         //top: 4px;
       }
     }
+
+    &.prevdisabled {
+        .selection {
+            border-left: 2px solid $borderColor;
+            border-top-left-radius: $rowHeight / 2;
+            border-bottom-left-radius: $rowHeight / 2;
+        }
+    }
+
+    &.nextdisabled {
+        .selection {
+            border-right: 2px solid $borderColor;
+            border-top-right-radius: $rowHeight / 2;
+            border-bottom-right-radius: $rowHeight / 2;
+        }
+    }
+
   }
 }
