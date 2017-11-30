@@ -32,6 +32,7 @@ export const withDefaultProps = defaultProps({
   max: new Date(2050, 11, 31),
   maxDate: new Date(2050, 11, 31),
   min: new Date(1980, 0, 1),
+  preselected: {},
   minDate: new Date(1980, 0, 1),
   onHighlightedDateChange: emptyFn,
   onScroll: emptyFn,
@@ -49,6 +50,7 @@ export default class Calendar extends Component {
     super(...arguments);
 
     this.updateYears(props);
+    this.updatePreSelected(props);
 
     this.state = {
       display: props.display,
@@ -88,6 +90,7 @@ export default class Calendar extends Component {
     max: PropTypes.instanceOf(Date),
     maxDate: PropTypes.instanceOf(Date),
     min: PropTypes.instanceOf(Date),
+    preselected: PropTypes.arrayOf(PropTypes.object),
     minDate: PropTypes.instanceOf(Date),
     onScroll: PropTypes.func,
     onScrollEnd: PropTypes.func,
@@ -120,7 +123,7 @@ export default class Calendar extends Component {
     }
   }
   componentWillUpdate(nextProps, nextState) {
-    let {min, minDate, max, maxDate} = this.props;
+    let {min, minDate, max, maxDate, preselected} = this.props;
 
     if (nextProps.min !== min || nextProps.minDate !== minDate || nextProps.max !== max || nextProps.maxDate !== maxDate) {
       this.updateYears(nextProps);
@@ -129,6 +132,18 @@ export default class Calendar extends Component {
     if (nextProps.display !== this.props.display) {
       this.setState({display: nextProps.display});
     }
+
+    if (nextProps.preselected !== this.props.preselected) {
+        this.updatePreSelected(nextProps);
+    }
+  }
+  updatePreSelected(props = this.props) {
+    const preselected = props.preselected;
+
+    console.log('index.js');
+    console.log(preselected);
+
+    this.preselected = preselected;
   }
   updateYears(props = this.props) {
     this._min = parse(props.min);
@@ -361,7 +376,7 @@ export default class Calendar extends Component {
               today={today}
               rowHeight={rowHeight}
               selected={selected}
-              preselected={preselected}
+              preselected={this.preselected}
               scrollDate={scrollDate}
               showOverlay={showOverlay}
               width={width}
@@ -381,7 +396,7 @@ export default class Calendar extends Component {
               minDate={this._minDate}
               scrollToDate={this.scrollToDate}
               selected={selected}
-              preselected={preselected}
+              preselected={this.preselected}
               setDisplay={this.setDisplay}
               showMonths={showMonthsForYears}
               theme={theme}
