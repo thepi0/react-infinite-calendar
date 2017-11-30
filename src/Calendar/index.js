@@ -148,7 +148,7 @@ export default class Calendar extends Component {
   updatedisabledDates(props = this.props) {
     const disabledDates = props.disabledDates;
     this.disabledDates = disabledDates;
-     getDisabledDates(this.disabledDates);
+    getDisabledDates(this.disabledDates);
   }
   updateYears(props = this.props) {
     this._min = parse(props.min);
@@ -313,7 +313,7 @@ export default class Calendar extends Component {
       showWeekdays,
     } = this.getDisplayOptions();
     const {display, isScrolling, showToday} = this.state;
-    const disabledDates = this.getDisabledDates(this.props.disabledDates);
+    const disabledDates = this.getDisabledDates(this.disabledDates);
     const locale = this.getLocale();
     const theme = this.getTheme();
     const today = this.today = startOfDay(new Date());
@@ -365,7 +365,7 @@ export default class Calendar extends Component {
                 this._MonthList = instance;
               }}
               DayComponent={DayComponent}
-              disabledDates={disabledDates}
+              disabledDates={this.disabledDates}
               disabledDays={disabledDays}
               height={height}
               isScrolling={isScrolling}
