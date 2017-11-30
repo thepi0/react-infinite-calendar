@@ -71,19 +71,56 @@ storiesOf('Higher Order Components', module)
       width={Math.min(window.innerWidth, 900)}
       height={Math.min(window.innerHeight, 900)}
       rowHeight={60}
-      selected={[
+      selected={null}
+      preselected={[
           {
-              start: new Date(2017, 11, 5),
-              end: new Date(2017, 11, 7),
-              child: 123
+              start: "2017-11-01T08:00:00Z",
+              end: "2017-11-01T16:00:00Z",
+              child: 100
           }, {
-              start: new Date(2017, 10, 22),
-              end: new Date(2017, 10, 24),
-              child: 123
+              start: "2017-11-01T09:00:00Z",
+              end: "2017-11-01T17:00:00Z",
+              child: 101
           }, {
-              start: new Date(2017, 11, 21),
-              end: new Date(2017, 11, 26),
-              child: 123
+              start: "2017-11-06T08:00:00Z",
+              end: "2017-11-06T16:00:00Z",
+              child: 100
+          }, {
+              start: "2017-11-06T09:00:00Z",
+              end: "2017-11-06T17:00:00Z",
+              child: 101
+          },{
+              start: "2017-11-07T08:00:00Z",
+              end: "2017-11-07T16:00:00Z",
+              child: 100
+          }, {
+              start: "2017-11-07T09:00:00Z",
+              end: "2017-11-07T17:00:00Z",
+              child: 101
+          }, {
+              start: "2017-11-08T08:00:00Z",
+              end: "2017-11-08T16:00:00Z",
+              child: 100
+          }, {
+              start: "2017-11-08T09:00:00Z",
+              end: "2017-11-08T17:00:00Z",
+              child: 101
+          }, {
+              start: "2017-11-15T08:00:00Z",
+              end: "2017-11-15T16:00:00Z",
+              child: 100
+          }, {
+              start: "2017-11-16T08:00:00Z",
+              end: "2017-11-16T16:00:00Z",
+              child: 100
+          }, {
+              start: "2017-11-17T08:00:00Z",
+              end: "2017-11-17T16:00:00Z",
+              child: 100
+          }, {
+              start: "2017-12-26T08:00:00Z",
+              end: "2017-12-26T16:00:00Z",
+              child: 100
           }
       ]}
       initialSelectedDate={new Date()}
@@ -95,7 +132,7 @@ storiesOf('Higher Order Components', module)
           showHeader: false,
           showMonthsForYears: false,
           showOverlay: false,
-          showTodayHelper: false,
+          showTodayHelper: true,
           showWeekdays: false,
           todayHelperRowOffset: 4,
       }}
@@ -109,13 +146,14 @@ storiesOf('Higher Order Components', module)
           weekdays: ['Su', 'Ma', 'Ti', 'Ke', 'To', 'Pe', 'La'],
           weekStartsOn: 1,
       }}
-      Component={withMultipleRanges(Calendar)}
+      onSelect={(date) => console.log(date)}
+      Component={withRange(Calendar)}
     />
   ))
   .add('Multiple date selection', () => {
     return (
       <InfiniteCalendar
-        selected={[addDays(today, -600), addDays(today, -200), today, addDays(today, 50), addDays(today, 400)]}
+        selected={[new Date(2017, 11, 11), new Date(2017, 11, 11), addDays(today, -600), addDays(today, -200), today, addDays(today, 50), addDays(today, 400)]}
         initialSelectedDate={today}
         interpolateSelection={defaultMultipleDateInterpolation}
         Component={withMultipleDates(withKeyboardSupport(Calendar))}

@@ -85,11 +85,20 @@ export const withMultipleRanges = compose(
         onYearClick: (date, e, key) => setDisplayKey(key || 'start'),
       },
     },
+    preselected: preselected
+      .map(dateObj => {
+        return {
+          start: format(dateObj.start, 'YYYY-MM-DD'),
+          end: format(dateObj.end, 'YYYY-MM-DD'),
+          child: dateObj.child
+        };
+      }),
     selected: selected
       .map(dateObj => {
         return {
           start: format(dateObj.start, 'YYYY-MM-DD'),
           end: format(dateObj.end, 'YYYY-MM-DD'),
+          child: dateObj.child
         };
       }),
   })),
@@ -106,10 +115,12 @@ function handleSelect(date, {onSelect, selected, selectionStart, setSelectionSta
   const funcs = {onSelect, setSelectionStart, setSelectionStartIdx, setDisplayIndex};
 
   if(positionOfDate.value && !selectionStart) { //selecting an already defined range
-    const selectedDate = selected[positionOfDate.index];//not clone so modding this is modding selected
-    selectedDate.end = date; //not possible to have start/end reversed when clicking on already set range
+    //const selectedDate = selected[positionOfDate.index];//not clone so modding this is modding selected
+    //selectedDate.end = date; //not possible to have start/end reversed when clicking on already set range
 
-    updateSelectedState(positionOfDate.index, selectedDate.start, positionOfDate.index, selected, funcs);//grab index of selected and set in state
+    //updateSelectedState(positionOfDate.index, selectedDate.start, positionOfDate.index, selected, funcs);//grab index of selected and set in state
+    console.log('already selected date range clicked');
+
   } else if (selectionStart) { //ending date range selection
     if (positionOfDate.value === PositionTypes.START && !(date < selectionStart)) { //if in process and selecting start, assume they want to cancel
       const displayIdx = positionOfDate.index > 0 ? positionOfDate.index -1 : 0;

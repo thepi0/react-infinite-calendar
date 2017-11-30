@@ -276,6 +276,7 @@ export default class Calendar extends Component {
       rowHeight,
       scrollDate,
       selected,
+      preselected,
 			tabIndex,
 			width,
       YearsComponent,
@@ -360,6 +361,7 @@ export default class Calendar extends Component {
               today={today}
               rowHeight={rowHeight}
               selected={selected}
+              preselected={preselected}
               scrollDate={scrollDate}
               showOverlay={showOverlay}
               width={width}
@@ -379,6 +381,7 @@ export default class Calendar extends Component {
               minDate={this._minDate}
               scrollToDate={this.scrollToDate}
               selected={selected}
+              preselected={preselected}
               setDisplay={this.setDisplay}
               showMonths={showMonthsForYears}
               theme={theme}

@@ -128,6 +128,8 @@ export default class MonthList extends Component {
       passThrough,
       rowHeight,
       selected,
+      preselected,
+      startDays,
       showOverlay,
       theme,
       today,
@@ -141,6 +143,8 @@ export default class MonthList extends Component {
       <Month
         key={key}
         selected={selected}
+        preselected={preselected}
+        startDays={startDays}
         DayComponent={DayComponent}
         monthDate={date}
         disabledDates={disabledDates}

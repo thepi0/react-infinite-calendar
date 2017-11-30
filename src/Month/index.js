@@ -22,6 +22,7 @@ export default class Month extends PureComponent {
       rowHeight,
       rows,
       selected,
+      preselected,
       today,
       theme,
       passThrough,
@@ -35,6 +36,8 @@ export default class Month extends PureComponent {
     let isDisabled = false;
     let nextDisabled = false;
     let prevDisabled = false;
+    let nextSelected = false;
+    let prevSelected= false;
     let isToday = false;
     let date, days, dow, nextdow, prevdow, row;
 
@@ -79,6 +82,7 @@ export default class Month extends PureComponent {
 						date={date}
 						day={day}
             selected={selected}
+            preselected={preselected}
             nextDisabled={nextDisabled}
             prevDisabled={prevDisabled}
 						isDisabled={isDisabled}
@@ -112,9 +116,12 @@ export default class Month extends PureComponent {
   }
 
   render() {
-    const {locale: {locale}, monthDate, today, rows, rowHeight, showOverlay, style, theme} = this.props;
+    const {locale: {locale}, preselected, monthDate, today, rows, rowHeight, showOverlay, style, theme} = this.props;
     const dateFormat = isSameYear(monthDate, today) ? 'MMMM' : 'MMMM YYYY';
     const isCurrentMonth = isThisMonth(monthDate) && isThisYear(monthDate);
+
+    /* TODO: remove this and above */
+    // console.log(preselected);
 
     return (
       <div className={styles.root} style={{...style, lineHeight: `${rowHeight}px`}}>
