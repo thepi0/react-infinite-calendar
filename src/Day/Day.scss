@@ -180,21 +180,6 @@
     &.highlighted, &:active, &:hover {
       position: relative;
       z-index: 1;
-
-      /*&:before {
-        @include circle();
-        border-radius: 50%;
-
-        background-color: $cellHoverBg;
-        z-index: -1;
-    }*/
-    }
-
-    &:hover:before {
-      //opacity: 0.5;
-    }
-    &.highlighted:before, &:active:before {
-      //opacity: 1;
     }
   }
 
@@ -241,15 +226,8 @@
       z-index: 2;
       background-color: #FFFFFF;
 
-      .month {
-        //top: 9px;
-      }
       .day {
         position: relative;
-        //top: 5px;
-
-        //font-weight: bold;
-        //font-size: 18px;
       }
     }
   }
@@ -338,18 +316,15 @@
 
   &.disabled {
     .selection.selection {
-        // background-color: #EEE !important;
         border: 0;
 
       .day, .month {
         color: $textColorDisabled;
-        //font-weight: 300;
       }
     }
   }
 
   &.start {
-
 
     .selection {
       border-top-left-radius: $rowHeight / 2;
@@ -384,10 +359,6 @@
       border-left: 0;
     }
 
-    .day {
-      //top: 0;
-      //font-size: 16px;
-    }
     .month {
       display: none;
     }
@@ -421,10 +392,6 @@
         border-top: 2px solid $borderColor;
         border-bottom: 2px solid $borderColor;
         border-left: 0;
-
-      .day {
-        //top: 4px;
-      }
     }
 
     &.prevdisabled {
