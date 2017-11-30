@@ -351,7 +351,7 @@ var Calendar = function (_Component) {
         isScrolling = _state.isScrolling,
         showToday = _state.showToday;
 
-    var disabledDates = this.getDisabledDates(this.props.disabledDates);
+    var disabledDates = this.getDisabledDates(this.disabledDates);
     var locale = this.getLocale();
     var theme = this.getTheme();
     var today = this.today = startOfDay(new Date());
@@ -398,7 +398,7 @@ var Calendar = function (_Component) {
               _this2._MonthList = instance;
             },
             DayComponent: DayComponent,
-            disabledDates: disabledDates,
+            disabledDates: this.disabledDates,
             disabledDays: disabledDays,
             height: height,
             isScrolling: isScrolling,
