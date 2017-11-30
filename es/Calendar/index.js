@@ -289,7 +289,7 @@ var Calendar = function (_Component) {
 
   Calendar.prototype.getDisabledDates = function getDisabledDates(disabledDates) {
     return disabledDates && disabledDates.map(function (date) {
-      return format(parse(date), 'YYYY-MM-DD');
+      return format(parse(date.date), 'YYYY-MM-DD');
     });
   };
 
@@ -445,7 +445,7 @@ process.env.NODE_ENV !== "production" ? Calendar.propTypes = {
   autoFocus: PropTypes.bool,
   className: PropTypes.string,
   DayComponent: PropTypes.func,
-  disabledDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+  disabledDates: PropTypes.arrayOf(PropTypes.object),
   disabledDays: PropTypes.arrayOf(PropTypes.number),
   display: PropTypes.oneOf(['years', 'days']),
   displayOptions: PropTypes.shape({
