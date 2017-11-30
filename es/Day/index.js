@@ -11,6 +11,10 @@ import classNames from 'classnames';
 import parse from 'date-fns/parse';
 var styles = {
   'root': 'Cal__Day__root',
+  'preselected': 'Cal__Day__preselected',
+  'nextselected': 'Cal__Day__nextselected',
+  'prevselected': 'Cal__Day__prevselected',
+  'multiple': 'Cal__Day__multiple',
   'enabled': 'Cal__Day__enabled',
   'highlighted': 'Cal__Day__highlighted',
   'today': 'Cal__Day__today',
@@ -20,10 +24,13 @@ var styles = {
   'year': 'Cal__Day__year',
   'selection': 'Cal__Day__selection',
   'day': 'Cal__Day__day',
+  'nextdisabled': 'Cal__Day__nextdisabled',
+  'prevdisabled': 'Cal__Day__prevdisabled',
   'range': 'Cal__Day__range',
   'start': 'Cal__Day__start',
   'end': 'Cal__Day__end',
-  'betweenRange': 'Cal__Day__betweenRange'
+  'betweenRange': 'Cal__Day__betweenRange',
+  'multipleSelections': 'Cal__Day__multipleSelections'
 };
 
 var Day = function (_PureComponent) {
@@ -73,11 +80,6 @@ var Day = function (_PureComponent) {
       },
       React.createElement(
         'span',
-        { className: styles.month },
-        isToday ? todayLabel.short || todayLabel.long : monthShort
-      ),
-      React.createElement(
-        'span',
         { className: styles.day },
         day
       )
@@ -97,6 +99,9 @@ var Day = function (_PureComponent) {
         isHighlighted = _props2.isHighlighted,
         isToday = _props2.isToday,
         isSelected = _props2.isSelected,
+        isPreSelected = _props2.isPreSelected,
+        prevDisabled = _props2.prevDisabled,
+        nextDisabled = _props2.nextDisabled,
         monthShort = _props2.monthShort,
         _props2$theme = _props2.theme,
         selectionColor = _props2$theme.selectionColor,
@@ -115,25 +120,15 @@ var Day = function (_PureComponent) {
       'li',
       _extends({
         style: color ? { color: color } : null,
-        className: classNames(styles.root, (_classNames = {}, _classNames[styles.today] = isToday, _classNames[styles.highlighted] = isHighlighted, _classNames[styles.selected] = isSelected, _classNames[styles.disabled] = isDisabled, _classNames[styles.enabled] = !isDisabled, _classNames), className),
+        className: classNames(styles.root, (_classNames = {}, _classNames[styles.today] = isToday, _classNames[styles.highlighted] = isHighlighted, _classNames[styles.selected] = isSelected, _classNames[styles.preselected] = isPreSelected, _classNames[styles.prevdisabled] = prevDisabled, _classNames[styles.nextdisabled] = nextDisabled, _classNames[styles.disabled] = isDisabled, _classNames[styles.enabled] = !isDisabled, _classNames), className),
         onClick: this.handleClick,
         'data-date': date
       }, handlers),
-      day === 1 && React.createElement(
-        'span',
-        { className: styles.month },
-        monthShort
-      ),
       isToday ? React.createElement(
         'span',
         null,
         day
       ) : day,
-      day === 1 && currentYear !== year && React.createElement(
-        'span',
-        { className: styles.year },
-        year
-      ),
       isSelected && this.renderSelection()
     );
   };

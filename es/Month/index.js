@@ -11,11 +11,19 @@ import classNames from 'classnames';
 import { getDateString } from '../utils';
 import format from 'date-fns/format';
 import getDay from 'date-fns/get_day';
+import addDays from 'date-fns/add_days';
 import isSameYear from 'date-fns/is_same_year';
+import isThisMonth from 'date-fns/is_this_month';
+import isThisYear from 'date-fns/is_this_year';
 var styles = {
+  'root': 'Cal__Month__root',
   'rows': 'Cal__Month__rows',
   'row': 'Cal__Month__row',
   'partial': 'Cal__Month__partial',
+  'indicator': 'Cal__Month__indicator',
+  'month': 'Cal__Month__month',
+  'year': 'Cal__Month__year',
+  'indicatorCurrent': 'Cal__Month__indicatorCurrent',
   'label': 'Cal__Month__label',
   'partialFirstRow': 'Cal__Month__partialFirstRow'
 };
@@ -41,6 +49,7 @@ var Month = function (_PureComponent) {
         rowHeight = _props.rowHeight,
         rows = _props.rows,
         selected = _props.selected,
+        preselected = _props.preselected,
         today = _props.today,
         theme = _props.theme,
         passThrough = _props.passThrough;
@@ -52,10 +61,16 @@ var Month = function (_PureComponent) {
     var monthRows = [];
     var day = 0;
     var isDisabled = false;
+    var nextDisabled = false;
+    var prevDisabled = false;
+    var nextSelected = false;
+    var prevSelected = false;
     var isToday = false;
     var date = void 0,
         days = void 0,
         dow = void 0,
+        nextdow = void 0,
+        prevdow = void 0,
         row = void 0;
 
     // Used for faster comparisons
@@ -76,8 +91,14 @@ var Month = function (_PureComponent) {
 
         date = getDateString(year, month, day);
         isToday = date === _today;
+        nextdow = dow + 1;
+        prevdow = dow === 1 ? 7 : dow - 1;
 
         isDisabled = minDate && date < _minDate || maxDate && date > _maxDate || disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 || disabledDates && disabledDates.length && disabledDates.indexOf(date) !== -1;
+
+        prevDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(prevdow) !== -1;
+
+        nextDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(nextdow) !== -1;
 
         days[k] = React.createElement(DayComponent, _extends({
           key: 'day-' + day,
@@ -85,6 +106,9 @@ var Month = function (_PureComponent) {
           date: date,
           day: day,
           selected: selected,
+          preselected: preselected,
+          nextDisabled: nextDisabled,
+          prevDisabled: prevDisabled,
           isDisabled: isDisabled,
           isToday: isToday,
           locale: locale,
@@ -113,10 +137,11 @@ var Month = function (_PureComponent) {
   };
 
   Month.prototype.render = function render() {
-    var _classNames2;
+    var _classNames2, _classNames3;
 
     var _props2 = this.props,
         locale = _props2.locale.locale,
+        preselected = _props2.preselected,
         monthDate = _props2.monthDate,
         today = _props2.today,
         rows = _props2.rows,
@@ -126,26 +151,33 @@ var Month = function (_PureComponent) {
         theme = _props2.theme;
 
     var dateFormat = isSameYear(monthDate, today) ? 'MMMM' : 'MMMM YYYY';
+    var isCurrentMonth = isThisMonth(monthDate) && isThisYear(monthDate);
+
+    /* TODO: remove this and above */
+    // console.log(preselected);
 
     return React.createElement(
       'div',
       { className: styles.root, style: _extends({}, style, { lineHeight: rowHeight + 'px' }) },
       React.createElement(
         'div',
-        { className: styles.rows },
-        this.renderRows(),
-        showOverlay && React.createElement(
-          'label',
-          {
-            className: classNames(styles.label, (_classNames2 = {}, _classNames2[styles.partialFirstRow] = rows[0].length !== 7, _classNames2)),
-            style: { backgroundColor: theme.overlayColor }
-          },
-          React.createElement(
-            'span',
-            null,
-            format(monthDate, dateFormat, { locale: locale })
-          )
+        { className: classNames(styles.indicator, (_classNames2 = {}, _classNames2[styles.partialFirstRow] = rows[0].length !== 7, _classNames2), (_classNames3 = {}, _classNames3[styles.indicatorCurrent] = isCurrentMonth, _classNames3)),
+          style: { backgroundColor: theme.overlayColor } },
+        React.createElement(
+          'span',
+          { className: 'month' },
+          format(monthDate, 'MMMM', { locale: locale })
+        ),
+        React.createElement(
+          'span',
+          { className: 'year' },
+          format(monthDate, 'YYYY', { locale: locale })
         )
+      ),
+      React.createElement(
+        'div',
+        { className: styles.rows },
+        this.renderRows()
       )
     );
   };

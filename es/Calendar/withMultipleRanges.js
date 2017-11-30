@@ -16,6 +16,10 @@ import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 var styles = {
   'root': 'Cal__Day__root',
+  'preselected': 'Cal__Day__preselected',
+  'nextselected': 'Cal__Day__nextselected',
+  'prevselected': 'Cal__Day__prevselected',
+  'multiple': 'Cal__Day__multiple',
   'enabled': 'Cal__Day__enabled',
   'highlighted': 'Cal__Day__highlighted',
   'today': 'Cal__Day__today',
@@ -25,10 +29,13 @@ var styles = {
   'year': 'Cal__Day__year',
   'selection': 'Cal__Day__selection',
   'day': 'Cal__Day__day',
+  'nextdisabled': 'Cal__Day__nextdisabled',
+  'prevdisabled': 'Cal__Day__prevdisabled',
   'range': 'Cal__Day__range',
   'start': 'Cal__Day__start',
   'end': 'Cal__Day__end',
-  'betweenRange': 'Cal__Day__betweenRange'
+  'betweenRange': 'Cal__Day__betweenRange',
+  'multipleSelections': 'Cal__Day__multipleSelections'
 };
 
 
@@ -115,10 +122,18 @@ var withMultipleRanges = _compose(withDefaultProps, _withState('displayIndex', '
         }
       }
     }),
+    preselected: preselected.map(function (dateObj) {
+      return {
+        start: format(dateObj.start, 'YYYY-MM-DD'),
+        end: format(dateObj.end, 'YYYY-MM-DD'),
+        child: dateObj.child
+      };
+    }),
     selected: selected.map(function (dateObj) {
       return {
         start: format(dateObj.start, 'YYYY-MM-DD'),
-        end: format(dateObj.end, 'YYYY-MM-DD')
+        end: format(dateObj.end, 'YYYY-MM-DD'),
+        child: dateObj.child
       };
     })
   };
@@ -146,10 +161,11 @@ function handleSelect(date, _ref5) {
 
   if (positionOfDate.value && !selectionStart) {
     //selecting an already defined range
-    var selectedDate = selected[positionOfDate.index]; //not clone so modding this is modding selected
-    selectedDate.end = date; //not possible to have start/end reversed when clicking on already set range
+    //const selectedDate = selected[positionOfDate.index];//not clone so modding this is modding selected
+    //selectedDate.end = date; //not possible to have start/end reversed when clicking on already set range
 
-    updateSelectedState(positionOfDate.index, selectedDate.start, positionOfDate.index, selected, funcs); //grab index of selected and set in state
+    //updateSelectedState(positionOfDate.index, selectedDate.start, positionOfDate.index, selected, funcs);//grab index of selected and set in state
+    console.log('already selected date range clicked');
   } else if (selectionStart) {
     //ending date range selection
     if (positionOfDate.value === PositionTypes.START && !(date < selectionStart)) {
