@@ -136,14 +136,19 @@ export default class Calendar extends Component {
     if (nextProps.preselected !== this.props.preselected) {
         this.updatePreSelected(nextProps);
     }
+
+    if (nextProps.disabledDates !== this.props.disabledDates) {
+        this.updatedisabledDates(nextProps);
+    }
   }
   updatePreSelected(props = this.props) {
     const preselected = props.preselected;
-
-    console.log('index.js');
-    console.log(preselected);
-
     this.preselected = preselected;
+  }
+  updatedisabledDates(props = this.props) {
+    const disabledDates = props.disabledDates;
+    this.disabledDates = disabledDates;
+     getDisabledDates(this.disabledDates);
   }
   updateYears(props = this.props) {
     this._min = parse(props.min);
