@@ -64,9 +64,9 @@ export var enhanceDay = _withPropsOnChange(['selected'], function (_ref) {
       preselected = _ref.preselected,
       theme = _ref.theme;
 
-  var isSelected = date >= selected.start && date <= selected.end;
-  var isStart = date === selected.start;
-  var isEnd = date === selected.end;
+  var isSelected = date >= selected.start_time && date <= selected.end_time;
+  var isStart = date === selected.start_time;
+  var isEnd = date === selected.end_time;
   var isRange = !(isStart && isEnd);
   var style = isRange && (isStart && { backgroundColor: theme.accentColor } || isEnd && { borderColor: theme.accentColor });
 
@@ -134,8 +134,8 @@ var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDa
     preselected: handlePreselected(preselected),
     startDays: getStartDays(preselected),
     selected: {
-      start: selected && format(selected.start, 'YYYY-MM-DD'),
-      end: selected && format(selected.end, 'YYYY-MM-DD')
+      start_time: selected && format(selected.start_time, 'YYYY-MM-DD'),
+      end_time: selected && format(selected.end_time, 'YYYY-MM-DD')
     }
   };
 }));
@@ -144,8 +144,8 @@ export { withRange };
 function getStartDays(preselected) {
   var returnable = preselected.map(function (dateObj) {
     return {
-      start: dateObj.start,
-      end: dateObj.end,
+      start_time: dateObj.start_time,
+      end_time: dateObj.end_time,
       child: dateObj.child
     };
   });
@@ -154,7 +154,7 @@ function getStartDays(preselected) {
 
   returnable.forEach(function (day, idx) {
 
-    var dayStart = format(day.start, 'YYYY-MM-DD');
+    var dayStart = format(day.start_time, 'YYYY-MM-DD');
 
     if (!starts.includes(dayStart)) {
       starts.push(dayStart);
@@ -167,8 +167,8 @@ function getStartDays(preselected) {
 function handlePreselected(preselected) {
   var returnable = preselected.map(function (dateObj) {
     return {
-      start: dateObj.start,
-      end: dateObj.end,
+      start_time: dateObj.start_time,
+      end_time: dateObj.end_time,
       child: dateObj.child
     };
   });
@@ -178,16 +178,16 @@ function handlePreselected(preselected) {
 
   returnable.forEach(function (day, idx) {
 
-    var dayStart = format(day.start, 'YYYY-MM-DD');
-    var dayEnd = format(day.end, 'YYYY-MM-DD');
+    var dayStart = format(day.start_time, 'YYYY-MM-DD');
+    var dayEnd = format(day.end_time, 'YYYY-MM-DD');
     var dayChild = day.child;
 
     var pushThis = {
-      start: dayStart,
-      end: dayEnd,
+      start_time: dayStart,
+      end_time: dayEnd,
       child: day.child,
-      original_start: day.start,
-      original_end: day.end,
+      original_start: day.start_time,
+      original_end: day.end_time,
       count: 1,
       nextselected: false,
       prevselected: false
@@ -198,7 +198,7 @@ function handlePreselected(preselected) {
       pushThis.count += 1;
 
       for (var i = 0; i < days.length; i++) {
-        if (days[i].start == dayStart) {
+        if (days[i].start_time == dayStart) {
           days[i].count += 1;
         }
       }
@@ -210,7 +210,7 @@ function handlePreselected(preselected) {
 
   days.forEach(function (day, idx) {
 
-    var dayStart = format(day.start, 'YYYY-MM-DD');
+    var dayStart = format(day.start_time, 'YYYY-MM-DD');
     var nextDayStart = format(addDays(dayStart, 1), 'YYYY-MM-DD');
     var prevDayStart = format(subDays(dayStart, 1), 'YYYY-MM-DD');
 
@@ -227,10 +227,10 @@ function handlePreselected(preselected) {
 }
 
 function getSortedSelection(_ref4) {
-  var start = _ref4.start,
-      end = _ref4.end;
+  var start_time = _ref4.start_time,
+      end_time = _ref4.end_time;
 
-  return isBefore(start, end) ? { start: start, end: end } : { start: end, end: start };
+  return isBefore(start_time, end_time) ? { start_time: start_time, end_time: end_time } : { start_time: end_time, end_time: start_time };
 }
 
 function handleSelect(date, _ref5) {
@@ -243,12 +243,12 @@ function handleSelect(date, _ref5) {
     onSelect(_extends({
       eventType: EVENT_TYPE.END
     }, getSortedSelection({
-      start: selectionStart,
-      end: date
+      start_time: selectionStart,
+      end_time: date
     })));
     setSelectionStart(null);
   } else {
-    onSelect({ eventType: EVENT_TYPE.START, start: date, end: date });
+    onSelect({ eventType: EVENT_TYPE.START, start_time: date, end_time: date });
     setSelectionStart(date);
   }
 }
@@ -267,8 +267,8 @@ function handleMouseOver(e, _ref6) {
   onSelect(_extends({
     eventType: EVENT_TYPE.HOVER
   }, getSortedSelection({
-    start: selectionStart,
-    end: date
+    start_time: selectionStart,
+    end_time: date
   })));
 }
 
@@ -289,7 +289,7 @@ function getInitialDate(_ref8) {
   var selected = _ref8.selected,
       initialSelectedDate = _ref8.initialSelectedDate;
 
-  return initialSelectedDate || selected && selected.start || new Date();
+  return initialSelectedDate || selected && selected.start_time || new Date();
 }
 
 function determineIfDateAlreadySelected(date, selected) {
@@ -301,8 +301,8 @@ function determineIfDateAlreadySelected(date, selected) {
     prevselected: false
   };
   selected.forEach(function (dateObj, idx) {
-    if (date < dateObj.start || date > dateObj.end) return;
-    if (format(date, 'YYYY-MM-DD') === format(dateObj.start, 'YYYY-MM-DD')) {
+    if (date < dateObj.start_time || date > dateObj.end_time) return;
+    if (format(date, 'YYYY-MM-DD') === format(dateObj.start_time, 'YYYY-MM-DD')) {
       returnVal.value = PositionTypes.START;
       returnVal.index = idx;
       returnVal.count = dateObj.count;
@@ -310,7 +310,7 @@ function determineIfDateAlreadySelected(date, selected) {
       returnVal.prevselected = dateObj.prevselected;
       return;
     }
-    if (format(date, 'YYYY-MM-DD') === format(dateObj.end, 'YYYY-MM-DD')) {
+    if (format(date, 'YYYY-MM-DD') === format(dateObj.end_time, 'YYYY-MM-DD')) {
       returnVal.value = PositionTypes.END;
       returnVal.index = idx;
       returnVal.count = dateObj.count;
