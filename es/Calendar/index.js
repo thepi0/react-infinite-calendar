@@ -69,6 +69,7 @@ export var withDefaultProps = _defaultProps({
   max: new Date(2050, 11, 31),
   maxDate: new Date(2050, 11, 31),
   min: new Date(1980, 0, 1),
+  preselected: {},
   minDate: new Date(1980, 0, 1),
   onHighlightedDateChange: emptyFn,
   onScroll: emptyFn,
@@ -207,6 +208,7 @@ var Calendar = function (_Component) {
     };
 
     _this.updateYears(props);
+    _this.updatePreSelected(props);
 
     _this.state = {
       display: props.display
@@ -228,7 +230,8 @@ var Calendar = function (_Component) {
         min = _props.min,
         minDate = _props.minDate,
         max = _props.max,
-        maxDate = _props.maxDate;
+        maxDate = _props.maxDate,
+        preselected = _props.preselected;
 
 
     if (nextProps.min !== min || nextProps.minDate !== minDate || nextProps.max !== max || nextProps.maxDate !== maxDate) {
@@ -238,6 +241,21 @@ var Calendar = function (_Component) {
     if (nextProps.display !== this.props.display) {
       this.setState({ display: nextProps.display });
     }
+
+    if (nextProps.preselected !== this.props.preselected) {
+      this.updatePreSelected(nextProps);
+    }
+  };
+
+  Calendar.prototype.updatePreSelected = function updatePreSelected() {
+    var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
+
+    var preselected = props.preselected;
+
+    console.log('index.js');
+    console.log(preselected);
+
+    this.preselected = preselected;
   };
 
   Calendar.prototype.updateYears = function updateYears() {
@@ -388,7 +406,7 @@ var Calendar = function (_Component) {
             today: today,
             rowHeight: rowHeight,
             selected: selected,
-            preselected: preselected,
+            preselected: this.preselected,
             scrollDate: scrollDate,
             showOverlay: showOverlay,
             width: width
@@ -407,7 +425,7 @@ var Calendar = function (_Component) {
           minDate: this._minDate,
           scrollToDate: this.scrollToDate,
           selected: selected,
-          preselected: preselected,
+          preselected: this.preselected,
           setDisplay: this.setDisplay,
           showMonths: showMonthsForYears,
           theme: theme,
@@ -457,6 +475,7 @@ process.env.NODE_ENV !== "production" ? Calendar.propTypes = {
   max: PropTypes.instanceOf(Date),
   maxDate: PropTypes.instanceOf(Date),
   min: PropTypes.instanceOf(Date),
+  preselected: PropTypes.arrayOf(PropTypes.object),
   minDate: PropTypes.instanceOf(Date),
   onScroll: PropTypes.func,
   onScrollEnd: PropTypes.func,
