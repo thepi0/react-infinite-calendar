@@ -60,7 +60,7 @@ export default class Calendar extends Component {
     autoFocus: PropTypes.bool,
     className: PropTypes.string,
     DayComponent: PropTypes.func,
-    disabledDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+    disabledDates: PropTypes.arrayOf(PropTypes.object),
     disabledDays: PropTypes.arrayOf(PropTypes.number),
     display: PropTypes.oneOf(['years', 'days']),
     displayOptions: PropTypes.shape({
@@ -174,7 +174,7 @@ export default class Calendar extends Component {
     this.months = months;
   }
   getDisabledDates(disabledDates) {
-    return disabledDates && disabledDates.map((date) => format(parse(date), 'YYYY-MM-DD'));
+    return disabledDates && disabledDates.map((date) => format(parse(date.date), 'YYYY-MM-DD'));
   }
   _displayOptions = {};
   getDisplayOptions(displayOptions = this.props.displayOptions) {

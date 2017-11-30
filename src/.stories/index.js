@@ -72,6 +72,15 @@ storiesOf('Higher Order Components', module)
       height={Math.min(window.innerHeight, 900)}
       rowHeight={60}
       selected={null}
+      disabledDates={[
+          {
+              date: "2017-12-25",
+              type: "vacation"
+          }, {
+              date: "2017-12-26",
+              type: "vacation"
+          }
+      ]}
       preselected={[
           {
               start_time: "2017-11-01T08:00:00Z",
@@ -118,8 +127,8 @@ storiesOf('Higher Order Components', module)
               end_time: "2017-11-17T16:00:00Z",
               child: 100
           }, {
-              start_time: "2017-12-26T08:00:00Z",
-              end_time: "2017-12-26T16:00:00Z",
+              start_time: "2017-12-28T08:00:00Z",
+              end_time: "2017-12-28T16:00:00Z",
               child: 100
           }
       ]}
