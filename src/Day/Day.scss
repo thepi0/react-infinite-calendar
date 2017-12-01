@@ -178,7 +178,6 @@
   &.enabled {
     &.highlighted, &:active, &:hover {
       position: relative;
-      //z-index: 1;
     }
   }
 
@@ -263,57 +262,20 @@
   }
 }
 
-/*.month, .year {
-  position: absolute;
-  left: 0;
-  right: 0;
-
-  font-size: 12px;
-  line-height: 12px;
-  text-transform: capitalize;
-}
-
-.month {
-  top: 5px;
-}
-
-.year {
-  bottom: 5px;
-}*/
-
 /*
  * Range selection styles
  */
 .range.selected {
   &.start, &.end {
-    /*&:after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      width: 50%;
-      height: $rowHeight - 4px;
-      margin-top: -0.5 * ($rowHeight - 4px);
-      border-top: 2px solid $borderColor;
-      border-bottom: 2px solid $borderColor;
-  }*/
+
   }
 
   &.nextdisabled {
-      /*&.start, &.end {
-        &:after {
-          border-top: 0;
-          border-bottom: 0;
-        }
-    }*/
+
   }
 
   &.prevdisabled {
-      /*&.start, &.end {
-        &:after {
-          border-top: 0;
-          border-bottom: 0;
-        }
-    }*/
+
   }
 
   &.start {

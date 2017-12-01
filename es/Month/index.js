@@ -13,6 +13,7 @@ import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 import getDay from 'date-fns/get_day';
 import addDays from 'date-fns/add_days';
+import subDays from 'date-fns/sub_days';
 import isSameYear from 'date-fns/is_same_year';
 import isThisMonth from 'date-fns/is_this_month';
 import isThisYear from 'date-fns/is_this_year';
@@ -68,6 +69,8 @@ var Month = function (_PureComponent) {
     var prevSelected = false;
     var isToday = false;
     var date = void 0,
+        nextDate = void 0,
+        prevDate = void 0,
         days = void 0,
         dow = void 0,
         nextdow = void 0,
@@ -79,7 +82,7 @@ var Month = function (_PureComponent) {
     var _minDate = format(minDate, 'YYYY-MM-DD');
     var _maxDate = format(maxDate, 'YYYY-MM-DD');
 
-    var disabledDates2 = disabledDates && disabledDates[0] ? disabledDates.map(function (date) {
+    var disabledDatesArray = disabledDates && disabledDates[0] ? disabledDates.map(function (date) {
       return format(parse(date.date), 'YYYY-MM-DD');
     }) : disabledDates;
 
@@ -95,14 +98,17 @@ var Month = function (_PureComponent) {
         day = row[k];
 
         date = getDateString(year, month, day);
+        nextDate = format(addDays(date, 1), 'YYYY-MM-DD');
+        prevDate = format(subDays(date, 1), 'YYYY-MM-DD');
         isToday = date === _today;
         nextdow = dow + 1;
         prevdow = dow === 1 ? 7 : dow - 1;
-        isDisabled = minDate && date < _minDate || maxDate && date > _maxDate || disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 || disabledDates2 && disabledDates2.length && disabledDates2.indexOf(date) !== -1;
 
-        prevDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(prevdow) !== -1;
+        isDisabled = minDate && date < _minDate || maxDate && date > _maxDate || disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 || disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(date) !== -1;
 
-        nextDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(nextdow) !== -1;
+        prevDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(prevdow) !== -1 || disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(prevDate) !== -1;
+
+        nextDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(nextdow) !== -1 || disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(nextDate) !== -1;
 
         days[k] = React.createElement(DayComponent, _extends({
           key: 'day-' + day,
