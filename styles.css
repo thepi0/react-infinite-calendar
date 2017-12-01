@@ -29,7 +29,9 @@
   position: relative;
   overflow: hidden;
   background-color: #FFF; }
-/* imported from Day.scss */
+/*
+  imported from Day.scss 
+ */
 
 .Cal__Day__root {
   display: inline-block;
@@ -183,54 +185,9 @@
     cursor: not-allowed;
     box-shadow: none; }
 
-/*.month, .year {
-  position: absolute;
-  left: 0;
-  right: 0;
-
-  font-size: 12px;
-  line-height: 12px;
-  text-transform: capitalize;
-}
-
-.month {
-  top: 5px;
-}
-
-.year {
-  bottom: 5px;
-}*/
 /*
  * Range selection styles
  */
-.Cal__Day__range.Cal__Day__selected.Cal__Day__start, .Cal__Day__range.Cal__Day__selected.Cal__Day__end {
-  /*&:after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      width: 50%;
-      height: $rowHeight - 4px;
-      margin-top: -0.5 * ($rowHeight - 4px);
-      border-top: 2px solid $borderColor;
-      border-bottom: 2px solid $borderColor;
-  }*/ }
-
-.Cal__Day__range.Cal__Day__selected.Cal__Day__nextdisabled {
-  /*&.start, &.end {
-        &:after {
-          border-top: 0;
-          border-bottom: 0;
-        }
-    }*/ }
-
-.Cal__Day__range.Cal__Day__selected.Cal__Day__prevdisabled {
-  /*&.start, &.end {
-        &:after {
-          border-top: 0;
-          border-bottom: 0;
-        }
-    }*/ }
-
 .Cal__Day__range.Cal__Day__selected.Cal__Day__start .Cal__Day__selection {
   border-right: 0;
   border-top: 3px solid #ea992f;
