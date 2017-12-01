@@ -44,17 +44,15 @@ var styles = {
     'today': 'Cal__Day__today',
     'disabled': 'Cal__Day__disabled',
     'selected': 'Cal__Day__selected',
-    'month': 'Cal__Day__month',
-    'year': 'Cal__Day__year',
     'selection': 'Cal__Day__selection',
-    'day': 'Cal__Day__day',
     'nextdisabled': 'Cal__Day__nextdisabled',
     'prevdisabled': 'Cal__Day__prevdisabled',
     'range': 'Cal__Day__range',
     'start': 'Cal__Day__start',
     'end': 'Cal__Day__end',
     'betweenRange': 'Cal__Day__betweenRange',
-    'multipleSelections': 'Cal__Day__multipleSelections'
+    'day': 'Cal__Day__day',
+    'month': 'Cal__Day__month'
   }
 };
 

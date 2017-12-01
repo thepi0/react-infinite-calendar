@@ -16,11 +16,11 @@ import isSameYear from 'date-fns/is_same_year';
 import isThisMonth from 'date-fns/is_this_month';
 import isThisYear from 'date-fns/is_this_year';
 var styles = {
-  'root': 'Cal__Month__root',
   'rows': 'Cal__Month__rows',
   'row': 'Cal__Month__row',
   'partial': 'Cal__Month__partial',
   'indicator': 'Cal__Month__indicator',
+  'display': 'Cal__Month__display',
   'month': 'Cal__Month__month',
   'year': 'Cal__Month__year',
   'indicatorCurrent': 'Cal__Month__indicatorCurrent',
@@ -137,7 +137,7 @@ var Month = function (_PureComponent) {
   };
 
   Month.prototype.render = function render() {
-    var _classNames2, _classNames3;
+    var _classNames2;
 
     var _props2 = this.props,
         locale = _props2.locale.locale,
@@ -161,17 +161,20 @@ var Month = function (_PureComponent) {
       { className: styles.root, style: _extends({}, style, { lineHeight: rowHeight + 'px' }) },
       React.createElement(
         'div',
-        { className: classNames(styles.indicator, (_classNames2 = {}, _classNames2[styles.partialFirstRow] = rows[0].length !== 7, _classNames2), (_classNames3 = {}, _classNames3[styles.indicatorCurrent] = isCurrentMonth, _classNames3)),
-          style: { backgroundColor: theme.overlayColor } },
+        { className: classNames(styles.indicator, (_classNames2 = {}, _classNames2[styles.indicatorCurrent] = isCurrentMonth, _classNames2)) },
         React.createElement(
-          'span',
-          { className: 'month' },
-          format(monthDate, 'MMMM', { locale: locale })
-        ),
-        React.createElement(
-          'span',
-          { className: 'year' },
-          format(monthDate, 'YYYY', { locale: locale })
+          'div',
+          { className: styles.display },
+          React.createElement(
+            'span',
+            { className: 'month' },
+            format(monthDate, 'MMMM', { locale: locale })
+          ),
+          React.createElement(
+            'span',
+            { className: 'year' },
+            format(monthDate, 'YYYY', { locale: locale })
+          )
         )
       ),
       React.createElement(

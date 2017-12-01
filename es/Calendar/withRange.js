@@ -27,17 +27,15 @@ var styles = {
   'today': 'Cal__Day__today',
   'disabled': 'Cal__Day__disabled',
   'selected': 'Cal__Day__selected',
-  'month': 'Cal__Day__month',
-  'year': 'Cal__Day__year',
   'selection': 'Cal__Day__selection',
-  'day': 'Cal__Day__day',
   'nextdisabled': 'Cal__Day__nextdisabled',
   'prevdisabled': 'Cal__Day__prevdisabled',
   'range': 'Cal__Day__range',
   'start': 'Cal__Day__start',
   'end': 'Cal__Day__end',
   'betweenRange': 'Cal__Day__betweenRange',
-  'multipleSelections': 'Cal__Day__multipleSelections'
+  'day': 'Cal__Day__day',
+  'month': 'Cal__Day__month'
 };
 
 
@@ -68,7 +66,6 @@ export var enhanceDay = _withPropsOnChange(['selected'], function (_ref) {
   var isStart = date === selected.start_time;
   var isEnd = date === selected.end_time;
   var isRange = !(isStart && isEnd);
-  var style = isRange && (isStart && { backgroundColor: theme.accentColor } || isEnd && { borderColor: theme.accentColor });
 
   var positionOfDate = determineIfDateAlreadySelected(date, preselected);
   var isPreSelected = !!positionOfDate.value;
@@ -79,13 +76,12 @@ export var enhanceDay = _withPropsOnChange(['selected'], function (_ref) {
   var isNextSelected = positionOfDate.nextselected;
   var isPrevSelected = positionOfDate.prevselected;
 
-  var dayClasses = isSelected && isRange && classNames(styles.range, (_classNames = {}, _classNames[styles.start] = isStart, _classNames[styles.betweenRange] = !isStart && !isEnd, _classNames[styles.end] = isEnd, _classNames)) || isPreSelected && classNames(styles.range, (_classNames2 = {}, _classNames2[styles.prestart] = isPreStart, _classNames2[styles.preend] = isPreEnd, _classNames2[styles.multiple] = isMultipleChildren, _classNames2[styles.nextselected] = isNextSelected, _classNames2[styles.prevselected] = isPrevSelected, _classNames2));
+  var dayClasses = isSelected && isRange && classNames(styles.range, (_classNames = {}, _classNames[styles.start] = isStart, _classNames[styles.betweenRange] = !isStart && !isEnd, _classNames[styles.end] = isEnd, _classNames[styles.multiple] = isMultipleChildren, _classNames[styles.nextselected] = isNextSelected, _classNames[styles.prevselected] = isPrevSelected, _classNames)) || isPreSelected && classNames(styles.range, (_classNames2 = {}, _classNames2[styles.prestart] = isPreStart, _classNames2[styles.preend] = isPreEnd, _classNames2[styles.multiple] = isMultipleChildren, _classNames2[styles.nextselected] = isNextSelected, _classNames2[styles.prevselected] = isPrevSelected, _classNames2));
 
   return {
     className: dayClasses,
     isPreSelected: isPreSelected,
-    isSelected: isSelected,
-    selectionStyle: style
+    isSelected: isSelected
   };
 });
 
