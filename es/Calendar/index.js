@@ -68,6 +68,7 @@ export var withDefaultProps = _defaultProps({
   maxDate: new Date(2050, 11, 31),
   min: new Date(1980, 0, 1),
   preselected: {},
+  disabledDates: {},
   minDate: new Date(1980, 0, 1),
   onHighlightedDateChange: emptyFn,
   onScroll: emptyFn,
@@ -207,6 +208,7 @@ var Calendar = function (_Component) {
 
     _this.updateYears(props);
     _this.updatePreSelected(props);
+    _this.updatedisabledDates(props);
 
     _this.state = {
       display: props.display
@@ -261,7 +263,6 @@ var Calendar = function (_Component) {
 
     var disabledDates = props.disabledDates;
     this.disabledDates = disabledDates;
-    getDisabledDates(this.disabledDates);
   };
 
   Calendar.prototype.updateYears = function updateYears() {
@@ -396,7 +397,7 @@ var Calendar = function (_Component) {
               _this2._MonthList = instance;
             },
             DayComponent: DayComponent,
-            disabledDates: this.disabledDates,
+            disabledDates: disabledDates,
             disabledDays: disabledDays,
             height: height,
             isScrolling: isScrolling,
