@@ -1,5 +1,9 @@
 @import "../variables";
 
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 .root {
   position: relative;
   display: table;

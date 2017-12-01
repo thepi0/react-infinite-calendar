@@ -173,11 +173,7 @@
             }
         }
     }
-
   }
-
-
-
 
   &.enabled {
     &.highlighted, &:active, &:hover {
@@ -225,8 +221,8 @@
         left: 50%;
         width: $rowHeight;
         height: $rowHeight - 6px;
-        margin-top: -0.5 * ($rowHeight);
-        margin-left: -0.5 * ($rowHeight) - 4px;
+        margin-top: -0.5 * ($rowHeight - 6px);
+        margin-left: -0.5 * ($rowHeight) - 1px;
         border-top: 3px solid $selectionBorderColor;
         border-right: 3px solid $selectionBorderColor;
         border-bottom: 3px solid $selectionBorderColor;

@@ -79,6 +79,9 @@ storiesOf('Higher Order Components', module)
           }, {
               date: "2017-12-26",
               type: "vacation"
+          }, {
+              date: "2017-12-29",
+              type: "vacation"
           }
       ]}
       preselected={[

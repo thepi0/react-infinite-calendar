@@ -5,6 +5,7 @@ import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 import getDay from 'date-fns/get_day';
 import addDays from 'date-fns/add_days';
+import subDays from 'date-fns/sub_days';
 import isSameYear from 'date-fns/is_same_year';
 import isThisMonth from 'date-fns/is_this_month';
 import isThisYear from 'date-fns/is_this_year';
@@ -40,14 +41,14 @@ export default class Month extends PureComponent {
     let nextSelected = false;
     let prevSelected= false;
     let isToday = false;
-    let date, days, dow, nextdow, prevdow, row;
+    let date, nextDate, prevDate, days, dow, nextdow, prevdow, row;
 
     // Used for faster comparisons
     const _today = format(today, 'YYYY-MM-DD');
     const _minDate = format(minDate, 'YYYY-MM-DD');
     const _maxDate = format(maxDate, 'YYYY-MM-DD');
 
-    const disabledDates2 = disabledDates && disabledDates[0] ? disabledDates.map((date) => format(parse(date.date), 'YYYY-MM-DD')) : disabledDates;
+    const disabledDatesArray = disabledDates && disabledDates[0] ? disabledDates.map((date) => format(parse(date.date), 'YYYY-MM-DD')) : disabledDates;
 
 		// Oh the things we do in the name of performance...
     for (let i = 0, len = rows.length; i < len; i++) {
@@ -59,22 +60,27 @@ export default class Month extends PureComponent {
         day = row[k];
 
         date = getDateString(year, month, day);
+        nextDate = format(addDays(date, 1), 'YYYY-MM-DD');
+        prevDate = format(subDays(date, 1), 'YYYY-MM-DD');
         isToday = (date === _today);
         nextdow = dow + 1;
         prevdow = dow === 1 ? 7 : dow - 1;
+
         isDisabled = (
 					minDate && date < _minDate ||
 					maxDate && date > _maxDate ||
 					disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 ||
-					disabledDates2 && disabledDates2.length && disabledDates2.indexOf(date) !== -1
+					disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(date) !== -1
 				);
 
         prevDisabled = (
-					disabledDays && disabledDays.length && disabledDays.indexOf(prevdow) !== -1
+					disabledDays && disabledDays.length && disabledDays.indexOf(prevdow) !== -1 ||
+					disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(prevDate) !== -1
 				);
 
         nextDisabled = (
-					disabledDays && disabledDays.length && disabledDays.indexOf(nextdow) !== -1
+					disabledDays && disabledDays.length && disabledDays.indexOf(nextdow) !== -1 ||
+					disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(nextDate) !== -1
 				);
 
         days[k] = (
