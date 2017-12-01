@@ -366,7 +366,7 @@ export default class Calendar extends Component {
                 this._MonthList = instance;
               }}
               DayComponent={DayComponent}
-              disabledDates={disabledDates}
+              disabledDates={this.disabledDates}
               disabledDays={disabledDays}
               height={height}
               isScrolling={isScrolling}

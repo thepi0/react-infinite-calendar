@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import classNames from 'classnames';
 import {getDateString} from '../utils';
 import format from 'date-fns/format';
+import parse from 'date-fns/parse';
 import getDay from 'date-fns/get_day';
 import addDays from 'date-fns/add_days';
 import isSameYear from 'date-fns/is_same_year';
@@ -46,6 +47,8 @@ export default class Month extends PureComponent {
     const _minDate = format(minDate, 'YYYY-MM-DD');
     const _maxDate = format(maxDate, 'YYYY-MM-DD');
 
+    const disabledDates2 = disabledDates && disabledDates[0] ? disabledDates.map((date) => format(parse(date.date), 'YYYY-MM-DD')) : disabledDates;
+
 		// Oh the things we do in the name of performance...
     for (let i = 0, len = rows.length; i < len; i++) {
       row = rows[i];
@@ -59,12 +62,11 @@ export default class Month extends PureComponent {
         isToday = (date === _today);
         nextdow = dow + 1;
         prevdow = dow === 1 ? 7 : dow - 1;
-
         isDisabled = (
 					minDate && date < _minDate ||
 					maxDate && date > _maxDate ||
 					disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 ||
-					disabledDates && disabledDates.length && disabledDates.indexOf(date) !== -1
+					disabledDates2 && disabledDates2.length && disabledDates2.indexOf(date) !== -1
 				);
 
         prevDisabled = (
