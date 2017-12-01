@@ -30,10 +30,6 @@ export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, pres
   const isStart = date === selected.start_time;
   const isEnd = date === selected.end_time;
   const isRange = !(isStart && isEnd);
-  const style = isRange && (
-    isStart && {backgroundColor: theme.accentColor} ||
-    isEnd && {borderColor: theme.accentColor}
-  );
 
   const positionOfDate = determineIfDateAlreadySelected(date, preselected);
   const isPreSelected = !!positionOfDate.value;
@@ -49,6 +45,9 @@ export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, pres
       [styles.start]: isStart,
       [styles.betweenRange]: !isStart && !isEnd,
       [styles.end]: isEnd,
+      [styles.multiple]: isMultipleChildren,
+      [styles.nextselected]: isNextSelected,
+      [styles.prevselected]: isPrevSelected
     })
     ||
     isPreSelected && classNames(styles.range, {
@@ -62,8 +61,7 @@ export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, pres
   return {
     className: dayClasses,
     isPreSelected,
-    isSelected,
-    selectionStyle: style,
+    isSelected
   };
 });
 

@@ -27,10 +27,6 @@ export default class Day extends PureComponent {
       <div
         className={styles.selection}
         data-date={date}
-        style={{
-          color: textColor.active,
-          ...selectionStyle,
-        }}
       >
         {/*<span className={styles.month}>
           {isToday ? todayLabel.short || todayLabel.long : monthShort}
@@ -58,19 +54,9 @@ export default class Day extends PureComponent {
       theme: {selectionColor, todayColor},
       year,
     } = this.props;
-    let color;
-
-    if (isSelected) {
-      color = this.selectionColor = typeof selectionColor === 'function'
-        ? selectionColor(date)
-        : selectionColor;
-    } else if (isToday) {
-      color = todayColor;
-    }
 
     return (
       <li
-        style={color ? {color} : null}
         className={classNames(styles.root, {
           [styles.today]: isToday,
           [styles.highlighted]: isHighlighted,
@@ -86,11 +72,11 @@ export default class Day extends PureComponent {
         {...handlers}
       >
         {/*{day === 1 && <span className={styles.month}>{monthShort}</span>}*/}
-        {isToday ? <span>{day}</span> : day}
+        {day}
         {/*{day === 1 &&
           currentYear !== year &&
           <span className={styles.year}>{year}</span>}*/}
-        {isSelected && this.renderSelection()}
+
       </li>
     );
   }

@@ -47,10 +47,10 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: $rowHeight - 4px;
-        height: $rowHeight - 4px;
-        margin-top: -0.5 * ($rowHeight - 4px);
-        margin-left: -0.5 * ($rowHeight - 4px);
+        width: $rowHeight - 16px;
+        height: $rowHeight - 16px;
+        margin-top: -0.5 * ($rowHeight - 16px);
+        margin-left: -0.5 * ($rowHeight - 16px);
         background: #2cb1d8;
         z-index: -1;
         border-radius: 50%;
@@ -63,9 +63,9 @@
             position: absolute;
             top: 50%;
             right: 0;
-            width: $rowHeight - 4px;
-            height: $rowHeight - 4px;
-            margin-top: -0.5 * ($rowHeight - 4px);
+            width: $rowHeight - 16px;
+            height: $rowHeight - 16px;
+            margin-top: -0.5 * ($rowHeight - 16px);
             margin-left: 0;
             background: #2cb1d8;
             z-index: -1;
@@ -79,9 +79,9 @@
             position: absolute;
             top: 50%;
             left: 0;
-            width: $rowHeight - 4px;
-            height: $rowHeight - 4px;
-            margin-top: -0.5 * ($rowHeight - 4px);
+            width: $rowHeight - 16px;
+            height: $rowHeight - 16px;
+            margin-top: -0.5 * ($rowHeight - 16px);
             margin-left: 0;
             background: #2cb1d8;;
             z-index: -1;
@@ -95,8 +95,8 @@
             top: 50%;
             right: 0;
             width: 100%;
-            height: $rowHeight - 4px;
-            margin-top: -0.5 * ($rowHeight - 4px);
+            height: $rowHeight - 16px;
+            margin-top: -0.5 * ($rowHeight - 16px);
             margin-left: 0;
             background: #2cb1d8;
             z-index: -1;
@@ -114,10 +114,10 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: $rowHeight - 4px;
-            height: $rowHeight - 4px;
-            margin-top: -0.5 * ($rowHeight - 4px);
-            margin-left: -0.5 * ($rowHeight - 4px);
+            width: $rowHeight - 16px;
+            height: $rowHeight - 16px;
+            margin-top: -0.5 * ($rowHeight - 16px);
+            margin-left: -0.5 * ($rowHeight - 16px);
             background: linear-gradient(to bottom, #ca569a 50%, #2cb1d8 50%);
             z-index: -1;
             border-radius: 50%;
@@ -130,9 +130,9 @@
                 position: absolute;
                 top: 50%;
                 right: 0;
-                width: $rowHeight - 4px;
-                height: $rowHeight - 4px;
-                margin-top: -0.5 * ($rowHeight - 4px);
+                width: $rowHeight - 16px;
+                height: $rowHeight - 16px;
+                margin-top: -0.5 * ($rowHeight - 16px);
                 margin-left: 0;
                 background: linear-gradient(to bottom, #ca569a 50%, #2cb1d8 50%);
                 z-index: -1;
@@ -146,9 +146,9 @@
                 position: absolute;
                 top: 50%;
                 left: 0;
-                width: $rowHeight - 4px;
-                height: $rowHeight - 4px;
-                margin-top: -0.5 * ($rowHeight - 4px);
+                width: $rowHeight - 16px;
+                height: $rowHeight - 16px;
+                margin-top: -0.5 * ($rowHeight - 16px);
                 margin-left: 0;
                 background: linear-gradient(to bottom, #ca569a 50%, #2cb1d8 50%);
                 z-index: -1;
@@ -162,8 +162,8 @@
                 top: 50%;
                 right: 0;
                 width: 100%;
-                height: $rowHeight - 4px;
-                margin-top: -0.5 * ($rowHeight - 4px);
+                height: $rowHeight - 16px;
+                margin-top: -0.5 * ($rowHeight - 16px);
                 margin-left: 0;
                 background: linear-gradient(to bottom, #ca569a 50%, #2cb1d8 50%);
                 z-index: -1;
@@ -179,7 +179,7 @@
   &.enabled {
     &.highlighted, &:active, &:hover {
       position: relative;
-      z-index: 1;
+      //z-index: 1;
     }
   }
 
@@ -191,44 +191,53 @@
       position: relative;
       z-index: 2;
 
-      > span {
-          color: $textColor;
+      &:before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: $rowHeight - 16px;
+          height: $rowHeight - 16px;
+          margin-top: -0.5 * ($rowHeight - 16px);
+          margin-left: -0.5 * ($rowHeight - 16px);
+          background: rgba(44, 177, 216, 0.2);
+          z-index: -1;
+          border-radius: 50%;
       }
 
       &.disabled > span {
           color: $textColorDisabled;
       }
 
-      &:before {
-          @include todayCircle();
-          border-radius: $rowHeight / 2;
-          z-index: -1;
-      }
-
       &.disabled:before {
-          box-shadow: inset 0 0 0 1px #BBB;
+
       }
   }
   &.selected {
     position: relative;
+    border: 3px solid $selectionBorderColor;
+    border-radius: $rowHeight / 2;
+    line-height: $rowHeight - 6;
+    //border-style: inset;
 
     > .month, > .year {
       display: none;
     }
 
-    &:before {
-      display: none;
-    }
-
     .selection {
-      @include circle();
-      line-height: $rowHeight - 9;
-      z-index: 2;
-      background-color: #FFFFFF;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        width: 100%;
+      //@include circle();
+      //line-height: $rowHeight - 9;
+      //z-index: 2;
 
-      .day {
+      /*.day {
         position: relative;
-      }
+    }*/
     }
   }
   &.nextdisabled {
@@ -258,10 +267,11 @@
   &.disabled {
     color: $textColorDisabled;
     cursor: not-allowed;
+    box-shadow: none;
   }
 }
 
-.month, .year {
+/*.month, .year {
   position: absolute;
   left: 0;
   right: 0;
@@ -277,14 +287,14 @@
 
 .year {
   bottom: 5px;
-}
+}*/
 
 /*
  * Range selection styles
  */
 .range.selected {
   &.start, &.end {
-    &:after {
+    /*&:after {
       content: '';
       position: absolute;
       top: 50%;
@@ -293,40 +303,38 @@
       margin-top: -0.5 * ($rowHeight - 4px);
       border-top: 2px solid $borderColor;
       border-bottom: 2px solid $borderColor;
-    }
+  }*/
   }
 
   &.nextdisabled {
-      &.start, &.end {
+      /*&.start, &.end {
         &:after {
           border-top: 0;
           border-bottom: 0;
         }
-      }
+    }*/
   }
 
   &.prevdisabled {
-      &.start, &.end {
+      /*&.start, &.end {
         &:after {
           border-top: 0;
           border-bottom: 0;
         }
-      }
-  }
-
-  &.disabled {
-    .selection.selection {
-        border: 0;
-
-      .day, .month {
-        color: $textColorDisabled;
-      }
-    }
+    }*/
   }
 
   &.start {
+      border-right: 0;
+      border-top: 3px solid $selectionBorderColor;
+      border-bottom: 3px solid $selectionBorderColor;
+      border-left: 3px solid $selectionBorderColor;
+      border-top-left-radius: $rowHeight / 2;
+      border-bottom-left-radius: $rowHeight / 2;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
 
-    .selection {
+    /*.selection {
       border-top-left-radius: $rowHeight / 2;
       border-bottom-left-radius: $rowHeight / 2;
       border-left: 2px solid $borderColor;
@@ -341,11 +349,39 @@
 
     &.end:after {
       display: none;
-    }
+  }*/
 
   }
   &.betweenRange {
-    .selection {
+      border-right: 0;
+      border-top: 3px solid $selectionBorderColor;
+      border-bottom: 3px solid $selectionBorderColor;
+      border-left: 0;
+      border-radius: 0;
+
+      &.nextdisabled {
+          border-right: 3px solid $selectionBorderColor;
+          border-top-right-radius: $rowHeight / 2;
+          border-bottom-right-radius: $rowHeight / 2;
+          //margin-right: -3px;
+
+          &.disabled {
+              border: 0;
+              border-radius: 0;
+          }
+      }
+
+      &.prevdisabled {
+          border-left: 3px solid $selectionBorderColor;
+          border-top-left-radius: $rowHeight / 2;
+          border-bottom-left-radius: $rowHeight / 2;
+
+          &.disabled {
+              border: 0;
+              border-radius: 0;
+          }
+      }
+    /*.selection {
       left: 0;
       right: 0;
       width: 100%;
@@ -361,8 +397,9 @@
 
     .month {
       display: none;
-    }
+  }*/
   }
+  /*
   &.multipleSelections {
       border: 4px solid red;
   }
@@ -380,35 +417,38 @@
           border-bottom-right-radius: $rowHeight / 2;
       }
   }
+  */
   &.end {
-    &:after {
-      left: 0;
-    }
-
-    .selection {
-        border-top-right-radius: $rowHeight / 2;
-        border-bottom-right-radius: $rowHeight / 2;
-        border-right: 2px solid $borderColor;
-        border-top: 2px solid $borderColor;
-        border-bottom: 2px solid $borderColor;
-        border-left: 0;
-    }
+    border-right: 3px solid $selectionBorderColor;
+    border-top: 3px solid $selectionBorderColor;
+    border-bottom: 3px solid $selectionBorderColor;
+    border-left: 0;
+    border-top-right-radius: $rowHeight / 2;
+    border-bottom-right-radius: $rowHeight / 2;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    //margin-right: -3px;
 
     &.prevdisabled {
-        .selection {
-            border-left: 2px solid $borderColor;
-            border-top-left-radius: $rowHeight / 2;
-            border-bottom-left-radius: $rowHeight / 2;
+        border-left: 3px solid $selectionBorderColor;
+        border-top-left-radius: $rowHeight / 2;
+        border-bottom-left-radius: $rowHeight / 2;
+
+        &.disabled {
+            border: 0;
+            border-radius: 0;
         }
     }
+  }
+  &.disabled {
+      border: 0;
+      border-radius: 0;
+    .selection.selection {
+        border: 0;
 
-    &.nextdisabled {
-        .selection {
-            border-right: 2px solid $borderColor;
-            border-top-right-radius: $rowHeight / 2;
-            border-bottom-right-radius: $rowHeight / 2;
-        }
+      .day, .month {
+        color: $textColorDisabled;
+      }
     }
-
   }
 }
