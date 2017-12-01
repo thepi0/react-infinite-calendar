@@ -62,7 +62,10 @@ export default class Calendar extends Component {
     autoFocus: PropTypes.bool,
     className: PropTypes.string,
     DayComponent: PropTypes.func,
-    disabledDates: PropTypes.arrayOf(PropTypes.object),
+    disabledDates: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array
+    ]),
     disabledDays: PropTypes.arrayOf(PropTypes.number),
     display: PropTypes.oneOf(['years', 'days']),
     displayOptions: PropTypes.shape({
@@ -314,7 +317,6 @@ export default class Calendar extends Component {
       showWeekdays,
     } = this.getDisplayOptions();
     const {display, isScrolling, showToday} = this.state;
-    const disabledDates = this.getDisabledDates(this.disabledDates);
     const locale = this.getLocale();
     const theme = this.getTheme();
     const today = this.today = startOfDay(new Date());
