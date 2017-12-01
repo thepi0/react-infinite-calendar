@@ -70,7 +70,7 @@ storiesOf('Higher Order Components', module)
     <InfiniteCalendar
       width={Math.min(window.innerWidth, 900)}
       height={Math.min(window.innerHeight, 900)}
-      rowHeight={66}
+      rowHeight={74}
       selected={null}
       disabledDates={[
           {

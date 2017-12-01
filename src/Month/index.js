@@ -126,10 +126,11 @@ export default class Month extends PureComponent {
     return (
       <div className={styles.root} style={{...style, lineHeight: `${rowHeight}px`}}>
 
-              <div className={classNames(styles.indicator, { [styles.partialFirstRow]: rows[0].length !== 7, }, {[styles.indicatorCurrent] : isCurrentMonth })}
-                  style={{backgroundColor: theme.overlayColor}}>
-                  <span className="month">{format(monthDate, 'MMMM', {locale})}</span>
-                  <span className="year">{format(monthDate, 'YYYY', {locale})}</span>
+              <div className={classNames(styles.indicator, {[styles.indicatorCurrent] : isCurrentMonth })}>
+                  <div className={styles.display}>
+                      <span className="month">{format(monthDate, 'MMMM', {locale})}</span>
+                      <span className="year">{format(monthDate, 'YYYY', {locale})}</span>
+                  </div>
               </div>
 
   				<div className={styles.rows}>
