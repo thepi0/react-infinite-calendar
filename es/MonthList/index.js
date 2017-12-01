@@ -222,7 +222,7 @@ var MonthList = function (_Component) {
 
 export { MonthList as default };
 process.env.NODE_ENV !== "production" ? MonthList.propTypes = {
-  disabledDates: PropTypes.arrayOf(PropTypes.object),
+  disabledDates: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   disabledDays: PropTypes.arrayOf(PropTypes.number),
   height: PropTypes.number,
   isScrolling: PropTypes.bool,

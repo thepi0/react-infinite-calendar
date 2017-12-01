@@ -350,7 +350,6 @@ var Calendar = function (_Component) {
         isScrolling = _state.isScrolling,
         showToday = _state.showToday;
 
-    var disabledDates = this.getDisabledDates(this.disabledDates);
     var locale = this.getLocale();
     var theme = this.getTheme();
     var today = this.today = startOfDay(new Date());
@@ -452,7 +451,7 @@ process.env.NODE_ENV !== "production" ? Calendar.propTypes = {
   autoFocus: PropTypes.bool,
   className: PropTypes.string,
   DayComponent: PropTypes.func,
-  disabledDates: PropTypes.arrayOf(PropTypes.object),
+  disabledDates: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   disabledDays: PropTypes.arrayOf(PropTypes.number),
   display: PropTypes.oneOf(['years', 'days']),
   displayOptions: PropTypes.shape({
