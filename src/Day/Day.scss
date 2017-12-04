@@ -227,15 +227,43 @@
 
         &.nextdifferentiates {
             &:after {
+                opacity: 0;
                 border-top-right-radius: $rowHeight / 2;
                 border-bottom-right-radius: $rowHeight / 2;
+            }
+
+            &.prevselected {
+                &:after {
+                    left: 0;
+                    right: auto;
+                    width: $rowHeight / 2;
+                    height: $rowHeight - 18px;
+                    margin-top: -0.5 * ($rowHeight - 18px);
+                    margin-left: 0;
+                    border-radius: 0;
+                    opacity: 1;
+                }
             }
         }
 
         &.prevdifferentiates {
             &:after {
+                opacity: 0;
                 border-top-left-radius: $rowHeight / 2;
                 border-bottom-left-radius: $rowHeight / 2;
+            }
+
+            &.nextselected {
+                &:after {
+                    left: auto;
+                    right: 0;
+                    width: $rowHeight / 2;
+                    height: $rowHeight - 18px;
+                    margin-top: -0.5 * ($rowHeight - 18px);
+                    margin-left: -0.5 * ($rowHeight - 18px);
+                    border-radius: 0;
+                    opacity: 1;
+                }
             }
         }
 
