@@ -5,7 +5,7 @@ import styles from './Today.scss';
 
 export const DIRECTION_UP = 1;
 export const DIRECTION_DOWN = -1;
-const CHEVRON = 'M256,298.3L256,298.3L256,298.3l174.2-167.2c4.3-4.2,11.4-4.1,15.8,0.2l30.6,29.9c4.4,4.3,4.5,11.3,0.2,15.5L264.1,380.9 c-2.2,2.2-5.2,3.2-8.1,3c-3,0.1-5.9-0.9-8.1-3L35.2,176.7c-4.3-4.2-4.2-11.2,0.2-15.5L66,131.3c4.4-4.3,11.5-4.4,15.8-0.2L256,298.3 z';
+const CHEVRON = "m33.36 20l-13.36 13.36-13.36-13.36 2.421666666666667-2.3433333333333337 9.296666666666667 9.296666666666667v-20.313333333333333h3.2833333333333314v20.313333333333336l9.373333333333335-9.296666666666667z";
 
 export default class Today extends PureComponent {
   static propTypes = {
@@ -37,8 +37,7 @@ export default class Today extends PureComponent {
         onClick={this.scrollToToday}
         ref="node"
       >
-        {todayLabel}
-        <svg
+        {/*<svg
           className={styles.chevron}
           x="0px"
           y="0px"
@@ -50,6 +49,12 @@ export default class Today extends PureComponent {
             fill={theme.floatingNav.chevron || theme.floatingNav.color}
             d={CHEVRON}
           />
+        </svg>*/}
+        <svg fill="currentColor" className={styles.chevron} width="24" height="24" viewBox="0 0 40 40" style={{verticalAlign: 'middle', display: 'inline-block', fill: '#FFF'}} size="50" preserveAspectRatio="xMidYMid meet">
+            <g>
+                <path d="m33.36 20l-13.36 13.36-13.36-13.36 2.421666666666667-2.3433333333333337 9.296666666666667 9.296666666666667v-20.313333333333333h3.2833333333333314v20.313333333333336l9.373333333333335-9.296666666666667z">
+                </path>
+            </g>
         </svg>
       </div>
     );

@@ -1,9 +1,9 @@
 module.exports = {
   accentColor: '#fff',
   floatingNav: {
-    background: 'rgba(56, 87, 138, 0.94)',
-    chevron: '#FFA726',
-    color: '#FFF',
+    background: '#ca569a',
+    chevron: '#FFFFFF',
+    color: '#FFF'
   },
   headerColor: '#2cb1d8',
   selectionColor: '#2cb1d8',
