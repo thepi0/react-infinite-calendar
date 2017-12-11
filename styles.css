@@ -512,7 +512,7 @@
 
 .Cal__Month__indicator {
   padding-top: 25px;
-  padding-left: 25px;
+  padding-left: 20px;
   /*align-items: flex-end;
     display: flex;
     justify-content: flex-end;
@@ -578,7 +578,7 @@
 .Cal__Today__root {
   position: absolute;
   top: -28px;
-  left: -28px;
+  left: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
