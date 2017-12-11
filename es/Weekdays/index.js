@@ -8,6 +8,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { scrollbarSize } from '../utils';
 var styles = {
+  'wrapper': 'Cal__Weekdays__wrapper',
   'root': 'Cal__Weekdays__root',
   'day': 'Cal__Weekdays__day'
 };
@@ -30,23 +31,27 @@ var Weekdays = function (_PureComponent) {
     var orderedWeekdays = [].concat(weekdays.slice(weekStartsOn, 7), weekdays.slice(0, weekStartsOn));
 
     return React.createElement(
-      'ul',
-      {
-        className: styles.root,
-        style: {
-          backgroundColor: theme.weekdayColor,
-          color: theme.textColor.active,
-          paddingRight: scrollbarSize
+      'div',
+      { className: styles.wrapper, style: { backgroundColor: theme.weekdayBackground, height: theme.weekdaysHeight } },
+      React.createElement(
+        'ul',
+        {
+          className: styles.root,
+          style: {
+            backgroundColor: theme.weekdayColor,
+            color: theme.textColor.weekday,
+            paddingRight: scrollbarSize
+          },
+          'aria-hidden': true
         },
-        'aria-hidden': true
-      },
-      orderedWeekdays.map(function (val, index) {
-        return React.createElement(
-          'li',
-          { key: 'Weekday-' + index, className: styles.day },
-          val
-        );
-      })
+        orderedWeekdays.map(function (val, index) {
+          return React.createElement(
+            'li',
+            { key: 'Weekday-' + index, className: styles.day },
+            val
+          );
+        })
+      )
     );
   };
 

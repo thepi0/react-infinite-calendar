@@ -503,7 +503,8 @@ process.env.NODE_ENV !== "production" ? Calendar.propTypes = {
       default: PropTypes.string
     }),
     todayColor: PropTypes.string,
-    weekdayColor: PropTypes.string
+    weekdayColor: PropTypes.string,
+    weekdaysHeight: PropTypes.string
   }),
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   YearsComponent: PropTypes.func
