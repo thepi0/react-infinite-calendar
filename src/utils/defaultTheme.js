@@ -10,7 +10,10 @@ module.exports = {
   textColor: {
     active: '#2cb1d8',
     default: '#2cb1d8',
+    weekday: '#FFFFFF'
   },
   todayColor: '#FFA726',
   weekdayColor: '#2cb1d8',
+  weekdayBackground: '#2cb1d8',
+  weekdaysHeight: '50px'
 };

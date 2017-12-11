@@ -14,19 +14,21 @@ export default class Weekdays extends PureComponent {
     const orderedWeekdays = [...weekdays.slice(weekStartsOn, 7), ...weekdays.slice(0, weekStartsOn)];
 
     return (
-      <ul
-        className={styles.root}
-        style={{
-          backgroundColor: theme.weekdayColor,
-          color: theme.textColor.active,
-          paddingRight: scrollbarSize,
-        }}
-        aria-hidden={true}
-      >
-        {orderedWeekdays.map((val, index) => (
-          <li key={`Weekday-${index}`} className={styles.day}>{val}</li>
-        ))}
-      </ul>
+        <div className={styles.wrapper} style={{backgroundColor: theme.weekdayBackground, height: theme.weekdaysHeight}}>
+          <ul
+            className={styles.root}
+            style={{
+              backgroundColor: theme.weekdayColor,
+              color: theme.textColor.weekday,
+              paddingRight: scrollbarSize,
+            }}
+            aria-hidden={true}
+          >
+            {orderedWeekdays.map((val, index) => (
+              <li key={`Weekday-${index}`} className={styles.day}>{val}</li>
+            ))}
+          </ul>
+      </div>
     );
   }
 }

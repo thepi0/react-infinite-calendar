@@ -237,7 +237,7 @@ storiesOf('Higher Order Components', module)
           showMonthsForYears: false,
           showOverlay: false,
           showTodayHelper: true,
-          showWeekdays: false,
+          showWeekdays: true,
           todayHelperRowOffset: 4,
       }}
       locale={{
@@ -249,6 +249,9 @@ storiesOf('Higher Order Components', module)
           },
           weekdays: ['Su', 'Ma', 'Ti', 'Ke', 'To', 'Pe', 'La'],
           weekStartsOn: 1,
+      }}
+      theme={{
+          weekdaysHeight: '64px'
       }}
       onSelect={(date) => console.log(date)}
       Component={withRange(Calendar)}
