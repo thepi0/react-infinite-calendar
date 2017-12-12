@@ -113,6 +113,7 @@ var MonthList = function (_Component) {
           style = _ref.style;
       var _this$props2 = _this.props,
           DayComponent = _this$props2.DayComponent,
+          lastSelectableDate = _this$props2.lastSelectableDate,
           disabledDates = _this$props2.disabledDates,
           disabledDays = _this$props2.disabledDays,
           locale = _this$props2.locale,
@@ -144,6 +145,7 @@ var MonthList = function (_Component) {
         startDays: startDays,
         DayComponent: DayComponent,
         monthDate: date,
+        lastSelectableDate: lastSelectableDate,
         disabledDates: disabledDates,
         disabledDays: disabledDays,
         maxDate: maxDate,
@@ -222,6 +224,7 @@ var MonthList = function (_Component) {
 
 export { MonthList as default };
 process.env.NODE_ENV !== "production" ? MonthList.propTypes = {
+  lastSelectableDate: PropTypes.string,
   disabledDates: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   disabledDays: PropTypes.arrayOf(PropTypes.number),
   height: PropTypes.number,

@@ -43,6 +43,8 @@
   user-select: none;
   max-width: 70px;
   width: 70px; }
+  .Cal__Day__root.Cal__Day__beforelast {
+    color: #a4d8e8; }
   .Cal__Day__root.Cal__Day__preselected {
     position: relative;
     color: #FFFFFF; }
@@ -233,9 +235,9 @@
       top: 50%;
       left: 50%;
       width: 70px;
-      height: 64px;
-      margin-top: -32px;
-      margin-left: -36px;
+      height: 70px;
+      margin-top: -35px;
+      margin-left: -35px;
       border-top: 3px solid #ea992f;
       border-right: 3px solid #ea992f;
       border-bottom: 3px solid #ea992f;
@@ -250,7 +252,6 @@
     border-bottom: 0; }
   .Cal__Day__root.Cal__Day__disabled {
     color: #a4d8e8;
-    cursor: not-allowed;
     box-shadow: none; }
 
 /*

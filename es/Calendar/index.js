@@ -35,6 +35,7 @@ var styles = {
   },
   day: {
     'root': 'Cal__Day__root',
+    'beforelast': 'Cal__Day__beforelast',
     'preselected': 'Cal__Day__preselected',
     'nextselected': 'Cal__Day__nextselected',
     'prevselected': 'Cal__Day__prevselected',
@@ -71,6 +72,7 @@ export var withDefaultProps = _defaultProps({
   min: new Date(1980, 0, 1),
   preselected: {},
   disabledDates: {},
+  lastSelectableDate: new Date(),
   minDate: new Date(1980, 0, 1),
   onHighlightedDateChange: emptyFn,
   onScroll: emptyFn,
@@ -211,6 +213,7 @@ var Calendar = function (_Component) {
     _this.updateYears(props);
     _this.updatePreSelected(props);
     _this.updatedisabledDates(props);
+    _this.updatelastSelectableDate(props);
 
     _this.state = {
       display: props.display
@@ -251,6 +254,10 @@ var Calendar = function (_Component) {
     if (nextProps.disabledDates !== this.props.disabledDates) {
       this.updatedisabledDates(nextProps);
     }
+
+    if (nextProps.lastSelectableDate !== this.props.lastSelectableDate) {
+      this.updatelastSelectableDate(nextProps);
+    }
   };
 
   Calendar.prototype.updatePreSelected = function updatePreSelected() {
@@ -265,6 +272,13 @@ var Calendar = function (_Component) {
 
     var disabledDates = props.disabledDates;
     this.disabledDates = disabledDates;
+  };
+
+  Calendar.prototype.updatelastSelectableDate = function updatelastSelectableDate() {
+    var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
+
+    var lastSelectableDate = props.lastSelectableDate;
+    this.lastSelectableDate = lastSelectableDate;
   };
 
   Calendar.prototype.updateYears = function updateYears() {
@@ -399,6 +413,7 @@ var Calendar = function (_Component) {
             },
             DayComponent: DayComponent,
             disabledDates: this.disabledDates,
+            lastSelectableDate: this.lastSelectableDate,
             disabledDays: disabledDays,
             height: height,
             isScrolling: isScrolling,
@@ -453,6 +468,7 @@ process.env.NODE_ENV !== "production" ? Calendar.propTypes = {
   autoFocus: PropTypes.bool,
   className: PropTypes.string,
   DayComponent: PropTypes.func,
+  lastSelectableDate: PropTypes.string,
   disabledDates: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   disabledDays: PropTypes.arrayOf(PropTypes.number),
   display: PropTypes.oneOf(['years', 'days']),

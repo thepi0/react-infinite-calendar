@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import parse from 'date-fns/parse';
 var styles = {
   'root': 'Cal__Day__root',
+  'beforelast': 'Cal__Day__beforelast',
   'preselected': 'Cal__Day__preselected',
   'nextselected': 'Cal__Day__nextselected',
   'prevselected': 'Cal__Day__prevselected',
@@ -83,6 +84,7 @@ var Day = function (_PureComponent) {
         currentYear = _props2.currentYear,
         date = _props2.date,
         day = _props2.day,
+        beforeLastDisabled = _props2.beforeLastDisabled,
         handlers = _props2.handlers,
         isDisabled = _props2.isDisabled,
         isHighlighted = _props2.isHighlighted,
@@ -101,7 +103,7 @@ var Day = function (_PureComponent) {
     return React.createElement(
       'li',
       _extends({
-        className: classNames(styles.root, (_classNames = {}, _classNames[styles.today] = isToday, _classNames[styles.highlighted] = isHighlighted, _classNames[styles.selected] = isSelected, _classNames[styles.preselected] = isPreSelected, _classNames[styles.prevdisabled] = prevDisabled, _classNames[styles.nextdisabled] = nextDisabled, _classNames[styles.disabled] = isDisabled, _classNames[styles.enabled] = !isDisabled, _classNames), className),
+        className: classNames(styles.root, (_classNames = {}, _classNames[styles.today] = isToday, _classNames[styles.highlighted] = isHighlighted, _classNames[styles.selected] = isSelected, _classNames[styles.preselected] = isPreSelected, _classNames[styles.prevdisabled] = prevDisabled, _classNames[styles.nextdisabled] = nextDisabled, _classNames[styles.disabled] = isDisabled, _classNames[styles.enabled] = !isDisabled, _classNames[styles.beforelast] = beforeLastDisabled, _classNames), className),
         onClick: this.handleClick,
         'data-date': date
       }, handlers),

@@ -14,6 +14,7 @@ import parse from 'date-fns/parse';
 import getDay from 'date-fns/get_day';
 import addDays from 'date-fns/add_days';
 import subDays from 'date-fns/sub_days';
+import isBefore from 'date-fns/is_before';
 import isSameYear from 'date-fns/is_same_year';
 import isThisMonth from 'date-fns/is_this_month';
 import isThisYear from 'date-fns/is_this_year';
@@ -43,6 +44,7 @@ var Month = function (_PureComponent) {
     var _props = this.props,
         DayComponent = _props.DayComponent,
         disabledDates = _props.disabledDates,
+        lastSelectableDate = _props.lastSelectableDate,
         disabledDays = _props.disabledDays,
         monthDate = _props.monthDate,
         locale = _props.locale,
@@ -61,9 +63,11 @@ var Month = function (_PureComponent) {
     var month = monthDate.getMonth();
     var monthShort = format(monthDate, 'MMM', { locale: locale.locale });
     var monthRows = [];
+    var lastDate = format(lastSelectableDate, 'YYYY-MM-DD', { locale: locale.locale });
     var day = 0;
     var isDisabled = false;
     var nextDisabled = false;
+    var beforeLastDisabled = false;
     var prevDisabled = false;
     var nextSelected = false;
     var prevSelected = false;
@@ -110,11 +114,14 @@ var Month = function (_PureComponent) {
 
         nextDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(nextdow) !== -1 || disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(nextDate) !== -1;
 
+        beforeLastDisabled = lastSelectableDate && lastSelectableDate.length && isBefore(date, lastDate);
+
         days[k] = React.createElement(DayComponent, _extends({
           key: 'day-' + day,
           currentYear: currentYear,
           date: date,
           day: day,
+          beforeLastDisabled: beforeLastDisabled,
           selected: selected,
           preselected: preselected,
           nextDisabled: nextDisabled,

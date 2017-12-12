@@ -19,6 +19,7 @@ import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 var styles = {
   'root': 'Cal__Day__root',
+  'beforelast': 'Cal__Day__beforelast',
   'preselected': 'Cal__Day__preselected',
   'nextselected': 'Cal__Day__nextselected',
   'prevselected': 'Cal__Day__prevselected',
@@ -93,20 +94,19 @@ export var enhanceDay = _withPropsOnChange(['selected'], function (_ref) {
 
 // Enhancer to handle selecting and displaying multiple dates
 var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDate', getInitialDate), _withState('displayKey', 'setDisplayKey', getInitialDate), _withState('selectionStart', 'setSelectionStart', null), withImmutableProps(function (_ref2) {
-  var DayComponent = _ref2.DayComponent,
-      HeaderComponent = _ref2.HeaderComponent,
-      YearsComponent = _ref2.YearsComponent;
+  var DayComponent = _ref2.DayComponent;
   return {
-    DayComponent: enhanceDay(DayComponent),
-    HeaderComponent: enhanceHeader(HeaderComponent)
+    DayComponent: enhanceDay(DayComponent)
+    //HeaderComponent: enhanceHeader(HeaderComponent),
   };
 }), _withProps(function (_ref3) {
   var displayKey = _ref3.displayKey,
       passThrough = _ref3.passThrough,
       selected = _ref3.selected,
       preselected = _ref3.preselected,
+      beforeLastDisabled = _ref3.beforeLastDisabled,
       setDisplayKey = _ref3.setDisplayKey,
-      props = _objectWithoutProperties(_ref3, ['displayKey', 'passThrough', 'selected', 'preselected', 'setDisplayKey']);
+      props = _objectWithoutProperties(_ref3, ['displayKey', 'passThrough', 'selected', 'preselected', 'beforeLastDisabled', 'setDisplayKey']);
 
   return {
     /* eslint-disable sort-keys */
@@ -120,25 +120,23 @@ var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDa
             return handleMouseOver(e, _extends({ selected: selected, preselected: preselected }, props));
           } : null
         }
-      },
-      Years: {
+      }
+      /*Years: {
         selected: selected && selected[displayKey],
-        onSelect: function onSelect(date) {
-          return handleYearSelect(date, _extends({ displayKey: displayKey, selected: selected }, props));
-        }
+        onSelect: (date) => handleYearSelect(date, {displayKey, selected, ...props}),
       },
       Header: {
-        onYearClick: function onYearClick(date, e, key) {
-          return setDisplayKey(key || 'start');
-        }
-      }
+        onYearClick: (date, e, key) => setDisplayKey( key || 'start'),
+      },
+      */
     }),
     preselected: handlePreselected(preselected),
     startDays: getStartDays(preselected),
     selected: {
       start_time: selected && format(selected.start_time, 'YYYY-MM-DD'),
       end_time: selected && format(selected.end_time, 'YYYY-MM-DD')
-    }
+    },
+    beforeLastDisabled: beforeLastDisabled
   };
 }));
 
@@ -275,7 +273,7 @@ function handleSelect(date, _ref5) {
       eventType: EVENT_TYPE.START,
       start_time: date,
       end_time: date,
-      selections: getPreselectedWithinRange(date, date, preselected),
+      //selections: getPreselectedWithinRange(date, date, preselected),
       eventProp: 'click'
     });
     setSelectionStart(date);
@@ -300,7 +298,7 @@ function handleMouseOver(e, _ref6) {
     start_time: selectionStart,
     end_time: date
   }), {
-    selections: getPreselectedWithinRange(selectionStart, date, preselected),
+    //selections: getPreselectedWithinRange(selectionStart, date, preselected),
     eventProp: 'hover'
   }));
 }
