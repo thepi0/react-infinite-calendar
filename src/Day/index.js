@@ -5,10 +5,10 @@ import styles from './Day.scss';
 
 export default class Day extends PureComponent {
   handleClick = () => {
-    let {date, isDisabled, onClick} = this.props;
+    let {date, beforeLastDisabled, isDisabled, onClick} = this.props;
 
     if (!isDisabled && typeof onClick === 'function') {
-      onClick(parse(date));
+      onClick(parse(date), beforeLastDisabled);
     }
   };
 
@@ -39,6 +39,7 @@ export default class Day extends PureComponent {
       date,
       day,
       beforeLastDisabled,
+      lastDisabled,
       handlers,
       isDisabled,
       isHighlighted,

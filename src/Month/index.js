@@ -98,6 +98,7 @@ export default class Month extends PureComponent {
 						date={date}
 						day={day}
                         beforeLastDisabled={beforeLastDisabled}
+                        lastDisabled={lastDate}
             selected={selected}
             preselected={preselected}
             nextDisabled={nextDisabled}

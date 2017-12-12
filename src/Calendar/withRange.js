@@ -89,12 +89,12 @@ export const withRange = compose(
     DayComponent: enhanceDay(DayComponent),
     //HeaderComponent: enhanceHeader(HeaderComponent),
   })),
-  withProps(({displayKey, passThrough, selected, preselected, beforeLastDisabled, setDisplayKey, ...props}) => ({
+  withProps(({displayKey, passThrough, selected, preselected, setDisplayKey, ...props}) => ({
     /* eslint-disable sort-keys */
     passThrough: {
       ...passThrough,
       Day: {
-        onClick: (date) => handleSelect(date, {selected, preselected, ...props}),
+        onClick: (date, beforeLastDisabled) => handleSelect(date, beforeLastDisabled, {selected, preselected, ...props}),
         handlers: {
           onMouseOver: !isTouchDevice && props.selectionStart
             ? (e) => handleMouseOver(e, {selected, preselected, ...props})
@@ -115,8 +115,7 @@ export const withRange = compose(
     selected: {
       start_time: selected && format(selected.start_time, 'YYYY-MM-DD'),
       end_time: selected && format(selected.end_time, 'YYYY-MM-DD'),
-    },
-    beforeLastDisabled: beforeLastDisabled,
+    }
   })),
 );
 
@@ -226,7 +225,7 @@ function getSortedSelection({start_time, end_time}) {
     : {start_time: end_time, end_time: start_time};
 }
 
-function handleSelect(date, {onSelect, selected, preselected, selectionStart, setSelectionStart}) {
+function handleSelect(date, beforeLastDisabled, {onSelect, selected, preselected, selectionStart, setSelectionStart}) {
 
   if (selectionStart) {
     onSelect({
@@ -235,6 +234,7 @@ function handleSelect(date, {onSelect, selected, preselected, selectionStart, se
         start_time: selectionStart,
         end_time: date,
       }),
+      before_last: beforeLastDisabled,
       selections: getPreselectedWithinRange(selectionStart, date, preselected),
       eventProp: 'click'
     });
@@ -244,6 +244,7 @@ function handleSelect(date, {onSelect, selected, preselected, selectionStart, se
         eventType:EVENT_TYPE.START,
         start_time: date,
         end_time: date,
+        before_last: beforeLastDisabled,
         //selections: getPreselectedWithinRange(date, date, preselected),
         eventProp: 'click'
     });
