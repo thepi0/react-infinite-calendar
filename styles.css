@@ -254,7 +254,8 @@
     border-bottom: 0; }
   .Cal__Day__root.Cal__Day__disabled {
     color: #a4d8e8;
-    box-shadow: none; }
+    box-shadow: none;
+    cursor: not-allowed; }
 
 /*
  * Range selection styles
