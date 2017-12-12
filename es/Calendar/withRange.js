@@ -20,6 +20,7 @@ import parse from 'date-fns/parse';
 var styles = {
   'root': 'Cal__Day__root',
   'beforelast': 'Cal__Day__beforelast',
+  'disabled': 'Cal__Day__disabled',
   'preselected': 'Cal__Day__preselected',
   'nextselected': 'Cal__Day__nextselected',
   'prevselected': 'Cal__Day__prevselected',
@@ -29,7 +30,6 @@ var styles = {
   'enabled': 'Cal__Day__enabled',
   'highlighted': 'Cal__Day__highlighted',
   'today': 'Cal__Day__today',
-  'disabled': 'Cal__Day__disabled',
   'selected': 'Cal__Day__selected',
   'selection': 'Cal__Day__selection',
   'nextdisabled': 'Cal__Day__nextdisabled',
