@@ -390,6 +390,7 @@
   &.disabled {
     color: $textColorDisabled;
     box-shadow: none;
+    cursor: not-allowed;
   }
 }
 
