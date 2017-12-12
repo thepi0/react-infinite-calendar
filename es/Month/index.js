@@ -122,6 +122,7 @@ var Month = function (_PureComponent) {
           date: date,
           day: day,
           beforeLastDisabled: beforeLastDisabled,
+          lastDisabled: lastDate,
           selected: selected,
           preselected: preselected,
           nextDisabled: nextDisabled,

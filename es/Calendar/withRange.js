@@ -104,16 +104,15 @@ var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDa
       passThrough = _ref3.passThrough,
       selected = _ref3.selected,
       preselected = _ref3.preselected,
-      beforeLastDisabled = _ref3.beforeLastDisabled,
       setDisplayKey = _ref3.setDisplayKey,
-      props = _objectWithoutProperties(_ref3, ['displayKey', 'passThrough', 'selected', 'preselected', 'beforeLastDisabled', 'setDisplayKey']);
+      props = _objectWithoutProperties(_ref3, ['displayKey', 'passThrough', 'selected', 'preselected', 'setDisplayKey']);
 
   return {
     /* eslint-disable sort-keys */
     passThrough: _extends({}, passThrough, {
       Day: {
-        onClick: function onClick(date) {
-          return handleSelect(date, _extends({ selected: selected, preselected: preselected }, props));
+        onClick: function onClick(date, beforeLastDisabled) {
+          return handleSelect(date, beforeLastDisabled, _extends({ selected: selected, preselected: preselected }, props));
         },
         handlers: {
           onMouseOver: !isTouchDevice && props.selectionStart ? function (e) {
@@ -135,8 +134,7 @@ var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDa
     selected: {
       start_time: selected && format(selected.start_time, 'YYYY-MM-DD'),
       end_time: selected && format(selected.end_time, 'YYYY-MM-DD')
-    },
-    beforeLastDisabled: beforeLastDisabled
+    }
   };
 }));
 
@@ -249,7 +247,7 @@ function getSortedSelection(_ref4) {
   return isBefore(start_time, end_time) ? { start_time: start_time, end_time: end_time } : { start_time: end_time, end_time: start_time };
 }
 
-function handleSelect(date, _ref5) {
+function handleSelect(date, beforeLastDisabled, _ref5) {
   var onSelect = _ref5.onSelect,
       selected = _ref5.selected,
       preselected = _ref5.preselected,
@@ -264,6 +262,7 @@ function handleSelect(date, _ref5) {
       start_time: selectionStart,
       end_time: date
     }), {
+      before_last: beforeLastDisabled,
       selections: getPreselectedWithinRange(selectionStart, date, preselected),
       eventProp: 'click'
     }));
@@ -273,6 +272,7 @@ function handleSelect(date, _ref5) {
       eventType: EVENT_TYPE.START,
       start_time: date,
       end_time: date,
+      before_last: beforeLastDisabled,
       //selections: getPreselectedWithinRange(date, date, preselected),
       eventProp: 'click'
     });

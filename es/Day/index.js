@@ -49,12 +49,13 @@ var Day = function (_PureComponent) {
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, _PureComponent.call.apply(_PureComponent, [this].concat(args))), _this), _this.handleClick = function () {
       var _this$props = _this.props,
           date = _this$props.date,
+          beforeLastDisabled = _this$props.beforeLastDisabled,
           isDisabled = _this$props.isDisabled,
           onClick = _this$props.onClick;
 
 
       if (!isDisabled && typeof onClick === 'function') {
-        onClick(parse(date));
+        onClick(parse(date), beforeLastDisabled);
       }
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -85,6 +86,7 @@ var Day = function (_PureComponent) {
         date = _props2.date,
         day = _props2.day,
         beforeLastDisabled = _props2.beforeLastDisabled,
+        lastDisabled = _props2.lastDisabled,
         handlers = _props2.handlers,
         isDisabled = _props2.isDisabled,
         isHighlighted = _props2.isHighlighted,
