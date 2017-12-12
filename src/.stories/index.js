@@ -75,6 +75,9 @@ storiesOf('Higher Order Components', module)
       lastSelectableDate={"2017-12-18T21:00:00Z"}
       disabledDates={[
           {
+              date: "2017-11-21",
+              type: "vacation"
+          }, {
               date: "2017-12-25",
               type: "vacation"
           }, {

@@ -39,9 +39,12 @@
   max-width: 70px;
   width: 70px;
 
-
   &.beforelast {
       color: $textColorDisabled;
+  }
+
+  &.disabled.beforelast {
+    cursor: not-allowed;
   }
 
   &.preselected {
