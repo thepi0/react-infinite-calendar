@@ -83,13 +83,13 @@ export const withRange = compose(
   withState('selectionStart', 'setSelectionStart', null),
   withImmutableProps(({
     DayComponent,
-    HeaderComponent,
-    YearsComponent,
+    //HeaderComponent,
+    //YearsComponent,
   }) => ({
     DayComponent: enhanceDay(DayComponent),
-    HeaderComponent: enhanceHeader(HeaderComponent),
+    //HeaderComponent: enhanceHeader(HeaderComponent),
   })),
-  withProps(({displayKey, passThrough, selected, preselected, setDisplayKey, ...props}) => ({
+  withProps(({displayKey, passThrough, selected, preselected, beforeLastDisabled, setDisplayKey, ...props}) => ({
     /* eslint-disable sort-keys */
     passThrough: {
       ...passThrough,
@@ -101,13 +101,14 @@ export const withRange = compose(
             : null,
         },
       },
-      Years: {
+      /*Years: {
         selected: selected && selected[displayKey],
         onSelect: (date) => handleYearSelect(date, {displayKey, selected, ...props}),
-      },
+    },
       Header: {
         onYearClick: (date, e, key) => setDisplayKey( key || 'start'),
       },
+      */
     },
     preselected: handlePreselected(preselected),
     startDays: getStartDays(preselected),
@@ -115,6 +116,7 @@ export const withRange = compose(
       start_time: selected && format(selected.start_time, 'YYYY-MM-DD'),
       end_time: selected && format(selected.end_time, 'YYYY-MM-DD'),
     },
+    beforeLastDisabled: beforeLastDisabled,
   })),
 );
 
@@ -237,12 +239,12 @@ function handleSelect(date, {onSelect, selected, preselected, selectionStart, se
       eventProp: 'click'
     });
     setSelectionStart(null);
-  } else {
+} else {
     onSelect({
         eventType:EVENT_TYPE.START,
         start_time: date,
         end_time: date,
-        selections: getPreselectedWithinRange(date, date, preselected),
+        //selections: getPreselectedWithinRange(date, date, preselected),
         eventProp: 'click'
     });
     setSelectionStart(date);
@@ -261,9 +263,9 @@ function handleMouseOver(e, {onSelect, selectionStart, preselected}) {
       start_time: selectionStart,
       end_time: date
     }),
-    selections: getPreselectedWithinRange(selectionStart, date, preselected),
+    //selections: getPreselectedWithinRange(selectionStart, date, preselected),
     eventProp: 'hover'
-  });
+});
 }
 
 function getPreselectedWithinRange(start_date, end_date, preselected) {

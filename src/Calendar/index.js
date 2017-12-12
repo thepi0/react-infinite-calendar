@@ -34,6 +34,7 @@ export const withDefaultProps = defaultProps({
   min: new Date(1980, 0, 1),
   preselected: {},
   disabledDates: {},
+  lastSelectableDate: new Date(),
   minDate: new Date(1980, 0, 1),
   onHighlightedDateChange: emptyFn,
   onScroll: emptyFn,
@@ -53,6 +54,7 @@ export default class Calendar extends Component {
     this.updateYears(props);
     this.updatePreSelected(props);
     this.updatedisabledDates(props);
+    this.updatelastSelectableDate(props);
 
     this.state = {
       display: props.display,
@@ -62,6 +64,7 @@ export default class Calendar extends Component {
     autoFocus: PropTypes.bool,
     className: PropTypes.string,
     DayComponent: PropTypes.func,
+    lastSelectableDate: PropTypes.string,
     disabledDates: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.array
@@ -146,6 +149,11 @@ export default class Calendar extends Component {
     if (nextProps.disabledDates !== this.props.disabledDates) {
         this.updatedisabledDates(nextProps);
     }
+
+    if (nextProps.lastSelectableDate !== this.props.lastSelectableDate) {
+        this.updatelastSelectableDate(nextProps);
+    }
+
   }
   updatePreSelected(props = this.props) {
     const preselected = props.preselected;
@@ -154,6 +162,10 @@ export default class Calendar extends Component {
   updatedisabledDates(props = this.props) {
     const disabledDates = props.disabledDates;
     this.disabledDates = disabledDates;
+  }
+  updatelastSelectableDate(props = this.props) {
+    const lastSelectableDate = props.lastSelectableDate;
+    this.lastSelectableDate = lastSelectableDate;
   }
   updateYears(props = this.props) {
     this._min = parse(props.min);
@@ -370,6 +382,7 @@ export default class Calendar extends Component {
               }}
               DayComponent={DayComponent}
               disabledDates={this.disabledDates}
+              lastSelectableDate={this.lastSelectableDate}
               disabledDays={disabledDays}
               height={height}
               isScrolling={isScrolling}

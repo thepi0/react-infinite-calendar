@@ -72,6 +72,7 @@ storiesOf('Higher Order Components', module)
       height={Math.min(window.innerHeight, 900)}
       rowHeight={74}
       selected={null}
+      lastSelectableDate={"2017-12-18T21:00:00Z"}
       disabledDates={[
           {
               date: "2017-12-25",

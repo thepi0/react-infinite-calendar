@@ -18,6 +18,7 @@ const AVERAGE_ROWS_PER_MONTH = 5;
 
 export default class MonthList extends Component {
   static propTypes = {
+    lastSelectableDate: PropTypes.string,
     disabledDates: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.array
@@ -122,6 +123,7 @@ export default class MonthList extends Component {
   renderMonth = ({index, style}) => {
     let {
       DayComponent,
+      lastSelectableDate,
       disabledDates,
       disabledDays,
       locale,
@@ -150,6 +152,7 @@ export default class MonthList extends Component {
         startDays={startDays}
         DayComponent={DayComponent}
         monthDate={date}
+        lastSelectableDate={lastSelectableDate}
         disabledDates={disabledDates}
         disabledDays={disabledDays}
         maxDate={maxDate}

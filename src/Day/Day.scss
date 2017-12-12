@@ -40,6 +40,9 @@
   width: 70px;
 
 
+  &.beforelast {
+      color: $textColorDisabled;
+  }
 
   &.preselected {
     position: relative;
@@ -345,9 +348,9 @@
         top: 50%;
         left: 50%;
         width: $rowHeight;
-        height: $rowHeight - 6px;
-        margin-top: -0.5 * ($rowHeight - 6px);
-        margin-left: -0.5 * ($rowHeight) - 1px;
+        height: $rowHeight;
+        margin-top: -0.5 * ($rowHeight);
+        margin-left: -0.5 * ($rowHeight);
         border-top: 3px solid $selectionBorderColor;
         border-right: 3px solid $selectionBorderColor;
         border-bottom: 3px solid $selectionBorderColor;
@@ -383,7 +386,6 @@
   }
   &.disabled {
     color: $textColorDisabled;
-    cursor: not-allowed;
     box-shadow: none;
   }
 }

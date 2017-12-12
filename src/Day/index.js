@@ -38,6 +38,7 @@ export default class Day extends PureComponent {
       currentYear,
       date,
       day,
+      beforeLastDisabled,
       handlers,
       isDisabled,
       isHighlighted,
@@ -62,6 +63,7 @@ export default class Day extends PureComponent {
           [styles.nextdisabled]: nextDisabled,
           [styles.disabled]: isDisabled,
           [styles.enabled]: !isDisabled,
+          [styles.beforelast]: beforeLastDisabled,
         }, className)}
         onClick={this.handleClick}
         data-date={date}

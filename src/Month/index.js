@@ -6,6 +6,7 @@ import parse from 'date-fns/parse';
 import getDay from 'date-fns/get_day';
 import addDays from 'date-fns/add_days';
 import subDays from 'date-fns/sub_days';
+import isBefore from 'date-fns/is_before';
 import isSameYear from 'date-fns/is_same_year';
 import isThisMonth from 'date-fns/is_this_month';
 import isThisYear from 'date-fns/is_this_year';
@@ -16,6 +17,7 @@ export default class Month extends PureComponent {
     const {
       DayComponent,
       disabledDates,
+      lastSelectableDate,
       disabledDays,
       monthDate,
       locale,
@@ -34,9 +36,11 @@ export default class Month extends PureComponent {
     const month = monthDate.getMonth();
     const monthShort = format(monthDate, 'MMM', {locale: locale.locale});
     const monthRows = [];
+    const lastDate = format(lastSelectableDate, 'YYYY-MM-DD', {locale: locale.locale});
     let day = 0;
     let isDisabled = false;
     let nextDisabled = false;
+    let beforeLastDisabled = false;
     let prevDisabled = false;
     let nextSelected = false;
     let prevSelected= false;
@@ -83,12 +87,17 @@ export default class Month extends PureComponent {
 					disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(nextDate) !== -1
 				);
 
+        beforeLastDisabled = (
+					lastSelectableDate && lastSelectableDate.length && isBefore(date, lastDate)
+				);
+
         days[k] = (
 					<DayComponent
 						key={`day-${day}`}
 						currentYear={currentYear}
 						date={date}
 						day={day}
+                        beforeLastDisabled={beforeLastDisabled}
             selected={selected}
             preselected={preselected}
             nextDisabled={nextDisabled}
