@@ -13,6 +13,7 @@ import isThisYear from 'date-fns/is_this_year';
 import styles from './Month.scss';
 
 export default class Month extends PureComponent {
+
   renderRows() {
     const {
       DayComponent,
@@ -27,6 +28,9 @@ export default class Month extends PureComponent {
       rows,
       selected,
       preselected,
+      isPreselectedDate,
+      startDays,
+      testing,
       today,
       theme,
       passThrough,
@@ -45,6 +49,9 @@ export default class Month extends PureComponent {
     let nextSelected = false;
     let prevSelected= false;
     let isToday = false;
+    let isPreSelectedSelected = passThrough.test2;
+    let tempDisabledDates = passThrough.test3;
+    let selectionType = passThrough.test4;
     let date, nextDate, prevDate, days, dow, nextdow, prevdow, row;
 
     // Used for faster comparisons
@@ -52,7 +59,29 @@ export default class Month extends PureComponent {
     const _minDate = format(minDate, 'YYYY-MM-DD');
     const _maxDate = format(maxDate, 'YYYY-MM-DD');
 
-    const disabledDatesArray = disabledDates && disabledDates[0] ? disabledDates.map((date) => format(parse(date.date), 'YYYY-MM-DD')) : disabledDates;
+    let disabledDatesArray = disabledDates && disabledDates[0] ? disabledDates.map((date) => format(parse(date.date), 'YYYY-MM-DD')) : null;
+    let enabledDatesArray = preselected && preselected[0] ? preselected.map((date) => format(parse(date.start_time), 'YYYY-MM-DD')) : null;
+
+    /*console.log('disabledDatesArray');
+    console.log(disabledDatesArray);
+    console.log('enabledDatesArray');
+    console.log(enabledDatesArray);*/
+
+    console.log(isPreSelectedSelected);
+    console.log(tempDisabledDates);
+    console.log(selectionType);
+
+    if (selectionType === 'none' || selectionType === 'not_preselected') {
+        console.log('first option');
+        disabledDatesArray = disabledDatesArray.concat(tempDisabledDates);
+    } else if (selectionType === 'preselected') {
+        console.log('second option');
+        enabledDatesArray =  enabledDatesArray.concat(tempDisabledDates);
+    } else {
+        console.log('third option');
+        disabledDatesArray = disabledDatesArray;
+    }
+
 
 		// Oh the things we do in the name of performance...
     for (let i = 0, len = rows.length; i < len; i++) {
@@ -74,7 +103,8 @@ export default class Month extends PureComponent {
 					minDate && date < _minDate ||
 					maxDate && date > _maxDate ||
 					disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 ||
-					disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(date) !== -1
+					disabledDatesArray && (selectionType === 'none' || selectionType === 'not_preselected') && disabledDatesArray.indexOf(date) !== -1 ||
+                    enabledDatesArray && selectionType === 'preselected' && enabledDatesArray.indexOf(date) === -1
 				);
 
         prevDisabled = (
@@ -97,6 +127,8 @@ export default class Month extends PureComponent {
 						currentYear={currentYear}
 						date={date}
 						day={day}
+                        isPreSelectedSelected={isPreSelectedSelected}
+                        isPreselectedDate={isPreselectedDate}
                         beforeLastDisabled={beforeLastDisabled}
                         lastDisabled={lastDate}
             selected={selected}

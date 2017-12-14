@@ -98,28 +98,28 @@ storiesOf('Higher Order Components', module)
               end_time: "2017-11-01T17:00:00Z",
               child: 101
           }, {
-              start_time: "2017-11-06T08:00:00Z",
-              end_time: "2017-11-06T16:00:00Z",
+              start_time: "2017-11-28T08:00:00Z",
+              end_time: "2017-11-28T16:00:00Z",
               child: 100
           }, {
-              start_time: "2017-11-06T09:00:00Z",
-              end_time: "2017-11-06T17:00:00Z",
+              start_time: "2017-11-28T09:00:00Z",
+              end_time: "2017-11-28T17:00:00Z",
               child: 101
           },{
-              start_time: "2017-11-07T08:00:00Z",
+              start_time: "2017-11-29T08:00:00Z",
               end_time: "2017-11-07T16:00:00Z",
               child: 100
           }, {
-              start_time: "2017-11-07T09:00:00Z",
-              end_time: "2017-11-07T17:00:00Z",
+              start_time: "2017-11-29T09:00:00Z",
+              end_time: "2017-11-29T17:00:00Z",
               child: 101
           }, {
-              start_time: "2017-11-08T08:00:00Z",
-              end_time: "2017-11-08T16:00:00Z",
+              start_time: "2017-11-30T08:00:00Z",
+              end_time: "2017-11-30T16:00:00Z",
               child: 100
           }, {
-              start_time: "2017-11-08T09:00:00Z",
-              end_time: "2017-11-08T17:00:00Z",
+              start_time: "2017-11-30T09:00:00Z",
+              end_time: "2017-11-30T17:00:00Z",
               child: 101
           }, {
               start_time: "2017-11-15T08:00:00Z",
@@ -180,6 +180,10 @@ storiesOf('Higher Order Components', module)
           }, {
               start_time: "2018-01-11T09:00:00Z",
               end_time: "2018-01-11T17:00:00Z",
+              child: 101
+          }, {
+              start_time: "2018-01-17T09:00:00Z",
+              end_time: "2018-01-17T17:00:00Z",
               child: 101
           }, {
               start_time: "2018-01-01T09:00:00Z",

@@ -12,6 +12,7 @@ import parse from 'date-fns/parse';
 import styles from '../Day/Day.scss';
 
 let isTouchDevice = false;
+let preSelectedSelected = false;
 
 export const EVENT_TYPE = {
   END: 3,
@@ -41,8 +42,20 @@ export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, pres
   const isNextSelected = positionOfDate.nextselected;
   const isPrevSelected = positionOfDate.prevselected;
 
+  const isNextPreSelected = positionOfDate.nextpreselected;
+  const isPrevPreSelected = positionOfDate.prevpreselected;
+
   const isNextCountDifferent = positionOfDate.nextcountdifferentiates;
   const isPrevCountDifferent = positionOfDate.prevcountdifferentiates;
+
+  const test1 = positionOfDate.nextpreselecteddifferentiates;
+
+  const isPreSelectedValue = preSelectedSelected;
+
+  const isNextPreDifferent = isNextPreSelected;
+  const isPrevPreDifferent = isPrevPreSelected;
+
+  const isPreselectedDate = positionOfDate.preselected ? positionOfDate.preselected : false;
 
   const dayClasses =
     isSelected && isRange && classNames(styles.range, {
@@ -54,7 +67,11 @@ export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, pres
       [styles.nextselected]: isNextSelected,
       [styles.prevselected]: isPrevSelected,
       [styles.nextdifferentiates]: isNextCountDifferent,
-      [styles.prevdifferentiates]: isPrevCountDifferent
+      [styles.prevdifferentiates]: isPrevCountDifferent,
+      [styles.nextpreselected]: (isPreSelectedValue && isNextPreDifferent),
+      [styles.prevpreselected]: (isPreSelectedValue && isPrevPreDifferent),
+      [styles.nextnotpreselected]: (isPreSelectedValue && !isNextPreDifferent),
+      [styles.prevnotpreselected]: (isPreSelectedValue && !isPrevPreDifferent),
     })
     ||
     isPreSelected && classNames(styles.range, {
@@ -71,7 +88,8 @@ export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, pres
   return {
     className: dayClasses,
     isPreSelected,
-    isSelected
+    isSelected,
+    isPreselectedDate
   };
 });
 
@@ -81,6 +99,9 @@ export const withRange = compose(
   withState('scrollDate', 'setScrollDate', getInitialDate),
   withState('displayKey', 'setDisplayKey', getInitialDate),
   withState('selectionStart', 'setSelectionStart', null),
+  withState('test2', 'setTest2', false),
+  withState('test3', 'setTest3', false),
+  withState('test4', 'setTest4', 'none'),
   withImmutableProps(({
     DayComponent,
     //HeaderComponent,
@@ -94,13 +115,16 @@ export const withRange = compose(
     passThrough: {
       ...passThrough,
       Day: {
-        onClick: (date, beforeLastDisabled) => handleSelect(date, beforeLastDisabled, {selected, preselected, ...props}),
+        onClick: (date, beforeLastDisabled, isPreSelected) => handleSelect(date, beforeLastDisabled, isPreSelected, {selected, preselected, ...props}),
         handlers: {
           onMouseOver: !isTouchDevice && props.selectionStart
             ? (e) => handleMouseOver(e, {selected, preselected, ...props})
             : null,
         },
       },
+      test2: props.test2,
+      test3: props.test3,
+      test4: props.test4,
       /*Years: {
         selected: selected && selected[displayKey],
         onSelect: (date) => handleYearSelect(date, {displayKey, selected, ...props}),
@@ -170,8 +194,13 @@ function handlePreselected(preselected) {
             count: 1,
             nextselected: false,
             prevselected: false,
+            nextpreselected: false,
+            prevpreselected: false,
             nextcountdifferentiates: false,
-            prevcountdifferentiates: false
+            prevcountdifferentiates: false,
+            nextpreselecteddifferentiates: false,
+            prevpreselecteddifferentiates: false,
+            preselected: true
         }
 
         if (starts.includes(dayStart)) {
@@ -203,6 +232,14 @@ function handlePreselected(preselected) {
             if (nextday[0].count !== day.count) {
                 day.nextcountdifferentiates = true;
             }
+
+            if (nextday[0].preselected) {
+                day.nextpreselected = true;
+            }
+
+            if (nextday[0].preselected !== day.preselected) {
+                day.nextpreselecteddifferentiates = true;
+            }
         }
 
         if (starts.includes(prevDayStart)) {
@@ -211,6 +248,14 @@ function handlePreselected(preselected) {
 
             if (prevday[0].count !== day.count) {
                 day.prevcountdifferentiates = true;
+            }
+
+            if (prevday[0].preselected) {
+                day.prevpreselected = true;
+            }
+
+            if (prevday[0].preselected !== day.preselected) {
+                day.prevpreselecteddifferentiates = true;
             }
         }
 
@@ -225,7 +270,16 @@ function getSortedSelection({start_time, end_time}) {
     : {start_time: end_time, end_time: start_time};
 }
 
-function handleSelect(date, beforeLastDisabled, {onSelect, selected, preselected, selectionStart, setSelectionStart}) {
+function handleSelect(date, beforeLastDisabled, isPreSelected, {onSelect, selected, preselected, test2, setTest2, test3, setTest3, test4, setTest4, selectionStart, setSelectionStart}) {
+
+    if (!isPreSelected) {
+        let returnable = preselected.map(dateObj => format(dateObj.start_time, 'YYYY-MM-DD'));
+        setTest3(returnable);
+        setTest4('not_preselected');
+    } else {
+        setTest3(false);
+        setTest4('preselected');
+    }
 
   if (selectionStart) {
     onSelect({
@@ -239,6 +293,10 @@ function handleSelect(date, beforeLastDisabled, {onSelect, selected, preselected
       eventProp: 'click'
     });
     setSelectionStart(null);
+    setTest2(false);
+    preSelectedSelected = false;
+    //setTest2(false);
+    //preSelectedSelected = false;
 } else {
     onSelect({
         eventType:EVENT_TYPE.START,
@@ -249,6 +307,14 @@ function handleSelect(date, beforeLastDisabled, {onSelect, selected, preselected
         eventProp: 'click'
     });
     setSelectionStart(date);
+    if (isPreSelected) {
+        setTest2(true);
+        preSelectedSelected = true;
+    } else {
+        setTest2(false);
+        preSelectedSelected = false;
+    }
+
   }
 }
 
@@ -271,15 +337,17 @@ function handleMouseOver(e, {onSelect, selectionStart, preselected}) {
 
 function getPreselectedWithinRange(start_date, end_date, preselected) {
     const returnableDates = [];
-    let startDate = format(start_date, 'YYYY-MM-DD');
-    let endDate = format(end_date, 'YYYY-MM-DD');
-    preselected.forEach((day, idx) => {
-        let dayStart = format(day.start_time, 'YYYY-MM-DD');
-        let withinRange = isBefore(startDate, endDate) ? isWithinRange(dayStart, startDate, endDate) : isWithinRange(dayStart, endDate, startDate);
-        if (withinRange) {
-            returnableDates.push(day);
-        }
-    });
+    if (preSelectedSelected) {
+        let startDate = format(start_date, 'YYYY-MM-DD');
+        let endDate = format(end_date, 'YYYY-MM-DD');
+        preselected.forEach((day, idx) => {
+            let dayStart = format(day.start_time, 'YYYY-MM-DD');
+            let withinRange = isBefore(startDate, endDate) ? isWithinRange(dayStart, startDate, endDate) : isWithinRange(dayStart, endDate, startDate);
+            if (withinRange) {
+                returnableDates.push(day);
+            }
+        });
+    }
     return returnableDates;
 
 }
@@ -303,7 +371,12 @@ function determineIfDateAlreadySelected(date, selected) {
     count: 1,
     nextselected: false,
     prevselected: false,
-    nextcountdifferentiates: false
+    nextpreselected: false,
+    nextcountdifferentiates: false,
+    prevcountdifferentiates: false,
+    nextpreselecteddifferentiates: false,
+    prevpreselecteddifferentiates: false,
+    preselected: false,
   };
   selected.forEach((dateObj, idx) => {
     if (date < dateObj.start_time || date > dateObj.end_time ) return;
@@ -313,8 +386,13 @@ function determineIfDateAlreadySelected(date, selected) {
       returnVal.count = dateObj.count;
       returnVal.nextselected = dateObj.nextselected;
       returnVal.prevselected = dateObj.prevselected;
+      returnVal.nextpreselected = dateObj.nextpreselected;
+      returnVal.prevpreselected = dateObj.prevpreselected;
       returnVal.nextcountdifferentiates = dateObj.nextcountdifferentiates;
       returnVal.prevcountdifferentiates = dateObj.prevcountdifferentiates;
+      returnVal.nextpreselecteddifferentiates = dateObj.nextpreselecteddifferentiates;
+      returnVal.prevpreselecteddifferentiates = dateObj.prevpreselecteddifferentiates;
+      returnVal.preselected = dateObj.preselected;
       return;
     }
     if (format(date, 'YYYY-MM-DD') === format(dateObj.end_time, 'YYYY-MM-DD')) {
@@ -323,8 +401,13 @@ function determineIfDateAlreadySelected(date, selected) {
       returnVal.count = dateObj.count;
       returnVal.nextselected = dateObj.nextselected;
       returnVal.prevselected = dateObj.prevselected;
+      returnVal.nextpreselected = dateObj.nextpreselected;
+      returnVal.prevpreselected = dateObj.prevpreselected;
       returnVal.nextcountdifferentiates = dateObj.nextcountdifferentiates;
       returnVal.prevcountdifferentiates = dateObj.prevcountdifferentiates;
+      returnVal.nextpreselecteddifferentiates = dateObj.nextpreselecteddifferentiates;
+      returnVal.prevpreselecteddifferentiates = dateObj.prevpreselecteddifferentiates;
+      returnVal.preselected = dateObj.preselected;
       return;
     }
     if (!returnVal.value) {
@@ -333,8 +416,13 @@ function determineIfDateAlreadySelected(date, selected) {
       returnVal.count = dateObj.count;
       returnVal.nextselected = dateObj.nextselected;
       returnVal.prevselected = dateObj.prevselected;
+      returnVal.nextpreselected = dateObj.nextpreselected;
+      returnVal.prevpreselected = dateObj.prevpreselected;
       returnVal.nextcountdifferentiates = dateObj.nextcountdifferentiates;
       returnVal.prevcountdifferentiates = dateObj.prevcountdifferentiates;
+      returnVal.nextpreselecteddifferentiates = dateObj.nextpreselecteddifferentiates;
+      returnVal.prevpreselecteddifferentiates = dateObj.prevpreselecteddifferentiates;
+      returnVal.preselected = dateObj.preselected;
       return;
     }
   });

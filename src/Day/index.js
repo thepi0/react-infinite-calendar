@@ -3,12 +3,17 @@ import classNames from 'classnames';
 import parse from 'date-fns/parse';
 import styles from './Day.scss';
 
+let isPreSelection = false;
+
 export default class Day extends PureComponent {
+
   handleClick = () => {
-    let {date, beforeLastDisabled, isDisabled, onClick} = this.props;
+    let {date, beforeLastDisabled, isDisabled, isPreSelected, onClick} = this.props;
+
+    isPreSelection = isPreSelected;
 
     if (!isDisabled && typeof onClick === 'function') {
-      onClick(parse(date), beforeLastDisabled);
+      onClick(parse(date), beforeLastDisabled, isPreSelected);
     }
   };
 
@@ -45,10 +50,13 @@ export default class Day extends PureComponent {
       isHighlighted,
       isToday,
       isSelected,
+      isPreselectedDate,
+      isPreSelectedSelected,
       isPreSelected,
       prevDisabled,
       nextDisabled,
       monthShort,
+      testing,
       theme: {selectionColor, todayColor},
       year,
     } = this.props;
@@ -62,9 +70,12 @@ export default class Day extends PureComponent {
           [styles.preselected]: isPreSelected,
           [styles.prevdisabled]: prevDisabled,
           [styles.nextdisabled]: nextDisabled,
+          /*[styles.disabled]:
+          isDisabled ||
+          (isPreSelectedSelected !== null && isPreSelectedSelected && !isPreselectedDate),*/
           [styles.disabled]: isDisabled,
           [styles.enabled]: !isDisabled,
-          [styles.beforelast]: beforeLastDisabled,
+          [styles.beforelast]: beforeLastDisabled
         }, className)}
         onClick={this.handleClick}
         data-date={date}

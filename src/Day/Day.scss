@@ -423,6 +423,22 @@
           border-bottom-right-radius: 0;
       }
 
+      &.nextnotpreselected {
+          .selection {
+              border-right: 3px solid $selectionBorderColor;
+              border-top-right-radius: $rowHeight / 2;
+              border-bottom-right-radius: $rowHeight / 2;
+          }
+      }
+
+      &.prevnotpreselected {
+          .selection {
+              border-left: 3px solid $selectionBorderColor;
+              border-top-left-radius: $rowHeight / 2;
+              border-bottom-left-radius: $rowHeight / 2;
+          }
+      }
+
       &.nextdisabled {
 
           .selection {
@@ -441,6 +457,22 @@
           border-bottom: 3px solid $selectionBorderColor;
           border-left: 0;
           border-radius: 0;
+      }
+
+      &.nextnotpreselected {
+          .selection {
+              border-right: 3px solid $selectionBorderColor;
+              border-top-right-radius: $rowHeight / 2;
+              border-bottom-right-radius: $rowHeight / 2;
+          }
+      }
+
+      &.prevnotpreselected {
+          .selection {
+              border-left: 3px solid $selectionBorderColor;
+              border-top-left-radius: $rowHeight / 2;
+              border-bottom-left-radius: $rowHeight / 2;
+          }
       }
 
       &.nextdisabled {
@@ -486,6 +518,22 @@
         border-bottom-right-radius: $rowHeight / 2;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
+    }
+
+    &.nextnotpreselected {
+        .selection {
+            border-right: 3px solid $selectionBorderColor;
+            border-top-right-radius: $rowHeight / 2;
+            border-bottom-right-radius: $rowHeight / 2;
+        }
+    }
+
+    &.prevnotpreselected {
+        .selection {
+            border-left: 3px solid $selectionBorderColor;
+            border-top-left-radius: $rowHeight / 2;
+            border-bottom-left-radius: $rowHeight / 2;
+        }
     }
 
     &.prevdisabled {
