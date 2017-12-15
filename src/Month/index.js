@@ -59,9 +59,9 @@ export default class Month extends PureComponent {
     let disabledDatesArray = disabledDates && disabledDates[0] ? disabledDates.map((date) => format(parse(date.date), 'YYYY-MM-DD')) : null;
     let enabledDatesArray = preselected && preselected[0] ? preselected.map((date) => format(parse(date.start_time), 'YYYY-MM-DD')) : null;
 
-    if (selectionType === 'none' || selectionType === 'not_preselected') {
+    if (selectionType === 'none' || selectionType === 'not_preselected' && preselectedDates) {
         disabledDatesArray = disabledDatesArray.concat(preselectedDates);
-    } else if (selectionType === 'preselected') {
+    } else if (selectionType === 'preselected' && preselectedDates) {
         enabledDatesArray =  enabledDatesArray.concat(preselectedDates);
     } else {
         disabledDatesArray = disabledDatesArray;
