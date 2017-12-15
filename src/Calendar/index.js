@@ -132,11 +132,13 @@ export default class Calendar extends Component {
     }
   }
   componentWillUpdate(nextProps, nextState) {
-    let {min, minDate, max, maxDate, preselected} = this.props;
+    //let {min, minDate, max, maxDate, preselected} = this.props;
 
-    if (nextProps.min !== min || nextProps.minDate !== minDate || nextProps.max !== max || nextProps.maxDate !== maxDate) {
+    /*if (nextProps.min !== min || nextProps.minDate !== minDate || nextProps.max !== max || nextProps.maxDate !== maxDate) {
       this.updateYears(nextProps);
-    }
+    }*/
+
+    let {preselected} = this.props;
 
     if (nextProps.display !== this.props.display) {
       this.setState({display: nextProps.display});
@@ -237,13 +239,6 @@ export default class Calendar extends Component {
     const {showTodayHelper, showOverlay} = this.getDisplayOptions();
     const scrollSpeed = this.scrollSpeed = Math.abs(this.getScrollSpeed(scrollTop));
     this.scrollTop = scrollTop;
-
-		// We only want to display the months overlay if the user is rapidly scrolling
-    if (showOverlay && scrollSpeed > rowHeight && !isScrolling) {
-      this.setState({
-        isScrolling: true,
-      });
-    }
 
     if (showTodayHelper) {
       this.updateTodayHelperPosition(scrollSpeed);

@@ -138,13 +138,6 @@ var Calendar = function (_Component) {
       var scrollSpeed = _this.scrollSpeed = Math.abs(_this.getScrollSpeed(scrollTop));
       _this.scrollTop = scrollTop;
 
-      // We only want to display the months overlay if the user is rapidly scrolling
-      if (showOverlay && scrollSpeed > rowHeight && !isScrolling) {
-        _this.setState({
-          isScrolling: true
-        });
-      }
-
       if (showTodayHelper) {
         _this.updateTodayHelperPosition(scrollSpeed);
       }
@@ -233,17 +226,14 @@ var Calendar = function (_Component) {
   };
 
   Calendar.prototype.componentWillUpdate = function componentWillUpdate(nextProps, nextState) {
-    var _props = this.props,
-        min = _props.min,
-        minDate = _props.minDate,
-        max = _props.max,
-        maxDate = _props.maxDate,
-        preselected = _props.preselected;
+    //let {min, minDate, max, maxDate, preselected} = this.props;
 
-
-    if (nextProps.min !== min || nextProps.minDate !== minDate || nextProps.max !== max || nextProps.maxDate !== maxDate) {
+    /*if (nextProps.min !== min || nextProps.minDate !== minDate || nextProps.max !== max || nextProps.maxDate !== maxDate) {
       this.updateYears(nextProps);
-    }
+    }*/
+
+    var preselected = this.props.preselected;
+
 
     if (nextProps.display !== this.props.display) {
       this.setState({ display: nextProps.display });
@@ -336,21 +326,21 @@ var Calendar = function (_Component) {
     var _classNames,
         _this2 = this;
 
-    var _props2 = this.props,
-        className = _props2.className,
-        passThrough = _props2.passThrough,
-        DayComponent = _props2.DayComponent,
-        disabledDays = _props2.disabledDays,
-        displayDate = _props2.displayDate,
-        height = _props2.height,
-        HeaderComponent = _props2.HeaderComponent,
-        rowHeight = _props2.rowHeight,
-        scrollDate = _props2.scrollDate,
-        selected = _props2.selected,
-        preselected = _props2.preselected,
-        tabIndex = _props2.tabIndex,
-        width = _props2.width,
-        YearsComponent = _props2.YearsComponent;
+    var _props = this.props,
+        className = _props.className,
+        passThrough = _props.passThrough,
+        DayComponent = _props.DayComponent,
+        disabledDays = _props.disabledDays,
+        displayDate = _props.displayDate,
+        height = _props.height,
+        HeaderComponent = _props.HeaderComponent,
+        rowHeight = _props.rowHeight,
+        scrollDate = _props.scrollDate,
+        selected = _props.selected,
+        preselected = _props.preselected,
+        tabIndex = _props.tabIndex,
+        width = _props.width,
+        YearsComponent = _props.YearsComponent;
 
     var _getDisplayOptions = this.getDisplayOptions(),
         hideYearsOnSelect = _getDisplayOptions.hideYearsOnSelect,
