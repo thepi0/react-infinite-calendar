@@ -121,13 +121,16 @@ export const withRange = compose(
 );
 
 function getStartDays(preselected) {
-    let returnable = preselected.map(dateObj => {
-        return {
-          start_time: dateObj.start_time,
-          end_time: dateObj.end_time,
-          child: dateObj.child
-        };
-    });
+    let returnable = [];
+    if (preselected && preselected[0]) {
+        returnable = preselected.map(dateObj => {
+            return {
+              start_time: dateObj.start_time,
+              end_time: dateObj.end_time,
+              child: dateObj.child
+            };
+        });
+    }
 
     const starts = [];
 
@@ -145,13 +148,17 @@ function getStartDays(preselected) {
 }
 
 function handlePreselected(preselected) {
-    let returnable = preselected.map(dateObj => {
-        return {
-          start_time: dateObj.start_time,
-          end_time: dateObj.end_time,
-          child: dateObj.child
-        };
-    });
+    let returnable = [];
+    if (preselected && preselected[0]) {
+        returnable = preselected.map(dateObj => {
+            return {
+              start_time: dateObj.start_time,
+              end_time: dateObj.end_time,
+              child: dateObj.child
+            };
+        });
+    }
+
 
     const days = [];
     const starts = [];
@@ -250,8 +257,10 @@ function getSortedSelection({start_time, end_time}) {
 function handleSelect(date, beforeLastDisabled, isPreSelected, {onSelect, selected, preselected, preselectedDates, setPreselectedDates, selectionType, setSelectionType, selectionStart, setSelectionStart}) {
 
     if (!isPreSelected) {
-        let returnable = preselected.map(dateObj => format(dateObj.start_time, 'YYYY-MM-DD'));
-        setPreselectedDates(returnable);
+        if (preselected && preselected[0]) {
+            let returnable = preselected.map(dateObj => format(dateObj.start_time, 'YYYY-MM-DD'));
+            setPreselectedDates(returnable);
+        }
         setSelectionType('not_preselected');
     } else {
         setPreselectedDates(false);
@@ -306,7 +315,7 @@ function handleMouseOver(e, {onSelect, selectionStart, preselected}) {
 
 function getPreselectedWithinRange(start_date, end_date, preselected) {
     const returnableDates = [];
-    if (preSelectedSelected) {
+    if (preSelectedSelected && preselected) {
         let startDate = format(start_date, 'YYYY-MM-DD');
         let endDate = format(end_date, 'YYYY-MM-DD');
         preselected.forEach((day, idx) => {
