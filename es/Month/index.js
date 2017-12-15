@@ -96,9 +96,9 @@ var Month = function (_PureComponent) {
       return format(parse(date.start_time), 'YYYY-MM-DD');
     }) : null;
 
-    if (selectionType === 'none' || selectionType === 'not_preselected' && disabledDatesArray.length) {
+    if (selectionType === 'not_preselected' && disabledDatesArray != null && disabledDatesArray.length) {
       disabledDatesArray = disabledDatesArray.concat(preselectedDates);
-    } else if (selectionType === 'preselected' && enabledDatesArray.length) {
+    } else if (selectionType === 'preselected' && enabledDatesArray != null && enabledDatesArray.length) {
       enabledDatesArray = enabledDatesArray.concat(preselectedDates);
     } else {
       disabledDatesArray = disabledDatesArray;
