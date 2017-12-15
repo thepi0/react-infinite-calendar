@@ -301,6 +301,7 @@ export default class Calendar extends Component {
   setDisplay = (display) => {
     this.setState({display});
   }
+
   render() {
     let {
 			className,
@@ -404,30 +405,6 @@ export default class Calendar extends Component {
               width={width}
             />
           </div>
-          {display === 'years' &&
-            <YearsComponent
-              ref={instance => {
-                this._Years = instance;
-              }}
-              height={height}
-              hideOnSelect={hideYearsOnSelect}
-              locale={locale}
-              max={this._max}
-              maxDate={this._maxDate}
-              min={this._min}
-              minDate={this._minDate}
-              scrollToDate={this.scrollToDate}
-              selected={selected}
-              preselected={this.preselected}
-              setDisplay={this.setDisplay}
-              showMonths={showMonthsForYears}
-              theme={theme}
-              today={today}
-              width={width}
-              years={range(this._min.getFullYear(), this._max.getFullYear() + 1)}
-              {...passThrough.Years}
-            />
-          }
         </div>
       </div>
     );

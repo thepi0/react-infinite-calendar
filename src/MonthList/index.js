@@ -24,7 +24,6 @@ export default class MonthList extends Component {
       PropTypes.array
     ]),
     disabledDays: PropTypes.arrayOf(PropTypes.number),
-    isPreselectedDate: PropTypes.bool,
     height: PropTypes.number,
     isScrolling: PropTypes.bool,
     locale: PropTypes.object,
@@ -73,14 +72,6 @@ export default class MonthList extends Component {
 
   componentDidMount() {
     this.scrollEl = this.VirtualList.rootNode;
-  }
-
-  componentWillReceiveProps({scrollDate}) {
-    /*if (scrollDate !== this.props.scrollDate) {
-      this.setState({
-        scrollTop: this.getDateOffset(scrollDate),
-      });
-    }*/
   }
 
   getDateOffset(date) {
@@ -135,10 +126,7 @@ export default class MonthList extends Component {
       rowHeight,
       selected,
       preselected,
-      isPreselectedDate,
-      isPreSelectedSelected,
       startDays,
-      testing,
       showOverlay,
       theme,
       today,
@@ -153,9 +141,6 @@ export default class MonthList extends Component {
         key={key}
         selected={selected}
         preselected={preselected}
-        testing={testing}
-        isPreselectedDate={isPreselectedDate}
-        isPreSelectedSelected={isPreSelectedSelected}
         startDays={startDays}
         DayComponent={DayComponent}
         monthDate={date}

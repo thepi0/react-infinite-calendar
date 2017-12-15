@@ -44,21 +44,15 @@ export default class Day extends PureComponent {
       date,
       day,
       beforeLastDisabled,
-      lastDisabled,
       handlers,
       isDisabled,
       isHighlighted,
       isToday,
       isSelected,
-      isPreselectedDate,
-      isPreSelectedSelected,
       isPreSelected,
       prevDisabled,
       nextDisabled,
       monthShort,
-      testing,
-      theme: {selectionColor, todayColor},
-      year,
     } = this.props;
 
     return (
@@ -70,9 +64,6 @@ export default class Day extends PureComponent {
           [styles.preselected]: isPreSelected,
           [styles.prevdisabled]: prevDisabled,
           [styles.nextdisabled]: nextDisabled,
-          /*[styles.disabled]:
-          isDisabled ||
-          (isPreSelectedSelected !== null && isPreSelectedSelected && !isPreselectedDate),*/
           [styles.disabled]: isDisabled,
           [styles.enabled]: !isDisabled,
           [styles.beforelast]: beforeLastDisabled
@@ -81,11 +72,7 @@ export default class Day extends PureComponent {
         data-date={date}
         {...handlers}
       >
-        {/*{day === 1 && <span className={styles.month}>{monthShort}</span>}*/}
         {day}
-        {/*{day === 1 &&
-          currentYear !== year &&
-          <span className={styles.year}>{year}</span>}*/}
         {isSelected && this.renderSelection()}
       </li>
     );

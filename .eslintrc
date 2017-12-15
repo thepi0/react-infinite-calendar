@@ -16,5 +16,6 @@
         "allowSamePrecedence": true
       }
     ]
-  }
+  },
+  "esversion": 6
 }

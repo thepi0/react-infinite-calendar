@@ -28,9 +28,7 @@ export default class Month extends PureComponent {
       rows,
       selected,
       preselected,
-      isPreselectedDate,
       startDays,
-      testing,
       today,
       theme,
       passThrough,
@@ -49,9 +47,8 @@ export default class Month extends PureComponent {
     let nextSelected = false;
     let prevSelected= false;
     let isToday = false;
-    let isPreSelectedSelected = passThrough.test2;
-    let tempDisabledDates = passThrough.test3;
-    let selectionType = passThrough.test4;
+    let preselectedDates = passThrough.preselectedDates;
+    let selectionType = passThrough.selectionType;
     let date, nextDate, prevDate, days, dow, nextdow, prevdow, row;
 
     // Used for faster comparisons
@@ -62,26 +59,13 @@ export default class Month extends PureComponent {
     let disabledDatesArray = disabledDates && disabledDates[0] ? disabledDates.map((date) => format(parse(date.date), 'YYYY-MM-DD')) : null;
     let enabledDatesArray = preselected && preselected[0] ? preselected.map((date) => format(parse(date.start_time), 'YYYY-MM-DD')) : null;
 
-    /*console.log('disabledDatesArray');
-    console.log(disabledDatesArray);
-    console.log('enabledDatesArray');
-    console.log(enabledDatesArray);*/
-
-    console.log(isPreSelectedSelected);
-    console.log(tempDisabledDates);
-    console.log(selectionType);
-
     if (selectionType === 'none' || selectionType === 'not_preselected') {
-        console.log('first option');
-        disabledDatesArray = disabledDatesArray.concat(tempDisabledDates);
+        disabledDatesArray = disabledDatesArray.concat(preselectedDates);
     } else if (selectionType === 'preselected') {
-        console.log('second option');
-        enabledDatesArray =  enabledDatesArray.concat(tempDisabledDates);
+        enabledDatesArray =  enabledDatesArray.concat(preselectedDates);
     } else {
-        console.log('third option');
         disabledDatesArray = disabledDatesArray;
     }
-
 
 		// Oh the things we do in the name of performance...
     for (let i = 0, len = rows.length; i < len; i++) {
@@ -127,22 +111,20 @@ export default class Month extends PureComponent {
 						currentYear={currentYear}
 						date={date}
 						day={day}
-                        isPreSelectedSelected={isPreSelectedSelected}
-                        isPreselectedDate={isPreselectedDate}
                         beforeLastDisabled={beforeLastDisabled}
                         lastDisabled={lastDate}
-            selected={selected}
-            preselected={preselected}
-            nextDisabled={nextDisabled}
-            prevDisabled={prevDisabled}
+                        selected={selected}
+                        preselected={preselected}
+                        nextDisabled={nextDisabled}
+                        prevDisabled={prevDisabled}
 						isDisabled={isDisabled}
 						isToday={isToday}
 						locale={locale}
-            month={month}
-            monthShort={monthShort}
+                        month={month}
+                        monthShort={monthShort}
 						theme={theme}
-            year={year}
-            {...passThrough.Day}
+                        year={year}
+                        {...passThrough.Day}
 					/>
 				);
 
@@ -166,41 +148,22 @@ export default class Month extends PureComponent {
   }
 
   render() {
-    const {locale: {locale}, preselected, monthDate, today, rows, rowHeight, showOverlay, style, theme} = this.props;
+    const {locale: {locale}, monthDate, today, rows, rowHeight, style} = this.props;
     const dateFormat = isSameYear(monthDate, today) ? 'MMMM' : 'MMMM YYYY';
     const isCurrentMonth = isThisMonth(monthDate) && isThisYear(monthDate);
 
-    /* TODO: remove this and above */
-    // console.log(preselected);
-
     return (
-      <div className={styles.root} style={{...style, lineHeight: `${rowHeight}px`}}>
-
-              <div className={classNames(styles.indicator, {[styles.indicatorCurrent] : isCurrentMonth })}>
-                  <div className={styles.display}>
-                      <span className="month">{format(monthDate, 'MMMM', {locale})}</span>
-                      <span className="year">{format(monthDate, 'YYYY', {locale})}</span>
-                  </div>
-              </div>
-
-  				<div className={styles.rows}>
-  					{this.renderRows()}
-  					{/*{showOverlay &&
-  						<label
-                className={classNames(styles.label, {
-                  [styles.partialFirstRow]: rows[0].length !== 7,
-                })}
-                style={{backgroundColor: theme.overlayColor}}
-              >
-                <span>{format(monthDate, dateFormat, {locale})}</span>
-              </label>
-  					}*/}
-
-
-
-
-  				</div>
-  			</div>
+        <div className={styles.root} style={{...style, lineHeight: `${rowHeight}px`}}>
+            <div className={classNames(styles.indicator, {[styles.indicatorCurrent] : isCurrentMonth })}>
+                <div className={styles.display}>
+                    <span className="month">{format(monthDate, 'MMMM', {locale})}</span>
+                    <span className="year">{format(monthDate, 'YYYY', {locale})}</span>
+                </div>
+            </div>
+  		    <div className={styles.rows}>
+  				{this.renderRows()}
+  		    </div>
+  		</div>
     );
   }
 }
