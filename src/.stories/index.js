@@ -70,6 +70,8 @@ storiesOf('Higher Order Components', module)
     <InfiniteCalendar
       width={Math.min(window.innerWidth, 900)}
       height={Math.min(window.innerHeight, 900)}
+      min={subMonths(today, 6)}
+      max={addMonths(today, 6)}
       rowHeight={74}
       selected={null}
       lastSelectableDate={"2017-12-18T21:00:00Z"}

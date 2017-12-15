@@ -27,14 +27,13 @@ const PositionTypes = {
 };
 
 // Enhance Day component to display selected state based on an array of selected dates
-export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, preselected, theme}) => {
+export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, preselected}) => {
   const isSelected = date >= selected.start_time && date <= selected.end_time;
   const isStart = date === selected.start_time;
   const isEnd = date === selected.end_time;
   const isRange = !(isStart && isEnd);
   const positionOfDate = determineIfDateAlreadySelected(date, preselected);
   const isPreSelected = !!positionOfDate.value;
-  //const isPreSelected = true;
   const isPreStart = positionOfDate.value === PositionTypes.START;
   const isPreEnd = positionOfDate.value === PositionTypes.END;
   const isMultipleChildren = positionOfDate.count > 1;
@@ -121,60 +120,39 @@ export const withRange = compose(
 );
 
 function getStartDays(preselected) {
-    let returnable = [];
-    if (preselected && preselected[0]) {
-        returnable = preselected.map(dateObj => {
-            return {
-              start_time: dateObj.start_time,
-              end_time: dateObj.end_time,
-              child: dateObj.child
-            };
-        });
-    }
 
     const starts = [];
 
-    returnable.forEach((day, idx) => {
+    preselected = preselected ? preselected : [];
 
-        let dayStart = format(day.start_time, 'YYYY-MM-DD');
-
+    for (var i = 0, preselect = preselected.length; i < preselect; ++i) {
+        let dayStart = format(preselected[i].start_time, 'YYYY-MM-DD');
         if (!starts.includes(dayStart)) {
             starts.push(dayStart);
         }
-
-    });
+    }
 
     return starts;
 }
 
 function handlePreselected(preselected) {
-    let returnable = [];
-    if (preselected && preselected[0]) {
-        returnable = preselected.map(dateObj => {
-            return {
-              start_time: dateObj.start_time,
-              end_time: dateObj.end_time,
-              child: dateObj.child
-            };
-        });
-    }
 
+    preselected = preselected ? preselected : [];
 
     const days = [];
     const starts = [];
 
-    returnable.forEach((day, idx) => {
-
-        let dayStart = format(day.start_time, 'YYYY-MM-DD');
-        let dayEnd = format(day.end_time, 'YYYY-MM-DD');
-        let dayChild = day.child;
+    for (var i = 0, preselect = preselected.length; i < preselect; ++i) {
+        let dayStart = format(preselected[i].start_time, 'YYYY-MM-DD');
+        let dayEnd = format(preselected[i].end_time, 'YYYY-MM-DD');
+        let dayChild = preselected[i].child;
 
         let pushThis = {
             start_time: dayStart,
             end_time: dayEnd,
-            child: day.child,
-            original_start: day.start_time,
-            original_end: day.end_time,
+            child: preselected[i].child,
+            original_start: preselected[i].start_time,
+            original_end: preselected[i].end_time,
             count: 1,
             nextselected: false,
             prevselected: false,
@@ -191,59 +169,56 @@ function handlePreselected(preselected) {
 
             pushThis.count += 1;
 
-            for (var i = 0; i < days.length; i++) {
-                if (days[i].start_time == dayStart) {
-                    days[i].count += 1;
+            for (var y = 0, dayy = days.length; y < dayy; ++y) {
+                if (days[y].start_time == dayStart) {
+                    days[y].count += 1;
                 }
             }
         }
 
         starts.push(dayStart);
         days.push(pushThis);
+    }
 
-    });
-
-    days.forEach((day, idx) => {
-
-        let dayStart = format(day.start_time, 'YYYY-MM-DD');
+    for (var x = 0, day = days.length; x < day; ++x) {
+        let dayStart = format(days[x].start_time, 'YYYY-MM-DD');
         let nextDayStart = format(addDays(dayStart, 1), 'YYYY-MM-DD');
         let prevDayStart = format(subDays(dayStart, 1), 'YYYY-MM-DD');
 
         if (starts.includes(nextDayStart)) {
-            day.nextselected = true;
+            days[x].nextselected = true;
             let nextday = days.filter(date => date.start_time === nextDayStart);
 
-            if (nextday[0].count !== day.count) {
-                day.nextcountdifferentiates = true;
+            if (nextday[0].count !== days[x].count) {
+                days[x].nextcountdifferentiates = true;
             }
 
             if (nextday[0].preselected) {
-                day.nextpreselected = true;
+                days[x].nextpreselected = true;
             }
 
-            if (nextday[0].preselected !== day.preselected) {
-                day.nextpreselecteddifferentiates = true;
+            if (nextday[0].preselected !== days[x].preselected) {
+                days[x].nextpreselecteddifferentiates = true;
             }
         }
 
         if (starts.includes(prevDayStart)) {
-            day.prevselected = true;
+            days[x].prevselected = true;
             let prevday = days.filter(date => date.end_time === prevDayStart);
 
-            if (prevday[0].count !== day.count) {
-                day.prevcountdifferentiates = true;
+            if (prevday[0].count !== days[x].count) {
+                days[x].prevcountdifferentiates = true;
             }
 
             if (prevday[0].preselected) {
-                day.prevpreselected = true;
+                days[x].prevpreselected = true;
             }
 
-            if (prevday[0].preselected !== day.preselected) {
-                day.prevpreselecteddifferentiates = true;
+            if (prevday[0].preselected !== days[x].preselected) {
+                days[x].prevpreselecteddifferentiates = true;
             }
         }
-
-    });
+    }
 
     return days;
 }
@@ -297,20 +272,27 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, {onSelect, select
   }
 }
 
+let saveHoverDate;
+
 function handleMouseOver(e, {onSelect, selectionStart, preselected}) {
   const dateStr = e.target.getAttribute('data-date');
   const date = dateStr && parse(dateStr);
 
   if (!date) { return; }
 
-  onSelect({
-    eventType: EVENT_TYPE.HOVER,
-    ...getSortedSelection({
-      start_time: selectionStart,
-      end_time: date
-    }),
-    eventProp: 'hover'
-});
+  if (saveHoverDate !== dateStr) {
+      console.log('update selected from mousemovement');
+      onSelect({
+        eventType: EVENT_TYPE.HOVER,
+        ...getSortedSelection({
+          start_time: selectionStart,
+          end_time: date
+        }),
+        eventProp: 'hover'
+      });
+
+      saveHoverDate = dateStr;
+  }
 }
 
 function getPreselectedWithinRange(start_date, end_date, preselected) {
@@ -318,13 +300,14 @@ function getPreselectedWithinRange(start_date, end_date, preselected) {
     if (preSelectedSelected && preselected) {
         let startDate = format(start_date, 'YYYY-MM-DD');
         let endDate = format(end_date, 'YYYY-MM-DD');
-        preselected.forEach((day, idx) => {
-            let dayStart = format(day.start_time, 'YYYY-MM-DD');
+
+        for (var i = 0, preselect = preselected.length; i < preselect; ++i) {
+            let dayStart = format(preselected[i].start_time, 'YYYY-MM-DD');
             let withinRange = isBefore(startDate, endDate) ? isWithinRange(dayStart, startDate, endDate) : isWithinRange(dayStart, endDate, startDate);
             if (withinRange) {
-                returnableDates.push(day);
+                returnableDates.push(preselected[i]);
             }
-        });
+        }
     }
     return returnableDates;
 
@@ -369,61 +352,6 @@ function determineIfDateAlreadySelected(date, selected) {
   }
 
   return returnVal;
-
-  /*
-
-  selected.forEach((dateObj, idx) => {
-    if (date < dateObj.start_time || date > dateObj.end_time ) return;
-
-    if (format(date, 'YYYY-MM-DD') === format(dateObj.start_time, 'YYYY-MM-DD')) {
-      console.log('second option');
-      returnVal.value = PositionTypes.START;
-      returnVal.index = idx;
-      returnVal.count = dateObj.count;
-      returnVal.nextselected = dateObj.nextselected;
-      returnVal.prevselected = dateObj.prevselected;
-      returnVal.nextpreselected = dateObj.nextpreselected;
-      returnVal.prevpreselected = dateObj.prevpreselected;
-      returnVal.nextcountdifferentiates = dateObj.nextcountdifferentiates;
-      returnVal.prevcountdifferentiates = dateObj.prevcountdifferentiates;
-      returnVal.nextpreselecteddifferentiates = dateObj.nextpreselecteddifferentiates;
-      returnVal.prevpreselecteddifferentiates = dateObj.prevpreselecteddifferentiates;
-      return;
-    }
-    if (format(date, 'YYYY-MM-DD') === format(dateObj.end_time, 'YYYY-MM-DD')) {
-      console.log('third option');
-      returnVal.value = PositionTypes.END;
-      returnVal.index = idx;
-      returnVal.count = dateObj.count;
-      returnVal.nextselected = dateObj.nextselected;
-      returnVal.prevselected = dateObj.prevselected;
-      returnVal.nextpreselected = dateObj.nextpreselected;
-      returnVal.prevpreselected = dateObj.prevpreselected;
-      returnVal.nextcountdifferentiates = dateObj.nextcountdifferentiates;
-      returnVal.prevcountdifferentiates = dateObj.prevcountdifferentiates;
-      returnVal.nextpreselecteddifferentiates = dateObj.nextpreselecteddifferentiates;
-      returnVal.prevpreselecteddifferentiates = dateObj.prevpreselecteddifferentiates;
-      return;
-    }
-    if (!returnVal.value) {
-      console.log('fourth option');
-      returnVal.value = PositionTypes.RANGE;
-      returnVal.index = idx;
-      returnVal.count = dateObj.count;
-      returnVal.nextselected = dateObj.nextselected;
-      returnVal.prevselected = dateObj.prevselected;
-      returnVal.nextpreselected = dateObj.nextpreselected;
-      returnVal.prevpreselected = dateObj.prevpreselected;
-      returnVal.nextcountdifferentiates = dateObj.nextcountdifferentiates;
-      returnVal.prevcountdifferentiates = dateObj.prevcountdifferentiates;
-      returnVal.nextpreselecteddifferentiates = dateObj.nextpreselecteddifferentiates;
-      returnVal.prevpreselecteddifferentiates = dateObj.prevpreselecteddifferentiates;
-      return;
-    }
-  });
-  return returnVal;
-  */
-
 }
 
 if (typeof window !== 'undefined') {
