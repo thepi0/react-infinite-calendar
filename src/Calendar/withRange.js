@@ -281,7 +281,6 @@ function handleMouseOver(e, {onSelect, selectionStart, preselected}) {
   if (!date) { return; }
 
   if (saveHoverDate !== dateStr) {
-      console.log('update selected from mousemovement');
       onSelect({
         eventType: EVENT_TYPE.HOVER,
         ...getSortedSelection({
