@@ -54,6 +54,7 @@ var Month = function (_PureComponent) {
         rows = _props.rows,
         selected = _props.selected,
         preselected = _props.preselected,
+        startDays = _props.startDays,
         today = _props.today,
         theme = _props.theme,
         passThrough = _props.passThrough;
@@ -72,6 +73,8 @@ var Month = function (_PureComponent) {
     var nextSelected = false;
     var prevSelected = false;
     var isToday = false;
+    var preselectedDates = passThrough.preselectedDates;
+    var selectionType = passThrough.selectionType;
     var date = void 0,
         nextDate = void 0,
         prevDate = void 0,
@@ -88,7 +91,18 @@ var Month = function (_PureComponent) {
 
     var disabledDatesArray = disabledDates && disabledDates[0] ? disabledDates.map(function (date) {
       return format(parse(date.date), 'YYYY-MM-DD');
-    }) : disabledDates;
+    }) : null;
+    var enabledDatesArray = preselected && preselected[0] ? preselected.map(function (date) {
+      return format(parse(date.start_time), 'YYYY-MM-DD');
+    }) : null;
+
+    if (selectionType === 'none' || selectionType === 'not_preselected') {
+      disabledDatesArray = disabledDatesArray.concat(preselectedDates);
+    } else if (selectionType === 'preselected') {
+      enabledDatesArray = enabledDatesArray.concat(preselectedDates);
+    } else {
+      disabledDatesArray = disabledDatesArray;
+    }
 
     // Oh the things we do in the name of performance...
     for (var i = 0, len = rows.length; i < len; i++) {
@@ -108,7 +122,7 @@ var Month = function (_PureComponent) {
         nextdow = dow + 1;
         prevdow = dow === 1 ? 7 : dow - 1;
 
-        isDisabled = minDate && date < _minDate || maxDate && date > _maxDate || disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 || disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(date) !== -1;
+        isDisabled = minDate && date < _minDate || maxDate && date > _maxDate || disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 || disabledDatesArray && (selectionType === 'none' || selectionType === 'not_preselected') && disabledDatesArray.indexOf(date) !== -1 || enabledDatesArray && selectionType === 'preselected' && enabledDatesArray.indexOf(date) === -1;
 
         prevDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(prevdow) !== -1 || disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(prevDate) !== -1;
 
@@ -159,20 +173,14 @@ var Month = function (_PureComponent) {
 
     var _props2 = this.props,
         locale = _props2.locale.locale,
-        preselected = _props2.preselected,
         monthDate = _props2.monthDate,
         today = _props2.today,
         rows = _props2.rows,
         rowHeight = _props2.rowHeight,
-        showOverlay = _props2.showOverlay,
-        style = _props2.style,
-        theme = _props2.theme;
+        style = _props2.style;
 
     var dateFormat = isSameYear(monthDate, today) ? 'MMMM' : 'MMMM YYYY';
     var isCurrentMonth = isThisMonth(monthDate) && isThisYear(monthDate);
-
-    /* TODO: remove this and above */
-    // console.log(preselected);
 
     return React.createElement(
       'div',

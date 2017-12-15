@@ -167,16 +167,6 @@ var MonthList = function (_Component) {
     this.scrollEl = this.VirtualList.rootNode;
   };
 
-  MonthList.prototype.componentWillReceiveProps = function componentWillReceiveProps(_ref2) {
-    var scrollDate = _ref2.scrollDate;
-
-    if (scrollDate !== this.props.scrollDate) {
-      this.setState({
-        scrollTop: this.getDateOffset(scrollDate)
-      });
-    }
-  };
-
   MonthList.prototype.getDateOffset = function getDateOffset(date) {
     var _props = this.props,
         min = _props.min,

@@ -270,6 +270,16 @@
   border-top-right-radius: 0;
   border-bottom-right-radius: 0; }
 
+.Cal__Day__range.Cal__Day__selected.Cal__Day__start.Cal__Day__nextnotpreselected .Cal__Day__selection {
+  border-right: 3px solid #ea992f;
+  border-top-right-radius: 35px;
+  border-bottom-right-radius: 35px; }
+
+.Cal__Day__range.Cal__Day__selected.Cal__Day__start.Cal__Day__prevnotpreselected .Cal__Day__selection {
+  border-left: 3px solid #ea992f;
+  border-top-left-radius: 35px;
+  border-bottom-left-radius: 35px; }
+
 .Cal__Day__range.Cal__Day__selected.Cal__Day__start.Cal__Day__nextdisabled .Cal__Day__selection {
   border-right: 3px solid #ea992f;
   border-top-right-radius: 35px;
@@ -281,6 +291,16 @@
   border-bottom: 3px solid #ea992f;
   border-left: 0;
   border-radius: 0; }
+
+.Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextnotpreselected .Cal__Day__selection {
+  border-right: 3px solid #ea992f;
+  border-top-right-radius: 35px;
+  border-bottom-right-radius: 35px; }
+
+.Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevnotpreselected .Cal__Day__selection {
+  border-left: 3px solid #ea992f;
+  border-top-left-radius: 35px;
+  border-bottom-left-radius: 35px; }
 
 .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled .Cal__Day__selection {
   border-right: 3px solid #ea992f;
@@ -313,6 +333,16 @@
   border-bottom-right-radius: 35px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0; }
+
+.Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__nextnotpreselected .Cal__Day__selection {
+  border-right: 3px solid #ea992f;
+  border-top-right-radius: 35px;
+  border-bottom-right-radius: 35px; }
+
+.Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevnotpreselected .Cal__Day__selection {
+  border-left: 3px solid #ea992f;
+  border-top-left-radius: 35px;
+  border-bottom-left-radius: 35px; }
 
 .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled .Cal__Day__selection {
   border-left: 3px solid #ea992f;
@@ -498,7 +528,7 @@
 .Cal__Animation__leave.Cal__Animation__leaveActive {
   opacity: 0;
   transform: translate3d(0, 100%, 0); }
-/* imported from Month.scss */
+/*  imported from Month.scss  */
 
 .Cal__Month__rows {
   position: relative;
@@ -517,10 +547,6 @@
 .Cal__Month__indicator {
   padding-top: 25px;
   padding-left: 20px;
-  /*align-items: flex-end;
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: column;*/
   max-width: 400px;
   position: absolute; }
   .Cal__Month__indicator .Cal__Month__display {

@@ -36,6 +36,8 @@ var styles = {
   'prevdisabled': 'Cal__Day__prevdisabled',
   'range': 'Cal__Day__range',
   'start': 'Cal__Day__start',
+  'nextnotpreselected': 'Cal__Day__nextnotpreselected',
+  'prevnotpreselected': 'Cal__Day__prevnotpreselected',
   'betweenRange': 'Cal__Day__betweenRange',
   'end': 'Cal__Day__end',
   'day': 'Cal__Day__day',
@@ -44,6 +46,7 @@ var styles = {
 
 
 var isTouchDevice = false;
+var preSelectedSelected = false;
 
 export var EVENT_TYPE = {
   END: 3,
@@ -70,20 +73,23 @@ export var enhanceDay = _withPropsOnChange(['selected'], function (_ref) {
   var isStart = date === selected.start_time;
   var isEnd = date === selected.end_time;
   var isRange = !(isStart && isEnd);
-
   var positionOfDate = determineIfDateAlreadySelected(date, preselected);
   var isPreSelected = !!positionOfDate.value;
+  //const isPreSelected = true;
   var isPreStart = positionOfDate.value === PositionTypes.START;
   var isPreEnd = positionOfDate.value === PositionTypes.END;
-
   var isMultipleChildren = positionOfDate.count > 1;
   var isNextSelected = positionOfDate.nextselected;
   var isPrevSelected = positionOfDate.prevselected;
-
+  var isNextPreSelected = positionOfDate.nextpreselected;
+  var isPrevPreSelected = positionOfDate.prevpreselected;
   var isNextCountDifferent = positionOfDate.nextcountdifferentiates;
   var isPrevCountDifferent = positionOfDate.prevcountdifferentiates;
+  var isPreSelectedValue = preSelectedSelected;
+  var isNextPreDifferent = isNextPreSelected;
+  var isPrevPreDifferent = isPrevPreSelected;
 
-  var dayClasses = isSelected && isRange && classNames(styles.range, (_classNames = {}, _classNames[styles.start] = isStart, _classNames[styles.betweenRange] = !isStart && !isEnd, _classNames[styles.end] = isEnd, _classNames[styles.multiple] = isMultipleChildren, _classNames[styles.single] = !isMultipleChildren, _classNames[styles.nextselected] = isNextSelected, _classNames[styles.prevselected] = isPrevSelected, _classNames[styles.nextdifferentiates] = isNextCountDifferent, _classNames[styles.prevdifferentiates] = isPrevCountDifferent, _classNames)) || isPreSelected && classNames(styles.range, (_classNames2 = {}, _classNames2[styles.prestart] = isPreStart, _classNames2[styles.preend] = isPreEnd, _classNames2[styles.multiple] = isMultipleChildren, _classNames2[styles.single] = !isMultipleChildren, _classNames2[styles.nextselected] = isNextSelected, _classNames2[styles.prevselected] = isPrevSelected, _classNames2[styles.nextdifferentiates] = isNextCountDifferent, _classNames2[styles.prevdifferentiates] = isPrevCountDifferent, _classNames2));
+  var dayClasses = isSelected && isRange && classNames(styles.range, (_classNames = {}, _classNames[styles.start] = isStart, _classNames[styles.betweenRange] = !isStart && !isEnd, _classNames[styles.end] = isEnd, _classNames[styles.multiple] = isMultipleChildren, _classNames[styles.single] = !isMultipleChildren, _classNames[styles.nextselected] = isNextSelected, _classNames[styles.prevselected] = isPrevSelected, _classNames[styles.nextdifferentiates] = isNextCountDifferent, _classNames[styles.prevdifferentiates] = isPrevCountDifferent, _classNames[styles.nextpreselected] = isPreSelectedValue && isNextPreDifferent, _classNames[styles.prevpreselected] = isPreSelectedValue && isPrevPreDifferent, _classNames[styles.nextnotpreselected] = isPreSelectedValue && !isNextPreDifferent, _classNames[styles.prevnotpreselected] = isPreSelectedValue && !isPrevPreDifferent, _classNames)) || isPreSelected && classNames(styles.range, (_classNames2 = {}, _classNames2[styles.prestart] = isPreStart, _classNames2[styles.preend] = isPreEnd, _classNames2[styles.multiple] = isMultipleChildren, _classNames2[styles.single] = !isMultipleChildren, _classNames2[styles.nextselected] = isNextSelected, _classNames2[styles.prevselected] = isPrevSelected, _classNames2[styles.nextdifferentiates] = isNextCountDifferent, _classNames2[styles.prevdifferentiates] = isPrevCountDifferent, _classNames2));
 
   return {
     className: dayClasses,
@@ -93,11 +99,10 @@ export var enhanceDay = _withPropsOnChange(['selected'], function (_ref) {
 });
 
 // Enhancer to handle selecting and displaying multiple dates
-var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDate', getInitialDate), _withState('displayKey', 'setDisplayKey', getInitialDate), _withState('selectionStart', 'setSelectionStart', null), withImmutableProps(function (_ref2) {
+var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDate', getInitialDate), _withState('displayKey', 'setDisplayKey', getInitialDate), _withState('selectionStart', 'setSelectionStart', null), _withState('preselectedDates', 'setPreselectedDates', false), _withState('selectionType', 'setSelectionType', 'none'), withImmutableProps(function (_ref2) {
   var DayComponent = _ref2.DayComponent;
   return {
     DayComponent: enhanceDay(DayComponent)
-    //HeaderComponent: enhanceHeader(HeaderComponent),
   };
 }), _withProps(function (_ref3) {
   var displayKey = _ref3.displayKey,
@@ -111,23 +116,17 @@ var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDa
     /* eslint-disable sort-keys */
     passThrough: _extends({}, passThrough, {
       Day: {
-        onClick: function onClick(date, beforeLastDisabled) {
-          return handleSelect(date, beforeLastDisabled, _extends({ selected: selected, preselected: preselected }, props));
+        onClick: function onClick(date, beforeLastDisabled, isPreSelected) {
+          return handleSelect(date, beforeLastDisabled, isPreSelected, _extends({ selected: selected, preselected: preselected }, props));
         },
         handlers: {
           onMouseOver: !isTouchDevice && props.selectionStart ? function (e) {
             return handleMouseOver(e, _extends({ selected: selected, preselected: preselected }, props));
           } : null
         }
-      }
-      /*Years: {
-        selected: selected && selected[displayKey],
-        onSelect: (date) => handleYearSelect(date, {displayKey, selected, ...props}),
       },
-      Header: {
-        onYearClick: (date, e, key) => setDisplayKey( key || 'start'),
-      },
-      */
+      preselectedDates: props.preselectedDates,
+      selectionType: props.selectionType
     }),
     preselected: handlePreselected(preselected),
     startDays: getStartDays(preselected),
@@ -189,8 +188,13 @@ function handlePreselected(preselected) {
       count: 1,
       nextselected: false,
       prevselected: false,
+      nextpreselected: false,
+      prevpreselected: false,
       nextcountdifferentiates: false,
-      prevcountdifferentiates: false
+      prevcountdifferentiates: false,
+      nextpreselecteddifferentiates: false,
+      prevpreselecteddifferentiates: false,
+      preselected: true
     };
 
     if (starts.includes(dayStart)) {
@@ -223,6 +227,14 @@ function handlePreselected(preselected) {
       if (nextday[0].count !== day.count) {
         day.nextcountdifferentiates = true;
       }
+
+      if (nextday[0].preselected) {
+        day.nextpreselected = true;
+      }
+
+      if (nextday[0].preselected !== day.preselected) {
+        day.nextpreselecteddifferentiates = true;
+      }
     }
 
     if (starts.includes(prevDayStart)) {
@@ -233,6 +245,14 @@ function handlePreselected(preselected) {
 
       if (prevday[0].count !== day.count) {
         day.prevcountdifferentiates = true;
+      }
+
+      if (prevday[0].preselected) {
+        day.prevpreselected = true;
+      }
+
+      if (prevday[0].preselected !== day.preselected) {
+        day.prevpreselecteddifferentiates = true;
       }
     }
   });
@@ -247,13 +267,28 @@ function getSortedSelection(_ref4) {
   return isBefore(start_time, end_time) ? { start_time: start_time, end_time: end_time } : { start_time: end_time, end_time: start_time };
 }
 
-function handleSelect(date, beforeLastDisabled, _ref5) {
+function handleSelect(date, beforeLastDisabled, isPreSelected, _ref5) {
   var onSelect = _ref5.onSelect,
       selected = _ref5.selected,
       preselected = _ref5.preselected,
+      preselectedDates = _ref5.preselectedDates,
+      setPreselectedDates = _ref5.setPreselectedDates,
+      selectionType = _ref5.selectionType,
+      setSelectionType = _ref5.setSelectionType,
       selectionStart = _ref5.selectionStart,
       setSelectionStart = _ref5.setSelectionStart;
 
+
+  if (!isPreSelected) {
+    var returnable = preselected.map(function (dateObj) {
+      return format(dateObj.start_time, 'YYYY-MM-DD');
+    });
+    setPreselectedDates(returnable);
+    setSelectionType('not_preselected');
+  } else {
+    setPreselectedDates(false);
+    setSelectionType('preselected');
+  }
 
   if (selectionStart) {
     onSelect(_extends({
@@ -273,10 +308,14 @@ function handleSelect(date, beforeLastDisabled, _ref5) {
       start_time: date,
       end_time: date,
       before_last: beforeLastDisabled,
-      //selections: getPreselectedWithinRange(date, date, preselected),
       eventProp: 'click'
     });
     setSelectionStart(date);
+    if (isPreSelected) {
+      preSelectedSelected = true;
+    } else {
+      preSelectedSelected = false;
+    }
   }
 }
 
@@ -298,41 +337,29 @@ function handleMouseOver(e, _ref6) {
     start_time: selectionStart,
     end_time: date
   }), {
-    //selections: getPreselectedWithinRange(selectionStart, date, preselected),
     eventProp: 'hover'
   }));
 }
 
 function getPreselectedWithinRange(start_date, end_date, preselected) {
   var returnableDates = [];
-  var startDate = format(start_date, 'YYYY-MM-DD');
-  var endDate = format(end_date, 'YYYY-MM-DD');
-  preselected.forEach(function (day, idx) {
-    var dayStart = format(day.start_time, 'YYYY-MM-DD');
-    var withinRange = isBefore(startDate, endDate) ? isWithinRange(dayStart, startDate, endDate) : isWithinRange(dayStart, endDate, startDate);
-    if (withinRange) {
-      returnableDates.push(day);
-    }
-  });
+  if (preSelectedSelected) {
+    var startDate = format(start_date, 'YYYY-MM-DD');
+    var endDate = format(end_date, 'YYYY-MM-DD');
+    preselected.forEach(function (day, idx) {
+      var dayStart = format(day.start_time, 'YYYY-MM-DD');
+      var withinRange = isBefore(startDate, endDate) ? isWithinRange(dayStart, startDate, endDate) : isWithinRange(dayStart, endDate, startDate);
+      if (withinRange) {
+        returnableDates.push(day);
+      }
+    });
+  }
   return returnableDates;
 }
 
-function handleYearSelect(date, _ref7) {
-  var _Object$assign;
-
-  var displayKey = _ref7.displayKey,
-      onSelect = _ref7.onSelect,
-      selected = _ref7.selected,
-      setScrollDate = _ref7.setScrollDate;
-
-
-  setScrollDate(date);
-  onSelect(getSortedSelection(Object.assign({}, selected, (_Object$assign = {}, _Object$assign[displayKey] = parse(date), _Object$assign))));
-}
-
-function getInitialDate(_ref8) {
-  var selected = _ref8.selected,
-      initialSelectedDate = _ref8.initialSelectedDate;
+function getInitialDate(_ref7) {
+  var selected = _ref7.selected,
+      initialSelectedDate = _ref7.initialSelectedDate;
 
   return initialSelectedDate || selected && selected.start_time || new Date();
 }
@@ -344,42 +371,86 @@ function determineIfDateAlreadySelected(date, selected) {
     count: 1,
     nextselected: false,
     prevselected: false,
-    nextcountdifferentiates: false
+    nextpreselected: false,
+    nextcountdifferentiates: false,
+    prevcountdifferentiates: false,
+    nextpreselecteddifferentiates: false,
+    prevpreselecteddifferentiates: false,
+    preselected: false
   };
-  selected.forEach(function (dateObj, idx) {
-    if (date < dateObj.start_time || date > dateObj.end_time) return;
-    if (format(date, 'YYYY-MM-DD') === format(dateObj.start_time, 'YYYY-MM-DD')) {
+
+  var selected_date = date;
+  var selected_array = selected;
+
+  for (var i = 0, len = selected_array.length; i < len; ++i) {
+    if (selected_date === selected_array[i].start_time) {
+      returnVal.value = PositionTypes.START;
+      returnVal.index = selected_array[i];
+      returnVal.count = selected_array[i].count;
+      returnVal.nextselected = selected_array[i].nextselected;
+      returnVal.prevselected = selected_array[i].prevselected;
+      returnVal.nextpreselected = selected_array[i].nextpreselected;
+      returnVal.prevpreselected = selected_array[i].prevpreselected;
+      returnVal.nextcountdifferentiates = selected_array[i].nextcountdifferentiates;
+      returnVal.prevcountdifferentiates = selected_array[i].prevcountdifferentiates;
+      returnVal.nextpreselecteddifferentiates = selected_array[i].nextpreselecteddifferentiates;
+      returnVal.prevpreselecteddifferentiates = selected_array[i].prevpreselecteddifferentiates;
+    }
+  }
+
+  return returnVal;
+
+  /*
+   selected.forEach((dateObj, idx) => {
+    if (date < dateObj.start_time || date > dateObj.end_time ) return;
+     if (format(date, 'YYYY-MM-DD') === format(dateObj.start_time, 'YYYY-MM-DD')) {
+      console.log('second option');
       returnVal.value = PositionTypes.START;
       returnVal.index = idx;
       returnVal.count = dateObj.count;
       returnVal.nextselected = dateObj.nextselected;
       returnVal.prevselected = dateObj.prevselected;
+      returnVal.nextpreselected = dateObj.nextpreselected;
+      returnVal.prevpreselected = dateObj.prevpreselected;
       returnVal.nextcountdifferentiates = dateObj.nextcountdifferentiates;
       returnVal.prevcountdifferentiates = dateObj.prevcountdifferentiates;
+      returnVal.nextpreselecteddifferentiates = dateObj.nextpreselecteddifferentiates;
+      returnVal.prevpreselecteddifferentiates = dateObj.prevpreselecteddifferentiates;
       return;
     }
     if (format(date, 'YYYY-MM-DD') === format(dateObj.end_time, 'YYYY-MM-DD')) {
+      console.log('third option');
       returnVal.value = PositionTypes.END;
       returnVal.index = idx;
       returnVal.count = dateObj.count;
       returnVal.nextselected = dateObj.nextselected;
       returnVal.prevselected = dateObj.prevselected;
+      returnVal.nextpreselected = dateObj.nextpreselected;
+      returnVal.prevpreselected = dateObj.prevpreselected;
       returnVal.nextcountdifferentiates = dateObj.nextcountdifferentiates;
       returnVal.prevcountdifferentiates = dateObj.prevcountdifferentiates;
+      returnVal.nextpreselecteddifferentiates = dateObj.nextpreselecteddifferentiates;
+      returnVal.prevpreselecteddifferentiates = dateObj.prevpreselecteddifferentiates;
       return;
     }
     if (!returnVal.value) {
+      console.log('fourth option');
       returnVal.value = PositionTypes.RANGE;
       returnVal.index = idx;
       returnVal.count = dateObj.count;
       returnVal.nextselected = dateObj.nextselected;
       returnVal.prevselected = dateObj.prevselected;
+      returnVal.nextpreselected = dateObj.nextpreselected;
+      returnVal.prevpreselected = dateObj.prevpreselected;
       returnVal.nextcountdifferentiates = dateObj.nextcountdifferentiates;
       returnVal.prevcountdifferentiates = dateObj.prevcountdifferentiates;
+      returnVal.nextpreselecteddifferentiates = dateObj.nextpreselecteddifferentiates;
+      returnVal.prevpreselecteddifferentiates = dateObj.prevpreselecteddifferentiates;
       return;
     }
   });
   return returnVal;
+  */
 }
 
 if (typeof window !== 'undefined') {

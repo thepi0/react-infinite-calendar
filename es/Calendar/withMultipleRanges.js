@@ -33,6 +33,8 @@ var styles = {
   'prevdisabled': 'Cal__Day__prevdisabled',
   'range': 'Cal__Day__range',
   'start': 'Cal__Day__start',
+  'nextnotpreselected': 'Cal__Day__nextnotpreselected',
+  'prevnotpreselected': 'Cal__Day__prevnotpreselected',
   'betweenRange': 'Cal__Day__betweenRange',
   'end': 'Cal__Day__end',
   'day': 'Cal__Day__day',
