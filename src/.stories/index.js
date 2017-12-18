@@ -75,7 +75,7 @@ storiesOf('Higher Order Components', module)
       rowHeight={74}
       selected={null}
       lastSelectableDate={"2017-12-18T21:00:00Z"}
-      lastUpdate={"2017-12-18T21:00:00Z"}
+      lastUpdate={new Date()}
       originalDisabledDates={[
           {
               date: "2017-11-21",

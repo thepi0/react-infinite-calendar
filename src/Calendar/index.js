@@ -161,10 +161,12 @@ export default class Calendar extends Component {
     }*/
 
     if (nextProps.display !== this.props.display) {
+        console.log('component will update and update display');
       this.setState({display: nextProps.display});
     }
 
     if (nextProps.lastUpdate !== this.props.lastUpdate) {
+        console.log('component will update and update everything');
         this.updateLastUpdated(nextProps);
         this.updatePreSelected(nextProps);
         this.updateOriginalDisabledDates(nextProps);
@@ -174,7 +176,9 @@ export default class Calendar extends Component {
 
   }
   updateLastUpdated(props = this.props) {
+    console.log('updateLastUpdated()');
     const lastUpdate = props.lastUpdate;
+    console.log(lastUpdate);
     this.lastUpdate = lastUpdate;
   }
   updatePreSelected(props = this.props) {
