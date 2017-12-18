@@ -6,7 +6,9 @@ import isBefore from 'date-fns/is_before';
 import addDays from 'date-fns/add_days';
 import subDays from 'date-fns/sub_days';
 import addMonths from 'date-fns/add_months';
+import eachDay from 'date-fns/each_day'
 import differenceInDays from 'date-fns/difference_in_days';
+import differenceInCalendarDays from 'date-fns/difference_in_calendar_days'
 import isWithinRange from 'date-fns/is_within_range';
 import isWeekend from 'date-fns/is_weekend';
 import enhanceHeader from '../Header/withRange';
@@ -301,6 +303,7 @@ function getPreselectedWithinRange(start_date, end_date, preselected, selected, 
     let returnableDates;
     let startDate = format(start_date, 'YYYY-MM-DD');
     let endDate = format(end_date, 'YYYY-MM-DD');
+    let days = 0;
     if (preSelectedSelected && preselected) {
         returnableDates = [];
         for (var i = 0, preselect = preselected.length; i < preselect; ++i) {
@@ -310,6 +313,17 @@ function getPreselectedWithinRange(start_date, end_date, preselected, selected, 
                 returnableDates.push(preselected[i]);
             }
         }
+
+        let test = [];
+
+        for (var j = 0, returnables = returnableDates.length; j < returnables; ++j) {
+            let returnable_start = format(returnableDates[j].start_time, "YYYY-MM-DD");
+            if (!test.includes(returnable_start)) {
+                test.push(returnable_start);
+            }
+        }
+
+        days = test.length;
     } else if (selected) {
         returnableDates = [];
         let start = start_date;
@@ -333,12 +347,13 @@ function getPreselectedWithinRange(start_date, end_date, preselected, selected, 
             }
             if (!thesame && !isWeekend(start)) {
                 returnableDates.push({start_time: format(start, 'YYYY-MM-DD'), end_time: format(start, 'YYYY-MM-DD')});
+                days += 1;
             }
             start = addDays(start, 1);
         }
     }
-    return returnableDates;
 
+    return {days_count: days, data: returnableDates};
 }
 
 function getDates(startDate, stopDate, preselected) {
