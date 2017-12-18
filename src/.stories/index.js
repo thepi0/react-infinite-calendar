@@ -95,6 +95,32 @@ storiesOf('Higher Order Components', module)
           }
       ]}
       disabledDates={null}
+      initialSelectedDate={new Date()}
+      disabledDays={[6,7]}
+      displayOptions={{
+          hideYearsOnSelect: true,
+          layout: 'portrait',
+          overscanMonthCount: 2,
+          showHeader: false,
+          showMonthsForYears: false,
+          showOverlay: false,
+          showTodayHelper: true,
+          showWeekdays: true,
+          todayHelperRowOffset: 4,
+      }}
+      locale={{
+          locale: require('date-fns/locale/fi'),
+          blank: 'Valitse päivämäärä(t)',
+          headerFormat: 'ddd, MMM Do',
+          todayLabel: {
+            long: 'Tänään',
+          },
+          weekdays: ['Su', 'Ma', 'Ti', 'Ke', 'To', 'Pe', 'La'],
+          weekStartsOn: 1,
+      }}
+      theme={{
+          weekdaysHeight: '64px'
+      }}
       preselected={[
           {
               start_time: "2017-11-01T08:00:00Z",
@@ -242,32 +268,6 @@ storiesOf('Higher Order Components', module)
               child: 100
           }
       ]}
-      initialSelectedDate={new Date()}
-      disabledDays={[6,7]}
-      displayOptions={{
-          hideYearsOnSelect: true,
-          layout: 'portrait',
-          overscanMonthCount: 2,
-          showHeader: false,
-          showMonthsForYears: false,
-          showOverlay: false,
-          showTodayHelper: true,
-          showWeekdays: true,
-          todayHelperRowOffset: 4,
-      }}
-      locale={{
-          locale: require('date-fns/locale/fi'),
-          blank: 'Valitse päivämäärä(t)',
-          headerFormat: 'ddd, MMM Do',
-          todayLabel: {
-            long: 'Tänään',
-          },
-          weekdays: ['Su', 'Ma', 'Ti', 'Ke', 'To', 'Pe', 'La'],
-          weekStartsOn: 1,
-      }}
-      theme={{
-          weekdaysHeight: '64px'
-      }}
       onSelect={(date) => console.log(date)}
       Component={withRange(Calendar)}
     />
