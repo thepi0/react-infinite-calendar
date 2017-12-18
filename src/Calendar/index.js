@@ -35,7 +35,7 @@ export const withDefaultProps = defaultProps({
   preselected: {},
   originalDisabledDates: {},
   lastSelectableDate: new Date(),
-  lastUpdated: new Date(),
+  lastUpdate: new Date(),
   minDate: new Date(1980, 0, 1),
   onHighlightedDateChange: emptyFn,
   onScroll: emptyFn,
@@ -103,7 +103,7 @@ export default class Calendar extends Component {
     min: PropTypes.instanceOf(Date),
     preselected: PropTypes.arrayOf(PropTypes.object),
     minDate: PropTypes.instanceOf(Date),
-    lastUpdate: PropTypes.string,
+    lastUpdate: PropTypes.instanceOf(Date),
     onScroll: PropTypes.func,
     onScrollEnd: PropTypes.func,
     onSelect: PropTypes.func,
@@ -174,8 +174,8 @@ export default class Calendar extends Component {
 
   }
   updateLastUpdated(props = this.props) {
-    const lastUpdated = props.lastUpdated;
-    this.lastUpdated = lastUpdated;
+    const lastUpdate = props.lastUpdate;
+    this.lastUpdate = lastUpdate;
   }
   updatePreSelected(props = this.props) {
     const preselected = props.preselected;
