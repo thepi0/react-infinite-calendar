@@ -18,6 +18,7 @@ export default class Month extends PureComponent {
     const {
       DayComponent,
       disabledDates,
+      originalDisabledDates,
       lastSelectableDate,
       disabledDays,
       monthDate,
@@ -56,7 +57,9 @@ export default class Month extends PureComponent {
     const _minDate = format(minDate, 'YYYY-MM-DD');
     const _maxDate = format(maxDate, 'YYYY-MM-DD');
 
-    let disabledDatesArray = disabledDates && disabledDates[0] ? disabledDates.map((date) => format(parse(date.date), 'YYYY-MM-DD')) : null;
+    const initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.map((date) => format(parse(date.date), 'YYYY-MM-DD')) : null;
+
+    let disabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.map((date) => format(parse(date.date), 'YYYY-MM-DD')) : null;
     let enabledDatesArray = preselected && preselected[0] ? preselected.map((date) => format(parse(date.start_time), 'YYYY-MM-DD')) : null;
 
     if (selectionType === 'not_preselected' && disabledDatesArray != null && disabledDatesArray.length) {
@@ -87,8 +90,9 @@ export default class Month extends PureComponent {
 					minDate && date < _minDate ||
 					maxDate && date > _maxDate ||
 					disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 ||
-					disabledDatesArray && (selectionType === 'none' || selectionType === 'not_preselected') && disabledDatesArray.indexOf(date) !== -1 ||
-                    enabledDatesArray && selectionType === 'preselected' && enabledDatesArray.indexOf(date) === -1
+                    initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(date) !== -1 ||
+					disabledDatesArray && selectionType === 'not_preselected' && (disabledDatesArray.indexOf(date) !== -1 || initialDisabledDatesArray.indexOf(date) !== -1) ||
+                    enabledDatesArray && selectionType === 'preselected' && (enabledDatesArray.indexOf(date) === -1 || initialDisabledDatesArray.indexOf(date) !== -1)
 				);
 
         prevDisabled = (
@@ -111,6 +115,7 @@ export default class Month extends PureComponent {
 						currentYear={currentYear}
 						date={date}
 						day={day}
+                        originalDisabledDates={originalDisabledDates}
                         beforeLastDisabled={beforeLastDisabled}
                         lastDisabled={lastDate}
                         selected={selected}

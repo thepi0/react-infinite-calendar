@@ -8,12 +8,12 @@ let isPreSelection = false;
 export default class Day extends PureComponent {
 
   handleClick = () => {
-    let {date, beforeLastDisabled, isDisabled, isPreSelected, onClick} = this.props;
+    let {date, beforeLastDisabled, isDisabled, isPreSelected, onClick, originalDisabledDates} = this.props;
 
     isPreSelection = isPreSelected;
 
     if (!isDisabled && typeof onClick === 'function') {
-      onClick(parse(date), beforeLastDisabled, isPreSelected);
+      onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
     }
   };
 
@@ -22,6 +22,7 @@ export default class Day extends PureComponent {
       day,
       date,
       isToday,
+      isDisabled,
       locale: {todayLabel},
       monthShort,
       theme: {textColor},
@@ -32,6 +33,7 @@ export default class Day extends PureComponent {
       <div
         className={styles.selection}
         data-date={date}
+        data-disabled={isDisabled}
       >
       </div>
     );
@@ -44,6 +46,7 @@ export default class Day extends PureComponent {
       date,
       day,
       beforeLastDisabled,
+      originalDisabledDates,
       handlers,
       isDisabled,
       isHighlighted,
@@ -70,6 +73,7 @@ export default class Day extends PureComponent {
         }, className)}
         onClick={this.handleClick}
         data-date={date}
+        data-disabled={isDisabled}
         {...handlers}
       >
         {day}

@@ -33,7 +33,7 @@ export const withDefaultProps = defaultProps({
   maxDate: new Date(2050, 11, 31),
   min: new Date(1980, 0, 1),
   preselected: {},
-  disabledDates: {},
+  originalDisabledDates: {},
   lastSelectableDate: new Date(),
   minDate: new Date(1980, 0, 1),
   onHighlightedDateChange: emptyFn,
@@ -53,7 +53,7 @@ export default class Calendar extends Component {
 
     this.updateYears(props);
     this.updatePreSelected(props);
-    this.updatedisabledDates(props);
+    this.updateOriginalDisabledDates(props);
     this.updatelastSelectableDate(props);
 
     this.state = {
@@ -65,7 +65,8 @@ export default class Calendar extends Component {
     className: PropTypes.string,
     DayComponent: PropTypes.func,
     lastSelectableDate: PropTypes.string,
-    disabledDates: PropTypes.oneOfType([
+    disabledDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+    originalDisabledDates: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.array
     ]),
@@ -138,7 +139,7 @@ export default class Calendar extends Component {
       this.updateYears(nextProps);
     }*/
 
-    let {preselected} = this.props;
+    let {preselected, originalDisabledDates} = this.props;
 
     if (nextProps.display !== this.props.display) {
       this.setState({display: nextProps.display});
@@ -148,8 +149,8 @@ export default class Calendar extends Component {
         this.updatePreSelected(nextProps);
     }
 
-    if (nextProps.disabledDates !== this.props.disabledDates) {
-        this.updatedisabledDates(nextProps);
+    if (nextProps.originalDisabledDates !== this.props.originalDisabledDates) {
+        this.updateOriginalDisabledDates(nextProps);
     }
 
     if (nextProps.lastSelectableDate !== this.props.lastSelectableDate) {
@@ -161,9 +162,9 @@ export default class Calendar extends Component {
     const preselected = props.preselected;
     this.preselected = preselected;
   }
-  updatedisabledDates(props = this.props) {
-    const disabledDates = props.disabledDates;
-    this.disabledDates = disabledDates;
+  updateOriginalDisabledDates(props = this.props) {
+    const originalDisabledDates = props.originalDisabledDates;
+    this.originalDisabledDates = originalDisabledDates;
   }
   updatelastSelectableDate(props = this.props) {
     const lastSelectableDate = props.lastSelectableDate;
@@ -303,6 +304,7 @@ export default class Calendar extends Component {
       passThrough,
       DayComponent,
 			disabledDays,
+            originalDisabledDates,
       displayDate,
 			height,
       HeaderComponent,
@@ -326,6 +328,7 @@ export default class Calendar extends Component {
       showWeekdays,
     } = this.getDisplayOptions();
     const {display, isScrolling, showToday} = this.state;
+     const disabledDates = this.getDisabledDates(this.props.disabledDates);
     const locale = this.getLocale();
     const theme = this.getTheme();
     const today = this.today = startOfDay(new Date());
@@ -377,7 +380,8 @@ export default class Calendar extends Component {
                 this._MonthList = instance;
               }}
               DayComponent={DayComponent}
-              disabledDates={this.disabledDates}
+              disabledDates={disabledDates}
+              originalDisabledDates={this.originalDisabledDates}
               lastSelectableDate={this.lastSelectableDate}
               disabledDays={disabledDays}
               height={height}

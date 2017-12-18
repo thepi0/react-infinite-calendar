@@ -75,7 +75,7 @@ storiesOf('Higher Order Components', module)
       rowHeight={74}
       selected={null}
       lastSelectableDate={"2017-12-18T21:00:00Z"}
-      disabledDates={[
+      originalDisabledDates={[
           {
               date: "2017-11-21",
               type: "vacation"
@@ -88,8 +88,12 @@ storiesOf('Higher Order Components', module)
           }, {
               date: "2017-12-29",
               type: "vacation"
+          }, {
+              date: "2018-01-23",
+              type: "vacation"
           }
       ]}
+      disabledDates={null}
       preselected={[
           {
               start_time: "2017-11-01T08:00:00Z",
