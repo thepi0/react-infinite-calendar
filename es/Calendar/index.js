@@ -75,7 +75,7 @@ export var withDefaultProps = _defaultProps({
   preselected: {},
   originalDisabledDates: {},
   lastSelectableDate: new Date(),
-  lastUpdated: new Date(),
+  lastUpdate: new Date(),
   minDate: new Date(1980, 0, 1),
   onHighlightedDateChange: emptyFn,
   onScroll: emptyFn,
@@ -264,8 +264,8 @@ var Calendar = function (_Component) {
   Calendar.prototype.updateLastUpdated = function updateLastUpdated() {
     var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 
-    var lastUpdated = props.lastUpdated;
-    this.lastUpdated = lastUpdated;
+    var lastUpdate = props.lastUpdate;
+    this.lastUpdate = lastUpdate;
   };
 
   Calendar.prototype.updatePreSelected = function updatePreSelected() {
@@ -492,7 +492,7 @@ process.env.NODE_ENV !== "production" ? Calendar.propTypes = {
   min: PropTypes.instanceOf(Date),
   preselected: PropTypes.arrayOf(PropTypes.object),
   minDate: PropTypes.instanceOf(Date),
-  lastUpdate: PropTypes.string,
+  lastUpdate: PropTypes.instanceOf(Date),
   onScroll: PropTypes.func,
   onScrollEnd: PropTypes.func,
   onSelect: PropTypes.func,
