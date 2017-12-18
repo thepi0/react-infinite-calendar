@@ -7,6 +7,7 @@ import getDay from 'date-fns/get_day';
 import addDays from 'date-fns/add_days';
 import subDays from 'date-fns/sub_days';
 import isBefore from 'date-fns/is_before';
+import isAfter from 'date-fns/is_after';
 import isSameYear from 'date-fns/is_same_year';
 import isThisMonth from 'date-fns/is_this_month';
 import isThisYear from 'date-fns/is_this_year';
@@ -65,6 +66,15 @@ export default class Month extends PureComponent {
     if (selectionType === 'not_preselected' && disabledDatesArray != null && disabledDatesArray.length) {
         disabledDatesArray = disabledDatesArray.concat(preselectedDates);
     } else if (selectionType === 'preselected' && enabledDatesArray != null && enabledDatesArray.length) {
+        if (selected && selected.start_time && lastSelectableDate && lastSelectableDate.length && isBefore(selected.start_time, lastSelectableDate)) {
+            enabledDatesArray = enabledDatesArray.filter(function(date) {
+                return isBefore(date, lastSelectableDate);
+            });
+        } else if (selected && selected.start_time && lastSelectableDate && lastSelectableDate.length && isBefore(lastSelectableDate, selected.start_time)) {
+            enabledDatesArray = enabledDatesArray.filter(function(date) {
+                return isBefore(lastSelectableDate, date);
+            });
+        }
         enabledDatesArray =  enabledDatesArray.concat(preselectedDates);
     } else {
         disabledDatesArray = disabledDatesArray;

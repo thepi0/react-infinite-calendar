@@ -33,7 +33,7 @@ export default class Day extends PureComponent {
       <div
         className={styles.selection}
         data-date={date}
-        data-disabled={isDisabled}
+        data-disabled={isDisabled ? isDisabled : false}
       >
       </div>
     );
@@ -67,13 +67,13 @@ export default class Day extends PureComponent {
           [styles.preselected]: isPreSelected,
           [styles.prevdisabled]: prevDisabled,
           [styles.nextdisabled]: nextDisabled,
-          [styles.disabled]: isDisabled,
+          [styles.disabled]: isDisabled || (beforeLastDisabled && !isPreSelected),
           [styles.enabled]: !isDisabled,
           [styles.beforelast]: beforeLastDisabled
         }, className)}
         onClick={this.handleClick}
         data-date={date}
-        data-disabled={isDisabled}
+        data-disabled={isDisabled ? isDisabled : false}
         {...handlers}
       >
         {day}

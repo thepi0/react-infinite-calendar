@@ -284,19 +284,17 @@ function handleMouseOver(e, {onSelect, selectionStart}) {
 
   if (!date) { return; }
 
-  if (saveHoverDate !== dateStr) {
+  if (saveHoverDate !== dateStr && isDisabled != 'true') {
       onSelect({
         eventType: EVENT_TYPE.HOVER,
         ...getSortedSelection({
           start_time: selectionStart,
           end_time: date
         }),
-        isDisabled: isDisabled,
         eventProp: 'hover'
       });
-
-      saveHoverDate = dateStr;
   }
+  saveHoverDate = dateStr;
 }
 
 function getPreselectedWithinRange(start_date, end_date, preselected, selected, originalDisabledDates) {
