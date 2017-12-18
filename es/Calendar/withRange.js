@@ -13,7 +13,10 @@ import { withImmutableProps } from '../utils';
 import isBefore from 'date-fns/is_before';
 import addDays from 'date-fns/add_days';
 import subDays from 'date-fns/sub_days';
+import addMonths from 'date-fns/add_months';
+import differenceInDays from 'date-fns/difference_in_days';
 import isWithinRange from 'date-fns/is_within_range';
+import isWeekend from 'date-fns/is_weekend';
 import enhanceHeader from '../Header/withRange';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
@@ -107,15 +110,16 @@ var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDa
         passThrough = _ref3.passThrough,
         selected = _ref3.selected,
         preselected = _ref3.preselected,
+        originalDisabledDates = _ref3.originalDisabledDates,
         setDisplayKey = _ref3.setDisplayKey,
-        props = _objectWithoutProperties(_ref3, ['displayKey', 'passThrough', 'selected', 'preselected', 'setDisplayKey']);
+        props = _objectWithoutProperties(_ref3, ['displayKey', 'passThrough', 'selected', 'preselected', 'originalDisabledDates', 'setDisplayKey']);
 
     return {
         /* eslint-disable sort-keys */
         passThrough: _extends({}, passThrough, {
             Day: {
-                onClick: function onClick(date, beforeLastDisabled, isPreSelected) {
-                    return handleSelect(date, beforeLastDisabled, isPreSelected, _extends({ selected: selected, preselected: preselected }, props));
+                onClick: function onClick(date, beforeLastDisabled, isPreSelected, originalDisabledDates) {
+                    return handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, _extends({ selected: selected, preselected: preselected }, props));
                 },
                 handlers: {
                     onMouseOver: !isTouchDevice && props.selectionStart ? function (e) {
@@ -255,7 +259,7 @@ function getSortedSelection(_ref4) {
     return isBefore(start_time, end_time) ? { start_time: start_time, end_time: end_time } : { start_time: end_time, end_time: start_time };
 }
 
-function handleSelect(date, beforeLastDisabled, isPreSelected, _ref5) {
+function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, _ref5) {
     var onSelect = _ref5.onSelect,
         selected = _ref5.selected,
         preselected = _ref5.preselected,
@@ -288,7 +292,7 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, _ref5) {
             end_time: date
         }), {
             before_last: beforeLastDisabled,
-            selections: getPreselectedWithinRange(selectionStart, date, preselected),
+            selections: getPreselectedWithinRange(selectionStart, date, preselected, selected, originalDisabledDates),
             eventProp: 'click'
         }));
         setSelectionStart(null);
@@ -313,17 +317,17 @@ var saveHoverDate = void 0;
 
 function handleMouseOver(e, _ref6) {
     var onSelect = _ref6.onSelect,
-        selectionStart = _ref6.selectionStart,
-        preselected = _ref6.preselected;
+        selectionStart = _ref6.selectionStart;
 
     var dateStr = e.target.getAttribute('data-date');
+    var isDisabled = e.target.getAttribute('data-disabled');
     var date = dateStr && parse(dateStr);
 
     if (!date) {
         return;
     }
 
-    if (saveHoverDate !== dateStr) {
+    if (saveHoverDate !== dateStr && isDisabled != 'true') {
         onSelect(_extends({
             eventType: EVENT_TYPE.HOVER
         }, getSortedSelection({
@@ -332,17 +336,16 @@ function handleMouseOver(e, _ref6) {
         }), {
             eventProp: 'hover'
         }));
-
-        saveHoverDate = dateStr;
     }
+    saveHoverDate = dateStr;
 }
 
-function getPreselectedWithinRange(start_date, end_date, preselected) {
-    var returnableDates = [];
+function getPreselectedWithinRange(start_date, end_date, preselected, selected, originalDisabledDates) {
+    var returnableDates = void 0;
+    var startDate = format(start_date, 'YYYY-MM-DD');
+    var endDate = format(end_date, 'YYYY-MM-DD');
     if (preSelectedSelected && preselected) {
-        var startDate = format(start_date, 'YYYY-MM-DD');
-        var endDate = format(end_date, 'YYYY-MM-DD');
-
+        returnableDates = [];
         for (var i = 0, preselect = preselected.length; i < preselect; ++i) {
             var dayStart = format(preselected[i].start_time, 'YYYY-MM-DD');
             var withinRange = isBefore(startDate, endDate) ? isWithinRange(dayStart, startDate, endDate) : isWithinRange(dayStart, endDate, startDate);
@@ -350,8 +353,45 @@ function getPreselectedWithinRange(start_date, end_date, preselected) {
                 returnableDates.push(preselected[i]);
             }
         }
+    } else if (selected) {
+        returnableDates = [];
+        var start = start_date;
+        while (start <= end_date) {
+            var thesame = false;
+            for (var i = 0, preselect = preselected.length; i < preselect; ++i) {
+                var preselected_start = format(preselected[i].start_time, 'YYYY-MM-DD');
+                if (preselected_start === format(start, 'YYYY-MM-DD')) {
+                    thesame = true;
+                    break;
+                }
+            }
+            if (!thesame) {
+                for (var i = 0, disabled = originalDisabledDates.length; i < disabled; ++i) {
+                    var disabled_start = format(originalDisabledDates[i].date, 'YYYY-MM-DD');
+                    if (disabled_start === format(start, 'YYYY-MM-DD')) {
+                        thesame = true;
+                        break;
+                    }
+                }
+            }
+            if (!thesame && !isWeekend(start)) {
+                returnableDates.push({ start_time: format(start, 'YYYY-MM-DD'), end_time: format(start, 'YYYY-MM-DD') });
+            }
+            start = addDays(start, 1);
+        }
     }
     return returnableDates;
+}
+
+function getDates(startDate, stopDate, preselected) {
+    var dateArray = [];
+    var currentDate = startDate;
+    var stopDate = stopDate;
+    while (currentDate <= stopDate) {
+        if (preselected.includes()) dateArray.push({ start_time: format(currentDate, 'YYYY-MM-DD'), end_time: format(currentDate, 'YYYY-MM-DD') });
+        currentDate = addDays(currentDate, 1);
+    }
+    return dateArray;
 }
 
 function getInitialDate(_ref7) {

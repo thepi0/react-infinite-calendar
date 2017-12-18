@@ -15,203 +15,219 @@ import getDay from 'date-fns/get_day';
 import addDays from 'date-fns/add_days';
 import subDays from 'date-fns/sub_days';
 import isBefore from 'date-fns/is_before';
+import isAfter from 'date-fns/is_after';
 import isSameYear from 'date-fns/is_same_year';
 import isThisMonth from 'date-fns/is_this_month';
 import isThisYear from 'date-fns/is_this_year';
 var styles = {
-  'rows': 'Cal__Month__rows',
-  'row': 'Cal__Month__row',
-  'partial': 'Cal__Month__partial',
-  'indicator': 'Cal__Month__indicator',
-  'display': 'Cal__Month__display',
-  'month': 'Cal__Month__month',
-  'year': 'Cal__Month__year',
-  'indicatorCurrent': 'Cal__Month__indicatorCurrent',
-  'label': 'Cal__Month__label',
-  'partialFirstRow': 'Cal__Month__partialFirstRow'
+    'rows': 'Cal__Month__rows',
+    'row': 'Cal__Month__row',
+    'partial': 'Cal__Month__partial',
+    'indicator': 'Cal__Month__indicator',
+    'display': 'Cal__Month__display',
+    'month': 'Cal__Month__month',
+    'year': 'Cal__Month__year',
+    'indicatorCurrent': 'Cal__Month__indicatorCurrent',
+    'label': 'Cal__Month__label',
+    'partialFirstRow': 'Cal__Month__partialFirstRow'
 };
 
 var Month = function (_PureComponent) {
-  _inherits(Month, _PureComponent);
+    _inherits(Month, _PureComponent);
 
-  function Month() {
-    _classCallCheck(this, Month);
+    function Month() {
+        _classCallCheck(this, Month);
 
-    return _possibleConstructorReturn(this, _PureComponent.apply(this, arguments));
-  }
-
-  Month.prototype.renderRows = function renderRows() {
-    var _props = this.props,
-        DayComponent = _props.DayComponent,
-        disabledDates = _props.disabledDates,
-        lastSelectableDate = _props.lastSelectableDate,
-        disabledDays = _props.disabledDays,
-        monthDate = _props.monthDate,
-        locale = _props.locale,
-        maxDate = _props.maxDate,
-        minDate = _props.minDate,
-        rowHeight = _props.rowHeight,
-        rows = _props.rows,
-        selected = _props.selected,
-        preselected = _props.preselected,
-        startDays = _props.startDays,
-        today = _props.today,
-        theme = _props.theme,
-        passThrough = _props.passThrough;
-
-    var currentYear = today.getFullYear();
-    var year = monthDate.getFullYear();
-    var month = monthDate.getMonth();
-    var monthShort = format(monthDate, 'MMM', { locale: locale.locale });
-    var monthRows = [];
-    var lastDate = format(lastSelectableDate, 'YYYY-MM-DD', { locale: locale.locale });
-    var day = 0;
-    var isDisabled = false;
-    var nextDisabled = false;
-    var beforeLastDisabled = false;
-    var prevDisabled = false;
-    var nextSelected = false;
-    var prevSelected = false;
-    var isToday = false;
-    var preselectedDates = passThrough.preselectedDates;
-    var selectionType = passThrough.selectionType;
-    var date = void 0,
-        nextDate = void 0,
-        prevDate = void 0,
-        days = void 0,
-        dow = void 0,
-        nextdow = void 0,
-        prevdow = void 0,
-        row = void 0;
-
-    // Used for faster comparisons
-    var _today = format(today, 'YYYY-MM-DD');
-    var _minDate = format(minDate, 'YYYY-MM-DD');
-    var _maxDate = format(maxDate, 'YYYY-MM-DD');
-
-    var disabledDatesArray = disabledDates && disabledDates[0] ? disabledDates.map(function (date) {
-      return format(parse(date.date), 'YYYY-MM-DD');
-    }) : null;
-    var enabledDatesArray = preselected && preselected[0] ? preselected.map(function (date) {
-      return format(parse(date.start_time), 'YYYY-MM-DD');
-    }) : null;
-
-    if (selectionType === 'not_preselected' && disabledDatesArray != null && disabledDatesArray.length) {
-      disabledDatesArray = disabledDatesArray.concat(preselectedDates);
-    } else if (selectionType === 'preselected' && enabledDatesArray != null && enabledDatesArray.length) {
-      enabledDatesArray = enabledDatesArray.concat(preselectedDates);
-    } else {
-      disabledDatesArray = disabledDatesArray;
+        return _possibleConstructorReturn(this, _PureComponent.apply(this, arguments));
     }
 
-    // Oh the things we do in the name of performance...
-    for (var i = 0, len = rows.length; i < len; i++) {
-      var _classNames;
+    Month.prototype.renderRows = function renderRows() {
+        var _props = this.props,
+            DayComponent = _props.DayComponent,
+            disabledDates = _props.disabledDates,
+            originalDisabledDates = _props.originalDisabledDates,
+            lastSelectableDate = _props.lastSelectableDate,
+            disabledDays = _props.disabledDays,
+            monthDate = _props.monthDate,
+            locale = _props.locale,
+            maxDate = _props.maxDate,
+            minDate = _props.minDate,
+            rowHeight = _props.rowHeight,
+            rows = _props.rows,
+            selected = _props.selected,
+            preselected = _props.preselected,
+            startDays = _props.startDays,
+            today = _props.today,
+            theme = _props.theme,
+            passThrough = _props.passThrough;
 
-      row = rows[i];
-      days = [];
-      dow = getDay(new Date(year, month, row[0]));
+        var currentYear = today.getFullYear();
+        var year = monthDate.getFullYear();
+        var month = monthDate.getMonth();
+        var monthShort = format(monthDate, 'MMM', { locale: locale.locale });
+        var monthRows = [];
+        var lastDate = format(lastSelectableDate, 'YYYY-MM-DD', { locale: locale.locale });
+        var day = 0;
+        var isDisabled = false;
+        var nextDisabled = false;
+        var beforeLastDisabled = false;
+        var prevDisabled = false;
+        var nextSelected = false;
+        var prevSelected = false;
+        var isToday = false;
+        var preselectedDates = passThrough.preselectedDates;
+        var selectionType = passThrough.selectionType;
+        var date = void 0,
+            nextDate = void 0,
+            prevDate = void 0,
+            days = void 0,
+            dow = void 0,
+            nextdow = void 0,
+            prevdow = void 0,
+            row = void 0;
 
-      for (var k = 0, _len = row.length; k < _len; k++) {
-        day = row[k];
+        // Used for faster comparisons
+        var _today = format(today, 'YYYY-MM-DD');
+        var _minDate = format(minDate, 'YYYY-MM-DD');
+        var _maxDate = format(maxDate, 'YYYY-MM-DD');
 
-        date = getDateString(year, month, day);
-        nextDate = format(addDays(date, 1), 'YYYY-MM-DD');
-        prevDate = format(subDays(date, 1), 'YYYY-MM-DD');
-        isToday = date === _today;
-        nextdow = dow + 1;
-        prevdow = dow === 1 ? 7 : dow - 1;
+        var initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.map(function (date) {
+            return format(parse(date.date), 'YYYY-MM-DD');
+        }) : null;
 
-        isDisabled = minDate && date < _minDate || maxDate && date > _maxDate || disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 || disabledDatesArray && (selectionType === 'none' || selectionType === 'not_preselected') && disabledDatesArray.indexOf(date) !== -1 || enabledDatesArray && selectionType === 'preselected' && enabledDatesArray.indexOf(date) === -1;
+        var disabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.map(function (date) {
+            return format(parse(date.date), 'YYYY-MM-DD');
+        }) : null;
+        var enabledDatesArray = preselected && preselected[0] ? preselected.map(function (date) {
+            return format(parse(date.start_time), 'YYYY-MM-DD');
+        }) : null;
 
-        prevDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(prevdow) !== -1 || disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(prevDate) !== -1;
+        if (selectionType === 'not_preselected' && disabledDatesArray != null && disabledDatesArray.length) {
+            disabledDatesArray = disabledDatesArray.concat(preselectedDates);
+        } else if (selectionType === 'preselected' && enabledDatesArray != null && enabledDatesArray.length) {
+            if (selected && selected.start_time && lastSelectableDate && lastSelectableDate.length && isBefore(selected.start_time, lastSelectableDate)) {
+                enabledDatesArray = enabledDatesArray.filter(function (date) {
+                    return isBefore(date, lastSelectableDate);
+                });
+            } else if (selected && selected.start_time && lastSelectableDate && lastSelectableDate.length && isBefore(lastSelectableDate, selected.start_time)) {
+                enabledDatesArray = enabledDatesArray.filter(function (date) {
+                    return isBefore(lastSelectableDate, date);
+                });
+            }
+            enabledDatesArray = enabledDatesArray.concat(preselectedDates);
+        } else {
+            disabledDatesArray = disabledDatesArray;
+        }
 
-        nextDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(nextdow) !== -1 || disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(nextDate) !== -1;
+        // Oh the things we do in the name of performance...
+        for (var i = 0, len = rows.length; i < len; i++) {
+            var _classNames;
 
-        beforeLastDisabled = lastSelectableDate && lastSelectableDate.length && isBefore(date, lastDate);
+            row = rows[i];
+            days = [];
+            dow = getDay(new Date(year, month, row[0]));
 
-        days[k] = React.createElement(DayComponent, _extends({
-          key: 'day-' + day,
-          currentYear: currentYear,
-          date: date,
-          day: day,
-          beforeLastDisabled: beforeLastDisabled,
-          lastDisabled: lastDate,
-          selected: selected,
-          preselected: preselected,
-          nextDisabled: nextDisabled,
-          prevDisabled: prevDisabled,
-          isDisabled: isDisabled,
-          isToday: isToday,
-          locale: locale,
-          month: month,
-          monthShort: monthShort,
-          theme: theme,
-          year: year
-        }, passThrough.Day));
+            for (var k = 0, _len = row.length; k < _len; k++) {
+                day = row[k];
 
-        dow += 1;
-      }
-      monthRows[i] = React.createElement(
-        'ul',
-        {
-          key: 'Row-' + i,
-          className: classNames(styles.row, (_classNames = {}, _classNames[styles.partial] = row.length !== 7, _classNames)),
-          style: { height: rowHeight },
-          role: 'row',
-          'aria-label': 'Week ' + (i + 1)
-        },
-        days
-      );
-    }
+                date = getDateString(year, month, day);
+                nextDate = format(addDays(date, 1), 'YYYY-MM-DD');
+                prevDate = format(subDays(date, 1), 'YYYY-MM-DD');
+                isToday = date === _today;
+                nextdow = dow + 1;
+                prevdow = dow === 1 ? 7 : dow - 1;
 
-    return monthRows;
-  };
+                isDisabled = minDate && date < _minDate || maxDate && date > _maxDate || disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 || initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(date) !== -1 || disabledDatesArray && selectionType === 'not_preselected' && (disabledDatesArray.indexOf(date) !== -1 || initialDisabledDatesArray.indexOf(date) !== -1) || enabledDatesArray && selectionType === 'preselected' && (enabledDatesArray.indexOf(date) === -1 || initialDisabledDatesArray.indexOf(date) !== -1);
 
-  Month.prototype.render = function render() {
-    var _classNames2;
+                prevDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(prevdow) !== -1 || disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(prevDate) !== -1;
 
-    var _props2 = this.props,
-        locale = _props2.locale.locale,
-        monthDate = _props2.monthDate,
-        today = _props2.today,
-        rows = _props2.rows,
-        rowHeight = _props2.rowHeight,
-        style = _props2.style;
+                nextDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(nextdow) !== -1 || disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(nextDate) !== -1;
 
-    var dateFormat = isSameYear(monthDate, today) ? 'MMMM' : 'MMMM YYYY';
-    var isCurrentMonth = isThisMonth(monthDate) && isThisYear(monthDate);
+                beforeLastDisabled = lastSelectableDate && lastSelectableDate.length && isBefore(date, lastDate);
 
-    return React.createElement(
-      'div',
-      { className: styles.root, style: _extends({}, style, { lineHeight: rowHeight + 'px' }) },
-      React.createElement(
-        'div',
-        { className: classNames(styles.indicator, (_classNames2 = {}, _classNames2[styles.indicatorCurrent] = isCurrentMonth, _classNames2)) },
-        React.createElement(
-          'div',
-          { className: styles.display },
-          React.createElement(
-            'span',
-            { className: 'month' },
-            format(monthDate, 'MMMM', { locale: locale })
-          ),
-          React.createElement(
-            'span',
-            { className: 'year' },
-            format(monthDate, 'YYYY', { locale: locale })
-          )
-        )
-      ),
-      React.createElement(
-        'div',
-        { className: styles.rows },
-        this.renderRows()
-      )
-    );
-  };
+                days[k] = React.createElement(DayComponent, _extends({
+                    key: 'day-' + day,
+                    currentYear: currentYear,
+                    date: date,
+                    day: day,
+                    originalDisabledDates: originalDisabledDates,
+                    beforeLastDisabled: beforeLastDisabled,
+                    lastDisabled: lastDate,
+                    selected: selected,
+                    preselected: preselected,
+                    nextDisabled: nextDisabled,
+                    prevDisabled: prevDisabled,
+                    isDisabled: isDisabled,
+                    isToday: isToday,
+                    locale: locale,
+                    month: month,
+                    monthShort: monthShort,
+                    theme: theme,
+                    year: year
+                }, passThrough.Day));
 
-  return Month;
+                dow += 1;
+            }
+            monthRows[i] = React.createElement(
+                'ul',
+                {
+                    key: 'Row-' + i,
+                    className: classNames(styles.row, (_classNames = {}, _classNames[styles.partial] = row.length !== 7, _classNames)),
+                    style: { height: rowHeight },
+                    role: 'row',
+                    'aria-label': 'Week ' + (i + 1)
+                },
+                days
+            );
+        }
+
+        return monthRows;
+    };
+
+    Month.prototype.render = function render() {
+        var _classNames2;
+
+        var _props2 = this.props,
+            locale = _props2.locale.locale,
+            monthDate = _props2.monthDate,
+            today = _props2.today,
+            rows = _props2.rows,
+            rowHeight = _props2.rowHeight,
+            style = _props2.style;
+
+        var dateFormat = isSameYear(monthDate, today) ? 'MMMM' : 'MMMM YYYY';
+        var isCurrentMonth = isThisMonth(monthDate) && isThisYear(monthDate);
+
+        return React.createElement(
+            'div',
+            { className: styles.root, style: _extends({}, style, { lineHeight: rowHeight + 'px' }) },
+            React.createElement(
+                'div',
+                { className: classNames(styles.indicator, (_classNames2 = {}, _classNames2[styles.indicatorCurrent] = isCurrentMonth, _classNames2)) },
+                React.createElement(
+                    'div',
+                    { className: styles.display },
+                    React.createElement(
+                        'span',
+                        { className: 'month' },
+                        format(monthDate, 'MMMM', { locale: locale })
+                    ),
+                    React.createElement(
+                        'span',
+                        { className: 'year' },
+                        format(monthDate, 'YYYY', { locale: locale })
+                    )
+                )
+            ),
+            React.createElement(
+                'div',
+                { className: styles.rows },
+                this.renderRows()
+            )
+        );
+    };
+
+    return Month;
 }(PureComponent);
 
 export { Month as default };

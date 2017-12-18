@@ -57,13 +57,14 @@ var Day = function (_PureComponent) {
           beforeLastDisabled = _this$props.beforeLastDisabled,
           isDisabled = _this$props.isDisabled,
           isPreSelected = _this$props.isPreSelected,
-          onClick = _this$props.onClick;
+          onClick = _this$props.onClick,
+          originalDisabledDates = _this$props.originalDisabledDates;
 
 
       isPreSelection = isPreSelected;
 
       if (!isDisabled && typeof onClick === 'function') {
-        onClick(parse(date), beforeLastDisabled, isPreSelected);
+        onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
       }
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -73,6 +74,7 @@ var Day = function (_PureComponent) {
         day = _props.day,
         date = _props.date,
         isToday = _props.isToday,
+        isDisabled = _props.isDisabled,
         todayLabel = _props.locale.todayLabel,
         monthShort = _props.monthShort,
         textColor = _props.theme.textColor,
@@ -81,7 +83,8 @@ var Day = function (_PureComponent) {
 
     return React.createElement('div', {
       className: styles.selection,
-      'data-date': date
+      'data-date': date,
+      'data-disabled': isDisabled ? isDisabled : false
     });
   };
 
@@ -94,6 +97,7 @@ var Day = function (_PureComponent) {
         date = _props2.date,
         day = _props2.day,
         beforeLastDisabled = _props2.beforeLastDisabled,
+        originalDisabledDates = _props2.originalDisabledDates,
         handlers = _props2.handlers,
         isDisabled = _props2.isDisabled,
         isHighlighted = _props2.isHighlighted,
@@ -108,9 +112,10 @@ var Day = function (_PureComponent) {
     return React.createElement(
       'li',
       _extends({
-        className: classNames(styles.root, (_classNames = {}, _classNames[styles.today] = isToday, _classNames[styles.highlighted] = isHighlighted, _classNames[styles.selected] = isSelected, _classNames[styles.preselected] = isPreSelected, _classNames[styles.prevdisabled] = prevDisabled, _classNames[styles.nextdisabled] = nextDisabled, _classNames[styles.disabled] = isDisabled, _classNames[styles.enabled] = !isDisabled, _classNames[styles.beforelast] = beforeLastDisabled, _classNames), className),
+        className: classNames(styles.root, (_classNames = {}, _classNames[styles.today] = isToday, _classNames[styles.highlighted] = isHighlighted, _classNames[styles.selected] = isSelected, _classNames[styles.preselected] = isPreSelected, _classNames[styles.prevdisabled] = prevDisabled, _classNames[styles.nextdisabled] = nextDisabled, _classNames[styles.disabled] = isDisabled || beforeLastDisabled && !isPreSelected, _classNames[styles.enabled] = !isDisabled, _classNames[styles.beforelast] = beforeLastDisabled, _classNames), className),
         onClick: this.handleClick,
-        'data-date': date
+        'data-date': date,
+        'data-disabled': isDisabled ? isDisabled : false
       }, handlers),
       day,
       isSelected && this.renderSelection()
