@@ -113,8 +113,8 @@ export const withRange = compose(
       preselectedDates: props.preselectedDates,
       selectionType: props.selectionType,
     },
-    preselected: handlePreselected(preselected),
-    startDays: getStartDays(preselected),
+    preselected: preselected && preselected.length ? handlePreselected(preselected) : [],
+    startDays: preselected && preselected.length ? getStartDays(preselected) : [],
     selected: {
       start_time: selected && format(selected.start_time, 'YYYY-MM-DD'),
       end_time: selected && format(selected.end_time, 'YYYY-MM-DD'),

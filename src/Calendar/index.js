@@ -35,6 +35,7 @@ export const withDefaultProps = defaultProps({
   preselected: {},
   originalDisabledDates: {},
   lastSelectableDate: new Date(),
+  lastUpdated: new Date(),
   minDate: new Date(1980, 0, 1),
   onHighlightedDateChange: emptyFn,
   onScroll: emptyFn,
@@ -53,6 +54,7 @@ export default class Calendar extends Component {
 
     this.updateYears(props);
     this.updatePreSelected(props);
+    this.updateLastUpdated(props);
     this.updateOriginalDisabledDates(props);
     this.updatelastSelectableDate(props);
 
@@ -101,6 +103,7 @@ export default class Calendar extends Component {
     min: PropTypes.instanceOf(Date),
     preselected: PropTypes.arrayOf(PropTypes.object),
     minDate: PropTypes.instanceOf(Date),
+    lastUpdate: PropTypes.string,
     onScroll: PropTypes.func,
     onScrollEnd: PropTypes.func,
     onSelect: PropTypes.func,
@@ -139,9 +142,9 @@ export default class Calendar extends Component {
       this.updateYears(nextProps);
     }*/
 
-    let {preselected, originalDisabledDates} = this.props;
+    let {lastUpdate} = this.props;
 
-    if (nextProps.display !== this.props.display) {
+    /*if (nextProps.display !== this.props.display) {
       this.setState({display: nextProps.display});
     }
 
@@ -155,8 +158,24 @@ export default class Calendar extends Component {
 
     if (nextProps.lastSelectableDate !== this.props.lastSelectableDate) {
         this.updatelastSelectableDate(nextProps);
+    }*/
+
+    if (nextProps.display !== this.props.display) {
+      this.setState({display: nextProps.display});
     }
 
+    if (nextProps.lastUpdate !== this.props.lastUpdate) {
+        this.updateLastUpdated(nextProps);
+        this.updatePreSelected(nextProps);
+        this.updateOriginalDisabledDates(nextProps);
+        this.updatelastSelectableDate(nextProps);
+    }
+
+
+  }
+  updateLastUpdated(props = this.props) {
+    const lastUpdated = props.lastUpdated;
+    this.lastUpdated = lastUpdated;
   }
   updatePreSelected(props = this.props) {
     const preselected = props.preselected;
@@ -328,7 +347,7 @@ export default class Calendar extends Component {
       showWeekdays,
     } = this.getDisplayOptions();
     const {display, isScrolling, showToday} = this.state;
-     const disabledDates = this.getDisabledDates(this.props.disabledDates);
+    const disabledDates = this.getDisabledDates(this.props.disabledDates);
     const locale = this.getLocale();
     const theme = this.getTheme();
     const today = this.today = startOfDay(new Date());

@@ -28,6 +28,10 @@ export default class MonthList extends Component {
       PropTypes.array
     ]),
     disabledDays: PropTypes.arrayOf(PropTypes.number),
+    preselected: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array
+    ]),
     height: PropTypes.number,
     isScrolling: PropTypes.bool,
     locale: PropTypes.object,
