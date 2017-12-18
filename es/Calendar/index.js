@@ -250,10 +250,12 @@ var Calendar = function (_Component) {
     }*/
 
     if (nextProps.display !== this.props.display) {
+      console.log('component will update and update display');
       this.setState({ display: nextProps.display });
     }
 
     if (nextProps.lastUpdate !== this.props.lastUpdate) {
+      console.log('component will update and update everything');
       this.updateLastUpdated(nextProps);
       this.updatePreSelected(nextProps);
       this.updateOriginalDisabledDates(nextProps);
@@ -264,7 +266,9 @@ var Calendar = function (_Component) {
   Calendar.prototype.updateLastUpdated = function updateLastUpdated() {
     var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 
+    console.log('updateLastUpdated()');
     var lastUpdate = props.lastUpdate;
+    console.log(lastUpdate);
     this.lastUpdate = lastUpdate;
   };
 
