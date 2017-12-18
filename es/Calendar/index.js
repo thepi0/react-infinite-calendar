@@ -75,6 +75,7 @@ export var withDefaultProps = _defaultProps({
   preselected: {},
   originalDisabledDates: {},
   lastSelectableDate: new Date(),
+  lastUpdated: new Date(),
   minDate: new Date(1980, 0, 1),
   onHighlightedDateChange: emptyFn,
   onScroll: emptyFn,
@@ -207,6 +208,7 @@ var Calendar = function (_Component) {
 
     _this.updateYears(props);
     _this.updatePreSelected(props);
+    _this.updateLastUpdated(props);
     _this.updateOriginalDisabledDates(props);
     _this.updatelastSelectableDate(props);
 
@@ -232,26 +234,38 @@ var Calendar = function (_Component) {
       this.updateYears(nextProps);
     }*/
 
-    var _props = this.props,
-        preselected = _props.preselected,
-        originalDisabledDates = _props.originalDisabledDates;
+    var lastUpdate = this.props.lastUpdate;
 
+    /*if (nextProps.display !== this.props.display) {
+      this.setState({display: nextProps.display});
+    }
+     if (nextProps.preselected !== this.props.preselected) {
+        this.updatePreSelected(nextProps);
+    }
+     if (nextProps.originalDisabledDates !== this.props.originalDisabledDates) {
+        this.updateOriginalDisabledDates(nextProps);
+    }
+     if (nextProps.lastSelectableDate !== this.props.lastSelectableDate) {
+        this.updatelastSelectableDate(nextProps);
+    }*/
 
     if (nextProps.display !== this.props.display) {
       this.setState({ display: nextProps.display });
     }
 
-    if (nextProps.preselected !== this.props.preselected) {
+    if (nextProps.lastUpdate !== this.props.lastUpdate) {
+      this.updateLastUpdated(nextProps);
       this.updatePreSelected(nextProps);
-    }
-
-    if (nextProps.originalDisabledDates !== this.props.originalDisabledDates) {
       this.updateOriginalDisabledDates(nextProps);
-    }
-
-    if (nextProps.lastSelectableDate !== this.props.lastSelectableDate) {
       this.updatelastSelectableDate(nextProps);
     }
+  };
+
+  Calendar.prototype.updateLastUpdated = function updateLastUpdated() {
+    var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
+
+    var lastUpdated = props.lastUpdated;
+    this.lastUpdated = lastUpdated;
   };
 
   Calendar.prototype.updatePreSelected = function updatePreSelected() {
@@ -328,22 +342,22 @@ var Calendar = function (_Component) {
     var _classNames,
         _this2 = this;
 
-    var _props2 = this.props,
-        className = _props2.className,
-        passThrough = _props2.passThrough,
-        DayComponent = _props2.DayComponent,
-        disabledDays = _props2.disabledDays,
-        originalDisabledDates = _props2.originalDisabledDates,
-        displayDate = _props2.displayDate,
-        height = _props2.height,
-        HeaderComponent = _props2.HeaderComponent,
-        rowHeight = _props2.rowHeight,
-        scrollDate = _props2.scrollDate,
-        selected = _props2.selected,
-        preselected = _props2.preselected,
-        tabIndex = _props2.tabIndex,
-        width = _props2.width,
-        YearsComponent = _props2.YearsComponent;
+    var _props = this.props,
+        className = _props.className,
+        passThrough = _props.passThrough,
+        DayComponent = _props.DayComponent,
+        disabledDays = _props.disabledDays,
+        originalDisabledDates = _props.originalDisabledDates,
+        displayDate = _props.displayDate,
+        height = _props.height,
+        HeaderComponent = _props.HeaderComponent,
+        rowHeight = _props.rowHeight,
+        scrollDate = _props.scrollDate,
+        selected = _props.selected,
+        preselected = _props.preselected,
+        tabIndex = _props.tabIndex,
+        width = _props.width,
+        YearsComponent = _props.YearsComponent;
 
     var _getDisplayOptions = this.getDisplayOptions(),
         hideYearsOnSelect = _getDisplayOptions.hideYearsOnSelect,
@@ -478,6 +492,7 @@ process.env.NODE_ENV !== "production" ? Calendar.propTypes = {
   min: PropTypes.instanceOf(Date),
   preselected: PropTypes.arrayOf(PropTypes.object),
   minDate: PropTypes.instanceOf(Date),
+  lastUpdate: PropTypes.string,
   onScroll: PropTypes.func,
   onScrollEnd: PropTypes.func,
   onSelect: PropTypes.func,
