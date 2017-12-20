@@ -18,7 +18,7 @@ const AVERAGE_ROWS_PER_MONTH = 5;
 
 export default class MonthList extends Component {
   static propTypes = {
-    lastSelectableDate: PropTypes.string,
+    lastSelectableDate: PropTypes.instanceOf(Date),
     disabledDates: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.array

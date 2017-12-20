@@ -49,6 +49,7 @@ var Month = function (_PureComponent) {
             lastSelectableDate = _props.lastSelectableDate,
             disabledDays = _props.disabledDays,
             monthDate = _props.monthDate,
+            lastUpdate = _props.lastUpdate,
             locale = _props.locale,
             maxDate = _props.maxDate,
             minDate = _props.minDate,
@@ -85,6 +86,9 @@ var Month = function (_PureComponent) {
             nextdow = void 0,
             prevdow = void 0,
             row = void 0;
+
+        console.log('MONTH.JS LAST UPDATE');
+        console.log(lastUpdate);
 
         // Used for faster comparisons
         var _today = format(today, 'YYYY-MM-DD');

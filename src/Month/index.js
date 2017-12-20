@@ -56,6 +56,8 @@ export default class Month extends PureComponent {
 
     console.log('MONTH.JS LAST UPDATE');
     console.log(lastUpdate);
+    console.log('MONTH.JS SELECTION TYPE');
+    console.log(selectionType);
 
     // Used for faster comparisons
     const _today = format(today, 'YYYY-MM-DD');

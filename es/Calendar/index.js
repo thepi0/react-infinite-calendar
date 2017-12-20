@@ -437,6 +437,7 @@ var Calendar = function (_Component) {
             },
             DayComponent: DayComponent,
             disabledDates: disabledDates,
+            lastUpdate: this.lastUpdate,
             originalDisabledDates: this.originalDisabledDates,
             lastSelectableDate: this.lastSelectableDate,
             disabledDays: disabledDays,

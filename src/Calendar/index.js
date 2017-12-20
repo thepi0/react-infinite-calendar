@@ -21,6 +21,8 @@ const styles = {
   day: require('../Day/Day.scss'),
 };
 
+let lastUpdateDate = new Date();
+
 export const withDefaultProps = defaultProps({
   autoFocus: true,
   DayComponent: Day,
@@ -68,7 +70,7 @@ export default class Calendar extends Component {
     autoFocus: PropTypes.bool,
     className: PropTypes.string,
     DayComponent: PropTypes.func,
-    lastSelectableDate: PropTypes.string,
+    lastSelectableDate: PropTypes.instanceOf(Date),
     disabledDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
     originalDisabledDates: PropTypes.oneOfType([
       PropTypes.object,
@@ -103,7 +105,10 @@ export default class Calendar extends Component {
     max: PropTypes.instanceOf(Date),
     maxDate: PropTypes.instanceOf(Date),
     min: PropTypes.instanceOf(Date),
-    preselected: PropTypes.arrayOf(PropTypes.object),
+    preselected: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array
+    ]),
     minDate: PropTypes.instanceOf(Date),
     lastUpdate: PropTypes.instanceOf(Date),
     onScroll: PropTypes.func,
@@ -136,6 +141,18 @@ export default class Calendar extends Component {
     if (autoFocus) {
       this.node.focus();
     }
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    // You can access `this.props` and `this.state` here
+    // This function should return a boolean, whether the component should re-render.
+    console.log('shouldComponentUpdate()');
+    console.log(this.props);
+    console.log(nextProps);
+    if (this.props.lastUpdate !== nextProps.lastUpdate) {
+        lastUpdateDate = nextProps.lastUpdate;
+        console.log('lastUPDATE IS NOT THE SAME - THE WHOLE THING SHOULD UPDATE');
+    }
+    return false;
   }
   componentWillReceiveProps() {
       console.log('componentWillReceiveProps()');
@@ -407,6 +424,7 @@ export default class Calendar extends Component {
                 todayLabel={locale.todayLabel.long}
               />
             }
+            {  this.months && this.months.length &&
             <MonthList
               ref={instance => {
                 this._MonthList = instance;
@@ -436,6 +454,7 @@ export default class Calendar extends Component {
               showOverlay={showOverlay}
               width={width}
             />
+            }
           </div>
         </div>
       </div>
