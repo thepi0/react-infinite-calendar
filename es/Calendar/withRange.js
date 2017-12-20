@@ -102,7 +102,7 @@ export var enhanceDay = _withPropsOnChange(['selected'], function (_ref) {
 });
 
 // Enhancer to handle selecting and displaying multiple dates
-var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDate', getInitialDate), _withState('displayKey', 'setDisplayKey', getInitialDate), _withState('selectionStart', 'setSelectionStart', null), _withState('preselectedDates', 'setPreselectedDates', false), _withState('selectionType', 'setSelectionType', 'none'), withImmutableProps(function (_ref2) {
+var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDate', getInitialDate), _withState('displayKey', 'setDisplayKey', getInitialDate), _withState('selectionStart', 'setSelectionStart', null), _withState('preselectedDates', 'setPreselectedDates', false), _withState('selectionType', 'setSelectionType', 'none'), _withState('selectionDone', 'setSelectionDone', false), withImmutableProps(function (_ref2) {
     var DayComponent = _ref2.DayComponent;
     return {
         DayComponent: enhanceDay(DayComponent)
@@ -120,8 +120,8 @@ var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDa
         /* eslint-disable sort-keys */
         passThrough: _extends({}, passThrough, {
             Day: {
-                onClick: function onClick(date, beforeLastDisabled, isPreSelected, originalDisabledDates) {
-                    return handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, _extends({ selected: selected, preselected: preselected }, props));
+                onClick: function onClick(date, beforeLastDisabled, isPreSelected, originalDisabledDates, disabledDays) {
+                    return handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, disabledDays, _extends({ selected: selected, preselected: preselected }, props));
                 },
                 handlers: {
                     onMouseOver: !isTouchDevice && props.selectionStart ? function (e) {
@@ -130,7 +130,8 @@ var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDa
                 }
             },
             preselectedDates: props.preselectedDates,
-            selectionType: props.selectionType
+            selectionType: props.selectionType,
+            selectionDone: props.selectionDone
         }),
         preselected: preselected && preselected.length ? handlePreselected(preselected) : [],
         startDays: preselected && preselected.length ? getStartDays(preselected) : [],
@@ -261,7 +262,7 @@ function getSortedSelection(_ref4) {
     return isBefore(start_time, end_time) ? { start_time: start_time, end_time: end_time } : { start_time: end_time, end_time: start_time };
 }
 
-function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, _ref5) {
+function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, disabledDays, _ref5) {
     var onSelect = _ref5.onSelect,
         selected = _ref5.selected,
         preselected = _ref5.preselected,
@@ -269,6 +270,8 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
         setPreselectedDates = _ref5.setPreselectedDates,
         selectionType = _ref5.selectionType,
         setSelectionType = _ref5.setSelectionType,
+        selectionDone = _ref5.selectionDone,
+        setSelectionDone = _ref5.setSelectionDone,
         selectionStart = _ref5.selectionStart,
         setSelectionStart = _ref5.setSelectionStart;
 
@@ -293,11 +296,13 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
             start_time: selectionStart,
             end_time: date
         }), {
+            disabled_days: disabledDays,
             before_last: beforeLastDisabled,
             selections: getPreselectedWithinRange(selectionStart, date, preselected, selected, originalDisabledDates),
             eventProp: 'click'
         }));
         setSelectionStart(null);
+        setSelectionDone(true);
     } else {
         onSelect({
             eventType: EVENT_TYPE.START,
@@ -312,6 +317,7 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
         } else {
             preSelectedSelected = false;
         }
+        setSelectionDone(false);
     }
 }
 

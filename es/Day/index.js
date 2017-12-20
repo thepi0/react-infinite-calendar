@@ -55,18 +55,22 @@ var Day = function (_PureComponent) {
       var _this$props = _this.props,
           date = _this$props.date,
           beforeLastDisabled = _this$props.beforeLastDisabled,
+          disabledDays = _this$props.disabledDays,
           isDisabled = _this$props.isDisabled,
           isPreSelected = _this$props.isPreSelected,
           onClick = _this$props.onClick,
           originalDisabledDates = _this$props.originalDisabledDates;
 
 
+      console.log('handleClick()');
+      console.log(disabledDays);
+
       isPreSelection = isPreSelected;
 
       if (beforeLastDisabled && !isPreSelected && typeof onClick === 'function') {
         //onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
       } else if (!isDisabled && typeof onClick === 'function') {
-        onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
+        onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, disabledDays);
       }
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -100,7 +104,9 @@ var Day = function (_PureComponent) {
         day = _props2.day,
         beforeLastDisabled = _props2.beforeLastDisabled,
         originalDisabledDates = _props2.originalDisabledDates,
+        disabledDays = _props2.disabledDays,
         handlers = _props2.handlers,
+        selected = _props2.selected,
         isDisabled = _props2.isDisabled,
         isHighlighted = _props2.isHighlighted,
         isToday = _props2.isToday,

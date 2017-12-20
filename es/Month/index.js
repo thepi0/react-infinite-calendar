@@ -33,6 +33,8 @@ var styles = {
     'partialFirstRow': 'Cal__Month__partialFirstRow'
 };
 
+import isWithinRange from 'date-fns/is_within_range';
+
 var Month = function (_PureComponent) {
     _inherits(Month, _PureComponent);
 
@@ -79,6 +81,7 @@ var Month = function (_PureComponent) {
         var isToday = false;
         var preselectedDates = passThrough.preselectedDates;
         var selectionType = passThrough.selectionType;
+        var selectionDone = passThrough.selectionDone;
         var date = void 0,
             nextDate = void 0,
             prevDate = void 0,
@@ -91,6 +94,9 @@ var Month = function (_PureComponent) {
         /*console.log('MONTH.JS');
         console.log(lastDate);
         console.log(lastSelectableDate);*/
+
+        console.log('selected');
+        console.log(selected);
 
         // Used for faster comparisons
         var _today = format(today, 'YYYY-MM-DD');
@@ -144,7 +150,7 @@ var Month = function (_PureComponent) {
                 nextdow = dow + 1;
                 prevdow = dow === 1 ? 7 : dow - 1;
 
-                isDisabled = minDate && date < _minDate || maxDate && date > _maxDate || disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 || initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(date) !== -1 || disabledDatesArray && selectionType === 'not_preselected' && (disabledDatesArray.indexOf(date) !== -1 || initialDisabledDatesArray.indexOf(date) !== -1) || enabledDatesArray && selectionType === 'preselected' && (enabledDatesArray.indexOf(date) === -1 || initialDisabledDatesArray.indexOf(date) !== -1);
+                isDisabled = minDate && date < _minDate || maxDate && date > _maxDate || disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 || initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(date) !== -1 || disabledDatesArray && selectionType === 'not_preselected' && (disabledDatesArray.indexOf(date) !== -1 || initialDisabledDatesArray.indexOf(date) !== -1) || enabledDatesArray && selectionType === 'preselected' && (enabledDatesArray.indexOf(date) === -1 || initialDisabledDatesArray.indexOf(date) !== -1) || selectionDone && selected && selected.start_time && selected.end_time && !isWithinRange(date, selected.start_time, selected.end_time);
 
                 prevDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(prevdow) !== -1 || disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(prevDate) !== -1;
 
@@ -157,6 +163,7 @@ var Month = function (_PureComponent) {
                     currentYear: currentYear,
                     date: date,
                     day: day,
+                    disabledDays: enabledDatesArray,
                     originalDisabledDates: originalDisabledDates,
                     beforeLastDisabled: beforeLastDisabled,
                     selected: selected,
