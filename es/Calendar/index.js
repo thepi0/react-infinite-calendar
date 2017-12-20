@@ -206,6 +206,8 @@ var Calendar = function (_Component) {
       _this.setState({ display: display });
     };
 
+    console.log('constructor fnction');
+
     _this.updateYears(props);
     _this.updatePreSelected(props);
     _this.updateLastUpdated(props);
@@ -227,6 +229,10 @@ var Calendar = function (_Component) {
     }
   };
 
+  Calendar.prototype.componentWillReceiveProps = function componentWillReceiveProps() {
+    console.log('componentWillReceiveProps()');
+  };
+
   Calendar.prototype.componentWillUpdate = function componentWillUpdate(nextProps, nextState) {
     //let {min, minDate, max, maxDate, preselected} = this.props;
 
@@ -234,7 +240,7 @@ var Calendar = function (_Component) {
       this.updateYears(nextProps);
     }*/
 
-    var lastUpdate = this.props.lastUpdate;
+    //let {lastUpdate} = this.props;
 
     /*if (nextProps.display !== this.props.display) {
       this.setState({display: nextProps.display});
@@ -248,6 +254,10 @@ var Calendar = function (_Component) {
      if (nextProps.lastSelectableDate !== this.props.lastSelectableDate) {
         this.updatelastSelectableDate(nextProps);
     }*/
+
+    console.log('ComponentDidUpdate');
+    console.log(this.props.lastUpdate);
+    console.log(nextProps.lastUpdate);
 
     if (nextProps.display !== this.props.display) {
       console.log('component will update and update display');
