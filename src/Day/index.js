@@ -8,14 +8,17 @@ let isPreSelection = false;
 export default class Day extends PureComponent {
 
   handleClick = () => {
-    let {date, beforeLastDisabled, isDisabled, isPreSelected, onClick, originalDisabledDates} = this.props;
+    let {date, beforeLastDisabled, disabledDays, isDisabled, isPreSelected, onClick, originalDisabledDates} = this.props;
+
+    console.log('handleClick()');
+    console.log(disabledDays);
 
     isPreSelection = isPreSelected;
 
     if (beforeLastDisabled && !isPreSelected && typeof onClick === 'function') {
       //onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
-  } else if (!isDisabled && typeof onClick === 'function') {
-      onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
+    } else if (!isDisabled && typeof onClick === 'function') {
+      onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, disabledDays);
     }
   };
 
@@ -49,7 +52,9 @@ export default class Day extends PureComponent {
       day,
       beforeLastDisabled,
       originalDisabledDates,
+      disabledDays,
       handlers,
+      selected,
       isDisabled,
       isHighlighted,
       isToday,

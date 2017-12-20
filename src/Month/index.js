@@ -13,6 +13,7 @@ import isSameYear from 'date-fns/is_same_year';
 import isThisMonth from 'date-fns/is_this_month';
 import isThisYear from 'date-fns/is_this_year';
 import styles from './Month.scss';
+import isWithinRange from 'date-fns/is_within_range';
 
 export default class Month extends PureComponent {
 
@@ -53,11 +54,15 @@ export default class Month extends PureComponent {
     let isToday = false;
     let preselectedDates = passThrough.preselectedDates;
     let selectionType = passThrough.selectionType;
+    let selectionDone = passThrough.selectionDone;
     let date, nextDate, prevDate, days, dow, nextdow, prevdow, row;
 
     /*console.log('MONTH.JS');
     console.log(lastDate);
     console.log(lastSelectableDate);*/
+
+    console.log('selected');
+    console.log(selected);
 
     // Used for faster comparisons
     const _today = format(today, 'YYYY-MM-DD');
@@ -109,7 +114,8 @@ export default class Month extends PureComponent {
 					disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 ||
                     initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(date) !== -1 ||
 					disabledDatesArray && selectionType === 'not_preselected' && (disabledDatesArray.indexOf(date) !== -1 || initialDisabledDatesArray.indexOf(date) !== -1) ||
-                    enabledDatesArray && selectionType === 'preselected' && (enabledDatesArray.indexOf(date) === -1 || initialDisabledDatesArray.indexOf(date) !== -1)
+                    enabledDatesArray && selectionType === 'preselected' && (enabledDatesArray.indexOf(date) === -1 || initialDisabledDatesArray.indexOf(date) !== -1) ||
+                    selectionDone && selected && selected.start_time && selected.end_time && !isWithinRange(date, selected.start_time, selected.end_time)
 				);
 
         prevDisabled = (
@@ -132,6 +138,7 @@ export default class Month extends PureComponent {
 						currentYear={currentYear}
 						date={date}
 						day={day}
+                        disabledDays={enabledDatesArray}
                         originalDisabledDates={originalDisabledDates}
                         beforeLastDisabled={beforeLastDisabled}
                         selected={selected}

@@ -95,6 +95,7 @@ export const withRange = compose(
   withState('selectionStart', 'setSelectionStart', null),
   withState('preselectedDates', 'setPreselectedDates', false),
   withState('selectionType', 'setSelectionType', 'none'),
+  withState('selectionDone', 'setSelectionDone', false),
   withImmutableProps(({
     DayComponent,
   }) => ({
@@ -105,7 +106,7 @@ export const withRange = compose(
     passThrough: {
       ...passThrough,
       Day: {
-        onClick: (date, beforeLastDisabled, isPreSelected, originalDisabledDates) => handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, {selected, preselected, ...props}),
+        onClick: (date, beforeLastDisabled, isPreSelected, originalDisabledDates, disabledDays) => handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, disabledDays, {selected, preselected, ...props}),
         handlers: {
           onMouseOver: !isTouchDevice && props.selectionStart
             ? (e) => handleMouseOver(e, {selected, preselected, ...props})
@@ -114,6 +115,7 @@ export const withRange = compose(
       },
       preselectedDates: props.preselectedDates,
       selectionType: props.selectionType,
+      selectionDone: props.selectionDone,
     },
     preselected: preselected && preselected.length ? handlePreselected(preselected) : [],
     startDays: preselected && preselected.length ? getStartDays(preselected) : [],
@@ -234,7 +236,7 @@ function getSortedSelection({start_time, end_time}) {
     : {start_time: end_time, end_time: start_time};
 }
 
-function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, {onSelect, selected, preselected, preselectedDates, setPreselectedDates, selectionType, setSelectionType, selectionStart, setSelectionStart}) {
+function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, disabledDays, {onSelect, selected, preselected, preselectedDates, setPreselectedDates, selectionType, setSelectionType, selectionDone, setSelectionDone, selectionStart, setSelectionStart}) {
 
     if (!isPreSelected) {
         if (preselected && preselected[0]) {
@@ -254,11 +256,13 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
         start_time: selectionStart,
         end_time: date,
       }),
+      disabled_days: disabledDays,
       before_last: beforeLastDisabled,
       selections: getPreselectedWithinRange(selectionStart, date, preselected, selected, originalDisabledDates),
       eventProp: 'click'
     });
     setSelectionStart(null);
+    setSelectionDone(true);
 } else {
     onSelect({
         eventType:EVENT_TYPE.START,
@@ -273,7 +277,7 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
     } else {
         preSelectedSelected = false;
     }
-
+    setSelectionDone(false);
   }
 }
 
