@@ -413,6 +413,7 @@ export default class Calendar extends Component {
               }}
               DayComponent={DayComponent}
               disabledDates={disabledDates}
+              lastUpdate={this.lastUpdate}
               originalDisabledDates={this.originalDisabledDates}
               lastSelectableDate={this.lastSelectableDate}
               disabledDays={disabledDays}

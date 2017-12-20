@@ -23,6 +23,7 @@ export default class Month extends PureComponent {
       lastSelectableDate,
       disabledDays,
       monthDate,
+      lastUpdate,
       locale,
       maxDate,
       minDate,
@@ -52,6 +53,9 @@ export default class Month extends PureComponent {
     let preselectedDates = passThrough.preselectedDates;
     let selectionType = passThrough.selectionType;
     let date, nextDate, prevDate, days, dow, nextdow, prevdow, row;
+
+    console.log('MONTH.JS LAST UPDATE');
+    console.log(lastUpdate);
 
     // Used for faster comparisons
     const _today = format(today, 'YYYY-MM-DD');

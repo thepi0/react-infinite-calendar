@@ -125,6 +125,7 @@ export default class MonthList extends Component {
       DayComponent,
       lastSelectableDate,
       disabledDates,
+      lastUpdate,
       originalDisabledDates,
       disabledDays,
       locale,
@@ -150,6 +151,7 @@ export default class MonthList extends Component {
         key={key}
         selected={selected}
         preselected={preselected}
+        lastUpdate={lastUpdate}
         startDays={startDays}
         DayComponent={DayComponent}
         monthDate={date}
