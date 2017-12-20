@@ -16,6 +16,7 @@ import addDays from 'date-fns/add_days';
 import subDays from 'date-fns/sub_days';
 import isBefore from 'date-fns/is_before';
 import isAfter from 'date-fns/is_after';
+import isDate from 'date-fns/is_date';
 import isSameYear from 'date-fns/is_same_year';
 import isThisMonth from 'date-fns/is_this_month';
 import isThisYear from 'date-fns/is_this_year';
@@ -87,10 +88,9 @@ var Month = function (_PureComponent) {
             prevdow = void 0,
             row = void 0;
 
-        console.log('MONTH.JS LAST UPDATE');
-        console.log(lastUpdate);
-        console.log('MONTH.JS SELECTION TYPE');
-        console.log(selectionType);
+        /*console.log('MONTH.JS');
+        console.log(lastDate);
+        console.log(lastSelectableDate);*/
 
         // Used for faster comparisons
         var _today = format(today, 'YYYY-MM-DD');
@@ -111,16 +111,17 @@ var Month = function (_PureComponent) {
         if (selectionType === 'not_preselected' && disabledDatesArray != null && disabledDatesArray.length) {
             disabledDatesArray = disabledDatesArray.concat(preselectedDates);
         } else if (selectionType === 'preselected' && enabledDatesArray != null && enabledDatesArray.length) {
-            if (selected && selected.start_time && lastSelectableDate && lastSelectableDate.length && isBefore(selected.start_time, lastSelectableDate)) {
+            enabledDatesArray = enabledDatesArray.concat(preselectedDates);
+
+            if (selected && selected.start_time && isDate(lastSelectableDate) && isBefore(selected.start_time, lastSelectableDate)) {
                 enabledDatesArray = enabledDatesArray.filter(function (date) {
-                    return isBefore(date, lastSelectableDate);
+                    return isBefore(date, lastDate);
                 });
-            } else if (selected && selected.start_time && lastSelectableDate && lastSelectableDate.length && isBefore(lastSelectableDate, selected.start_time)) {
+            } else if (selected && selected.start_time && isDate(lastSelectableDate) && isBefore(lastSelectableDate, selected.start_time)) {
                 enabledDatesArray = enabledDatesArray.filter(function (date) {
-                    return isBefore(lastSelectableDate, date);
+                    return isBefore(lastDate, date);
                 });
             }
-            enabledDatesArray = enabledDatesArray.concat(preselectedDates);
         } else {
             disabledDatesArray = disabledDatesArray;
         }
@@ -149,7 +150,7 @@ var Month = function (_PureComponent) {
 
                 nextDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(nextdow) !== -1 || disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(nextDate) !== -1;
 
-                beforeLastDisabled = lastSelectableDate && lastSelectableDate.length && isBefore(date, lastDate);
+                beforeLastDisabled = isDate(lastSelectableDate) && isBefore(date, lastDate);
 
                 days[k] = React.createElement(DayComponent, _extends({
                     key: 'day-' + day,
@@ -158,7 +159,6 @@ var Month = function (_PureComponent) {
                     day: day,
                     originalDisabledDates: originalDisabledDates,
                     beforeLastDisabled: beforeLastDisabled,
-                    lastDisabled: lastDate,
                     selected: selected,
                     preselected: preselected,
                     nextDisabled: nextDisabled,

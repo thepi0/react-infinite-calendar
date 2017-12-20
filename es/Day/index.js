@@ -63,7 +63,9 @@ var Day = function (_PureComponent) {
 
       isPreSelection = isPreSelected;
 
-      if (!isDisabled && typeof onClick === 'function') {
+      if (beforeLastDisabled && !isPreSelected && typeof onClick === 'function') {
+        //onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
+      } else if (!isDisabled && typeof onClick === 'function') {
         onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
       }
     }, _temp), _possibleConstructorReturn(_this, _ret);
