@@ -52,6 +52,8 @@ export default class Calendar extends Component {
   constructor(props) {
     super(...arguments);
 
+    console.log('constructor fnction');
+
     this.updateYears(props);
     this.updatePreSelected(props);
     this.updateLastUpdated(props);
@@ -135,6 +137,9 @@ export default class Calendar extends Component {
       this.node.focus();
     }
   }
+  componentWillReceiveProps() {
+      console.log('componentWillReceiveProps()');
+  }
   componentWillUpdate(nextProps, nextState) {
     //let {min, minDate, max, maxDate, preselected} = this.props;
 
@@ -142,7 +147,7 @@ export default class Calendar extends Component {
       this.updateYears(nextProps);
     }*/
 
-    let {lastUpdate} = this.props;
+    //let {lastUpdate} = this.props;
 
     /*if (nextProps.display !== this.props.display) {
       this.setState({display: nextProps.display});
@@ -159,6 +164,10 @@ export default class Calendar extends Component {
     if (nextProps.lastSelectableDate !== this.props.lastSelectableDate) {
         this.updatelastSelectableDate(nextProps);
     }*/
+
+    console.log('ComponentDidUpdate');
+    console.log(this.props.lastUpdate);
+    console.log(nextProps.lastUpdate);
 
     if (nextProps.display !== this.props.display) {
         console.log('component will update and update display');
