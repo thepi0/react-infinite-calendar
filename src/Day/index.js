@@ -12,7 +12,9 @@ export default class Day extends PureComponent {
 
     isPreSelection = isPreSelected;
 
-    if (!isDisabled && typeof onClick === 'function') {
+    if (beforeLastDisabled && !isPreSelected && typeof onClick === 'function') {
+      //onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
+  } else if (!isDisabled && typeof onClick === 'function') {
       onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
     }
   };

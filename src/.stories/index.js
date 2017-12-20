@@ -74,8 +74,8 @@ storiesOf('Higher Order Components', module)
       max={addMonths(today, 6)}
       rowHeight={74}
       selected={null}
-      lastSelectableDate={new Date(2017, 12, 18)}
-      lastUpdate={()=>{let date = new Date(); setTimeout(function() {date = new Date()}, 3000); return date;}}
+      lastSelectableDate={new Date(2017, 11, 18)}
+      lastUpdate={new Date()}
       originalDisabledDates={[
           {
               date: "2017-11-21",
@@ -95,7 +95,6 @@ storiesOf('Higher Order Components', module)
           }
       ]}
       disabledDates={null}
-      initialSelectedDate={new Date()}
       disabledDays={[6,7]}
       displayOptions={{
           hideYearsOnSelect: true,

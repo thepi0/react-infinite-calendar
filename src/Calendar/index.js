@@ -54,8 +54,6 @@ export default class Calendar extends Component {
   constructor(props) {
     super(...arguments);
 
-    console.log('constructor fnction');
-
     this.updateYears(props);
     this.updatePreSelected(props);
     this.updateLastUpdated(props);
@@ -142,21 +140,6 @@ export default class Calendar extends Component {
       this.node.focus();
     }
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    // You can access `this.props` and `this.state` here
-    // This function should return a boolean, whether the component should re-render.
-    console.log('shouldComponentUpdate()');
-    console.log(this.props);
-    console.log(nextProps);
-    if (this.props.lastUpdate !== nextProps.lastUpdate) {
-        lastUpdateDate = nextProps.lastUpdate;
-        console.log('lastUPDATE IS NOT THE SAME - THE WHOLE THING SHOULD UPDATE');
-    }
-    return false;
-  }
-  componentWillReceiveProps() {
-      console.log('componentWillReceiveProps()');
-  }
   componentWillUpdate(nextProps, nextState) {
     //let {min, minDate, max, maxDate, preselected} = this.props;
 
@@ -182,17 +165,16 @@ export default class Calendar extends Component {
         this.updatelastSelectableDate(nextProps);
     }*/
 
-    console.log('ComponentDidUpdate');
-    console.log(this.props.lastUpdate);
-    console.log(nextProps.lastUpdate);
+    //console.log('ComponentDidUpdate');
+    //console.log(this.props.lastUpdate);
+    //console.log(nextProps.lastUpdate);
 
     if (nextProps.display !== this.props.display) {
-        console.log('component will update and update display');
       this.setState({display: nextProps.display});
     }
 
     if (nextProps.lastUpdate !== this.props.lastUpdate) {
-        console.log('component will update and update everything');
+        console.log('lastUpdate is not the same as before - update everything');
         this.updateLastUpdated(nextProps);
         this.updatePreSelected(nextProps);
         this.updateOriginalDisabledDates(nextProps);
@@ -202,9 +184,7 @@ export default class Calendar extends Component {
 
   }
   updateLastUpdated(props = this.props) {
-    console.log('updateLastUpdated()');
     const lastUpdate = props.lastUpdate;
-    console.log(lastUpdate);
     this.lastUpdate = lastUpdate;
   }
   updatePreSelected(props = this.props) {
