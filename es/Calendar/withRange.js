@@ -73,6 +73,14 @@ export var enhanceDay = _withPropsOnChange(['selected'], function (_ref) {
         selected = _ref.selected,
         preselected = _ref.preselected;
 
+    /*let isSelected = false;
+    if (preSelectedSelected) {
+        console.log('is preselected selected');
+        console.log(date);
+        isSelected = date >= selected.start_time && date <= selected.end_time && !isWithinRange(date, selected.start_time, selected.end_time);
+    } else {
+        isSelected = date >= selected.start_time && date <= selected.end_time;
+     }*/
     var isSelected = date >= selected.start_time && date <= selected.end_time;
     var isStart = date === selected.start_time;
     var isEnd = date === selected.end_time;
