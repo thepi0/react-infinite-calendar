@@ -17,6 +17,12 @@ import isWithinRange from 'date-fns/is_within_range';
 
 export default class Month extends PureComponent {
 
+    shouldComponentUpdate(nextProps, nextState) {
+        const differentLastUpdate = nextProps.lastUpdate !== this.props.lastUpdate;
+        const differentSelection = nextProps.selected !== this.props.selected;
+        return differentLastUpdate || differentSelection;
+    }
+
   renderRows() {
     const {
       DayComponent,
@@ -61,8 +67,8 @@ export default class Month extends PureComponent {
     console.log(lastDate);
     console.log(lastSelectableDate);*/
 
-    console.log('selected');
-    console.log(selected);
+    //console.log('selected');
+    //console.log(selected);
 
     // Used for faster comparisons
     const _today = format(today, 'YYYY-MM-DD');

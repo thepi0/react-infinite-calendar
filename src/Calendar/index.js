@@ -61,7 +61,7 @@ export default class Calendar extends Component {
     this.updatelastSelectableDate(props);
 
     this.state = {
-      display: props.display,
+      display: props.display
     };
   }
   static propTypes = {
@@ -173,7 +173,7 @@ export default class Calendar extends Component {
       this.setState({display: nextProps.display});
     }
 
-    if (nextProps.lastUpdate !== this.props.lastUpdate) {
+    if (nextProps.lastUpdate !== this.state.lastUpdate) {
         console.log('lastUpdate is not the same as before - update everything');
         this.updateLastUpdated(nextProps);
         this.updatePreSelected(nextProps);

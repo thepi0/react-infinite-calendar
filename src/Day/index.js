@@ -10,8 +10,8 @@ export default class Day extends PureComponent {
   handleClick = () => {
     let {date, beforeLastDisabled, disabledDays, isDisabled, isPreSelected, onClick, originalDisabledDates} = this.props;
 
-    console.log('handleClick()');
-    console.log(disabledDays);
+    //console.log('handleClick()');
+    //console.log(disabledDays);
 
     isPreSelection = isPreSelected;
 
