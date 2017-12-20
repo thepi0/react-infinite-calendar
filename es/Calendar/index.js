@@ -61,6 +61,8 @@ var styles = {
   }
 };
 
+var lastUpdateDate = new Date();
+
 export var withDefaultProps = _defaultProps({
   autoFocus: true,
   DayComponent: Day,
@@ -227,6 +229,19 @@ var Calendar = function (_Component) {
     if (autoFocus) {
       this.node.focus();
     }
+  };
+
+  Calendar.prototype.shouldComponentUpdate = function shouldComponentUpdate(nextProps, nextState) {
+    // You can access `this.props` and `this.state` here
+    // This function should return a boolean, whether the component should re-render.
+    console.log('shouldComponentUpdate()');
+    console.log(this.props);
+    console.log(nextProps);
+    if (this.props.lastUpdate !== nextProps.lastUpdate) {
+      lastUpdateDate = nextProps.lastUpdate;
+      console.log('lastUPDATE IS NOT THE SAME - THE WHOLE THING SHOULD UPDATE');
+    }
+    return false;
   };
 
   Calendar.prototype.componentWillReceiveProps = function componentWillReceiveProps() {
@@ -431,7 +446,7 @@ var Calendar = function (_Component) {
             theme: theme,
             todayLabel: locale.todayLabel.long
           }),
-          React.createElement(MonthList, {
+          this.months && this.months.length && React.createElement(MonthList, {
             ref: function ref(instance) {
               _this2._MonthList = instance;
             },
@@ -473,7 +488,7 @@ process.env.NODE_ENV !== "production" ? Calendar.propTypes = {
   autoFocus: PropTypes.bool,
   className: PropTypes.string,
   DayComponent: PropTypes.func,
-  lastSelectableDate: PropTypes.string,
+  lastSelectableDate: PropTypes.instanceOf(Date),
   disabledDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
   originalDisabledDates: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   disabledDays: PropTypes.arrayOf(PropTypes.number),
@@ -505,7 +520,7 @@ process.env.NODE_ENV !== "production" ? Calendar.propTypes = {
   max: PropTypes.instanceOf(Date),
   maxDate: PropTypes.instanceOf(Date),
   min: PropTypes.instanceOf(Date),
-  preselected: PropTypes.arrayOf(PropTypes.object),
+  preselected: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   minDate: PropTypes.instanceOf(Date),
   lastUpdate: PropTypes.instanceOf(Date),
   onScroll: PropTypes.func,

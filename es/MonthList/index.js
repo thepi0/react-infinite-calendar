@@ -218,7 +218,7 @@ var MonthList = function (_Component) {
 
 export { MonthList as default };
 process.env.NODE_ENV !== "production" ? MonthList.propTypes = {
-  lastSelectableDate: PropTypes.string,
+  lastSelectableDate: PropTypes.instanceOf(Date),
   disabledDates: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   originalDisabledDates: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   disabledDays: PropTypes.arrayOf(PropTypes.number),
