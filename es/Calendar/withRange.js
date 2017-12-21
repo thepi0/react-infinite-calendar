@@ -328,7 +328,7 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
             end_time: date
         }), {
             before_last: true,
-            selections: getPreselectedWithinRange(date, date, preselected, selected, originalDisabledDates),
+            selections: getPreselectedWithinDate(date, preselected),
             eventProp: 'click'
         }));
         setSelectionStart(null);
@@ -423,6 +423,21 @@ function handleMouseOver(e, _ref7) {
         }));
     }
     saveHoverDate = dateStr;
+}
+
+function getPreselectedWithinDate(date, preselected) {
+    console.log(date);
+    console.log(preselected);
+    var returnableDates = [];
+    var thisDate = format(date, 'YYYY-MM-DD');
+    for (var i = 0, preselect = preselected.length; i < preselect; ++i) {
+        var dayStart = format(preselected[i].start_time, 'YYYY-MM-DD');
+        if (thisDate === dayStart) {
+            returnableDates.push(preselected[i]);
+        }
+    }
+
+    return { days_count: 1, data: returnableDates };
 }
 
 function getPreselectedWithinRange(start_date, end_date, preselected, selected, originalDisabledDates) {
