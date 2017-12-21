@@ -120,8 +120,8 @@ export default class Month extends PureComponent {
 					disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 ||
                     initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(date) !== -1 ||
 					disabledDatesArray && selectionType === 'not_preselected' && (disabledDatesArray.indexOf(date) !== -1 || initialDisabledDatesArray.indexOf(date) !== -1) ||
-                    enabledDatesArray && selectionType === 'preselected' && (enabledDatesArray.indexOf(date) === -1 || initialDisabledDatesArray.indexOf(date) !== -1) ||
-                    selectionDone && selected && selected.start_time && selected.end_time && !isWithinRange(date, selected.start_time, selected.end_time)
+                    enabledDatesArray && selectionType === 'preselected' && (enabledDatesArray.indexOf(date) === -1 || initialDisabledDatesArray.indexOf(date) !== -1) /*||
+                    selectionDone && selected && selected.start_time && selected.end_time && !isWithinRange(date, selected.start_time, selected.end_time)*/
 				);
 
         prevDisabled = (

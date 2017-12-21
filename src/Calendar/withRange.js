@@ -115,7 +115,8 @@ export const withRange = compose(
     passThrough: {
       ...passThrough,
       Day: {
-        onClick: (date, beforeLastDisabled, isPreSelected, originalDisabledDates, disabledDays) => handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, disabledDays, {selected, preselected, ...props}),
+        onClear: () => clearSelect({selected, ...props}),
+        onClick: (date, beforeLastDisabled, isPreSelected, originalDisabledDates) => handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, {selected, preselected, ...props}),
         handlers: {
           onMouseOver: !isTouchDevice && props.selectionStart
             ? (e) => handleMouseOver(e, {selected, preselected, ...props})
@@ -245,7 +246,21 @@ function getSortedSelection({start_time, end_time}) {
     : {start_time: end_time, end_time: start_time};
 }
 
-function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, disabledDays, {onSelect, selected, preselected, preselectedDates, setPreselectedDates, selectionType, setSelectionType, selectionDone, setSelectionDone, selectionStart, setSelectionStart}) {
+function clearSelect({onSelect, selected, setSelectionType, setSelectionDone, setSelectionStart}) {
+    selected = null;
+    setSelectionStart(null);
+    setSelectionType('none');
+    setSelectionDone(true);
+    onSelect({
+        eventType:EVENT_TYPE.END,
+        start_time: null,
+        end_time: null,
+        before_last: false,
+        eventProp: 'click'
+    });
+}
+
+function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, {onSelect, selected, preselected, preselectedDates, setPreselectedDates, selectionType, setSelectionType, selectionDone, setSelectionDone, selectionStart, setSelectionStart}) {
 
     if (!isPreSelected) {
         if (preselected && preselected[0]) {
@@ -258,41 +273,87 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
         setSelectionType('preselected');
     }
 
-  if (selectionStart) {
-    onSelect({
-      eventType: EVENT_TYPE.END,
-      ...getSortedSelection({
-        start_time: selectionStart,
-        end_time: date,
-      }),
-      disabled_days: disabledDays,
-      before_last: beforeLastDisabled,
-      selections: getPreselectedWithinRange(selectionStart, date, preselected, selected, originalDisabledDates),
-      eventProp: 'click'
-    });
-    setSelectionStart(null);
-    setSelectionDone(true);
-} else {
-    onSelect({
-        eventType:EVENT_TYPE.START,
-        start_time: date,
-        end_time: date,
-        before_last: beforeLastDisabled,
-        eventProp: 'click'
-    });
-    setSelectionStart(date);
-    if (isPreSelected) {
-        preSelectedSelected = true;
+    if (beforeLastDisabled) {
+        onSelect({
+            eventType:EVENT_TYPE.END,
+            ...getSortedSelection({
+              start_time: date,
+              end_time: date,
+            }),
+            before_last: true,
+            selections: getPreselectedWithinRange(date, date, preselected, selected, originalDisabledDates),
+            eventProp: 'click'
+        });
+        setSelectionStart(null);
+        setSelectionDone(true);
+    } else if (selectionStart) {
+        onSelect({
+          eventType: EVENT_TYPE.END,
+          ...getSortedSelection({
+            start_time: selectionStart,
+            end_time: date,
+          }),
+          before_last: beforeLastDisabled,
+          selections: getPreselectedWithinRange(selectionStart, date, preselected, selected, originalDisabledDates),
+          eventProp: 'click'
+        });
+        setSelectionStart(null);
+        setSelectionDone(true);
     } else {
-        preSelectedSelected = false;
+        onSelect({
+            eventType:EVENT_TYPE.START,
+            start_time: date,
+            end_time: date,
+            before_last: beforeLastDisabled,
+            eventProp: 'click'
+        });
+        setSelectionStart(date);
+        if (isPreSelected) {
+            preSelectedSelected = true;
+        } else {
+            preSelectedSelected = false;
+        }
+        setSelectionDone(false);
     }
-    setSelectionDone(false);
-  }
 }
+
+/*
+* TODO: Mouse down and touch support
+const EventListenerMode = {capture: true};
+
+function preventGlobalMouseEvents() {
+  document.body.style['pointer-events'] = 'none';
+}
+
+function restoreGlobalMouseEvents() {
+  document.body.style['pointer-events'] = 'auto';
+}
+
+function mousemoveListener(e) {
+  e.stopPropagation();
+  // do whatever is needed while the user is moving the cursor around
+}
+
+function mouseupListener(e) {
+  restoreGlobalMouseEvents();
+  document.removeEventListener('mouseup',   mouseupListener,   EventListenerMode);
+  document.removeEventListener('mousemove', mousemoveListener, EventListenerMode);
+  e.stopPropagation();
+}
+
+function handleMouseDown(e) {
+  preventGlobalMouseEvents();
+  document.addEventListener('mouseup',   mouseupListener,   EventListenerMode);
+  document.addEventListener('mousemove', mousemoveListener, EventListenerMode);
+  e.preventDefault();
+  e.stopPropagation();
+}
+*/
 
 let saveHoverDate;
 
 function handleMouseOver(e, {onSelect, selectionStart}) {
+  console.log('handleMouseOver');
   const dateStr = e.target.getAttribute('data-date');
   const isDisabled = e.target.getAttribute('data-disabled');
   const date = dateStr && parse(dateStr);

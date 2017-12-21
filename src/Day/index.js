@@ -8,19 +8,26 @@ let isPreSelection = false;
 export default class Day extends PureComponent {
 
   handleClick = () => {
-    let {date, beforeLastDisabled, disabledDays, isDisabled, isPreSelected, onClick, originalDisabledDates} = this.props;
-
-    //console.log('handleClick()');
-    //console.log(disabledDays);
+    let {date, beforeLastDisabled, isDisabled, isPreSelected, onClick, onClear, originalDisabledDates} = this.props;
 
     isPreSelection = isPreSelected;
 
-    if (beforeLastDisabled && !isPreSelected && typeof onClick === 'function') {
-      //onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
-    } else if (!isDisabled && typeof onClick === 'function') {
-      onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, disabledDays);
+    if (isDisabled) {
+      onClear();
+    } else if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onClick === 'function') {
+      onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
     }
   };
+
+  /*handleMouseDown = () => {
+      let {date, beforeLastDisabled, isDisabled, isPreSelected, onMouseDown, originalDisabledDates} = this.props;
+
+      isPreSelection = isPreSelected;
+
+      if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onMouseDown === 'function') {
+        onMouseDown(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
+      }
+  };*/
 
   renderSelection(selectionColor) {
     const {
