@@ -353,7 +353,6 @@ function handleMouseDown(e) {
 let saveHoverDate;
 
 function handleMouseOver(e, {onSelect, selectionStart}) {
-  console.log('handleMouseOver');
   const dateStr = e.target.getAttribute('data-date');
   const isDisabled = e.target.getAttribute('data-disabled');
   const date = dateStr && parse(dateStr);
@@ -374,8 +373,6 @@ function handleMouseOver(e, {onSelect, selectionStart}) {
 }
 
 function getPreselectedWithinDate(date, preselected) {
-    console.log(date);
-    console.log(preselected);
     let returnableDates = [];
     let thisDate = format(date, 'YYYY-MM-DD');
     for (var i = 0, preselect = preselected.length; i < preselect; ++i) {
