@@ -281,7 +281,7 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
               end_time: date,
             }),
             before_last: true,
-            selections: getPreselectedWithinRange(date, date, preselected, selected, originalDisabledDates),
+            selections: getPreselectedWithinDate(date, preselected),
             eventProp: 'click'
         });
         setSelectionStart(null);
@@ -371,6 +371,21 @@ function handleMouseOver(e, {onSelect, selectionStart}) {
       });
   }
   saveHoverDate = dateStr;
+}
+
+function getPreselectedWithinDate(date, preselected) {
+    console.log(date);
+    console.log(preselected);
+    let returnableDates = [];
+    let thisDate = format(date, 'YYYY-MM-DD');
+    for (var i = 0, preselect = preselected.length; i < preselect; ++i) {
+        let dayStart = format(preselected[i].start_time, 'YYYY-MM-DD');
+        if (thisDate === dayStart) {
+            returnableDates.push(preselected[i]);
+        }
+    }
+
+    return {days_count: 1, data: returnableDates};
 }
 
 function getPreselectedWithinRange(start_date, end_date, preselected, selected, originalDisabledDates) {
