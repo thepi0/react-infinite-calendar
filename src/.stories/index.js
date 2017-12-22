@@ -78,19 +78,25 @@ storiesOf('Higher Order Components', module)
       lastUpdate={new Date()}
       originalDisabledDates={[
           {
-              date: "2017-11-21",
+              date: "2018-01-15",
               type: "vacation"
           }, {
-              date: "2017-12-25",
+              date: "2018-01-16",
               type: "vacation"
           }, {
-              date: "2017-12-26",
+              date: "2018-01-17",
               type: "vacation"
           }, {
-              date: "2017-12-29",
+              date: "2018-01-10",
+              type: "holiday"
+          }, {
+              date: "2018-01-10",
               type: "vacation"
           }, {
-              date: "2018-01-23",
+              date: "2018-01-12",
+              type: "holiday"
+          }, {
+              date: "2018-01-12",
               type: "vacation"
           }
       ]}
@@ -122,6 +128,10 @@ storiesOf('Higher Order Components', module)
       }}
       preselected={[
           {
+              start_time: "2018-01-15T08:00:00Z",
+              end_time: "2018-01-15T16:00:00Z",
+              child: 100
+          },{
               start_time: "2017-11-01T08:00:00Z",
               end_time: "2017-11-01T16:00:00Z",
               child: 100
@@ -189,82 +199,6 @@ storiesOf('Higher Order Components', module)
               start_time: "2017-12-21T09:00:00Z",
               end_time: "2017-12-21T17:00:00Z",
               child: 101
-          }, {
-              start_time: "2018-01-08T09:00:00Z",
-              end_time: "2018-01-08T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2018-01-09T09:00:00Z",
-              end_time: "2018-01-09T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2018-01-09T09:00:00Z",
-              end_time: "2018-01-09T17:00:00Z",
-              child: 100
-          }, {
-              start_time: "2018-01-10T09:00:00Z",
-              end_time: "2018-01-10T17:00:00Z",
-              child: 100
-          }, {
-              start_time: "2018-01-10T09:00:00Z",
-              end_time: "2018-01-10T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2018-01-11T09:00:00Z",
-              end_time: "2018-01-11T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2018-01-17T09:00:00Z",
-              end_time: "2018-01-17T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2018-01-01T09:00:00Z",
-              end_time: "2018-01-01T17:00:00Z",
-              child: 100
-          }, {
-              start_time: "2018-01-01T09:00:00Z",
-              end_time: "2018-01-01T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2018-01-02T09:00:00Z",
-              end_time: "2018-01-02T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2018-01-03T09:00:00Z",
-              end_time: "2018-01-03T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2018-01-04T09:00:00Z",
-              end_time: "2018-01-04T17:00:00Z",
-              child: 100
-          }, {
-              start_time: "2018-01-05T09:00:00Z",
-              end_time: "2018-01-05T17:00:00Z",
-              child: 100
-          }, {
-              start_time: "2018-01-05T09:00:00Z",
-              end_time: "2018-01-05T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2018-01-26T09:00:00Z",
-              end_time: "2018-01-26T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2018-01-29T09:00:00Z",
-              end_time: "2018-01-29T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2018-01-30T09:00:00Z",
-              end_time: "2018-01-30T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2018-01-29T09:00:00Z",
-              end_time: "2018-01-29T17:00:00Z",
-              child: 100
-          }, {
-              start_time: "2018-01-30T09:00:00Z",
-              end_time: "2018-01-30T17:00:00Z",
-              child: 100
           }
       ]}
       onSelect={(date) => console.log(date)}

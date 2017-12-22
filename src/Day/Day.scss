@@ -24,6 +24,7 @@
 }
 
 .root {
+  position: relative;
   display: inline-block;
   box-sizing: border-box;
   width: 1 / 7 * 100%;
@@ -38,6 +39,24 @@
 
   max-width: 70px;
   width: 70px;
+
+  .vacationCircle {
+      position: absolute;
+      bottom: 17px;
+      left: 50%;
+      margin-left: -4px;
+      height: 8px;
+      width: 8px;
+      border-radius: 50%;
+      background-color: $selectionBorderColor;
+  }
+
+  &.disabled {
+
+      .vacationCircle {
+        display: none;
+      }
+  }
 
   &.beforelast {
       color: $textColorDisabled;

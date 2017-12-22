@@ -61,6 +61,8 @@ export default class Day extends PureComponent {
       originalDisabledDates,
       disabledDays,
       handlers,
+      isVacation,
+      vacationType,
       selected,
       isDisabled,
       isHighlighted,
@@ -69,6 +71,7 @@ export default class Day extends PureComponent {
       isPreSelected,
       prevDisabled,
       nextDisabled,
+      nextDateDisabled,
       monthShort,
     } = this.props;
 
@@ -87,10 +90,12 @@ export default class Day extends PureComponent {
         }, className)}
         onClick={this.handleClick}
         data-date={date}
+        data-vacation-type={vacationType}
         data-disabled={isDisabled ? isDisabled : false}
         {...handlers}
       >
         {day}
+        {isVacation ? <div className={styles.vacationCircle}></div> : null}
         {isSelected && this.renderSelection()}
       </li>
     );

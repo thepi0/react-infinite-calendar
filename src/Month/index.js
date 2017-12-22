@@ -53,15 +53,23 @@ export default class Month extends PureComponent {
     let day = 0;
     let isDisabled = false;
     let nextDisabled = false;
+    let nextDateDisabled = null;
     let beforeLastDisabled = false;
     let prevDisabled = false;
     let nextSelected = false;
     let prevSelected= false;
     let isToday = false;
+    let dateDisabled = null;
+    let isDateVacation = false;
     let preselectedDates = passThrough.preselectedDates;
     let selectionType = passThrough.selectionType;
     let selectionDone = passThrough.selectionDone;
     let date, nextDate, prevDate, days, dow, nextdow, prevdow, row;
+
+    let vacationType = null;
+
+    let test = null;
+    let test2 = null;
 
     /*console.log('MONTH.JS');
     console.log(lastDate);
@@ -75,10 +83,14 @@ export default class Month extends PureComponent {
     const _minDate = format(minDate, 'YYYY-MM-DD');
     const _maxDate = format(maxDate, 'YYYY-MM-DD');
 
-    const initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.map((date) => format(parse(date.date), 'YYYY-MM-DD')) : null;
+    const initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : null;
 
-    let disabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.map((date) => format(parse(date.date), 'YYYY-MM-DD')) : null;
-    let enabledDatesArray = preselected && preselected[0] ? preselected.map((date) => format(parse(date.start_time), 'YYYY-MM-DD')) : null;
+    //console.log(preselected);
+
+    let disabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : null;
+    let enabledDatesArray = preselected && preselected[0] ? preselected.map((dateObj) => ({ date: format(dateObj.start_time, 'YYYY-MM-DD'), type: 'preselect' })) : null;
+
+    //console.log(enabledDatesArray);
 
     if (selectionType === 'not_preselected' && disabledDatesArray != null && disabledDatesArray.length) {
         disabledDatesArray = disabledDatesArray.concat(preselectedDates);
@@ -87,16 +99,20 @@ export default class Month extends PureComponent {
 
         if (selected && selected.start_time && isDate(lastSelectableDate) && isBefore(selected.start_time, lastSelectableDate)) {
             enabledDatesArray = enabledDatesArray.filter(function(date) {
-                return isBefore(date, lastDate);
+                return isBefore(date.date, lastDate);
             });
         } else if (selected && selected.start_time && isDate(lastSelectableDate) && isBefore(lastSelectableDate, selected.start_time)) {
             enabledDatesArray = enabledDatesArray.filter(function(date) {
-                return isBefore(lastDate, date);
+                return isBefore(lastDate, date.date);
             });
         }
     } else {
         disabledDatesArray = disabledDatesArray;
     }
+
+    //console.log(initialDisabledDatesArray);
+    //console.log(disabledDatesArray);
+    //console.log(enabledDatesArray);
 
 		// Oh the things we do in the name of performance...
     for (let i = 0, len = rows.length; i < len; i++) {
@@ -105,33 +121,73 @@ export default class Month extends PureComponent {
       dow = getDay(new Date(year, month, row[0]));
 
       for (let k = 0, len = row.length; k < len; k++) {
+        isDateVacation = false;
+        dateDisabled = null;
         day = row[k];
+        nextDateDisabled = null;
+        vacationType = null;
+
+        test = null;
+        test2 = null;
 
         date = getDateString(year, month, day);
         nextDate = format(addDays(date, 1), 'YYYY-MM-DD');
         prevDate = format(subDays(date, 1), 'YYYY-MM-DD');
+        test = {date: format(addDays(date, 1), 'YYYY-MM-DD'), type: 'holiday'};
+        test2 = {date: format(subDays(date, 1), 'YYYY-MM-DD'), type: 'holiday'};
         isToday = (date === _today);
         nextdow = dow + 1;
         prevdow = dow === 1 ? 7 : dow - 1;
+
+        for (let x = 0, len = initialDisabledDatesArray.length; x < len; x++) {
+            if (format(initialDisabledDatesArray[x].date, 'YYYY-MM-DD', {locale: locale.locale}) === format(date, 'YYYY-MM-DD') && initialDisabledDatesArray[x].type === 'vacation') {
+                isDateVacation = true;
+            }
+        }
+
+        if (selectionType === 'none' || selectionType === 'not_preselected') {
+            for (let j = 0, len = initialDisabledDatesArray.length; j < len; j++) {
+                if (format(initialDisabledDatesArray[j].date, 'YYYY-MM-DD', {locale: locale.locale}) === format(date, 'YYYY-MM-DD') && initialDisabledDatesArray[j].type === 'holiday') {
+                    dateDisabled = initialDisabledDatesArray[j];
+                    vacationType = initialDisabledDatesArray[j].type;
+                }
+            }
+        } else if (selectionType === 'preselected') {
+            for (let j = 0, len = enabledDatesArray.length; j < len; j++) {
+                if (format(enabledDatesArray[j].date, 'YYYY-MM-DD', {locale: locale.locale}) === format(date, 'YYYY-MM-DD')) {
+                    dateDisabled = enabledDatesArray[j];
+                    vacationType = enabledDatesArray[j].type;
+                }
+            }
+        }
 
         isDisabled = (
 					minDate && date < _minDate ||
 					maxDate && date > _maxDate ||
 					disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 ||
-                    initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(date) !== -1 ||
-					disabledDatesArray && selectionType === 'not_preselected' && (disabledDatesArray.indexOf(date) !== -1 || initialDisabledDatesArray.indexOf(date) !== -1) ||
-                    enabledDatesArray && selectionType === 'preselected' && (enabledDatesArray.indexOf(date) === -1 || initialDisabledDatesArray.indexOf(date) !== -1) /*||
-                    selectionDone && selected && selected.start_time && selected.end_time && !isWithinRange(date, selected.start_time, selected.end_time)*/
+                    initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(dateDisabled) !== -1 ||
+					disabledDatesArray && selectionType === 'not_preselected' && (disabledDatesArray.indexOf(dateDisabled) !== -1 || initialDisabledDatesArray.indexOf(dateDisabled) !== -1) ||
+                    enabledDatesArray && selectionType === 'preselected' && (enabledDatesArray.indexOf(dateDisabled) === -1 || initialDisabledDatesArray.indexOf(dateDisabled) !== -1) //||
+                    //selectionDone && selected && selected.start_time && selected.end_time && !isWithinRange(date, selected.start_time, selected.end_time)
 				);
 
         prevDisabled = (
 					disabledDays && disabledDays.length && disabledDays.indexOf(prevdow) !== -1 ||
-					disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(prevDate) !== -1
+					disabledDatesArray && disabledDatesArray.length && disabledDatesArray.includes(test2)
 				);
+
+                //console.log(nextDateDisabled);
+                //console.log(disabledDatesArray);
+
+                console.log('----- day stuff -----');
+                console.log(date);
+                console.log(disabledDatesArray);
+                console.log(test);
+
 
         nextDisabled = (
 					disabledDays && disabledDays.length && disabledDays.indexOf(nextdow) !== -1 ||
-					disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(nextDate) !== -1
+					disabledDatesArray && disabledDatesArray.length && disabledDatesArray.includes(test)
 				);
 
         beforeLastDisabled = (
@@ -144,11 +200,14 @@ export default class Month extends PureComponent {
 						currentYear={currentYear}
 						date={date}
 						day={day}
+                        vacationType={vacationType}
+                        isVacation={isDateVacation}
                         disabledDays={enabledDatesArray}
                         originalDisabledDates={originalDisabledDates}
                         beforeLastDisabled={beforeLastDisabled}
                         selected={selected}
                         preselected={preselected}
+                        nextDateDisabled={nextDateDisabled}
                         nextDisabled={nextDisabled}
                         prevDisabled={prevDisabled}
 						isDisabled={isDisabled}

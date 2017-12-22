@@ -141,6 +141,7 @@ export default class Calendar extends Component {
     }
   }
   componentWillUpdate(nextProps, nextState) {
+      console.log('componentWillUpdate()');
     //let {min, minDate, max, maxDate, preselected} = this.props;
 
     /*if (nextProps.min !== min || nextProps.minDate !== minDate || nextProps.max !== max || nextProps.maxDate !== maxDate) {

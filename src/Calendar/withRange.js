@@ -102,7 +102,7 @@ export const withRange = compose(
   withState('scrollDate', 'setScrollDate', getInitialDate),
   withState('displayKey', 'setDisplayKey', getInitialDate),
   withState('selectionStart', 'setSelectionStart', null),
-  withState('preselectedDates', 'setPreselectedDates', false),
+  withState('preselectedDates', 'setPreselectedDates', []),
   withState('selectionType', 'setSelectionType', 'none'),
   withState('selectionDone', 'setSelectionDone', false),
   withImmutableProps(({
@@ -264,12 +264,12 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
 
     if (!isPreSelected) {
         if (preselected && preselected[0]) {
-            let returnable = preselected.map(dateObj => format(dateObj.start_time, 'YYYY-MM-DD'));
+            let returnable = preselected.map((dateObj) => ({ date: format(dateObj.start_time, 'YYYY-MM-DD'), type: 'preselect' }));
             setPreselectedDates(returnable);
         }
         setSelectionType('not_preselected');
     } else {
-        setPreselectedDates(false);
+        setPreselectedDates([]);
         setSelectionType('preselected');
     }
 
