@@ -35,8 +35,9 @@ var styles = {
   },
   day: {
     'root': 'Cal__Day__root',
-    'beforelast': 'Cal__Day__beforelast',
+    'vacationCircle': 'Cal__Day__vacationCircle',
     'disabled': 'Cal__Day__disabled',
+    'beforelast': 'Cal__Day__beforelast',
     'preselected': 'Cal__Day__preselected',
     'nextselected': 'Cal__Day__nextselected',
     'prevselected': 'Cal__Day__prevselected',
@@ -230,6 +231,7 @@ var Calendar = function (_Component) {
   };
 
   Calendar.prototype.componentWillUpdate = function componentWillUpdate(nextProps, nextState) {
+    console.log('componentWillUpdate()');
     //let {min, minDate, max, maxDate, preselected} = this.props;
 
     /*if (nextProps.min !== min || nextProps.minDate !== minDate || nextProps.max !== max || nextProps.maxDate !== maxDate) {

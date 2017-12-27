@@ -71,7 +71,6 @@ var Month = function (_PureComponent) {
             theme = _props.theme,
             passThrough = _props.passThrough;
 
-        var currentYear = today.getFullYear();
         var year = monthDate.getFullYear();
         var month = monthDate.getMonth();
         var monthShort = format(monthDate, 'MMM', { locale: locale.locale });
@@ -85,6 +84,8 @@ var Month = function (_PureComponent) {
         var nextSelected = false;
         var prevSelected = false;
         var isToday = false;
+        var dateDisabled = { date: null, type: null };
+        var isDateVacation = false;
         var preselectedDates = passThrough.preselectedDates;
         var selectionType = passThrough.selectionType;
         var selectionDone = passThrough.selectionDone;
@@ -96,49 +97,42 @@ var Month = function (_PureComponent) {
             nextdow = void 0,
             prevdow = void 0,
             row = void 0;
-
-        /*console.log('MONTH.JS');
-        console.log(lastDate);
-        console.log(lastSelectableDate);*/
-
-        //console.log('selected');
-        //console.log(selected);
+        var nextDateObject = null;
+        var prevDateObject = null;
 
         // Used for faster comparisons
         var _today = format(today, 'YYYY-MM-DD');
         var _minDate = format(minDate, 'YYYY-MM-DD');
         var _maxDate = format(maxDate, 'YYYY-MM-DD');
+        var initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : null;
 
-        var initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.map(function (date) {
-            return format(parse(date.date), 'YYYY-MM-DD');
+        var disabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : null;
+        var enabledDatesArray = preselected && preselected[0] ? preselected.map(function (dateObj) {
+            return { date: format(dateObj.start_time, 'YYYY-MM-DD'), type: 'preselect' };
         }) : null;
-
-        var disabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.map(function (date) {
-            return format(parse(date.date), 'YYYY-MM-DD');
-        }) : null;
-        var enabledDatesArray = preselected && preselected[0] ? preselected.map(function (date) {
-            return format(parse(date.start_time), 'YYYY-MM-DD');
+        var reallyDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.filter(function (object) {
+            return object.type === 'holiday';
         }) : null;
 
         if (selectionType === 'not_preselected' && disabledDatesArray != null && disabledDatesArray.length) {
             disabledDatesArray = disabledDatesArray.concat(preselectedDates);
+            reallyDisabledDatesArray = reallyDisabledDatesArray.concat(preselectedDates);
         } else if (selectionType === 'preselected' && enabledDatesArray != null && enabledDatesArray.length) {
             enabledDatesArray = enabledDatesArray.concat(preselectedDates);
 
             if (selected && selected.start_time && isDate(lastSelectableDate) && isBefore(selected.start_time, lastSelectableDate)) {
                 enabledDatesArray = enabledDatesArray.filter(function (date) {
-                    return isBefore(date, lastDate);
+                    return isBefore(date.date, lastDate);
                 });
             } else if (selected && selected.start_time && isDate(lastSelectableDate) && isBefore(lastSelectableDate, selected.start_time)) {
                 enabledDatesArray = enabledDatesArray.filter(function (date) {
-                    return isBefore(lastDate, date);
+                    return isBefore(lastDate, date.date);
                 });
             }
         } else {
             disabledDatesArray = disabledDatesArray;
         }
 
-        // Oh the things we do in the name of performance...
         for (var i = 0, len = rows.length; i < len; i++) {
             var _classNames;
 
@@ -147,31 +141,70 @@ var Month = function (_PureComponent) {
             dow = getDay(new Date(year, month, row[0]));
 
             for (var k = 0, _len = row.length; k < _len; k++) {
+                isDateVacation = false;
+                dateDisabled = { date: null, type: null };
                 day = row[k];
-
+                nextDateObject = null;
+                prevDateObject = null;
                 date = getDateString(year, month, day);
                 nextDate = format(addDays(date, 1), 'YYYY-MM-DD');
                 prevDate = format(subDays(date, 1), 'YYYY-MM-DD');
+                nextDateObject = { date: format(addDays(date, 1), 'YYYY-MM-DD'), type: 'holiday' };
+                prevDateObject = { date: format(subDays(date, 1), 'YYYY-MM-DD'), type: 'holiday' };
                 isToday = date === _today;
                 nextdow = dow + 1;
                 prevdow = dow === 1 ? 7 : dow - 1;
 
-                isDisabled = minDate && date < _minDate || maxDate && date > _maxDate || disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 || initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(date) !== -1 || disabledDatesArray && selectionType === 'not_preselected' && (disabledDatesArray.indexOf(date) !== -1 || initialDisabledDatesArray.indexOf(date) !== -1) || enabledDatesArray && selectionType === 'preselected' && (enabledDatesArray.indexOf(date) === -1 || initialDisabledDatesArray.indexOf(date) !== -1) /*||
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              selectionDone && selected && selected.start_time && selected.end_time && !isWithinRange(date, selected.start_time, selected.end_time)*/
-                ;
+                for (var x = 0, _len2 = initialDisabledDatesArray.length; x < _len2; x++) {
+                    if (format(initialDisabledDatesArray[x].date, 'YYYY-MM-DD', { locale: locale.locale }) === format(date, 'YYYY-MM-DD') && initialDisabledDatesArray[x].type === 'vacation') {
+                        isDateVacation = true;
+                    }
+                }
 
-                prevDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(prevdow) !== -1 || disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(prevDate) !== -1;
+                if (selectionType === 'none' || selectionType === 'not_preselected') {
+                    for (var j = 0, _len3 = initialDisabledDatesArray.length; j < _len3; j++) {
+                        if (format(initialDisabledDatesArray[j].date, 'YYYY-MM-DD', { locale: locale.locale }) === format(date, 'YYYY-MM-DD') && initialDisabledDatesArray[j].type === 'holiday') {
+                            dateDisabled = initialDisabledDatesArray[j];
+                        }
+                    }
+                } else if (selectionType === 'preselected') {
+                    for (var _j = 0, _len4 = enabledDatesArray.length; _j < _len4; _j++) {
+                        if (format(enabledDatesArray[_j].date, 'YYYY-MM-DD', { locale: locale.locale }) === format(date, 'YYYY-MM-DD')) {
+                            dateDisabled = enabledDatesArray[_j];
+                        }
+                    }
+                }
 
-                nextDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(nextdow) !== -1 || disabledDatesArray && disabledDatesArray.length && disabledDatesArray.indexOf(nextDate) !== -1;
+                isDisabled = minDate && date < _minDate || maxDate && date > _maxDate || disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 || initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(dateDisabled) !== -1 || disabledDatesArray && selectionType === 'not_preselected' && (disabledDatesArray.map(function (e) {
+                    return e.date;
+                }).indexOf(dateDisabled.date) !== -1 || initialDisabledDatesArray.map(function (e) {
+                    return e.date;
+                }).indexOf(dateDisabled.date) !== -1 || reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map(function (e) {
+                    return e.date;
+                }).indexOf(date) !== -1) || enabledDatesArray && selectionType === 'preselected' && (enabledDatesArray.map(function (e) {
+                    return e.date;
+                }).indexOf(dateDisabled.date) === -1 || initialDisabledDatesArray.map(function (e) {
+                    return { date: e.date, type: e.type };
+                }).indexOf(dateDisabled) !== -1);
+
+                prevDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(prevdow) !== -1 || reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map(function (e) {
+                    return e.date;
+                }).indexOf(prevDateObject.date) !== -1;
+
+                nextDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(nextdow) !== -1 ||
+                //disabledDatesArray && disabledDatesArray.length && disabledDatesArray.includes(test) ||
+                //reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map((e) => { return e.date; }).indexOf(date) !== -1 ||
+                reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map(function (e) {
+                    return e.date;
+                }).indexOf(nextDateObject.date) !== -1;
 
                 beforeLastDisabled = isDate(lastSelectableDate) && isBefore(date, lastDate);
 
                 days[k] = React.createElement(DayComponent, _extends({
                     key: 'day-' + day,
-                    currentYear: currentYear,
                     date: date,
                     day: day,
-                    disabledDays: enabledDatesArray,
+                    isVacation: isDateVacation,
                     originalDisabledDates: originalDisabledDates,
                     beforeLastDisabled: beforeLastDisabled,
                     selected: selected,
@@ -179,12 +212,7 @@ var Month = function (_PureComponent) {
                     nextDisabled: nextDisabled,
                     prevDisabled: prevDisabled,
                     isDisabled: isDisabled,
-                    isToday: isToday,
-                    locale: locale,
-                    month: month,
-                    monthShort: monthShort,
-                    theme: theme,
-                    year: year
+                    isToday: isToday
                 }, passThrough.Day));
 
                 dow += 1;

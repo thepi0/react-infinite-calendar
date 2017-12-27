@@ -24,8 +24,9 @@ import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 var styles = {
     'root': 'Cal__Day__root',
-    'beforelast': 'Cal__Day__beforelast',
+    'vacationCircle': 'Cal__Day__vacationCircle',
     'disabled': 'Cal__Day__disabled',
+    'beforelast': 'Cal__Day__beforelast',
     'preselected': 'Cal__Day__preselected',
     'nextselected': 'Cal__Day__nextselected',
     'prevselected': 'Cal__Day__prevselected',
@@ -73,14 +74,6 @@ export var enhanceDay = _withPropsOnChange(['selected'], function (_ref) {
         selected = _ref.selected,
         preselected = _ref.preselected;
 
-    /*let isSelected = false;
-    if (preSelectedSelected) {
-        console.log('is preselected selected');
-        console.log(date);
-        isSelected = date >= selected.start_time && date <= selected.end_time && !isWithinRange(date, selected.start_time, selected.end_time);
-    } else {
-        isSelected = date >= selected.start_time && date <= selected.end_time;
-     }*/
     var isSelected = date >= selected.start_time && date <= selected.end_time;
     var isStart = date === selected.start_time;
     var isEnd = date === selected.end_time;
@@ -110,7 +103,7 @@ export var enhanceDay = _withPropsOnChange(['selected'], function (_ref) {
 });
 
 // Enhancer to handle selecting and displaying multiple dates
-var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDate', getInitialDate), _withState('displayKey', 'setDisplayKey', getInitialDate), _withState('selectionStart', 'setSelectionStart', null), _withState('preselectedDates', 'setPreselectedDates', false), _withState('selectionType', 'setSelectionType', 'none'), _withState('selectionDone', 'setSelectionDone', false), withImmutableProps(function (_ref2) {
+var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDate', getInitialDate), _withState('displayKey', 'setDisplayKey', getInitialDate), _withState('selectionStart', 'setSelectionStart', null), _withState('preselectedDates', 'setPreselectedDates', []), _withState('selectionType', 'setSelectionType', 'none'), _withState('selectionDone', 'setSelectionDone', false), withImmutableProps(function (_ref2) {
     var DayComponent = _ref2.DayComponent;
     return {
         DayComponent: enhanceDay(DayComponent)
@@ -310,13 +303,13 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
     if (!isPreSelected) {
         if (preselected && preselected[0]) {
             var returnable = preselected.map(function (dateObj) {
-                return format(dateObj.start_time, 'YYYY-MM-DD');
+                return { date: format(dateObj.start_time, 'YYYY-MM-DD'), type: 'preselect' };
             });
             setPreselectedDates(returnable);
         }
         setSelectionType('not_preselected');
     } else {
-        setPreselectedDates(false);
+        setPreselectedDates([]);
         setSelectionType('preselected');
     }
 
@@ -403,7 +396,6 @@ function handleMouseOver(e, _ref7) {
     var onSelect = _ref7.onSelect,
         selectionStart = _ref7.selectionStart;
 
-    console.log('handleMouseOver');
     var dateStr = e.target.getAttribute('data-date');
     var isDisabled = e.target.getAttribute('data-disabled');
     var date = dateStr && parse(dateStr);
@@ -426,8 +418,6 @@ function handleMouseOver(e, _ref7) {
 }
 
 function getPreselectedWithinDate(date, preselected) {
-    console.log(date);
-    console.log(preselected);
     var returnableDates = [];
     var thisDate = format(date, 'YYYY-MM-DD');
     for (var i = 0, preselect = preselected.length; i < preselect; ++i) {

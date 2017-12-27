@@ -11,8 +11,9 @@ import classNames from 'classnames';
 import parse from 'date-fns/parse';
 var styles = {
   'root': 'Cal__Day__root',
-  'beforelast': 'Cal__Day__beforelast',
+  'vacationCircle': 'Cal__Day__vacationCircle',
   'disabled': 'Cal__Day__disabled',
+  'beforelast': 'Cal__Day__beforelast',
   'preselected': 'Cal__Day__preselected',
   'nextselected': 'Cal__Day__nextselected',
   'prevselected': 'Cal__Day__prevselected',
@@ -85,11 +86,7 @@ var Day = function (_PureComponent) {
         day = _props.day,
         date = _props.date,
         isToday = _props.isToday,
-        isDisabled = _props.isDisabled,
-        todayLabel = _props.locale.todayLabel,
-        monthShort = _props.monthShort,
-        textColor = _props.theme.textColor,
-        selectionStyle = _props.selectionStyle;
+        isDisabled = _props.isDisabled;
 
 
     return React.createElement('div', {
@@ -104,13 +101,12 @@ var Day = function (_PureComponent) {
 
     var _props2 = this.props,
         className = _props2.className,
-        currentYear = _props2.currentYear,
         date = _props2.date,
         day = _props2.day,
         beforeLastDisabled = _props2.beforeLastDisabled,
         originalDisabledDates = _props2.originalDisabledDates,
-        disabledDays = _props2.disabledDays,
         handlers = _props2.handlers,
+        isVacation = _props2.isVacation,
         selected = _props2.selected,
         isDisabled = _props2.isDisabled,
         isHighlighted = _props2.isHighlighted,
@@ -131,6 +127,7 @@ var Day = function (_PureComponent) {
         'data-disabled': isDisabled ? isDisabled : false
       }, handlers),
       day,
+      isVacation ? React.createElement('div', { className: styles.vacationCircle }) : null,
       isSelected && this.renderSelection()
     );
   };
