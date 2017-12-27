@@ -78,8 +78,14 @@ storiesOf('Higher Order Components', module)
       lastUpdate={new Date()}
       originalDisabledDates={[
           {
-              date: "2017-12-27",
-              type: "holiday"
+              date: "2017-11-28",
+              type: "vacation"
+          },{
+              date: "2017-12-28",
+              type: "vacation"
+          },{
+              date: "2017-12-25",
+              type: "vacation"
           },{
               date: "2018-01-15",
               type: "vacation"
@@ -88,6 +94,15 @@ storiesOf('Higher Order Components', module)
               type: "vacation"
           }, {
               date: "2018-01-17",
+              type: "vacation"
+          }, {
+              date: "2018-01-24",
+              type: "holiday"
+          }, {
+              date: "2018-01-25",
+              type: "vacation"
+          }, {
+              date: "2018-01-25",
               type: "vacation"
           }, {
               date: "2018-01-10",
