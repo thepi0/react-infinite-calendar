@@ -70,11 +70,11 @@ storiesOf('Higher Order Components', module)
     <InfiniteCalendar
       width={Math.min(window.innerWidth, 900)}
       height={Math.min(window.innerHeight, 900)}
-      min={subMonths(today, 1)}
-      max={addMonths(today, 1)}
+      min={subMonths(today, 2)}
+      max={addMonths(today, 2)}
       rowHeight={74}
       selected={null}
-      lastSelectableDate={new Date(2017, 12, 28)}
+      lastSelectableDate={new Date(2018, 0, 1)}
       lastUpdate={new Date()}
       originalDisabledDates={[
           {
@@ -131,6 +131,10 @@ storiesOf('Higher Order Components', module)
       }}
       preselected={[
           {
+              start_time: "2018-01-16T08:00:00Z",
+              end_time: "2018-01-16T16:00:00Z",
+              child: 100
+          }, {
               start_time: "2018-01-15T08:00:00Z",
               end_time: "2018-01-15T16:00:00Z",
               child: 100

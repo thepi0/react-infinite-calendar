@@ -39,9 +39,7 @@ export default class Month extends PureComponent {
       rows,
       selected,
       preselected,
-      startDays,
       today,
-      theme,
       passThrough,
     } = this.props;
     const year = monthDate.getFullYear();
@@ -116,7 +114,7 @@ export default class Month extends PureComponent {
         prevdow = dow === 1 ? 7 : dow - 1;
 
         for (let x = 0, len = initialDisabledDatesArray.length; x < len; x++) {
-            if (format(initialDisabledDatesArray[x].date, 'YYYY-MM-DD', {locale: locale.locale}) === format(date, 'YYYY-MM-DD') && initialDisabledDatesArray[x].type === 'vacation') {
+            if (initialDisabledDatesArray[x].date === date && initialDisabledDatesArray[x].type === 'vacation' && !isBefore(date, lastDate)) {
                 isDateVacation = true;
             }
         }
@@ -168,8 +166,6 @@ export default class Month extends PureComponent {
 
         nextDisabled = (
 					disabledDays && disabledDays.length && disabledDays.indexOf(nextdow) !== -1 ||
-					//disabledDatesArray && disabledDatesArray.length && disabledDatesArray.includes(test) ||
-                    //reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map((e) => { return e.date; }).indexOf(date) !== -1 ||
                     reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map((e) => { return e.date; }).indexOf(nextDateObject.date) !== -1
 				);
 

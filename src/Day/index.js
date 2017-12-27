@@ -3,14 +3,10 @@ import classNames from 'classnames';
 import parse from 'date-fns/parse';
 import styles from './Day.scss';
 
-let isPreSelection = false;
-
 export default class Day extends PureComponent {
 
   handleClick = () => {
     let {date, beforeLastDisabled, isDisabled, isPreSelected, onClick, onClear, originalDisabledDates} = this.props;
-
-    isPreSelection = isPreSelected;
 
     if (isDisabled) {
       onClear();
@@ -21,8 +17,6 @@ export default class Day extends PureComponent {
 
   /*handleMouseDown = () => {
       let {date, beforeLastDisabled, isDisabled, isPreSelected, onMouseDown, originalDisabledDates} = this.props;
-
-      isPreSelection = isPreSelected;
 
       if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onMouseDown === 'function') {
         onMouseDown(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
@@ -86,7 +80,7 @@ export default class Day extends PureComponent {
         {...handlers}
       >
         {day}
-        {isVacation ? <div className={styles.vacationCircle}></div> : null}
+        {!beforeLastDisabled && isVacation ? <div className={styles.vacationCircle}></div> : null}
         {isSelected && this.renderSelection()}
       </li>
     );
