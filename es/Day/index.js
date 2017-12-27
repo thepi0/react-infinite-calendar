@@ -37,9 +37,6 @@ var styles = {
   'month': 'Cal__Day__month'
 };
 
-
-var isPreSelection = false;
-
 var Day = function (_PureComponent) {
   _inherits(Day, _PureComponent);
 
@@ -63,8 +60,6 @@ var Day = function (_PureComponent) {
           originalDisabledDates = _this$props.originalDisabledDates;
 
 
-      isPreSelection = isPreSelected;
-
       if (isDisabled) {
         onClear();
       } else if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onClick === 'function') {
@@ -75,7 +70,6 @@ var Day = function (_PureComponent) {
 
   /*handleMouseDown = () => {
       let {date, beforeLastDisabled, isDisabled, isPreSelected, onMouseDown, originalDisabledDates} = this.props;
-       isPreSelection = isPreSelected;
        if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onMouseDown === 'function') {
         onMouseDown(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
       }
@@ -127,7 +121,7 @@ var Day = function (_PureComponent) {
         'data-disabled': isDisabled ? isDisabled : false
       }, handlers),
       day,
-      isVacation ? React.createElement('div', { className: styles.vacationCircle }) : null,
+      !beforeLastDisabled && isVacation ? React.createElement('div', { className: styles.vacationCircle }) : null,
       isSelected && this.renderSelection()
     );
   };

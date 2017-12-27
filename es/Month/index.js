@@ -66,9 +66,7 @@ var Month = function (_PureComponent) {
             rows = _props.rows,
             selected = _props.selected,
             preselected = _props.preselected,
-            startDays = _props.startDays,
             today = _props.today,
-            theme = _props.theme,
             passThrough = _props.passThrough;
 
         var year = monthDate.getFullYear();
@@ -156,7 +154,7 @@ var Month = function (_PureComponent) {
                 prevdow = dow === 1 ? 7 : dow - 1;
 
                 for (var x = 0, _len2 = initialDisabledDatesArray.length; x < _len2; x++) {
-                    if (format(initialDisabledDatesArray[x].date, 'YYYY-MM-DD', { locale: locale.locale }) === format(date, 'YYYY-MM-DD') && initialDisabledDatesArray[x].type === 'vacation') {
+                    if (initialDisabledDatesArray[x].date === date && initialDisabledDatesArray[x].type === 'vacation' && !isBefore(date, lastDate)) {
                         isDateVacation = true;
                     }
                 }
@@ -191,10 +189,7 @@ var Month = function (_PureComponent) {
                     return e.date;
                 }).indexOf(prevDateObject.date) !== -1;
 
-                nextDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(nextdow) !== -1 ||
-                //disabledDatesArray && disabledDatesArray.length && disabledDatesArray.includes(test) ||
-                //reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map((e) => { return e.date; }).indexOf(date) !== -1 ||
-                reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map(function (e) {
+                nextDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(nextdow) !== -1 || reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map(function (e) {
                     return e.date;
                 }).indexOf(nextDateObject.date) !== -1;
 
