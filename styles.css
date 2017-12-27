@@ -53,8 +53,6 @@
     width: 8px;
     border-radius: 50%;
     background-color: #ea992f; }
-  .Cal__Day__root.Cal__Day__disabled .Cal__Day__vacationCircle {
-    display: none; }
   .Cal__Day__root.Cal__Day__beforelast {
     color: #a4d8e8; }
   .Cal__Day__root.Cal__Day__disabled.Cal__Day__beforelast {

@@ -25,8 +25,8 @@ import parse from 'date-fns/parse';
 var styles = {
     'root': 'Cal__Day__root',
     'vacationCircle': 'Cal__Day__vacationCircle',
-    'disabled': 'Cal__Day__disabled',
     'beforelast': 'Cal__Day__beforelast',
+    'disabled': 'Cal__Day__disabled',
     'preselected': 'Cal__Day__preselected',
     'nextselected': 'Cal__Day__nextselected',
     'prevselected': 'Cal__Day__prevselected',
