@@ -70,14 +70,17 @@ storiesOf('Higher Order Components', module)
     <InfiniteCalendar
       width={Math.min(window.innerWidth, 900)}
       height={Math.min(window.innerHeight, 900)}
-      min={subMonths(today, 6)}
-      max={addMonths(today, 6)}
+      min={subMonths(today, 1)}
+      max={addMonths(today, 1)}
       rowHeight={74}
       selected={null}
       lastSelectableDate={new Date(2017, 11, 18)}
       lastUpdate={new Date()}
       originalDisabledDates={[
           {
+              date: "2018-01-24",
+              type: "holiday"
+          },{
               date: "2018-01-15",
               type: "vacation"
           }, {

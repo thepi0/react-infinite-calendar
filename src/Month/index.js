@@ -44,7 +44,6 @@ export default class Month extends PureComponent {
       theme,
       passThrough,
     } = this.props;
-    const currentYear = today.getFullYear();
     const year = monthDate.getFullYear();
     const month = monthDate.getMonth();
     const monthShort = format(monthDate, 'MMM', {locale: locale.locale});
@@ -53,47 +52,33 @@ export default class Month extends PureComponent {
     let day = 0;
     let isDisabled = false;
     let nextDisabled = false;
-    let nextDateDisabled = null;
     let beforeLastDisabled = false;
     let prevDisabled = false;
     let nextSelected = false;
     let prevSelected= false;
     let isToday = false;
-    let dateDisabled = null;
+    let dateDisabled = { date: null, type: null };
     let isDateVacation = false;
     let preselectedDates = passThrough.preselectedDates;
     let selectionType = passThrough.selectionType;
     let selectionDone = passThrough.selectionDone;
     let date, nextDate, prevDate, days, dow, nextdow, prevdow, row;
-
-    let vacationType = null;
-
-    let test = null;
-    let test2 = null;
-
-    /*console.log('MONTH.JS');
-    console.log(lastDate);
-    console.log(lastSelectableDate);*/
-
-    //console.log('selected');
-    //console.log(selected);
+    let nextDateObject = null;
+    let prevDateObject = null;
 
     // Used for faster comparisons
     const _today = format(today, 'YYYY-MM-DD');
     const _minDate = format(minDate, 'YYYY-MM-DD');
     const _maxDate = format(maxDate, 'YYYY-MM-DD');
-
     const initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : null;
-
-    //console.log(preselected);
 
     let disabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : null;
     let enabledDatesArray = preselected && preselected[0] ? preselected.map((dateObj) => ({ date: format(dateObj.start_time, 'YYYY-MM-DD'), type: 'preselect' })) : null;
-
-    //console.log(enabledDatesArray);
+    let reallyDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.filter((object) => object.type === 'holiday') : null;
 
     if (selectionType === 'not_preselected' && disabledDatesArray != null && disabledDatesArray.length) {
         disabledDatesArray = disabledDatesArray.concat(preselectedDates);
+        reallyDisabledDatesArray = reallyDisabledDatesArray.concat(preselectedDates);
     } else if (selectionType === 'preselected' && enabledDatesArray != null && enabledDatesArray.length) {
         enabledDatesArray =  enabledDatesArray.concat(preselectedDates);
 
@@ -110,11 +95,6 @@ export default class Month extends PureComponent {
         disabledDatesArray = disabledDatesArray;
     }
 
-    //console.log(initialDisabledDatesArray);
-    //console.log(disabledDatesArray);
-    //console.log(enabledDatesArray);
-
-		// Oh the things we do in the name of performance...
     for (let i = 0, len = rows.length; i < len; i++) {
       row = rows[i];
       days = [];
@@ -122,19 +102,15 @@ export default class Month extends PureComponent {
 
       for (let k = 0, len = row.length; k < len; k++) {
         isDateVacation = false;
-        dateDisabled = null;
+        dateDisabled = { date: null, type: null };
         day = row[k];
-        nextDateDisabled = null;
-        vacationType = null;
-
-        test = null;
-        test2 = null;
-
+        nextDateObject = null;
+        prevDateObject = null;
         date = getDateString(year, month, day);
         nextDate = format(addDays(date, 1), 'YYYY-MM-DD');
         prevDate = format(subDays(date, 1), 'YYYY-MM-DD');
-        test = {date: format(addDays(date, 1), 'YYYY-MM-DD'), type: 'holiday'};
-        test2 = {date: format(subDays(date, 1), 'YYYY-MM-DD'), type: 'holiday'};
+        nextDateObject = {date: format(addDays(date, 1), 'YYYY-MM-DD'), type: 'holiday'};
+        prevDateObject = {date: format(subDays(date, 1), 'YYYY-MM-DD'), type: 'holiday'};
         isToday = (date === _today);
         nextdow = dow + 1;
         prevdow = dow === 1 ? 7 : dow - 1;
@@ -149,14 +125,12 @@ export default class Month extends PureComponent {
             for (let j = 0, len = initialDisabledDatesArray.length; j < len; j++) {
                 if (format(initialDisabledDatesArray[j].date, 'YYYY-MM-DD', {locale: locale.locale}) === format(date, 'YYYY-MM-DD') && initialDisabledDatesArray[j].type === 'holiday') {
                     dateDisabled = initialDisabledDatesArray[j];
-                    vacationType = initialDisabledDatesArray[j].type;
                 }
             }
         } else if (selectionType === 'preselected') {
             for (let j = 0, len = enabledDatesArray.length; j < len; j++) {
                 if (format(enabledDatesArray[j].date, 'YYYY-MM-DD', {locale: locale.locale}) === format(date, 'YYYY-MM-DD')) {
                     dateDisabled = enabledDatesArray[j];
-                    vacationType = enabledDatesArray[j].type;
                 }
             }
         }
@@ -166,28 +140,37 @@ export default class Month extends PureComponent {
 					maxDate && date > _maxDate ||
 					disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 ||
                     initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(dateDisabled) !== -1 ||
-					disabledDatesArray && selectionType === 'not_preselected' && (disabledDatesArray.indexOf(dateDisabled) !== -1 || initialDisabledDatesArray.indexOf(dateDisabled) !== -1) ||
-                    enabledDatesArray && selectionType === 'preselected' && (enabledDatesArray.indexOf(dateDisabled) === -1 || initialDisabledDatesArray.indexOf(dateDisabled) !== -1) //||
-                    //selectionDone && selected && selected.start_time && selected.end_time && !isWithinRange(date, selected.start_time, selected.end_time)
+                    disabledDatesArray && selectionType === 'not_preselected' &&
+                    (
+                        (
+                        disabledDatesArray.map((e) => { return e.date; }).indexOf(dateDisabled.date) !== -1
+                        ||
+                        initialDisabledDatesArray.map((e) => { return e.date; }).indexOf(dateDisabled.date) !== -1
+                        ||
+                        reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map((e) => { return e.date; }).indexOf(date) !== -1
+                        )
+                    )
+                    ||
+                    enabledDatesArray && selectionType === 'preselected' &&
+                    (
+                        (
+                        enabledDatesArray.map((e) => { return e.date; }).indexOf(dateDisabled.date) === -1
+                        ||
+                        initialDisabledDatesArray.map((e) => { return {date: e.date, type: e.type}; }).indexOf(dateDisabled) !== -1
+                        )
+                    )
 				);
 
         prevDisabled = (
 					disabledDays && disabledDays.length && disabledDays.indexOf(prevdow) !== -1 ||
-					disabledDatesArray && disabledDatesArray.length && disabledDatesArray.includes(test2)
+                    reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map((e) => { return e.date; }).indexOf(prevDateObject.date) !== -1
 				);
-
-                //console.log(nextDateDisabled);
-                //console.log(disabledDatesArray);
-
-                console.log('----- day stuff -----');
-                console.log(date);
-                console.log(disabledDatesArray);
-                console.log(test);
-
 
         nextDisabled = (
 					disabledDays && disabledDays.length && disabledDays.indexOf(nextdow) !== -1 ||
-					disabledDatesArray && disabledDatesArray.length && disabledDatesArray.includes(test)
+					//disabledDatesArray && disabledDatesArray.length && disabledDatesArray.includes(test) ||
+                    //reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map((e) => { return e.date; }).indexOf(date) !== -1 ||
+                    reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map((e) => { return e.date; }).indexOf(nextDateObject.date) !== -1
 				);
 
         beforeLastDisabled = (
@@ -197,26 +180,17 @@ export default class Month extends PureComponent {
         days[k] = (
 					<DayComponent
 						key={`day-${day}`}
-						currentYear={currentYear}
 						date={date}
 						day={day}
-                        vacationType={vacationType}
                         isVacation={isDateVacation}
-                        disabledDays={enabledDatesArray}
                         originalDisabledDates={originalDisabledDates}
                         beforeLastDisabled={beforeLastDisabled}
                         selected={selected}
                         preselected={preselected}
-                        nextDateDisabled={nextDateDisabled}
                         nextDisabled={nextDisabled}
                         prevDisabled={prevDisabled}
 						isDisabled={isDisabled}
 						isToday={isToday}
-						locale={locale}
-                        month={month}
-                        monthShort={monthShort}
-						theme={theme}
-                        year={year}
                         {...passThrough.Day}
 					/>
 				);
