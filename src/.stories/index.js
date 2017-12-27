@@ -74,11 +74,11 @@ storiesOf('Higher Order Components', module)
       max={addMonths(today, 1)}
       rowHeight={74}
       selected={null}
-      lastSelectableDate={new Date(2017, 11, 18)}
+      lastSelectableDate={new Date(2017, 12, 28)}
       lastUpdate={new Date()}
       originalDisabledDates={[
           {
-              date: "2018-01-24",
+              date: "2017-12-27",
               type: "holiday"
           },{
               date: "2018-01-15",
@@ -143,12 +143,12 @@ storiesOf('Higher Order Components', module)
               end_time: "2017-11-01T17:00:00Z",
               child: 101
           }, {
-              start_time: "2017-11-28T08:00:00Z",
-              end_time: "2017-11-28T16:00:00Z",
+              start_time: "2017-12-27T08:00:00Z",
+              end_time: "2017-12-27T16:00:00Z",
               child: 100
           }, {
-              start_time: "2017-11-28T09:00:00Z",
-              end_time: "2017-11-28T17:00:00Z",
+              start_time: "2017-12-27T09:00:00Z",
+              end_time: "2017-12-27T17:00:00Z",
               child: 101
           },{
               start_time: "2017-11-29T08:00:00Z",
