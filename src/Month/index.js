@@ -70,11 +70,11 @@ export default class Month extends PureComponent {
     const _today = format(today, 'YYYY-MM-DD');
     const _minDate = format(minDate, 'YYYY-MM-DD');
     const _maxDate = format(maxDate, 'YYYY-MM-DD');
-    const initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : null;
+    const initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : [];
 
-    let disabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : null;
+    let disabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : [];
     let enabledDatesArray = preselected && preselected[0] ? preselected.map((dateObj) => ({ date: format(dateObj.start_time, 'YYYY-MM-DD'), type: 'preselect' })) : null;
-    let reallyDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.filter((object) => object.type === 'holiday') : null;
+    let reallyDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.filter((object) => object.type === 'holiday') : [];
 
     if (selectionType === 'not_preselected' && disabledDatesArray != null && disabledDatesArray.length) {
         disabledDatesArray = disabledDatesArray.concat(preselectedDates);
