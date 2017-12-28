@@ -158,6 +158,7 @@ var Month = function (_PureComponent) {
                 for (var x = 0, _len2 = initialDisabledDatesArray.length; x < _len2; x++) {
                     if (initialDisabledDatesArray[x].date === date && initialDisabledDatesArray[x].type === 'vacation' && !isBefore(date, lastDate)) {
                         isDateVacation = true;
+                        break;
                     }
                 }
 
@@ -165,12 +166,14 @@ var Month = function (_PureComponent) {
                     for (var j = 0, _len3 = initialDisabledDatesArray.length; j < _len3; j++) {
                         if (format(initialDisabledDatesArray[j].date, 'YYYY-MM-DD', { locale: locale.locale }) === format(date, 'YYYY-MM-DD') && initialDisabledDatesArray[j].type === 'holiday') {
                             dateDisabled = initialDisabledDatesArray[j];
+                            break;
                         }
                     }
                 } else if (selectionType === 'preselected') {
                     for (var _j = 0, _len4 = enabledDatesArray.length; _j < _len4; _j++) {
                         if (format(enabledDatesArray[_j].date, 'YYYY-MM-DD', { locale: locale.locale }) === format(date, 'YYYY-MM-DD')) {
                             dateDisabled = enabledDatesArray[_j];
+                            break;
                         }
                     }
                 }

@@ -470,7 +470,7 @@ function getPreselectedWithinRange(start_date, end_date, preselected, selected, 
             if (!thesame) {
                 for (var i = 0, disabled = originalDisabledDates.length; i < disabled; ++i) {
                     var disabled_start = format(originalDisabledDates[i].date, 'YYYY-MM-DD');
-                    if (disabled_start === format(start, 'YYYY-MM-DD')) {
+                    if (disabled_start === format(start, 'YYYY-MM-DD') && originalDisabledDates[i].type === 'holiday') {
                         thesame = true;
                         break;
                     }
