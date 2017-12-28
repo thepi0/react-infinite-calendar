@@ -54,9 +54,6 @@ storiesOf('Higher Order Components', module)
               date: "2018-01-17",
               type: "vacation"
           }, {
-              date: "2018-01-24",
-              type: "holiday"
-          }, {
               date: "2018-01-25",
               type: "vacation"
           }, {
@@ -156,10 +153,6 @@ storiesOf('Higher Order Components', module)
               end_time: "2017-11-17T16:00:00Z",
               child: 100
           }, {
-              start_time: "2017-12-28T08:00:00Z",
-              end_time: "2017-12-28T16:00:00Z",
-              child: 100
-          }, {
               start_time: "2017-12-19T08:00:00Z",
               end_time: "2017-12-19T16:00:00Z",
               child: 100
@@ -187,6 +180,46 @@ storiesOf('Higher Order Components', module)
               start_time: "2018-01-24T09:00:00Z",
               end_time: "2018-01-24T17:00:00Z",
               child: 101
+          }, {
+              start_time: "2018-01-25T09:00:00Z",
+              end_time: "2018-01-25T17:00:00Z",
+              child: 100
+          }, {
+              start_time: "2018-01-25T09:00:00Z",
+              end_time: "2018-01-25T17:00:00Z",
+              child: 101
+          }, {
+              start_time: "2018-01-26T09:00:00Z",
+              end_time: "2018-01-26T17:00:00Z",
+              child: 100
+          }, {
+              start_time: "2018-01-26T09:00:00Z",
+              end_time: "2018-01-26T17:00:00Z",
+              child: 101
+          }, {
+              start_time: "2018-01-26T09:00:00Z",
+              end_time: "2018-01-26T17:00:00Z",
+              child: 102
+          }, {
+              start_time: "2018-01-26T09:00:00Z",
+              end_time: "2018-01-26T17:00:00Z",
+              child: 103
+          }, {
+              start_time: "2018-01-31T09:00:00Z",
+              end_time: "2018-01-31T17:00:00Z",
+              child: 100
+          }, {
+              start_time: "2018-01-31T09:00:00Z",
+              end_time: "2018-01-31T17:00:00Z",
+              child: 101
+          }, {
+              start_time: "2018-01-31T09:00:00Z",
+              end_time: "2018-01-31T17:00:00Z",
+              child: 102
+          }, {
+              start_time: "2018-01-29T09:00:00Z",
+              end_time: "2018-01-29T17:00:00Z",
+              child: 102
           }
       ]}
       onSelect={(date) => console.log(date)}

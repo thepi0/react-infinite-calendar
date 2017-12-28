@@ -41,7 +41,9 @@ export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, pres
   const isPreSelected = !!positionOfDate.value;
   const isPreStart = positionOfDate.value === PositionTypes.START;
   const isPreEnd = positionOfDate.value === PositionTypes.END;
-  const isMultipleChildren = positionOfDate.count > 1;
+  const twoChildren = positionOfDate.count > 1 && positionOfDate.count < 3;
+  const threeChildren = positionOfDate.count > 2 && positionOfDate.count < 4;
+  const foreOrMore = positionOfDate.count > 3;
   const isNextSelected = positionOfDate.nextselected;
   const isPrevSelected = positionOfDate.prevselected;
   const isNextPreSelected = positionOfDate.nextpreselected;
@@ -57,8 +59,6 @@ export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, pres
       [styles.start]: isStart,
       [styles.betweenRange]: !isStart && !isEnd,
       [styles.end]: isEnd,
-      [styles.multiple]: isMultipleChildren,
-      [styles.single]: !isMultipleChildren,
       [styles.nextselected]: isNextSelected,
       [styles.prevselected]: isPrevSelected,
       [styles.nextdifferentiates]: isNextCountDifferent,
@@ -67,17 +67,21 @@ export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, pres
       [styles.prevpreselected]: (isPreSelectedValue && isPrevPreDifferent),
       [styles.nextnotpreselected]: (isPreSelectedValue && !isNextPreDifferent),
       [styles.prevnotpreselected]: (isPreSelectedValue && !isPrevPreDifferent),
+      [styles.two]: twoChildren,
+      [styles.three]: threeChildren,
+      [styles.foreOrMore]: foreOrMore
     })
     ||
     isPreSelected && classNames(styles.range, {
       [styles.prestart]: isPreStart,
       [styles.preend]: isPreEnd,
-      [styles.multiple]: isMultipleChildren,
-      [styles.single]: !isMultipleChildren,
       [styles.nextselected]: isNextSelected,
       [styles.prevselected]: isPrevSelected,
       [styles.nextdifferentiates]: isNextCountDifferent,
-      [styles.prevdifferentiates]: isPrevCountDifferent
+      [styles.prevdifferentiates]: isPrevCountDifferent,
+      [styles.two]: twoChildren,
+      [styles.three]: threeChildren,
+      [styles.foreOrMore]: foreOrMore
     });
 
   return {
@@ -174,11 +178,9 @@ function handlePreselected(preselected) {
         }
 
         if (starts.includes(dayStart)) {
-
-            pushThis.count += 1;
-
             for (var y = 0, dayy = days.length; y < dayy; ++y) {
-                if (days[y].start_time == dayStart) {
+                if (days[y].start_time == dayStart && days[y].child !== dayChild) {
+                    pushThis.count += 1;
                     days[y].count += 1;
                 }
             }
