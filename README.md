@@ -1,6 +1,6 @@
-<div align="center">
-<img src="https://raw.githubusercontent.com/clauderic/react-infinite-calendar/master/.github/logo.png" width="180"/>
-</div>
+# Please note
+
+This is a highly customized version of the Clauderic React Infinite Calendar and not much works like in the original calendar.
 
 # React Infinite Calendar
 [![npm version](https://img.shields.io/npm/v/react-infinite-calendar.svg)](https://www.npmjs.com/package/react-infinite-calendar)
@@ -8,8 +8,6 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/clauderic/react-infinite-calendar/blob/master/LICENSE)
 [![Gitter](https://badges.gitter.im/clauderic/react-infinite-calendar.svg)](https://gitter.im/clauderic/react-infinite-calendar)
 ### Examples available here: <a href="#">http://clauderic.github.io/react-infinite-calendar/</a>
-
-<a href="https://app.codesponsor.io/link/oN9PDWZz8fQcbh9sxpDEUvD5/clauderic/react-infinite-calendar" rel="nofollow"><img src="https://app.codesponsor.io/embed/oN9PDWZz8fQcbh9sxpDEUvD5/clauderic/react-infinite-calendar.svg" style="width: 888px; height: 68px;" alt="Sponsor" /></a>
 
 Features
 ---------------

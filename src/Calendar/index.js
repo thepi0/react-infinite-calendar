@@ -330,22 +330,22 @@ export default class Calendar extends Component {
 
   render() {
     let {
-			className,
-      passThrough,
-      DayComponent,
-			disabledDays,
-            originalDisabledDates,
-      displayDate,
-			height,
-      HeaderComponent,
-      rowHeight,
-      scrollDate,
-      selected,
-      preselected,
-			tabIndex,
-			width,
-      YearsComponent,
-		} = this.props;
+	    className,
+        passThrough,
+        DayComponent,
+		disabledDays,
+        originalDisabledDates,
+        displayDate,
+		height,
+        HeaderComponent,
+        rowHeight,
+        scrollDate,
+        selected,
+        preselected,
+		tabIndex,
+		width,
+        YearsComponent,
+	} = this.props;
     const {
       hideYearsOnSelect,
       layout,

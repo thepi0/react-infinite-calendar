@@ -24,7 +24,6 @@ export default class DefaultCalendar extends Component {
       : new Date(),
   };
   componentWillReceiveProps({selected}) {
-      console.log('INDEX.JS componentWillReceiveProps()');
     if (selected !== this.props.selected) {
       this.setState({selected});
     }

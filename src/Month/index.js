@@ -70,6 +70,7 @@ export default class Month extends PureComponent {
     const _maxDate = format(maxDate, 'YYYY-MM-DD');
     const initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : [];
 
+    /* TODO: These can be moved to withRange and return from there */
     let disabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : [];
     let enabledDatesArray = preselected && preselected[0] ? preselected.map((dateObj) => ({ date: format(dateObj.start_time, 'YYYY-MM-DD'), type: 'preselect' })) : null;
     let reallyDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.filter((object) => object.type === 'holiday') : [];
@@ -113,6 +114,7 @@ export default class Month extends PureComponent {
         nextdow = dow + 1;
         prevdow = dow === 1 ? 7 : dow - 1;
 
+        /* TODO: This should be passed from withRange */
         for (let x = 0, len = initialDisabledDatesArray.length; x < len; x++) {
             if (initialDisabledDatesArray[x].date === date && initialDisabledDatesArray[x].type === 'vacation' && !isBefore(date, lastDate)) {
                 isDateVacation = true;
