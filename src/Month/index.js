@@ -118,6 +118,7 @@ export default class Month extends PureComponent {
         for (let x = 0, len = initialDisabledDatesArray.length; x < len; x++) {
             if (initialDisabledDatesArray[x].date === date && initialDisabledDatesArray[x].type === 'vacation' && !isBefore(date, lastDate)) {
                 isDateVacation = true;
+                break;
             }
         }
 
@@ -125,12 +126,14 @@ export default class Month extends PureComponent {
             for (let j = 0, len = initialDisabledDatesArray.length; j < len; j++) {
                 if (format(initialDisabledDatesArray[j].date, 'YYYY-MM-DD', {locale: locale.locale}) === format(date, 'YYYY-MM-DD') && initialDisabledDatesArray[j].type === 'holiday') {
                     dateDisabled = initialDisabledDatesArray[j];
+                    break;
                 }
             }
         } else if (selectionType === 'preselected') {
             for (let j = 0, len = enabledDatesArray.length; j < len; j++) {
                 if (format(enabledDatesArray[j].date, 'YYYY-MM-DD', {locale: locale.locale}) === format(date, 'YYYY-MM-DD')) {
                     dateDisabled = enabledDatesArray[j];
+                    break;
                 }
             }
         }

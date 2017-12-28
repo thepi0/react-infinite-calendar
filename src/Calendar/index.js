@@ -141,7 +141,7 @@ export default class Calendar extends Component {
     }
   }
   componentWillUpdate(nextProps, nextState) {
-      console.log('componentWillUpdate()');
+      //console.log('componentWillUpdate()');
     //let {min, minDate, max, maxDate, preselected} = this.props;
 
     /*if (nextProps.min !== min || nextProps.minDate !== minDate || nextProps.max !== max || nextProps.maxDate !== maxDate) {
@@ -175,7 +175,7 @@ export default class Calendar extends Component {
     }
 
     if (nextProps.lastUpdate !== this.state.lastUpdate) {
-        console.log('lastUpdate is not the same as before - update everything');
+        //console.log('lastUpdate is not the same as before - update everything');
         this.updateLastUpdated(nextProps);
         this.updatePreSelected(nextProps);
         this.updateOriginalDisabledDates(nextProps);

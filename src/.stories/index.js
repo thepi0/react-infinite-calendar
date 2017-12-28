@@ -179,6 +179,14 @@ storiesOf('Higher Order Components', module)
               start_time: "2017-12-21T09:00:00Z",
               end_time: "2017-12-21T17:00:00Z",
               child: 101
+          }, {
+              start_time: "2018-01-24T08:00:00Z",
+              end_time: "2018-01-24T16:00:00Z",
+              child: 100
+          }, {
+              start_time: "2018-01-24T09:00:00Z",
+              end_time: "2018-01-24T17:00:00Z",
+              child: 101
           }
       ]}
       onSelect={(date) => console.log(date)}
