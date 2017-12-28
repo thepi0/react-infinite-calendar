@@ -104,6 +104,7 @@ var Month = function (_PureComponent) {
         var _maxDate = format(maxDate, 'YYYY-MM-DD');
         var initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : [];
 
+        /* TODO: These can be moved to withRange and return from there */
         var disabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : [];
         var enabledDatesArray = preselected && preselected[0] ? preselected.map(function (dateObj) {
             return { date: format(dateObj.start_time, 'YYYY-MM-DD'), type: 'preselect' };
@@ -153,6 +154,7 @@ var Month = function (_PureComponent) {
                 nextdow = dow + 1;
                 prevdow = dow === 1 ? 7 : dow - 1;
 
+                /* TODO: This should be passed from withRange */
                 for (var x = 0, _len2 = initialDisabledDatesArray.length; x < _len2; x++) {
                     if (initialDisabledDatesArray[x].date === date && initialDisabledDatesArray[x].type === 'vacation' && !isBefore(date, lastDate)) {
                         isDateVacation = true;

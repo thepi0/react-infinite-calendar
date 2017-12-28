@@ -56,7 +56,6 @@ var DefaultCalendar = (_temp2 = _class = function (_Component) {
   DefaultCalendar.prototype.componentWillReceiveProps = function componentWillReceiveProps(_ref) {
     var selected = _ref.selected;
 
-    console.log('INDEX.JS componentWillReceiveProps()');
     if (selected !== this.props.selected) {
       this.setState({ selected: selected });
     }
