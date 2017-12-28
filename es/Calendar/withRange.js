@@ -32,10 +32,14 @@ var styles = {
     'prevselected': 'Cal__Day__prevselected',
     'nextdifferentiates': 'Cal__Day__nextdifferentiates',
     'prevdifferentiates': 'Cal__Day__prevdifferentiates',
-    'multiple': 'Cal__Day__multiple',
+    'two': 'Cal__Day__two',
+    'three': 'Cal__Day__three',
+    'moreThanFour': 'Cal__Day__moreThanFour',
+    'foreOrMore': 'Cal__Day__foreOrMore',
     'enabled': 'Cal__Day__enabled',
     'highlighted': 'Cal__Day__highlighted',
     'today': 'Cal__Day__today',
+    'multiple': 'Cal__Day__multiple',
     'selected': 'Cal__Day__selected',
     'selection': 'Cal__Day__selection',
     'nextdisabled': 'Cal__Day__nextdisabled',
@@ -82,7 +86,9 @@ export var enhanceDay = _withPropsOnChange(['selected'], function (_ref) {
     var isPreSelected = !!positionOfDate.value;
     var isPreStart = positionOfDate.value === PositionTypes.START;
     var isPreEnd = positionOfDate.value === PositionTypes.END;
-    var isMultipleChildren = positionOfDate.count > 1;
+    var twoChildren = positionOfDate.count > 1 && positionOfDate.count < 3;
+    var threeChildren = positionOfDate.count > 2 && positionOfDate.count < 4;
+    var foreOrMore = positionOfDate.count > 3;
     var isNextSelected = positionOfDate.nextselected;
     var isPrevSelected = positionOfDate.prevselected;
     var isNextPreSelected = positionOfDate.nextpreselected;
@@ -93,7 +99,7 @@ export var enhanceDay = _withPropsOnChange(['selected'], function (_ref) {
     var isNextPreDifferent = isNextPreSelected;
     var isPrevPreDifferent = isPrevPreSelected;
 
-    var dayClasses = isSelected && isRange && classNames(styles.range, (_classNames = {}, _classNames[styles.start] = isStart, _classNames[styles.betweenRange] = !isStart && !isEnd, _classNames[styles.end] = isEnd, _classNames[styles.multiple] = isMultipleChildren, _classNames[styles.single] = !isMultipleChildren, _classNames[styles.nextselected] = isNextSelected, _classNames[styles.prevselected] = isPrevSelected, _classNames[styles.nextdifferentiates] = isNextCountDifferent, _classNames[styles.prevdifferentiates] = isPrevCountDifferent, _classNames[styles.nextpreselected] = isPreSelectedValue && isNextPreDifferent, _classNames[styles.prevpreselected] = isPreSelectedValue && isPrevPreDifferent, _classNames[styles.nextnotpreselected] = isPreSelectedValue && !isNextPreDifferent, _classNames[styles.prevnotpreselected] = isPreSelectedValue && !isPrevPreDifferent, _classNames)) || isPreSelected && classNames(styles.range, (_classNames2 = {}, _classNames2[styles.prestart] = isPreStart, _classNames2[styles.preend] = isPreEnd, _classNames2[styles.multiple] = isMultipleChildren, _classNames2[styles.single] = !isMultipleChildren, _classNames2[styles.nextselected] = isNextSelected, _classNames2[styles.prevselected] = isPrevSelected, _classNames2[styles.nextdifferentiates] = isNextCountDifferent, _classNames2[styles.prevdifferentiates] = isPrevCountDifferent, _classNames2));
+    var dayClasses = isSelected && isRange && classNames(styles.range, (_classNames = {}, _classNames[styles.start] = isStart, _classNames[styles.betweenRange] = !isStart && !isEnd, _classNames[styles.end] = isEnd, _classNames[styles.nextselected] = isNextSelected, _classNames[styles.prevselected] = isPrevSelected, _classNames[styles.nextdifferentiates] = isNextCountDifferent, _classNames[styles.prevdifferentiates] = isPrevCountDifferent, _classNames[styles.nextpreselected] = isPreSelectedValue && isNextPreDifferent, _classNames[styles.prevpreselected] = isPreSelectedValue && isPrevPreDifferent, _classNames[styles.nextnotpreselected] = isPreSelectedValue && !isNextPreDifferent, _classNames[styles.prevnotpreselected] = isPreSelectedValue && !isPrevPreDifferent, _classNames[styles.two] = twoChildren, _classNames[styles.three] = threeChildren, _classNames[styles.foreOrMore] = foreOrMore, _classNames)) || isPreSelected && classNames(styles.range, (_classNames2 = {}, _classNames2[styles.prestart] = isPreStart, _classNames2[styles.preend] = isPreEnd, _classNames2[styles.nextselected] = isNextSelected, _classNames2[styles.prevselected] = isPrevSelected, _classNames2[styles.nextdifferentiates] = isNextCountDifferent, _classNames2[styles.prevdifferentiates] = isPrevCountDifferent, _classNames2[styles.two] = twoChildren, _classNames2[styles.three] = threeChildren, _classNames2[styles.foreOrMore] = foreOrMore, _classNames2));
 
     return {
         className: dayClasses,
@@ -194,11 +200,9 @@ function handlePreselected(preselected) {
         };
 
         if (starts.includes(dayStart)) {
-
-            pushThis.count += 1;
-
             for (var y = 0, dayy = days.length; y < dayy; ++y) {
-                if (days[y].start_time == dayStart) {
+                if (days[y].start_time == dayStart && days[y].child !== dayChild) {
+                    pushThis.count += 1;
                     days[y].count += 1;
                 }
             }

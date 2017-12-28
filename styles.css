@@ -69,7 +69,7 @@
       height: 52px;
       margin-top: -26px;
       margin-left: -26px;
-      background: #2cb1d8;
+      background: #ca569a;
       z-index: -1;
       border-radius: 50%; }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__nextselected:after {
@@ -81,7 +81,7 @@
       height: 52px;
       margin-top: -26px;
       margin-left: 0;
-      background: #2cb1d8;
+      background: #ca569a;
       z-index: -1; }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__prevselected:after {
       content: '';
@@ -92,7 +92,7 @@
       height: 52px;
       margin-top: -26px;
       margin-left: 0;
-      background: #2cb1d8;
+      background: #ca569a;
       z-index: -1; }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__prevselected.Cal__Day__nextselected:after {
       content: '';
@@ -103,7 +103,7 @@
       height: 52px;
       margin-top: -26px;
       margin-left: 0;
-      background: #2cb1d8;
+      background: #ca569a;
       z-index: -1; }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__nextdifferentiates:after {
       opacity: 0;
@@ -137,7 +137,7 @@
       border-bottom-right-radius: 35px;
       border-top-left-radius: 35px;
       border-bottom-left-radius: 35px; }
-    .Cal__Day__root.Cal__Day__preselected.Cal__Day__multiple:before {
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__two:before, .Cal__Day__root.Cal__Day__preselected.Cal__Day__three:before, .Cal__Day__root.Cal__Day__preselected.Cal__Day__moreThanFour:before {
       content: '';
       position: absolute;
       top: 50%;
@@ -146,10 +146,9 @@
       height: 52px;
       margin-top: -26px;
       margin-left: -26px;
-      background: linear-gradient(to bottom, #ca569a 50%, #2cb1d8 50%);
       z-index: -1;
       border-radius: 50%; }
-    .Cal__Day__root.Cal__Day__preselected.Cal__Day__multiple.Cal__Day__nextselected:after {
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__two.Cal__Day__nextselected:after, .Cal__Day__root.Cal__Day__preselected.Cal__Day__three.Cal__Day__nextselected:after, .Cal__Day__root.Cal__Day__preselected.Cal__Day__moreThanFour.Cal__Day__nextselected:after {
       content: '';
       position: absolute;
       top: 50%;
@@ -158,9 +157,8 @@
       height: 52px;
       margin-top: -26px;
       margin-left: 0;
-      background: linear-gradient(to bottom, #ca569a 50%, #2cb1d8 50%);
       z-index: -1; }
-    .Cal__Day__root.Cal__Day__preselected.Cal__Day__multiple.Cal__Day__prevselected:after {
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__two.Cal__Day__prevselected:after, .Cal__Day__root.Cal__Day__preselected.Cal__Day__three.Cal__Day__prevselected:after, .Cal__Day__root.Cal__Day__preselected.Cal__Day__moreThanFour.Cal__Day__prevselected:after {
       content: '';
       position: absolute;
       top: 50%;
@@ -169,9 +167,8 @@
       height: 52px;
       margin-top: -26px;
       margin-left: 0;
-      background: linear-gradient(to bottom, #ca569a 50%, #2cb1d8 50%);
       z-index: -1; }
-    .Cal__Day__root.Cal__Day__preselected.Cal__Day__multiple.Cal__Day__prevselected.Cal__Day__nextselected:after {
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__two.Cal__Day__prevselected.Cal__Day__nextselected:after, .Cal__Day__root.Cal__Day__preselected.Cal__Day__three.Cal__Day__prevselected.Cal__Day__nextselected:after, .Cal__Day__root.Cal__Day__preselected.Cal__Day__moreThanFour.Cal__Day__prevselected.Cal__Day__nextselected:after {
       content: '';
       position: absolute;
       top: 50%;
@@ -180,13 +177,12 @@
       height: 52px;
       margin-top: -26px;
       margin-left: 0;
-      background: linear-gradient(to bottom, #ca569a 50%, #2cb1d8 50%);
       z-index: -1; }
-    .Cal__Day__root.Cal__Day__preselected.Cal__Day__multiple.Cal__Day__nextdifferentiates:after {
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__two.Cal__Day__nextdifferentiates:after, .Cal__Day__root.Cal__Day__preselected.Cal__Day__three.Cal__Day__nextdifferentiates:after, .Cal__Day__root.Cal__Day__preselected.Cal__Day__moreThanFour.Cal__Day__nextdifferentiates:after {
       opacity: 0;
       border-top-right-radius: 35px;
       border-bottom-right-radius: 35px; }
-    .Cal__Day__root.Cal__Day__preselected.Cal__Day__multiple.Cal__Day__nextdifferentiates.Cal__Day__prevselected:after {
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__two.Cal__Day__nextdifferentiates.Cal__Day__prevselected:after, .Cal__Day__root.Cal__Day__preselected.Cal__Day__three.Cal__Day__nextdifferentiates.Cal__Day__prevselected:after, .Cal__Day__root.Cal__Day__preselected.Cal__Day__moreThanFour.Cal__Day__nextdifferentiates.Cal__Day__prevselected:after {
       left: 0;
       right: auto;
       width: 35px;
@@ -195,11 +191,11 @@
       margin-left: 0;
       border-radius: 0;
       opacity: 1; }
-    .Cal__Day__root.Cal__Day__preselected.Cal__Day__multiple.Cal__Day__prevdifferentiates:after {
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__two.Cal__Day__prevdifferentiates:after, .Cal__Day__root.Cal__Day__preselected.Cal__Day__three.Cal__Day__prevdifferentiates:after, .Cal__Day__root.Cal__Day__preselected.Cal__Day__moreThanFour.Cal__Day__prevdifferentiates:after {
       opacity: 0;
       border-top-left-radius: 35px;
       border-bottom-left-radius: 35px; }
-    .Cal__Day__root.Cal__Day__preselected.Cal__Day__multiple.Cal__Day__prevdifferentiates.Cal__Day__nextselected:after {
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__two.Cal__Day__prevdifferentiates.Cal__Day__nextselected:after, .Cal__Day__root.Cal__Day__preselected.Cal__Day__three.Cal__Day__prevdifferentiates.Cal__Day__nextselected:after, .Cal__Day__root.Cal__Day__preselected.Cal__Day__moreThanFour.Cal__Day__prevdifferentiates.Cal__Day__nextselected:after {
       left: auto;
       right: 0;
       width: 35px;
@@ -208,11 +204,36 @@
       margin-left: -26px;
       border-radius: 0;
       opacity: 1; }
-    .Cal__Day__root.Cal__Day__preselected.Cal__Day__multiple.Cal__Day__nextdifferentiates.Cal__Day__prevdifferentiates:after {
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__two.Cal__Day__nextdifferentiates.Cal__Day__prevdifferentiates:after, .Cal__Day__root.Cal__Day__preselected.Cal__Day__three.Cal__Day__nextdifferentiates.Cal__Day__prevdifferentiates:after, .Cal__Day__root.Cal__Day__preselected.Cal__Day__moreThanFour.Cal__Day__nextdifferentiates.Cal__Day__prevdifferentiates:after {
+      display: none;
       border-top-right-radius: 35px;
       border-bottom-right-radius: 35px;
       border-top-left-radius: 35px;
       border-bottom-left-radius: 35px; }
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__two:before {
+      background: linear-gradient(to bottom, #ca569a 50%, #2cb1d8 50%); }
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__two.Cal__Day__nextselected:after {
+      background: linear-gradient(to bottom, #ca569a 50%, #2cb1d8 50%); }
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__two.Cal__Day__prevselected:after {
+      background: linear-gradient(to bottom, #ca569a 50%, #2cb1d8 50%); }
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__two.Cal__Day__prevselected.Cal__Day__nextselected:after {
+      background: linear-gradient(to bottom, #ca569a 50%, #2cb1d8 50%); }
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__three:before {
+      background: linear-gradient(to bottom, #ca569a 0%, #ca569a 33.33333%, #2cb1d8 33.33333%, #2cb1d8 66.66667%, #85bd4c 66.66667%, #85bd4c 100%); }
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__three.Cal__Day__nextselected:after {
+      background: linear-gradient(to bottom, #ca569a 0%, #ca569a 33.33333%, #2cb1d8 33.33333%, #2cb1d8 66.66667%, #85bd4c 66.66667%, #85bd4c 100%); }
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__three.Cal__Day__prevselected:after {
+      background: linear-gradient(to bottom, #ca569a 0%, #ca569a 33.33333%, #2cb1d8 33.33333%, #2cb1d8 66.66667%, #85bd4c 66.66667%, #85bd4c 100%); }
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__three.Cal__Day__prevselected.Cal__Day__nextselected:after {
+      background: linear-gradient(to bottom, #ca569a 0%, #ca569a 33.33333%, #2cb1d8 33.33333%, #2cb1d8 66.66667%, #85bd4c 66.66667%, #85bd4c 100%); }
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__foreOrMore:before {
+      background: linear-gradient(to bottom, #ca569a 0%, #ca569a 25%, #2cb1d8 25%, #2cb1d8 50%, #85bd4c 50%, #85bd4c 75%, #ea992f 75%, #ea992f 100%); }
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__foreOrMore.Cal__Day__nextselected:after {
+      background: linear-gradient(to bottom, #ca569a 0%, #ca569a 25%, #2cb1d8 25%, #2cb1d8 50%, #85bd4c 50%, #85bd4c 75%, #ea992f 75%, #ea992f 100%); }
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__foreOrMore.Cal__Day__prevselected:after {
+      background: linear-gradient(to bottom, #ca569a 0%, #ca569a 25%, #2cb1d8 25%, #2cb1d8 50%, #85bd4c 50%, #85bd4c 75%, #ea992f 75%, #ea992f 100%); }
+    .Cal__Day__root.Cal__Day__preselected.Cal__Day__foreOrMore.Cal__Day__prevselected.Cal__Day__nextselected:after {
+      background: linear-gradient(to bottom, #ca569a 0%, #ca569a 25%, #2cb1d8 25%, #2cb1d8 50%, #85bd4c 50%, #85bd4c 75%, #ea992f 75%, #ea992f 100%); }
   .Cal__Day__root.Cal__Day__enabled.Cal__Day__highlighted, .Cal__Day__root.Cal__Day__enabled:active, .Cal__Day__root.Cal__Day__enabled:hover {
     position: relative; }
   .Cal__Day__root:first-child {
