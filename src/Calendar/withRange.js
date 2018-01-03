@@ -33,12 +33,16 @@ const PositionTypes = {
 
 // Enhance Day component to display selected state based on an array of selected dates
 export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, preselected}) => {
+    let isSelected = false;
+    let isStart = false;
+    let isEnd = false;
+    let isRange = false;
     if (selected && selected.start_time && selected.end_time) {
-        const isSelected = date >= selected.start_time && date <= selected.end_time;
-        const isStart = date === selected.start_time;
-        const isEnd = date === selected.end_time;
+        isSelected = date >= selected.start_time && date <= selected.end_time;
+        isStart = date === selected.start_time;
+        isEnd = date === selected.end_time;
+        isRange = !(isStart && isEnd);
     }
-  const isRange = !(isStart && isEnd);
   const positionOfDate = determineIfDateAlreadySelected(date, preselected);
   const isPreSelected = !!positionOfDate.value;
   const isPreStart = positionOfDate.value === PositionTypes.START;
