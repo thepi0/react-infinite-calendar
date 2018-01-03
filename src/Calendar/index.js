@@ -35,6 +35,7 @@ export const withDefaultProps = defaultProps({
   maxDate: new Date(2050, 11, 31),
   min: new Date(1980, 0, 1),
   preselected: {},
+  selected: null,
   originalDisabledDates: {},
   lastSelectableDate: new Date(),
   lastUpdate: new Date(),
@@ -56,6 +57,7 @@ export default class Calendar extends Component {
 
     this.updateYears(props);
     this.updatePreSelected(props);
+    this.updateSelected(props);
     this.updateLastUpdated(props);
     this.updateOriginalDisabledDates(props);
     this.updatelastSelectableDate(props);
@@ -176,6 +178,7 @@ export default class Calendar extends Component {
 
     if (nextProps.lastUpdate !== this.state.lastUpdate) {
         //console.log('lastUpdate is not the same as before - update everything');
+        this.updateSelected(nextProps);
         this.updateLastUpdated(nextProps);
         this.updatePreSelected(nextProps);
         this.updateOriginalDisabledDates(nextProps);
@@ -187,6 +190,10 @@ export default class Calendar extends Component {
   updateLastUpdated(props = this.props) {
     const lastUpdate = props.lastUpdate;
     this.lastUpdate = lastUpdate;
+  }
+  updateSelected(props = this.props) {
+    const selected = props.selected;
+    this.selected = selected;
   }
   updatePreSelected(props = this.props) {
     const preselected = props.preselected;
@@ -376,21 +383,6 @@ export default class Calendar extends Component {
         }}
         {...passThrough.rootNode}
       >
-        {showHeader &&
-          <HeaderComponent
-            selected={selected}
-            shouldAnimate={Boolean(shouldHeaderAnimate && display !== 'years')}
-            layout={layout}
-            theme={theme}
-            locale={locale}
-            scrollToDate={this.scrollToDate}
-            setDisplay={this.setDisplay}
-            dateFormat={locale.headerFormat}
-            display={display}
-            displayDate={displayDate}
-            {...passThrough.Header}
-          />
-        }
         <div className={styles.container.wrapper}>
           {showWeekdays &&
             <Weekdays weekdays={locale.weekdays} weekStartsOn={locale.weekStartsOn} theme={theme} />
@@ -429,7 +421,7 @@ export default class Calendar extends Component {
               theme={theme}
               today={today}
               rowHeight={rowHeight}
-              selected={selected}
+              selected={this.selected}
               preselected={this.preselected}
               scrollDate={scrollDate}
               showOverlay={showOverlay}
