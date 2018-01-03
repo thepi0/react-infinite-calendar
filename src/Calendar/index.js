@@ -176,9 +176,12 @@ export default class Calendar extends Component {
       this.setState({display: nextProps.display});
     }
 
+    if (nextProps.selected !== this.state.selected) {
+        this.updateSelected(nextProps);
+    }
+
     if (nextProps.lastUpdate !== this.state.lastUpdate) {
         //console.log('lastUpdate is not the same as before - update everything');
-        this.updateSelected(nextProps);
         this.updateLastUpdated(nextProps);
         this.updatePreSelected(nextProps);
         this.updateOriginalDisabledDates(nextProps);
