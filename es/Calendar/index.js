@@ -80,6 +80,7 @@ export var withDefaultProps = _defaultProps({
   maxDate: new Date(2050, 11, 31),
   min: new Date(1980, 0, 1),
   preselected: {},
+  selected: null,
   originalDisabledDates: {},
   lastSelectableDate: new Date(),
   lastUpdate: new Date(),
@@ -215,6 +216,7 @@ var Calendar = function (_Component) {
 
     _this.updateYears(props);
     _this.updatePreSelected(props);
+    _this.updateSelected(props);
     _this.updateLastUpdated(props);
     _this.updateOriginalDisabledDates(props);
     _this.updatelastSelectableDate(props);
@@ -267,6 +269,7 @@ var Calendar = function (_Component) {
 
     if (nextProps.lastUpdate !== this.state.lastUpdate) {
       //console.log('lastUpdate is not the same as before - update everything');
+      this.updateSelected(nextProps);
       this.updateLastUpdated(nextProps);
       this.updatePreSelected(nextProps);
       this.updateOriginalDisabledDates(nextProps);
@@ -279,6 +282,13 @@ var Calendar = function (_Component) {
 
     var lastUpdate = props.lastUpdate;
     this.lastUpdate = lastUpdate;
+  };
+
+  Calendar.prototype.updateSelected = function updateSelected() {
+    var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
+
+    var selected = props.selected;
+    this.selected = selected;
   };
 
   Calendar.prototype.updatePreSelected = function updatePreSelected() {
@@ -404,18 +414,6 @@ var Calendar = function (_Component) {
           _this2.node = node;
         }
       }, passThrough.rootNode),
-      showHeader && React.createElement(HeaderComponent, _extends({
-        selected: selected,
-        shouldAnimate: Boolean(shouldHeaderAnimate && display !== 'years'),
-        layout: layout,
-        theme: theme,
-        locale: locale,
-        scrollToDate: this.scrollToDate,
-        setDisplay: this.setDisplay,
-        dateFormat: locale.headerFormat,
-        display: display,
-        displayDate: displayDate
-      }, passThrough.Header)),
       React.createElement(
         'div',
         { className: styles.container.wrapper },
@@ -453,7 +451,7 @@ var Calendar = function (_Component) {
             theme: theme,
             today: today,
             rowHeight: rowHeight,
-            selected: selected,
+            selected: this.selected,
             preselected: this.preselected,
             scrollDate: scrollDate,
             showOverlay: showOverlay,
