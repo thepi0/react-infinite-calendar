@@ -78,12 +78,16 @@ export var enhanceDay = _withPropsOnChange(['selected'], function (_ref) {
         selected = _ref.selected,
         preselected = _ref.preselected;
 
+    var isSelected = false;
+    var isStart = false;
+    var isEnd = false;
+    var isRange = false;
     if (selected && selected.start_time && selected.end_time) {
-        var _isSelected = date >= selected.start_time && date <= selected.end_time;
-        var _isStart = date === selected.start_time;
-        var _isEnd = date === selected.end_time;
+        isSelected = date >= selected.start_time && date <= selected.end_time;
+        isStart = date === selected.start_time;
+        isEnd = date === selected.end_time;
+        isRange = !(isStart && isEnd);
     }
-    var isRange = !(isStart && isEnd);
     var positionOfDate = determineIfDateAlreadySelected(date, preselected);
     var isPreSelected = !!positionOfDate.value;
     var isPreStart = positionOfDate.value === PositionTypes.START;
