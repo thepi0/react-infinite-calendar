@@ -73,7 +73,7 @@ var Month = function (_PureComponent) {
         var month = monthDate.getMonth();
         var monthShort = format(monthDate, 'MMM', { locale: locale.locale });
         var monthRows = [];
-        var lastDate = format(lastSelectableDate, 'YYYY-MM-DD', { locale: locale.locale });
+        var lastDate = format(subDays(lastSelectableDate, 1), 'YYYY-MM-DD', { locale: locale.locale });
         var day = 0;
         var isDisabled = false;
         var nextDisabled = false;
@@ -119,11 +119,11 @@ var Month = function (_PureComponent) {
         } else if (selectionType === 'preselected' && enabledDatesArray != null && enabledDatesArray.length) {
             enabledDatesArray = enabledDatesArray.concat(preselectedDates);
 
-            if (selected && selected.start_time && isDate(lastSelectableDate) && isBefore(selected.start_time, lastSelectableDate)) {
+            if (selected && selected.start_time && isDate(lastSelectableDate) && isBefore(format(selected.start_time, 'YYYY-MM-DD'), lastDate)) {
                 enabledDatesArray = enabledDatesArray.filter(function (date) {
                     return isBefore(date.date, lastDate);
                 });
-            } else if (selected && selected.start_time && isDate(lastSelectableDate) && isBefore(lastSelectableDate, selected.start_time)) {
+            } else if (selected && selected.start_time && isDate(lastSelectableDate) && isBefore(lastDate, format(selected.start_time, 'YYYY-MM-DD'))) {
                 enabledDatesArray = enabledDatesArray.filter(function (date) {
                     return isBefore(lastDate, date.date);
                 });
