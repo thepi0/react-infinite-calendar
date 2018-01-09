@@ -205,15 +205,15 @@ function handlePreselected(preselected) {
             days[x].nextselected = true;
             let nextday = days.filter(date => date.start_time === nextDayStart);
 
-            if (nextday[0].count !== days[x].count) {
+            if (nextday && nextday[0] && nextday[0].count && nextday[0].count !== days[x].count) {
                 days[x].nextcountdifferentiates = true;
             }
 
-            if (nextday[0].preselected) {
+            if (nextday && nextday[0] && nextday[0].preselected) {
                 days[x].nextpreselected = true;
             }
 
-            if (nextday[0].preselected !== days[x].preselected) {
+            if (nextday && nextday[0] && nextday[0].preselected && nextday[0].preselected !== days[x].preselected) {
                 days[x].nextpreselecteddifferentiates = true;
             }
         }
@@ -222,15 +222,15 @@ function handlePreselected(preselected) {
             days[x].prevselected = true;
             let prevday = days.filter(date => date.end_time === prevDayStart);
 
-            if (prevday[0].count !== days[x].count) {
+            if (prevday && prevday[0] && prevday[0].count && prevday[0].count !== days[x].count) {
                 days[x].prevcountdifferentiates = true;
             }
 
-            if (prevday[0].preselected) {
+            if (prevday && prevday[0] && prevday[0].preselected) {
                 days[x].prevpreselected = true;
             }
 
-            if (prevday[0].preselected !== days[x].preselected) {
+            if (prevday && prevday[0] && prevday[0].preselected && prevday[0].preselected !== days[x].preselected) {
                 days[x].prevpreselecteddifferentiates = true;
             }
         }

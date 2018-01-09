@@ -46,7 +46,7 @@ export default class Month extends PureComponent {
     const month = monthDate.getMonth();
     const monthShort = format(monthDate, 'MMM', {locale: locale.locale});
     const monthRows = [];
-    const lastDate = format(lastSelectableDate, 'YYYY-MM-DD', {locale: locale.locale});
+    const lastDate = format(subDays(lastSelectableDate, 1), 'YYYY-MM-DD', {locale: locale.locale});
     let day = 0;
     let isDisabled = false;
     let nextDisabled = false;
@@ -81,11 +81,11 @@ export default class Month extends PureComponent {
     } else if (selectionType === 'preselected' && enabledDatesArray != null && enabledDatesArray.length) {
         enabledDatesArray =  enabledDatesArray.concat(preselectedDates);
 
-        if (selected && selected.start_time && isDate(lastSelectableDate) && isBefore(selected.start_time, lastSelectableDate)) {
+        if (selected && selected.start_time && isDate(lastSelectableDate) && isBefore(format(selected.start_time, 'YYYY-MM-DD'), lastDate)) {
             enabledDatesArray = enabledDatesArray.filter(function(date) {
                 return isBefore(date.date, lastDate);
             });
-        } else if (selected && selected.start_time && isDate(lastSelectableDate) && isBefore(lastSelectableDate, selected.start_time)) {
+        } else if (selected && selected.start_time && isDate(lastSelectableDate) && isBefore(lastDate, format(selected.start_time, 'YYYY-MM-DD'))) {
             enabledDatesArray = enabledDatesArray.filter(function(date) {
                 return isBefore(lastDate, date.date);
             });
