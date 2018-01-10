@@ -26,7 +26,7 @@ var styles = {
   'enabled': 'Cal__Day__enabled',
   'highlighted': 'Cal__Day__highlighted',
   'today': 'Cal__Day__today',
-  'multiple': 'Cal__Day__multiple',
+  'foreorMore': 'Cal__Day__foreorMore',
   'selected': 'Cal__Day__selected',
   'selection': 'Cal__Day__selection',
   'nextdisabled': 'Cal__Day__nextdisabled',

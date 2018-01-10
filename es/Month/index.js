@@ -184,7 +184,7 @@ var Month = function (_PureComponent) {
                     return e.date;
                 }).indexOf(dateDisabled.date) !== -1 || reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map(function (e) {
                     return e.date;
-                }).indexOf(date) !== -1) || enabledDatesArray && selectionType === 'preselected' && (enabledDatesArray.map(function (e) {
+                }).indexOf(date) !== -1 || isDate(lastSelectableDate) && isBefore(date, lastDate)) || enabledDatesArray && selectionType === 'preselected' && (enabledDatesArray.map(function (e) {
                     return e.date;
                 }).indexOf(dateDisabled.date) === -1 || initialDisabledDatesArray.map(function (e) {
                     return { date: e.date, type: e.type };
