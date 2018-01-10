@@ -151,6 +151,8 @@ export default class Month extends PureComponent {
                         initialDisabledDatesArray.map((e) => { return e.date; }).indexOf(dateDisabled.date) !== -1
                         ||
                         reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map((e) => { return e.date; }).indexOf(date) !== -1
+                        ||
+                        isDate(lastSelectableDate) && isBefore(date, lastDate)
                         )
                     )
                     ||

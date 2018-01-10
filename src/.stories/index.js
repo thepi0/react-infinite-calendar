@@ -60,7 +60,7 @@ storiesOf('Higher Order Components', module)
               date: "2018-01-25",
               type: "vacation"
           }, {
-              date: "2018-01-10",
+              date: "2018-01-12",
               type: "holiday"
           }, {
               date: "2018-01-10",
@@ -107,10 +107,22 @@ storiesOf('Higher Order Components', module)
       }}
       preselected={[
           {
-              start_time: "2018-01-16T08:00:00Z",
-              end_time: "2018-01-16T16:00:00Z",
+              start_time: "2018-01-10T08:00:00Z",
+              end_time: "2018-01-10T16:00:00Z",
               child: 100
-          }, {
+          },{
+              start_time: "2018-01-10T08:00:00Z",
+              end_time: "2018-01-10T16:00:00Z",
+              child: 101
+          },{
+              start_time: "2018-01-09T08:00:00Z",
+              end_time: "2018-01-09T16:00:00Z",
+              child: 100
+          },{
+              start_time: "2018-01-09T08:00:00Z",
+              end_time: "2018-01-09T16:00:00Z",
+              child: 101
+          },{
               start_time: "2018-01-15T08:00:00Z",
               end_time: "2018-01-15T16:00:00Z",
               child: 100

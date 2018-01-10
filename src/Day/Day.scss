@@ -424,12 +424,12 @@
       &.preselected {
 
           &:before {
-              background: #2cb1d8;
+              background: #ca569a;
           }
 
       }
 
-      &.multiple {
+      &.two {
           &.preselected {
 
               &:before {
@@ -437,6 +437,26 @@
               }
           }
       }
+
+      &.three {
+          &.preselected {
+
+              &:before {
+                  background: linear-gradient(to bottom, #ca569a 0%, #ca569a 33.333333%, #2cb1d8 33.333333%, #2cb1d8 66.666666%,#85bd4c 66.666666%, #85bd4c 100%);
+              }
+          }
+      }
+
+      &.foreorMore {
+          &.preselected {
+
+              &:before {
+                 background: linear-gradient(to bottom, #ca569a 0%, #ca569a 25%, #2cb1d8 25%, #2cb1d8 50%,#85bd4c 50%, #85bd4c 75%, #ea992f 75%, #ea992f 100%);
+              }
+          }
+      }
+
+
   }
   &.selected {
     position: relative;
