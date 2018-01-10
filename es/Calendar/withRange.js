@@ -468,8 +468,11 @@ function getPreselectedWithinRange(start_date, end_date, preselected, selected, 
         days = test.length;
     } else if (selected) {
         returnableDates = [];
-        var start = start_date;
-        while (start <= end_date) {
+
+        var start = isBefore(start_date, end_date) ? start_date : end_date;
+        var end = isBefore(start_date, end_date) ? end_date : start_date;
+
+        while (start <= end) {
             var thesame = false;
             for (var i = 0, preselect = preselected.length; i < preselect; ++i) {
                 var preselected_start = format(preselected[i].start_time, 'YYYY-MM-DD');
