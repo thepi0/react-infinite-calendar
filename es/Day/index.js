@@ -68,13 +68,7 @@ var Day = function (_PureComponent) {
       } else if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onClick === 'function') {
         onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
       }
-    }, _this.getDayColors = function () {
-      var _this$props2 = _this.props,
-          date = _this$props2.date,
-          preselected = _this$props2.preselected,
-          isPreSelected = _this$props2.isPreSelected;
-
-
+    }, _this.getDayColors = function (date, preselected) {
       if (!preselected || !preselected.length) {
         return;
       }
@@ -140,6 +134,7 @@ var Day = function (_PureComponent) {
         handlers = _props2.handlers,
         isVacation = _props2.isVacation,
         selected = _props2.selected,
+        preselected = _props2.preselected,
         isDisabled = _props2.isDisabled,
         isHighlighted = _props2.isHighlighted,
         isToday = _props2.isToday,
@@ -150,7 +145,7 @@ var Day = function (_PureComponent) {
         monthShort = _props2.monthShort;
 
 
-    var colors = isPreSelected ? this.getDayColors() : {
+    var colors = isPreSelected ? this.getDayColors(date, preselected) : {
       purple: false,
       blue: false,
       green: false,
