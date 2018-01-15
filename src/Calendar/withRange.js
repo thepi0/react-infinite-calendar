@@ -265,7 +265,7 @@ function handlePreselected(preselected) {
         }
     }
 
-    return {days: days, colors: colorArray};
+    return days;
 }
 
 function areArraysEqual(a, b) {
@@ -312,7 +312,7 @@ function clearSelect({onSelect, selected, setSelectionType, setSelectionDone, se
 
 function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, {onSelect, selected, preselected, preselectedDates, setPreselectedDates, selectionType, setSelectionType, selectionDone, setSelectionDone, selectionStart, setSelectionStart}) {
 
-    //preselected = preselected && preselected.days ? preselected.days : [];
+    preselected = preselected && preselected[0] ? preselected : [];
 
     if (!isPreSelected) {
         if (preselected && preselected[0]) {

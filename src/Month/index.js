@@ -63,8 +63,8 @@ export default class Month extends PureComponent {
     let date, nextDate, prevDate, days, dow, nextdow, prevdow, row;
     let nextDateObject = null;
     let prevDateObject = null;
-    let preselectedDays = preselected.days;
-    let preselectedColors = preselected.colors;
+    //let preselectedDays = preselected.days;
+    //let preselectedColors = preselected.colors;
 
     // Used for faster comparisons
     const _today = format(today, 'YYYY-MM-DD');
@@ -74,7 +74,7 @@ export default class Month extends PureComponent {
 
     /* TODO: These can be moved to withRange and return from there */
     let disabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : [];
-    let enabledDatesArray = preselectedDays && preselectedDays[0] ? preselectedDays.map((dateObj) => ({ date: format(dateObj.start_time, 'YYYY-MM-DD'), type: 'preselect' })) : null;
+    let enabledDatesArray = preselected && preselected[0] ? preselected.map((dateObj) => ({ date: format(dateObj.start_time, 'YYYY-MM-DD'), type: 'preselect' })) : null;
     let reallyDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.filter((object) => object.type === 'holiday') : [];
 
     if (selectionType === 'not_preselected' && disabledDatesArray != null && disabledDatesArray.length) {
@@ -191,8 +191,7 @@ export default class Month extends PureComponent {
                         originalDisabledDates={originalDisabledDates}
                         beforeLastDisabled={beforeLastDisabled}
                         selected={selected}
-                        preselected={preselectedDays}
-                        preselectedColors={preselectedColors}
+                        preselected={preselected}
                         nextDisabled={nextDisabled}
                         prevDisabled={prevDisabled}
 						isDisabled={isDisabled}

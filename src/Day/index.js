@@ -26,11 +26,11 @@ export default class Day extends PureComponent {
   getDayColors = () => {
       const {
         date,
-        preselectedColors,
+        preselected,
         isPreSelected
       } = this.props;
 
-      if (!isPreSelected || !preselectedColors.length) {
+      if (!preselected || !preselected.length) {
           return;
       }
 
@@ -48,11 +48,12 @@ export default class Day extends PureComponent {
           '#ea992f': 'orange'
       }
 
-      for (var j = 0, len = preselectedColors.length; j < len; ++j) {
-          if (date === preselectedColors[j].date) {
-              for (var x = 0, col = preselectedColors[j].colors.length; x < col; ++x) {
-                  returnable[classes[preselectedColors[j].colors[x]]] = true;
+      for (var j = 0, len = preselected.length; j < len; ++j) {
+          if (date === preselected[j].start_time) {
+              for (var x = 0, col = preselected[j].colors.length; x < col; ++x) {
+                  returnable[classes[preselected[j].colors[x]]] = true;
               }
+              break;
           }
       }
 
@@ -87,7 +88,6 @@ export default class Day extends PureComponent {
       handlers,
       isVacation,
       selected,
-      preselectedColors,
       isDisabled,
       isHighlighted,
       isToday,
