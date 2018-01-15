@@ -294,7 +294,7 @@ function handlePreselected(preselected) {
         _loop();
     }
 
-    return { days: days, colors: colorArray };
+    return days;
 }
 
 function areArraysEqual(a, b) {
@@ -360,7 +360,7 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
         setSelectionStart = _ref6.setSelectionStart;
 
 
-    //preselected = preselected && preselected.days ? preselected.days : [];
+    preselected = preselected && preselected[0] ? preselected : [];
 
     if (!isPreSelected) {
         if (preselected && preselected[0]) {

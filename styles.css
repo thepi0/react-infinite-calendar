@@ -264,6 +264,7 @@
       height: 52px;
       margin-top: -26px;
       margin-left: -26px;
+      background: #CCC;
       z-index: -1;
       border-radius: 50%; }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__nextselected:after {

@@ -71,11 +71,11 @@ var Day = function (_PureComponent) {
     }, _this.getDayColors = function () {
       var _this$props2 = _this.props,
           date = _this$props2.date,
-          preselectedColors = _this$props2.preselectedColors,
+          preselected = _this$props2.preselected,
           isPreSelected = _this$props2.isPreSelected;
 
 
-      if (!isPreSelected || !preselectedColors.length) {
+      if (!preselected || !preselected.length) {
         return;
       }
 
@@ -93,11 +93,12 @@ var Day = function (_PureComponent) {
         '#ea992f': 'orange'
       };
 
-      for (var j = 0, len = preselectedColors.length; j < len; ++j) {
-        if (date === preselectedColors[j].date) {
-          for (var x = 0, col = preselectedColors[j].colors.length; x < col; ++x) {
-            returnable[classes[preselectedColors[j].colors[x]]] = true;
+      for (var j = 0, len = preselected.length; j < len; ++j) {
+        if (date === preselected[j].start_time) {
+          for (var x = 0, col = preselected[j].colors.length; x < col; ++x) {
+            returnable[classes[preselected[j].colors[x]]] = true;
           }
+          break;
         }
       }
 
@@ -139,7 +140,6 @@ var Day = function (_PureComponent) {
         handlers = _props2.handlers,
         isVacation = _props2.isVacation,
         selected = _props2.selected,
-        preselectedColors = _props2.preselectedColors,
         isDisabled = _props2.isDisabled,
         isHighlighted = _props2.isHighlighted,
         isToday = _props2.isToday,
