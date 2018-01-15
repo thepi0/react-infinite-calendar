@@ -72,10 +72,10 @@ export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, pres
       [styles.nextpreselected]: (isPreSelectedValue && isNextPreDifferent),
       [styles.prevpreselected]: (isPreSelectedValue && isPrevPreDifferent),
       [styles.nextnotpreselected]: (isPreSelectedValue && !isNextPreDifferent),
-      [styles.prevnotpreselected]: (isPreSelectedValue && !isPrevPreDifferent),
+      [styles.prevnotpreselected]: (isPreSelectedValue && !isPrevPreDifferent)/*,
       [styles.two]: twoChildren,
       [styles.three]: threeChildren,
-      [styles.foreOrMore]: foreOrMore
+      [styles.foreOrMore]: foreOrMore*/
     })
     ||
     isPreSelected && classNames(styles.range, {
@@ -84,10 +84,10 @@ export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, pres
       [styles.nextselected]: isNextSelected,
       [styles.prevselected]: isPrevSelected,
       [styles.nextdifferentiates]: isNextCountDifferent,
-      [styles.prevdifferentiates]: isPrevCountDifferent,
+      [styles.prevdifferentiates]: isPrevCountDifferent/*,
       [styles.two]: twoChildren,
       [styles.three]: threeChildren,
-      [styles.foreOrMore]: foreOrMore
+      [styles.foreOrMore]: foreOrMore*/
     });
 
   return {
@@ -159,6 +159,7 @@ function handlePreselected(preselected) {
 
     const days = [];
     const starts = [];
+    const colors = [];
 
     for (var i = 0, preselect = preselected.length; i < preselect; ++i) {
         let dayStart = format(preselected[i].start_time, 'YYYY-MM-DD');
@@ -166,6 +167,7 @@ function handlePreselected(preselected) {
         let dayChild = preselected[i].child;
 
         let pushThis = {
+            color: preselected[i].color,
             start_time: dayStart,
             end_time: dayEnd,
             child: preselected[i].child,
@@ -192,8 +194,29 @@ function handlePreselected(preselected) {
             }
         }
 
+        colors.push({date: dayStart, colors: preselected[i].color });
         starts.push(dayStart);
         days.push(pushThis);
+    }
+
+    let colorArray = [];
+
+    if (colors && colors.length) {
+        colors.forEach(function (a) {
+            if (!this[a.date]) {
+                this[a.date] = { date: a.date, colors: [] };
+                colorArray.push(this[a.date]);
+            }
+            this[a.date].colors.push(a.colors);
+        }, Object.create(null));
+    }
+
+    for (var x = 0, day = days.length; x < day; ++x) {
+        for (var m = 0, col = colorArray.length; m < col; ++m) {
+            if (days[x].start_time === colorArray[m].date) {
+                days[x].colors = colorArray[m].colors;
+            }
+        }
     }
 
     for (var x = 0, day = days.length; x < day; ++x) {
@@ -201,11 +224,17 @@ function handlePreselected(preselected) {
         let nextDayStart = format(addDays(dayStart, 1), 'YYYY-MM-DD');
         let prevDayStart = format(subDays(dayStart, 1), 'YYYY-MM-DD');
 
+        /*for (var m = 0, col = colorArray.length; m < col; ++m) {
+            if (days[x].start_time === colorArray[m].date) {
+                days[x].colors = colorArray[m].colors;
+            }
+        }*/
+
         if (starts.includes(nextDayStart)) {
             days[x].nextselected = true;
             let nextday = days.filter(date => date.start_time === nextDayStart);
 
-            if (nextday && nextday[0] && nextday[0].count && nextday[0].count !== days[x].count) {
+            if (nextday && nextday[0] && nextday[0].count && (nextday[0].count !== days[x].count || !areArraysEqual(nextday[0].colors, days[x].colors))) {
                 days[x].nextcountdifferentiates = true;
             }
 
@@ -222,7 +251,7 @@ function handlePreselected(preselected) {
             days[x].prevselected = true;
             let prevday = days.filter(date => date.end_time === prevDayStart);
 
-            if (prevday && prevday[0] && prevday[0].count && prevday[0].count !== days[x].count) {
+            if (prevday && prevday[0] && prevday[0].count && (prevday[0].count !== days[x].count || !areArraysEqual(prevday[0].colors, days[x].colors))) {
                 days[x].prevcountdifferentiates = true;
             }
 
@@ -236,7 +265,29 @@ function handlePreselected(preselected) {
         }
     }
 
-    return days;
+    return {days: days, colors: colorArray};
+}
+
+function areArraysEqual(a, b) {
+  if (a === b) {
+      return true;
+  }
+  if (a == null || b == null) {
+      return false;
+  }
+  if (a.length != b.length) {
+      return false;
+  }
+
+  // If you don't care about the order of the elements inside
+  // the array, you should sort both arrays here.
+
+  for (var i = 0; i < a.length; ++i) {
+    if (a[i] !== b[i]) {
+        return false;
+    }
+  }
+  return true;
 }
 
 function getSortedSelection({start_time, end_time}) {
@@ -260,6 +311,8 @@ function clearSelect({onSelect, selected, setSelectionType, setSelectionDone, se
 }
 
 function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, {onSelect, selected, preselected, preselectedDates, setPreselectedDates, selectionType, setSelectionType, selectionDone, setSelectionDone, selectionStart, setSelectionStart}) {
+
+    //preselected = preselected && preselected.days ? preselected.days : [];
 
     if (!isPreSelected) {
         if (preselected && preselected[0]) {
@@ -443,18 +496,6 @@ function getPreselectedWithinRange(start_date, end_date, preselected, selected, 
     }
 
     return {days_count: days, data: returnableDates};
-}
-
-function getDates(startDate, stopDate, preselected) {
-    var dateArray = [];
-    var currentDate = startDate;
-    var stopDate = stopDate;
-    while (currentDate <= stopDate) {
-        if (preselected.includes())
-        dateArray.push({start_time: format(currentDate, 'YYYY-MM-DD'), end_time: format(currentDate, 'YYYY-MM-DD')});
-        currentDate = addDays(currentDate, 1);
-    }
-    return dateArray;
 }
 
 function getInitialDate({selected, initialSelectedDate}) {

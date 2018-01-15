@@ -107,141 +107,150 @@ storiesOf('Higher Order Components', module)
       }}
       preselected={[
           {
-              start_time: "2018-01-10T08:00:00Z",
-              end_time: "2018-01-10T16:00:00Z",
-              child: 100
+              start_time: "2018-01-15",
+              end_time: "2018-01-15",
+              child: 100,
+              color: '#ca569a'
           },{
-              start_time: "2018-01-10T08:00:00Z",
-              end_time: "2018-01-10T16:00:00Z",
-              child: 101
+              start_time: "2018-01-16",
+              end_time: "2018-01-16",
+              child: 101,
+              color: '#2cb1d8'
           },{
-              start_time: "2018-01-09T08:00:00Z",
-              end_time: "2018-01-09T16:00:00Z",
-              child: 100
+              start_time: "2018-01-29",
+              end_time: "2018-01-29",
+              child: 100,
+              color: '#ca569a'
           },{
-              start_time: "2018-01-09T08:00:00Z",
-              end_time: "2018-01-09T16:00:00Z",
-              child: 101
+              start_time: "2018-01-29",
+              end_time: "2018-01-29",
+              child: 101,
+              color: '#2cb1d8'
           },{
-              start_time: "2018-01-15T08:00:00Z",
-              end_time: "2018-01-15T16:00:00Z",
-              child: 100
+              start_time: "2018-01-30",
+              end_time: "2018-01-30",
+              child: 100,
+              color: '#ca569a'
           },{
-              start_time: "2017-11-01T08:00:00Z",
-              end_time: "2017-11-01T16:00:00Z",
-              child: 100
-          }, {
-              start_time: "2017-11-01T09:00:00Z",
-              end_time: "2017-11-01T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2017-12-27T08:00:00Z",
-              end_time: "2017-12-27T16:00:00Z",
-              child: 100
-          }, {
-              start_time: "2017-12-27T09:00:00Z",
-              end_time: "2017-12-27T17:00:00Z",
-              child: 101
+              start_time: "2018-01-30",
+              end_time: "2018-01-30",
+              child: 101,
+              color: '#2cb1d8'
           },{
-              start_time: "2017-11-29T08:00:00Z",
-              end_time: "2017-11-07T16:00:00Z",
-              child: 100
-          }, {
-              start_time: "2017-11-29T09:00:00Z",
-              end_time: "2017-11-29T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2017-11-30T08:00:00Z",
-              end_time: "2017-11-30T16:00:00Z",
-              child: 100
-          }, {
-              start_time: "2017-11-30T09:00:00Z",
-              end_time: "2017-11-30T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2017-11-15T08:00:00Z",
-              end_time: "2017-11-15T16:00:00Z",
-              child: 100
-          }, {
-              start_time: "2017-11-16T08:00:00Z",
-              end_time: "2017-11-16T16:00:00Z",
-              child: 100
-          }, {
-              start_time: "2017-11-17T08:00:00Z",
-              end_time: "2017-11-17T16:00:00Z",
-              child: 100
-          }, {
-              start_time: "2017-12-19T08:00:00Z",
-              end_time: "2017-12-19T16:00:00Z",
-              child: 100
-          }, {
-              start_time: "2017-12-19T08:00:00Z",
-              end_time: "2017-12-19T16:00:00Z",
-              child: 101
-          }, {
-              start_time: "2017-12-20T09:00:00Z",
-              end_time: "2017-12-20T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2017-12-21T08:00:00Z",
-              end_time: "2017-12-21T16:00:00Z",
-              child: 100
-          }, {
-              start_time: "2017-12-21T09:00:00Z",
-              end_time: "2017-12-21T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2018-01-24T08:00:00Z",
-              end_time: "2018-01-24T16:00:00Z",
-              child: 100
-          }, {
-              start_time: "2018-01-24T09:00:00Z",
-              end_time: "2018-01-24T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2018-01-25T09:00:00Z",
-              end_time: "2018-01-25T17:00:00Z",
-              child: 100
-          }, {
-              start_time: "2018-01-25T09:00:00Z",
-              end_time: "2018-01-25T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2018-01-26T09:00:00Z",
-              end_time: "2018-01-26T17:00:00Z",
-              child: 100
-          }, {
-              start_time: "2018-01-26T09:00:00Z",
-              end_time: "2018-01-26T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2018-01-26T09:00:00Z",
-              end_time: "2018-01-26T17:00:00Z",
-              child: 102
-          }, {
-              start_time: "2018-01-26T09:00:00Z",
-              end_time: "2018-01-26T17:00:00Z",
-              child: 103
-          }, {
-              start_time: "2018-01-31T09:00:00Z",
-              end_time: "2018-01-31T17:00:00Z",
-              child: 100
-          }, {
-              start_time: "2018-01-31T09:00:00Z",
-              end_time: "2018-01-31T17:00:00Z",
-              child: 101
-          }, {
-              start_time: "2018-01-31T09:00:00Z",
-              end_time: "2018-01-31T17:00:00Z",
-              child: 102
-          }, {
-              start_time: "2018-01-29T09:00:00Z",
-              end_time: "2018-01-29T17:00:00Z",
-              child: 102
-          }, {
-              start_time: "2018-01-30T09:00:00Z",
-              end_time: "2018-01-30T17:00:00Z",
-              child: 102
+              start_time: "2018-01-31",
+              end_time: "2018-01-31",
+              child: 103,
+              color: '#ea992f'
+          },{
+              start_time: "2018-01-31",
+              end_time: "2018-01-31",
+              child: 102,
+              color: '#85bd4c'
+          },{
+              start_time: "2018-02-01",
+              end_time: "2018-02-301",
+              child: 103,
+              color: '#ea992f'
+          },{
+              start_time: "2018-02-01",
+              end_time: "2018-02-01",
+              child: 102,
+              color: '#85bd4c'
+          },{
+              start_time: "2018-02-26",
+              end_time: "2018-02-26",
+              child: 100,
+              color: '#ca569a'
+          },{
+              start_time: "2018-02-27",
+              end_time: "2018-02-27",
+              child: 100,
+              color: '#ca569a'
+          },{
+              start_time: "2018-02-28",
+              end_time: "2018-02-28",
+              child: 101,
+              color: '#2cb1d8'
+          },{
+              start_time: "2018-03-01",
+              end_time: "2018-03-01",
+              child: 102,
+              color: '#85bd4c'
+          },{
+              start_time: "2018-02-06",
+              end_time: "2018-02-06",
+              child: 100,
+              color: '#ca569a'
+          },{
+              start_time: "2018-02-06",
+              end_time: "2018-02-06",
+              child: 101,
+              color: '#2cb1d8'
+          },{
+              start_time: "2018-02-07",
+              end_time: "2018-02-07",
+              child: 100,
+              color: '#ca569a'
+          },{
+              start_time: "2018-02-07",
+              end_time: "2018-02-07",
+              child: 101,
+              color: '#2cb1d8'
+          },{
+              start_time: "2018-02-08",
+              end_time: "2018-02-08",
+              child: 102,
+              color: '#85bd4c'
+          },{
+              start_time: "2018-02-12",
+              end_time: "2018-02-12",
+              child: 101,
+              color: '#2cb1d8'
+          },{
+              start_time: "2018-02-12",
+              end_time: "2018-02-12",
+              child: 102,
+              color: '#85bd4c'
+          },{
+              start_time: "2018-02-13",
+              end_time: "2018-02-13",
+              child: 101,
+              color: '#2cb1d8'
+          },{
+              start_time: "2018-02-16",
+              end_time: "2018-02-16",
+              child: 100,
+              color: '#ca569a'
+          },{
+              start_time: "2018-02-16",
+              end_time: "2018-02-16",
+              child: 101,
+              color: '#2cb1d8'
+          },{
+              start_time: "2018-02-16",
+              end_time: "2018-02-16",
+              child: 102,
+              color: '#85bd4c'
+          },{
+              start_time: "2018-02-16",
+              end_time: "2018-02-16",
+              child: 103,
+              color: '#ea992f'
+          },{
+              start_time: "2018-02-21",
+              end_time: "2018-02-21",
+              child: 100,
+              color: '#ca569a'
+          },{
+              start_time: "2018-02-22",
+              end_time: "2018-02-22",
+              child: 101,
+              color: '#2cb1d8'
+          },{
+              start_time: "2018-02-23",
+              end_time: "2018-02-23",
+              child: 100,
+              color: '#ca569a'
           }
       ]}
       onSelect={(date) => console.log(date)}

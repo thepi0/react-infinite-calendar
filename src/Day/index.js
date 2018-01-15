@@ -23,6 +23,42 @@ export default class Day extends PureComponent {
       }
   };*/
 
+  getDayColors = () => {
+      const {
+        date,
+        preselectedColors,
+        isPreSelected
+      } = this.props;
+
+      if (!isPreSelected || !preselectedColors.length) {
+          return;
+      }
+
+      let returnable = {
+          purple: false,
+          blue: false,
+          green: false,
+          orange: false
+      };
+
+      const classes = {
+          '#ca569a': 'purple',
+          '#2cb1d8': 'blue',
+          '#85bd4c': 'green',
+          '#ea992f': 'orange'
+      }
+
+      for (var j = 0, len = preselectedColors.length; j < len; ++j) {
+          if (date === preselectedColors[j].date) {
+              for (var x = 0, col = preselectedColors[j].colors.length; x < col; ++x) {
+                  returnable[classes[preselectedColors[j].colors[x]]] = true;
+              }
+          }
+      }
+
+      return returnable;
+  }
+
   renderSelection(selectionColor) {
     const {
       day,
@@ -51,6 +87,7 @@ export default class Day extends PureComponent {
       handlers,
       isVacation,
       selected,
+      preselectedColors,
       isDisabled,
       isHighlighted,
       isToday,
@@ -60,6 +97,13 @@ export default class Day extends PureComponent {
       nextDisabled,
       monthShort,
     } = this.props;
+
+    let colors = isPreSelected ? this.getDayColors() : {
+        purple: false,
+        blue: false,
+        green: false,
+        orange: false
+    };
 
     return (
       <li
@@ -72,8 +116,12 @@ export default class Day extends PureComponent {
           [styles.nextdisabled]: nextDisabled,
           [styles.disabled]: isDisabled || (beforeLastDisabled && !isPreSelected),
           [styles.enabled]: !isDisabled,
-          [styles.beforelast]: beforeLastDisabled
-        }, className)}
+          [styles.beforelast]: beforeLastDisabled,
+          [styles.purple]: (isPreSelected && colors.purple),
+          [styles.blue]: (isPreSelected && colors.blue),
+          [styles.green]: (isPreSelected && colors.green),
+          [styles.orange]: (isPreSelected && colors.orange)
+      }, className)}
         onClick={this.handleClick}
         data-date={date}
         data-disabled={isDisabled ? isDisabled : false}
