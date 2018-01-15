@@ -23,13 +23,7 @@ export default class Day extends PureComponent {
       }
   };*/
 
-  getDayColors = () => {
-      const {
-        date,
-        preselected,
-        isPreSelected
-      } = this.props;
-
+  getDayColors = (date, preselected) => {
       if (!preselected || !preselected.length) {
           return;
       }
@@ -58,7 +52,7 @@ export default class Day extends PureComponent {
       }
 
       return returnable;
-  }
+  };
 
   renderSelection(selectionColor) {
     const {
@@ -88,6 +82,7 @@ export default class Day extends PureComponent {
       handlers,
       isVacation,
       selected,
+      preselected,
       isDisabled,
       isHighlighted,
       isToday,
@@ -98,7 +93,7 @@ export default class Day extends PureComponent {
       monthShort,
     } = this.props;
 
-    let colors = isPreSelected ? this.getDayColors() : {
+    let colors = isPreSelected ? this.getDayColors(date, preselected) : {
         purple: false,
         blue: false,
         green: false,
