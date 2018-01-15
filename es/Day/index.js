@@ -19,14 +19,13 @@ var styles = {
   'prevselected': 'Cal__Day__prevselected',
   'nextdifferentiates': 'Cal__Day__nextdifferentiates',
   'prevdifferentiates': 'Cal__Day__prevdifferentiates',
-  'two': 'Cal__Day__two',
-  'three': 'Cal__Day__three',
-  'moreThanFour': 'Cal__Day__moreThanFour',
-  'foreOrMore': 'Cal__Day__foreOrMore',
+  'purple': 'Cal__Day__purple',
+  'blue': 'Cal__Day__blue',
+  'green': 'Cal__Day__green',
+  'orange': 'Cal__Day__orange',
   'enabled': 'Cal__Day__enabled',
   'highlighted': 'Cal__Day__highlighted',
   'today': 'Cal__Day__today',
-  'foreorMore': 'Cal__Day__foreorMore',
   'selected': 'Cal__Day__selected',
   'selection': 'Cal__Day__selection',
   'nextdisabled': 'Cal__Day__nextdisabled',
@@ -69,6 +68,40 @@ var Day = function (_PureComponent) {
       } else if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onClick === 'function') {
         onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
       }
+    }, _this.getDayColors = function () {
+      var _this$props2 = _this.props,
+          date = _this$props2.date,
+          preselectedColors = _this$props2.preselectedColors,
+          isPreSelected = _this$props2.isPreSelected;
+
+
+      if (!isPreSelected || !preselectedColors.length) {
+        return;
+      }
+
+      var returnable = {
+        purple: false,
+        blue: false,
+        green: false,
+        orange: false
+      };
+
+      var classes = {
+        '#ca569a': 'purple',
+        '#2cb1d8': 'blue',
+        '#85bd4c': 'green',
+        '#ea992f': 'orange'
+      };
+
+      for (var j = 0, len = preselectedColors.length; j < len; ++j) {
+        if (date === preselectedColors[j].date) {
+          for (var x = 0, col = preselectedColors[j].colors.length; x < col; ++x) {
+            returnable[classes[preselectedColors[j].colors[x]]] = true;
+          }
+        }
+      }
+
+      return returnable;
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -106,6 +139,7 @@ var Day = function (_PureComponent) {
         handlers = _props2.handlers,
         isVacation = _props2.isVacation,
         selected = _props2.selected,
+        preselectedColors = _props2.preselectedColors,
         isDisabled = _props2.isDisabled,
         isHighlighted = _props2.isHighlighted,
         isToday = _props2.isToday,
@@ -116,10 +150,17 @@ var Day = function (_PureComponent) {
         monthShort = _props2.monthShort;
 
 
+    var colors = isPreSelected ? this.getDayColors() : {
+      purple: false,
+      blue: false,
+      green: false,
+      orange: false
+    };
+
     return React.createElement(
       'li',
       _extends({
-        className: classNames(styles.root, (_classNames = {}, _classNames[styles.today] = isToday, _classNames[styles.highlighted] = isHighlighted, _classNames[styles.selected] = isSelected, _classNames[styles.preselected] = isPreSelected, _classNames[styles.prevdisabled] = prevDisabled, _classNames[styles.nextdisabled] = nextDisabled, _classNames[styles.disabled] = isDisabled || beforeLastDisabled && !isPreSelected, _classNames[styles.enabled] = !isDisabled, _classNames[styles.beforelast] = beforeLastDisabled, _classNames), className),
+        className: classNames(styles.root, (_classNames = {}, _classNames[styles.today] = isToday, _classNames[styles.highlighted] = isHighlighted, _classNames[styles.selected] = isSelected, _classNames[styles.preselected] = isPreSelected, _classNames[styles.prevdisabled] = prevDisabled, _classNames[styles.nextdisabled] = nextDisabled, _classNames[styles.disabled] = isDisabled || beforeLastDisabled && !isPreSelected, _classNames[styles.enabled] = !isDisabled, _classNames[styles.beforelast] = beforeLastDisabled, _classNames[styles.purple] = isPreSelected && colors.purple, _classNames[styles.blue] = isPreSelected && colors.blue, _classNames[styles.green] = isPreSelected && colors.green, _classNames[styles.orange] = isPreSelected && colors.orange, _classNames), className),
         onClick: this.handleClick,
         'data-date': date,
         'data-disabled': isDisabled ? isDisabled : false

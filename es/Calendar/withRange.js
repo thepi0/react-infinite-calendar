@@ -32,14 +32,13 @@ var styles = {
     'prevselected': 'Cal__Day__prevselected',
     'nextdifferentiates': 'Cal__Day__nextdifferentiates',
     'prevdifferentiates': 'Cal__Day__prevdifferentiates',
-    'two': 'Cal__Day__two',
-    'three': 'Cal__Day__three',
-    'moreThanFour': 'Cal__Day__moreThanFour',
-    'foreOrMore': 'Cal__Day__foreOrMore',
+    'purple': 'Cal__Day__purple',
+    'blue': 'Cal__Day__blue',
+    'green': 'Cal__Day__green',
+    'orange': 'Cal__Day__orange',
     'enabled': 'Cal__Day__enabled',
     'highlighted': 'Cal__Day__highlighted',
     'today': 'Cal__Day__today',
-    'foreorMore': 'Cal__Day__foreorMore',
     'selected': 'Cal__Day__selected',
     'selection': 'Cal__Day__selection',
     'nextdisabled': 'Cal__Day__nextdisabled',
@@ -105,7 +104,7 @@ export var enhanceDay = _withPropsOnChange(['selected'], function (_ref) {
     var isNextPreDifferent = isNextPreSelected;
     var isPrevPreDifferent = isPrevPreSelected;
 
-    var dayClasses = isSelected && isRange && classNames(styles.range, (_classNames = {}, _classNames[styles.start] = isStart, _classNames[styles.betweenRange] = !isStart && !isEnd, _classNames[styles.end] = isEnd, _classNames[styles.nextselected] = isNextSelected, _classNames[styles.prevselected] = isPrevSelected, _classNames[styles.nextdifferentiates] = isNextCountDifferent, _classNames[styles.prevdifferentiates] = isPrevCountDifferent, _classNames[styles.nextpreselected] = isPreSelectedValue && isNextPreDifferent, _classNames[styles.prevpreselected] = isPreSelectedValue && isPrevPreDifferent, _classNames[styles.nextnotpreselected] = isPreSelectedValue && !isNextPreDifferent, _classNames[styles.prevnotpreselected] = isPreSelectedValue && !isPrevPreDifferent, _classNames[styles.two] = twoChildren, _classNames[styles.three] = threeChildren, _classNames[styles.foreOrMore] = foreOrMore, _classNames)) || isPreSelected && classNames(styles.range, (_classNames2 = {}, _classNames2[styles.prestart] = isPreStart, _classNames2[styles.preend] = isPreEnd, _classNames2[styles.nextselected] = isNextSelected, _classNames2[styles.prevselected] = isPrevSelected, _classNames2[styles.nextdifferentiates] = isNextCountDifferent, _classNames2[styles.prevdifferentiates] = isPrevCountDifferent, _classNames2[styles.two] = twoChildren, _classNames2[styles.three] = threeChildren, _classNames2[styles.foreOrMore] = foreOrMore, _classNames2));
+    var dayClasses = isSelected && isRange && classNames(styles.range, (_classNames = {}, _classNames[styles.start] = isStart, _classNames[styles.betweenRange] = !isStart && !isEnd, _classNames[styles.end] = isEnd, _classNames[styles.nextselected] = isNextSelected, _classNames[styles.prevselected] = isPrevSelected, _classNames[styles.nextdifferentiates] = isNextCountDifferent, _classNames[styles.prevdifferentiates] = isPrevCountDifferent, _classNames[styles.nextpreselected] = isPreSelectedValue && isNextPreDifferent, _classNames[styles.prevpreselected] = isPreSelectedValue && isPrevPreDifferent, _classNames[styles.nextnotpreselected] = isPreSelectedValue && !isNextPreDifferent, _classNames[styles.prevnotpreselected] = isPreSelectedValue && !isPrevPreDifferent, _classNames)) || isPreSelected && classNames(styles.range, (_classNames2 = {}, _classNames2[styles.prestart] = isPreStart, _classNames2[styles.preend] = isPreEnd, _classNames2[styles.nextselected] = isNextSelected, _classNames2[styles.prevselected] = isPrevSelected, _classNames2[styles.nextdifferentiates] = isNextCountDifferent, _classNames2[styles.prevdifferentiates] = isPrevCountDifferent, _classNames2));
 
     return {
         className: dayClasses,
@@ -181,6 +180,7 @@ function handlePreselected(preselected) {
 
     var days = [];
     var starts = [];
+    var colors = [];
 
     for (var i = 0, preselect = preselected.length; i < preselect; ++i) {
         var dayStart = format(preselected[i].start_time, 'YYYY-MM-DD');
@@ -188,6 +188,7 @@ function handlePreselected(preselected) {
         var dayChild = preselected[i].child;
 
         var pushThis = {
+            color: preselected[i].color,
             start_time: dayStart,
             end_time: dayEnd,
             child: preselected[i].child,
@@ -214,8 +215,29 @@ function handlePreselected(preselected) {
             }
         }
 
+        colors.push({ date: dayStart, colors: preselected[i].color });
         starts.push(dayStart);
         days.push(pushThis);
+    }
+
+    var colorArray = [];
+
+    if (colors && colors.length) {
+        colors.forEach(function (a) {
+            if (!this[a.date]) {
+                this[a.date] = { date: a.date, colors: [] };
+                colorArray.push(this[a.date]);
+            }
+            this[a.date].colors.push(a.colors);
+        }, Object.create(null));
+    }
+
+    for (var x = 0, day = days.length; x < day; ++x) {
+        for (var m = 0, col = colorArray.length; m < col; ++m) {
+            if (days[x].start_time === colorArray[m].date) {
+                days[x].colors = colorArray[m].colors;
+            }
+        }
     }
 
     var _loop = function _loop() {
@@ -223,13 +245,19 @@ function handlePreselected(preselected) {
         var nextDayStart = format(addDays(dayStart, 1), 'YYYY-MM-DD');
         var prevDayStart = format(subDays(dayStart, 1), 'YYYY-MM-DD');
 
+        /*for (var m = 0, col = colorArray.length; m < col; ++m) {
+            if (days[x].start_time === colorArray[m].date) {
+                days[x].colors = colorArray[m].colors;
+            }
+        }*/
+
         if (starts.includes(nextDayStart)) {
             days[x].nextselected = true;
             var nextday = days.filter(function (date) {
                 return date.start_time === nextDayStart;
             });
 
-            if (nextday && nextday[0] && nextday[0].count && nextday[0].count !== days[x].count) {
+            if (nextday && nextday[0] && nextday[0].count && (nextday[0].count !== days[x].count || !areArraysEqual(nextday[0].colors, days[x].colors))) {
                 days[x].nextcountdifferentiates = true;
             }
 
@@ -248,7 +276,7 @@ function handlePreselected(preselected) {
                 return date.end_time === prevDayStart;
             });
 
-            if (prevday && prevday[0] && prevday[0].count && prevday[0].count !== days[x].count) {
+            if (prevday && prevday[0] && prevday[0].count && (prevday[0].count !== days[x].count || !areArraysEqual(prevday[0].colors, days[x].colors))) {
                 days[x].prevcountdifferentiates = true;
             }
 
@@ -266,7 +294,29 @@ function handlePreselected(preselected) {
         _loop();
     }
 
-    return days;
+    return { days: days, colors: colorArray };
+}
+
+function areArraysEqual(a, b) {
+    if (a === b) {
+        return true;
+    }
+    if (a == null || b == null) {
+        return false;
+    }
+    if (a.length != b.length) {
+        return false;
+    }
+
+    // If you don't care about the order of the elements inside
+    // the array, you should sort both arrays here.
+
+    for (var i = 0; i < a.length; ++i) {
+        if (a[i] !== b[i]) {
+            return false;
+        }
+    }
+    return true;
 }
 
 function getSortedSelection(_ref4) {
@@ -309,6 +359,8 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
         selectionStart = _ref6.selectionStart,
         setSelectionStart = _ref6.setSelectionStart;
 
+
+    //preselected = preselected && preselected.days ? preselected.days : [];
 
     if (!isPreSelected) {
         if (preselected && preselected[0]) {
@@ -499,17 +551,6 @@ function getPreselectedWithinRange(start_date, end_date, preselected, selected, 
     }
 
     return { days_count: days, data: returnableDates };
-}
-
-function getDates(startDate, stopDate, preselected) {
-    var dateArray = [];
-    var currentDate = startDate;
-    var stopDate = stopDate;
-    while (currentDate <= stopDate) {
-        if (preselected.includes()) dateArray.push({ start_time: format(currentDate, 'YYYY-MM-DD'), end_time: format(currentDate, 'YYYY-MM-DD') });
-        currentDate = addDays(currentDate, 1);
-    }
-    return dateArray;
 }
 
 function getInitialDate(_ref8) {
