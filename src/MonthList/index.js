@@ -83,10 +83,17 @@ export default class MonthList extends Component {
   }
 
   getDateOffset(date) {
-    const {min, rowHeight, locale: {weekStartsOn}, height} = this.props;
-    const weeks = getWeek(startOfMonth(min), parse(date), weekStartsOn);
+      console.log('monthList');
+      console.log(date);
+     if (!isNaN(parseFloat(date)) && !isNaN(date - 0)) {
+         console.log('type is number');
+         return date;
+     } else {
+        const {min, rowHeight, locale: {weekStartsOn}, height} = this.props;
+        const weeks = getWeek(startOfMonth(min), parse(date), weekStartsOn);
 
-    return weeks * rowHeight - (height - rowHeight/2) / 2;
+        return weeks * rowHeight - (height - rowHeight/2) / 2;
+    }
   }
 
   scrollToDate = (date, offset = 0, ...rest) => {
@@ -186,6 +193,9 @@ export default class MonthList extends Component {
       width,
     } = this.props;
     const {scrollTop} = this.state;
+
+    console.log('RENDER MONTHLIST');
+    console.log(scrollTop);
 
     return (
       <VirtualList

@@ -498,8 +498,14 @@ function getPreselectedWithinRange(start_date, end_date, preselected, selected, 
     return {days_count: days, data: returnableDates};
 }
 
-function getInitialDate({selected, initialSelectedDate}) {
-  return initialSelectedDate || selected && selected.start_time || new Date();
+function getInitialDate({selected, initialSelectedDate, scrollOffset}) {
+    console.log('withRange');
+    console.log(scrollOffset);
+    if (scrollOffset !== null) {
+        return scrollOffset;
+    } else {
+        return initialSelectedDate || selected && selected.start_time || new Date();
+    }
 }
 
 function determineIfDateAlreadySelected(date, selected) {

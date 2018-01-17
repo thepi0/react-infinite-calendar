@@ -27,12 +27,12 @@ storiesOf('Higher Order Components', module)
     <InfiniteCalendar
       width={Math.min(window.innerWidth, 900)}
       height={Math.min(window.innerHeight, 900)}
-      min={subMonths(today, 3)}
-      max={addMonths(today, 3)}
+      min={subMonths(today, 12)}
+      max={addMonths(today, 12)}
       rowHeight={74}
       selected={null}
       lastSelectableDate={new Date(2018, 0, 29)}
-      initialSelectedDate={new Date(2018, 2, 29)}
+      scrollOffset={6153}
       lastUpdate={new Date()}
       shouldAnimate={true}
       autoFocus={false}
@@ -86,7 +86,7 @@ storiesOf('Higher Order Components', module)
       displayOptions={{
           hideYearsOnSelect: false,
           layout: 'portrait',
-          overscanMonthCount: 2,
+          overscanMonthCount: 10,
           showHeader: false,
           showMonthsForYears: false,
           showOverlay: false,
