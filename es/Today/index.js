@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 var styles = {
   'root': 'Cal__Today__root',
-  'show': 'Cal__Today__show',
+  'hide': 'Cal__Today__hide',
   'chevron': 'Cal__Today__chevron',
   'chevronUp': 'Cal__Today__chevronUp',
   'chevronDown': 'Cal__Today__chevronDown'
@@ -45,13 +45,14 @@ var Today = function (_PureComponent) {
 
     var _props = this.props,
         todayLabel = _props.todayLabel,
-        show = _props.show,
+        showObject = _props.showObject,
         theme = _props.theme;
+
 
     return React.createElement(
       'div',
       {
-        className: classNames(styles.root, (_classNames = {}, _classNames[styles.show] = show, _classNames[styles.chevronUp] = show === DIRECTION_UP, _classNames[styles.chevronDown] = show === DIRECTION_DOWN, _classNames)),
+        className: classNames(styles.root, (_classNames = {}, _classNames[styles.hide] = showObject.hide === true, _classNames[styles.chevronUp] = showObject.direction === DIRECTION_UP, _classNames[styles.chevronDown] = showObject.direction === DIRECTION_DOWN, _classNames)),
         style: {
           backgroundColor: theme.floatingNav.background,
           color: theme.floatingNav.color

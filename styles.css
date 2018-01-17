@@ -884,7 +884,7 @@
   width: 56px;
   padding: 6px;
   box-sizing: border-box;
-  opacity: 0;
+  opacity: 1;
   font-weight: 500;
   line-height: 0;
   z-index: 10;
@@ -892,11 +892,11 @@
   transition: opacity 0.3s ease;
   transition-delay: 0.3s;
   border-radius: 50%; }
-  .Cal__Today__root.Cal__Today__show {
-    opacity: 1;
+  .Cal__Today__root.Cal__Today__hide {
+    opacity: 0;
     transition-delay: 0s;
     transition: opacity 0.3s ease; }
-    .Cal__Today__root.Cal__Today__show .Cal__Today__chevron {
+    .Cal__Today__root.Cal__Today__hide .Cal__Today__chevron {
       transition: transform 0.3s ease; }
   .Cal__Today__root .Cal__Today__chevron {
     position: absolute;
