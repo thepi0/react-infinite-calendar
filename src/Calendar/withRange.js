@@ -499,8 +499,6 @@ function getPreselectedWithinRange(start_date, end_date, preselected, selected, 
 }
 
 function getInitialDate({selected, initialSelectedDate, scrollOffset}) {
-    console.log('withRange');
-    console.log(scrollOffset);
     if (scrollOffset !== null) {
         return scrollOffset;
     } else {

@@ -50,7 +50,7 @@ export default class MonthList extends Component {
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   };
   state = {
-    scrollTop: this.getDateOffset(this.props.scrollDate),
+    scrollTop: this.getDateOffset(this.props.scrollDate)
   };
   cache = {};
   memoize = function(param) {
@@ -83,10 +83,7 @@ export default class MonthList extends Component {
   }
 
   getDateOffset(date) {
-      console.log('monthList');
-      console.log(date);
      if (!isNaN(parseFloat(date)) && !isNaN(date - 0)) {
-         console.log('type is number');
          return date;
      } else {
         const {min, rowHeight, locale: {weekStartsOn}, height} = this.props;
@@ -192,10 +189,6 @@ export default class MonthList extends Component {
       rowHeight,
       width,
     } = this.props;
-    const {scrollTop} = this.state;
-
-    console.log('RENDER MONTHLIST');
-    console.log(scrollTop);
 
     return (
       <VirtualList
@@ -207,7 +200,7 @@ export default class MonthList extends Component {
         estimatedItemSize={rowHeight * AVERAGE_ROWS_PER_MONTH}
         renderItem={this.renderMonth}
         onScroll={onScroll}
-        scrollOffset={scrollTop}
+        scrollOffset={this.state.scrollTop}
         className={classNames(styles.root, {[styles.scrolling]: isScrolling})}
         style={{lineHeight: `${rowHeight}px`}}
         overscanCount={overscanMonthCount}

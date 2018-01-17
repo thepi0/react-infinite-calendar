@@ -34,7 +34,6 @@ storiesOf('Higher Order Components', module)
       lastSelectableDate={new Date(2018, 0, 29)}
       scrollOffset={6153}
       lastUpdate={new Date()}
-      shouldAnimate={true}
       autoFocus={false}
       originalDisabledDates={[
           {
@@ -256,6 +255,7 @@ storiesOf('Higher Order Components', module)
           }
       ]}
       onSelect={(date) => console.log(date)}
+      onScrollEnd={(date) => console.log(date)}
       Component={withRange(Calendar)}
     />
   ));
