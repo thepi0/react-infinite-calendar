@@ -73,6 +73,7 @@ export var withDefaultProps = _defaultProps({
   display: 'days',
   displayOptions: {},
   HeaderComponent: Header,
+  scrollOffset: null,
   height: 500,
   keyboardSupport: true,
   max: new Date(2050, 11, 31),

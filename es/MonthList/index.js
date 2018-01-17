@@ -172,15 +172,22 @@ var MonthList = function (_Component) {
   };
 
   MonthList.prototype.getDateOffset = function getDateOffset(date) {
-    var _props = this.props,
-        min = _props.min,
-        rowHeight = _props.rowHeight,
-        weekStartsOn = _props.locale.weekStartsOn,
-        height = _props.height;
+    console.log('monthList');
+    console.log(date);
+    if (!isNaN(parseFloat(date)) && !isNaN(date - 0)) {
+      console.log('type is number');
+      return date;
+    } else {
+      var _props = this.props,
+          min = _props.min,
+          rowHeight = _props.rowHeight,
+          weekStartsOn = _props.locale.weekStartsOn,
+          height = _props.height;
 
-    var weeks = getWeek(startOfMonth(min), parse(date), weekStartsOn);
+      var weeks = getWeek(startOfMonth(min), parse(date), weekStartsOn);
 
-    return weeks * rowHeight - (height - rowHeight / 2) / 2;
+      return weeks * rowHeight - (height - rowHeight / 2) / 2;
+    }
   };
 
   MonthList.prototype.render = function render() {
@@ -196,6 +203,9 @@ var MonthList = function (_Component) {
         width = _props2.width;
     var scrollTop = this.state.scrollTop;
 
+
+    console.log('RENDER MONTHLIST');
+    console.log(scrollTop);
 
     return React.createElement(VirtualList, {
       ref: this._getRef,
