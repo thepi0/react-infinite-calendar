@@ -172,10 +172,7 @@ var MonthList = function (_Component) {
   };
 
   MonthList.prototype.getDateOffset = function getDateOffset(date) {
-    console.log('monthList');
-    console.log(date);
     if (!isNaN(parseFloat(date)) && !isNaN(date - 0)) {
-      console.log('type is number');
       return date;
     } else {
       var _props = this.props,
@@ -201,11 +198,7 @@ var MonthList = function (_Component) {
         months = _props2.months,
         rowHeight = _props2.rowHeight,
         width = _props2.width;
-    var scrollTop = this.state.scrollTop;
 
-
-    console.log('RENDER MONTHLIST');
-    console.log(scrollTop);
 
     return React.createElement(VirtualList, {
       ref: this._getRef,
@@ -216,7 +209,7 @@ var MonthList = function (_Component) {
       estimatedItemSize: rowHeight * AVERAGE_ROWS_PER_MONTH,
       renderItem: this.renderMonth,
       onScroll: onScroll,
-      scrollOffset: scrollTop,
+      scrollOffset: this.state.scrollTop,
       className: classNames(styles.root, (_classNames = {}, _classNames[styles.scrolling] = isScrolling, _classNames)),
       style: { lineHeight: rowHeight + 'px' },
       overscanCount: overscanMonthCount

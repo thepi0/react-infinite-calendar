@@ -558,8 +558,6 @@ function getInitialDate(_ref8) {
         initialSelectedDate = _ref8.initialSelectedDate,
         scrollOffset = _ref8.scrollOffset;
 
-    console.log('withRange');
-    console.log(scrollOffset);
     if (scrollOffset !== null) {
         return scrollOffset;
     } else {

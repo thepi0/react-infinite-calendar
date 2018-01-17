@@ -197,7 +197,7 @@ var Calendar = function (_Component) {
       // Today is below the fold
       else if (scrollTop <= _this._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1)) {
           if (showToday !== DIRECTION_DOWN) newState = DIRECTION_DOWN;
-        } else if (showToday && scrollSpeed <= 1) {
+        } else if (showToday && (scrollTop >= _this._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1) || scrollTop <= _this._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset)) {
           newState = false;
         }
 
