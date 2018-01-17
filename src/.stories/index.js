@@ -32,7 +32,7 @@ storiesOf('Higher Order Components', module)
       rowHeight={74}
       selected={null}
       lastSelectableDate={new Date(2018, 0, 29)}
-      scrollOffset={6153}
+      scrollOffset={2100}
       lastUpdate={new Date()}
       autoFocus={false}
       originalDisabledDates={[

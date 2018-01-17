@@ -139,6 +139,8 @@ export default class Calendar extends Component {
   componentDidMount() {
     let {autoFocus} = this.props;
 
+    this.setInitialTodayHelperPosition(this.props);
+
     if (autoFocus) {
       this.node.focus();
     }
@@ -158,6 +160,8 @@ export default class Calendar extends Component {
         this.updateOriginalDisabledDates(nextProps);
         this.updatelastSelectableDate(nextProps);
     }
+
+
 
 
   }
@@ -274,6 +278,39 @@ export default class Calendar extends Component {
 
     onScrollEnd(this.scrollTop);
   }, 150);
+  setInitialTodayHelperPosition = (props = this.props) => {
+
+    const today = this.today;
+    const scrollTop = props.scrollOffset;
+    const {showToday} = this.state;
+    const {height, rowHeight} = this.props;
+    const {todayHelperRowOffset} = this.getDisplayOptions();
+    let newState;
+
+    if (!this._todayOffset) {
+      this._todayOffset = this.getDateOffset(today);
+    }
+
+    if (scrollTop >= this._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset) {
+      if (showToday !== DIRECTION_UP) newState = DIRECTION_UP;
+    }
+    // Today is below the fold
+    else if (scrollTop <= this._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1)) {
+      if (showToday !== DIRECTION_DOWN) newState = DIRECTION_DOWN;
+    } else if (
+      showToday &&
+      (
+          scrollTop >= this._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1) ||
+          scrollTop <= this._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset
+      )
+    )  {
+      newState = false;
+    }
+
+    if (newState != null) {
+      this.setState({showToday: newState});
+    }
+  };
   updateTodayHelperPosition = (scrollSpeed) => {
     const today = this.today;
     const scrollTop = this.scrollTop;
@@ -300,10 +337,6 @@ export default class Calendar extends Component {
           scrollTop <= this._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset
       )
     )  {
-      newState = false;
-    }
-
-    if (scrollTop === 0) {
       newState = false;
     }
 
