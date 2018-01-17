@@ -64,7 +64,8 @@ export default class Calendar extends Component {
     this.updatelastSelectableDate(props);
 
     this.state = {
-      display: props.display
+      display: props.display,
+      showToday: {hide: false, direction: null}
     };
   }
   static propTypes = {
@@ -160,9 +161,6 @@ export default class Calendar extends Component {
         this.updateOriginalDisabledDates(nextProps);
         this.updatelastSelectableDate(nextProps);
     }
-
-
-
 
   }
   updateLastUpdated(props = this.props) {
@@ -279,24 +277,27 @@ export default class Calendar extends Component {
     onScrollEnd(this.scrollTop);
   }, 150);
   setInitialTodayHelperPosition = (props = this.props) => {
-
     const today = this.today;
     const scrollTop = props.scrollOffset;
     const {showToday} = this.state;
     const {height, rowHeight} = this.props;
     const {todayHelperRowOffset} = this.getDisplayOptions();
-    let newState;
+    let newState = { hide: false, direction: null};
 
     if (!this._todayOffset) {
       this._todayOffset = this.getDateOffset(today);
     }
 
     if (scrollTop >= this._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset) {
-      if (showToday !== DIRECTION_UP) newState = DIRECTION_UP;
+      if (showToday.direction !== DIRECTION_UP ) {
+          newState = {hide: false, direction: DIRECTION_UP};
+      }
     }
     // Today is below the fold
     else if (scrollTop <= this._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1)) {
-      if (showToday !== DIRECTION_DOWN) newState = DIRECTION_DOWN;
+      if (showToday.direction !== DIRECTION_DOWN) {
+          newState = {hide: false, direction: DIRECTION_DOWN};
+      }
     } else if (
       showToday &&
       (
@@ -304,7 +305,8 @@ export default class Calendar extends Component {
           scrollTop <= this._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset
       )
     )  {
-      newState = false;
+
+      newState = {hide: true, direction: null};
     }
 
     if (newState != null) {
@@ -323,21 +325,25 @@ export default class Calendar extends Component {
       this._todayOffset = this.getDateOffset(today);
     }
 
-    // Today is above the fold
     if (scrollTop >= this._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset) {
-      if (showToday !== DIRECTION_UP) newState = DIRECTION_UP;
+      if (showToday.direction !== DIRECTION_UP ) {
+          newState = {hide: false, direction: DIRECTION_UP};
+      }
     }
     // Today is below the fold
     else if (scrollTop <= this._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1)) {
-      if (showToday !== DIRECTION_DOWN) newState = DIRECTION_DOWN;
-  } else if (
+      if (showToday.direction !== DIRECTION_DOWN) {
+          newState = {hide: false, direction: DIRECTION_DOWN};
+      }
+    } else if (
       showToday &&
       (
           scrollTop >= this._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1) ||
           scrollTop <= this._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset
       )
     )  {
-      newState = false;
+
+      newState = {hide: true, direction: null};
     }
 
     if (newState != null) {
@@ -404,7 +410,7 @@ export default class Calendar extends Component {
             {showTodayHelper &&
               <Today
                 scrollToDate={this.scrollToDate}
-                show={showToday}
+                showObject={showToday}
                 today={today}
                 theme={theme}
                 todayLabel={locale.todayLabel.long}
