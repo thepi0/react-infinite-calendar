@@ -197,6 +197,7 @@ export default class MonthList extends Component {
         estimatedItemSize={rowHeight * AVERAGE_ROWS_PER_MONTH}
         renderItem={this.renderMonth}
         onScroll={onScroll}
+        scrollOffset={scrollTop}
         className={classNames(styles.root, {[styles.scrolling]: isScrolling})}
         style={{lineHeight: `${rowHeight}px`}}
         overscanCount={overscanMonthCount}

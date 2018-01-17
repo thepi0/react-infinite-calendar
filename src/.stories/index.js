@@ -27,12 +27,14 @@ storiesOf('Higher Order Components', module)
     <InfiniteCalendar
       width={Math.min(window.innerWidth, 900)}
       height={Math.min(window.innerHeight, 900)}
-      min={subMonths(today, 2)}
-      max={addMonths(today, 2)}
+      min={subMonths(today, 3)}
+      max={addMonths(today, 3)}
       rowHeight={74}
       selected={null}
       lastSelectableDate={new Date(2018, 0, 29)}
+      initialSelectedDate={new Date(2018, 2, 29)}
       lastUpdate={new Date()}
+      shouldAnimate={true}
       autoFocus={false}
       originalDisabledDates={[
           {
