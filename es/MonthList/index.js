@@ -206,6 +206,7 @@ var MonthList = function (_Component) {
       estimatedItemSize: rowHeight * AVERAGE_ROWS_PER_MONTH,
       renderItem: this.renderMonth,
       onScroll: onScroll,
+      scrollOffset: scrollTop,
       className: classNames(styles.root, (_classNames = {}, _classNames[styles.scrolling] = isScrolling, _classNames)),
       style: { lineHeight: rowHeight + 'px' },
       overscanCount: overscanMonthCount
