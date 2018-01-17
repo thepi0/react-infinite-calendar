@@ -2,6 +2,8 @@ import _defaultProps from 'recompose/defaultProps';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _class, _temp, _initialiseProps;
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -96,7 +98,7 @@ export var withDefaultProps = _defaultProps({
   YearsComponent: Years
 });
 
-var Calendar = function (_Component) {
+var Calendar = (_temp = _class = function (_Component) {
   _inherits(Calendar, _Component);
 
   function Calendar(props) {
@@ -104,115 +106,7 @@ var Calendar = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, _Component.apply(this, arguments));
 
-    _this._displayOptions = {};
-    _this._locale = {};
-    _this._theme = {};
-
-    _this.getCurrentOffset = function () {
-      return _this.scrollTop;
-    };
-
-    _this.getDateOffset = function (date) {
-      return _this._MonthList && _this._MonthList.getDateOffset(date);
-    };
-
-    _this.scrollTo = function (offset) {
-      return _this._MonthList && _this._MonthList.scrollTo(offset);
-    };
-
-    _this.scrollToDate = function () {
-      var date = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Date();
-      var offset = arguments[1];
-      var shouldAnimate = arguments[2];
-      var display = _this.props.display;
-
-
-      return _this._MonthList && _this._MonthList.scrollToDate(date, offset, shouldAnimate && display === 'days', function () {
-        return _this.setState({ isScrolling: false });
-      });
-    };
-
-    _this.getScrollSpeed = new ScrollSpeed().getScrollSpeed;
-
-    _this.handleScroll = function (scrollTop, e) {
-      var _this$props = _this.props,
-          onScroll = _this$props.onScroll,
-          rowHeight = _this$props.rowHeight;
-      var isScrolling = _this.state.isScrolling;
-
-      var _this$getDisplayOptio = _this.getDisplayOptions(),
-          showTodayHelper = _this$getDisplayOptio.showTodayHelper,
-          showOverlay = _this$getDisplayOptio.showOverlay;
-
-      var scrollSpeed = _this.scrollSpeed = Math.abs(_this.getScrollSpeed(scrollTop));
-      _this.scrollTop = scrollTop;
-
-      if (showTodayHelper) {
-        _this.updateTodayHelperPosition(scrollSpeed);
-      }
-
-      onScroll(scrollTop, e);
-      _this.handleScrollEnd();
-    };
-
-    _this.handleScrollEnd = debounce(function () {
-      var onScrollEnd = _this.props.onScrollEnd;
-      var isScrolling = _this.state.isScrolling;
-
-      var _this$getDisplayOptio2 = _this.getDisplayOptions(),
-          showTodayHelper = _this$getDisplayOptio2.showTodayHelper;
-
-      if (isScrolling) {
-        _this.setState({ isScrolling: false });
-      }
-
-      if (showTodayHelper) {
-        _this.updateTodayHelperPosition(0);
-      }
-
-      onScrollEnd(_this.scrollTop);
-    }, 150);
-
-    _this.updateTodayHelperPosition = function (scrollSpeed) {
-      var today = _this.today;
-      var scrollTop = _this.scrollTop;
-      var showToday = _this.state.showToday;
-      var _this$props2 = _this.props,
-          height = _this$props2.height,
-          rowHeight = _this$props2.rowHeight;
-
-      var _this$getDisplayOptio3 = _this.getDisplayOptions(),
-          todayHelperRowOffset = _this$getDisplayOptio3.todayHelperRowOffset;
-
-      var newState = void 0;
-
-      if (!_this._todayOffset) {
-        _this._todayOffset = _this.getDateOffset(today);
-      }
-
-      // Today is above the fold
-      if (scrollTop >= _this._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset) {
-        if (showToday !== DIRECTION_UP) newState = DIRECTION_UP;
-      }
-      // Today is below the fold
-      else if (scrollTop <= _this._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1)) {
-          if (showToday !== DIRECTION_DOWN) newState = DIRECTION_DOWN;
-        } else if (showToday && (scrollTop >= _this._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1) || scrollTop <= _this._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset)) {
-          newState = false;
-        }
-
-      if (scrollTop === 0) {
-        newState = false;
-      }
-
-      if (newState != null) {
-        _this.setState({ showToday: newState });
-      }
-    };
-
-    _this.setDisplay = function (display) {
-      _this.setState({ display: display });
-    };
+    _initialiseProps.call(_this);
 
     _this.updateYears(props);
     _this.updatePreSelected(props);
@@ -230,6 +124,8 @@ var Calendar = function (_Component) {
   Calendar.prototype.componentDidMount = function componentDidMount() {
     var autoFocus = this.props.autoFocus;
 
+
+    this.setInitialTodayHelperPosition(this.props);
 
     if (autoFocus) {
       this.node.focus();
@@ -439,8 +335,150 @@ var Calendar = function (_Component) {
   };
 
   return Calendar;
-}(Component);
+}(Component), _initialiseProps = function _initialiseProps() {
+  var _this3 = this;
 
+  this._displayOptions = {};
+  this._locale = {};
+  this._theme = {};
+
+  this.getCurrentOffset = function () {
+    return _this3.scrollTop;
+  };
+
+  this.getDateOffset = function (date) {
+    return _this3._MonthList && _this3._MonthList.getDateOffset(date);
+  };
+
+  this.scrollTo = function (offset) {
+    return _this3._MonthList && _this3._MonthList.scrollTo(offset);
+  };
+
+  this.scrollToDate = function () {
+    var date = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Date();
+    var offset = arguments[1];
+    var shouldAnimate = arguments[2];
+    var display = _this3.props.display;
+
+
+    return _this3._MonthList && _this3._MonthList.scrollToDate(date, offset, shouldAnimate && display === 'days', function () {
+      return _this3.setState({ isScrolling: false });
+    });
+  };
+
+  this.getScrollSpeed = new ScrollSpeed().getScrollSpeed;
+
+  this.handleScroll = function (scrollTop, e) {
+    var _props2 = _this3.props,
+        onScroll = _props2.onScroll,
+        rowHeight = _props2.rowHeight;
+    var isScrolling = _this3.state.isScrolling;
+
+    var _getDisplayOptions2 = _this3.getDisplayOptions(),
+        showTodayHelper = _getDisplayOptions2.showTodayHelper,
+        showOverlay = _getDisplayOptions2.showOverlay;
+
+    var scrollSpeed = _this3.scrollSpeed = Math.abs(_this3.getScrollSpeed(scrollTop));
+    _this3.scrollTop = scrollTop;
+
+    if (showTodayHelper) {
+      _this3.updateTodayHelperPosition(scrollSpeed);
+    }
+
+    onScroll(scrollTop, e);
+    _this3.handleScrollEnd();
+  };
+
+  this.handleScrollEnd = debounce(function () {
+    var onScrollEnd = _this3.props.onScrollEnd;
+    var isScrolling = _this3.state.isScrolling;
+
+    var _getDisplayOptions3 = _this3.getDisplayOptions(),
+        showTodayHelper = _getDisplayOptions3.showTodayHelper;
+
+    if (isScrolling) {
+      _this3.setState({ isScrolling: false });
+    }
+
+    if (showTodayHelper) {
+      _this3.updateTodayHelperPosition(0);
+    }
+
+    onScrollEnd(_this3.scrollTop);
+  }, 150);
+
+  this.setInitialTodayHelperPosition = function () {
+    var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _this3.props;
+
+
+    var today = _this3.today;
+    var scrollTop = props.scrollOffset;
+    var showToday = _this3.state.showToday;
+    var _props3 = _this3.props,
+        height = _props3.height,
+        rowHeight = _props3.rowHeight;
+
+    var _getDisplayOptions4 = _this3.getDisplayOptions(),
+        todayHelperRowOffset = _getDisplayOptions4.todayHelperRowOffset;
+
+    var newState = void 0;
+
+    if (!_this3._todayOffset) {
+      _this3._todayOffset = _this3.getDateOffset(today);
+    }
+
+    if (scrollTop >= _this3._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset) {
+      if (showToday !== DIRECTION_UP) newState = DIRECTION_UP;
+    }
+    // Today is below the fold
+    else if (scrollTop <= _this3._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1)) {
+        if (showToday !== DIRECTION_DOWN) newState = DIRECTION_DOWN;
+      } else if (showToday && (scrollTop >= _this3._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1) || scrollTop <= _this3._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset)) {
+        newState = false;
+      }
+
+    if (newState != null) {
+      _this3.setState({ showToday: newState });
+    }
+  };
+
+  this.updateTodayHelperPosition = function (scrollSpeed) {
+    var today = _this3.today;
+    var scrollTop = _this3.scrollTop;
+    var showToday = _this3.state.showToday;
+    var _props4 = _this3.props,
+        height = _props4.height,
+        rowHeight = _props4.rowHeight;
+
+    var _getDisplayOptions5 = _this3.getDisplayOptions(),
+        todayHelperRowOffset = _getDisplayOptions5.todayHelperRowOffset;
+
+    var newState = void 0;
+
+    if (!_this3._todayOffset) {
+      _this3._todayOffset = _this3.getDateOffset(today);
+    }
+
+    // Today is above the fold
+    if (scrollTop >= _this3._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset) {
+      if (showToday !== DIRECTION_UP) newState = DIRECTION_UP;
+    }
+    // Today is below the fold
+    else if (scrollTop <= _this3._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1)) {
+        if (showToday !== DIRECTION_DOWN) newState = DIRECTION_DOWN;
+      } else if (showToday && (scrollTop >= _this3._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1) || scrollTop <= _this3._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset)) {
+        newState = false;
+      }
+
+    if (newState != null) {
+      _this3.setState({ showToday: newState });
+    }
+  };
+
+  this.setDisplay = function (display) {
+    _this3.setState({ display: display });
+  };
+}, _temp);
 export { Calendar as default };
 process.env.NODE_ENV !== "production" ? Calendar.propTypes = {
   autoFocus: PropTypes.bool,
