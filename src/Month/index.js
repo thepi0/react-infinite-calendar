@@ -100,6 +100,7 @@ export default class Month extends PureComponent {
       row = rows[i];
       days = [];
       dow = getDay(new Date(year, month, row[0]));
+      dow === 0 ? dow = 7 : dow;
 
       for (let k = 0, len = row.length; k < len; k++) {
         isDateVacation = false;
