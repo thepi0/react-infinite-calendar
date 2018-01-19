@@ -140,6 +140,7 @@ var Month = function (_PureComponent) {
             row = rows[i];
             days = [];
             dow = getDay(new Date(year, month, row[0]));
+            dow === 0 ? dow = 7 : dow;
 
             for (var k = 0, _len = row.length; k < _len; k++) {
                 isDateVacation = false;
