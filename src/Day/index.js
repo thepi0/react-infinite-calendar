@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import parse from 'date-fns/parse';
 import styles from './Day.scss';
@@ -8,10 +9,13 @@ export default class Day extends PureComponent {
   handleClick = () => {
     let {date, beforeLastDisabled, isDisabled, isPreSelected, onClick, onClear, originalDisabledDates} = this.props;
 
+    var fromTop = ReactDOM.findDOMNode(this)
+      .getBoundingClientRect().top;
+
     if (isDisabled) {
       onClear();
     } else if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onClick === 'function') {
-      onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
+      onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
     }
   };
 

@@ -231,7 +231,7 @@ export default class Calendar extends Component {
   }
   getDateOffset = (date) => {
     return this._MonthList && this._MonthList.getDateOffset(date);
-  };
+  }
   scrollTo = (offset) => {
     return this._MonthList && this._MonthList.scrollTo(offset);
   }
@@ -293,7 +293,7 @@ export default class Calendar extends Component {
           newState = {hide: false, direction: DIRECTION_UP};
       }
     }
-    // Today is below the fold
+
     else if (scrollTop <= this._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1)) {
       if (showToday.direction !== DIRECTION_DOWN) {
           newState = {hide: false, direction: DIRECTION_DOWN};

@@ -39,12 +39,12 @@ export default class Month extends PureComponent {
       rows,
       selected,
       preselected,
+      getDateOffset,
       today,
       passThrough,
     } = this.props;
     const year = monthDate.getFullYear();
     const month = monthDate.getMonth();
-    const monthShort = format(monthDate, 'MMM', {locale: locale.locale});
     const monthRows = [];
     const lastDate = format(subDays(lastSelectableDate, 1), 'YYYY-MM-DD', {locale: locale.locale});
     let day = 0;
@@ -52,8 +52,6 @@ export default class Month extends PureComponent {
     let nextDisabled = false;
     let beforeLastDisabled = false;
     let prevDisabled = false;
-    let nextSelected = false;
-    let prevSelected= false;
     let isToday = false;
     let dateDisabled = { date: null, type: null };
     let isDateVacation = false;
@@ -63,8 +61,6 @@ export default class Month extends PureComponent {
     let date, nextDate, prevDate, days, dow, nextdow, prevdow, row;
     let nextDateObject = null;
     let prevDateObject = null;
-    //let preselectedDays = preselected.days;
-    //let preselectedColors = preselected.colors;
 
     // Used for faster comparisons
     const _today = format(today, 'YYYY-MM-DD');
@@ -117,7 +113,6 @@ export default class Month extends PureComponent {
         nextdow = dow + 1;
         prevdow = dow === 1 ? 7 : dow - 1;
 
-        /* TODO: This should be passed from withRange */
         for (let x = 0, len = initialDisabledDatesArray.length; x < len; x++) {
             if (initialDisabledDatesArray[x].date === date && initialDisabledDatesArray[x].type === 'vacation' && !isBefore(date, lastDate)) {
                 isDateVacation = true;
