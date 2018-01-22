@@ -431,16 +431,14 @@ var Calendar = (_temp = _class = function (_Component) {
       if (showToday.direction !== DIRECTION_UP) {
         newState = { hide: false, direction: DIRECTION_UP };
       }
-    }
-    // Today is below the fold
-    else if (scrollTop <= _this3._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1)) {
-        if (showToday.direction !== DIRECTION_DOWN) {
-          newState = { hide: false, direction: DIRECTION_DOWN };
-        }
-      } else if (showToday && (scrollTop >= _this3._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1) || scrollTop <= _this3._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset)) {
-
-        newState = { hide: true, direction: null };
+    } else if (scrollTop <= _this3._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1)) {
+      if (showToday.direction !== DIRECTION_DOWN) {
+        newState = { hide: false, direction: DIRECTION_DOWN };
       }
+    } else if (showToday && (scrollTop >= _this3._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1) || scrollTop <= _this3._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset)) {
+
+      newState = { hide: true, direction: null };
+    }
 
     if (newState != null) {
       _this3.setState({ showToday: newState });

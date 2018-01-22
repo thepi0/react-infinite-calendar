@@ -7,6 +7,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import React, { PureComponent } from 'react';
+import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import parse from 'date-fns/parse';
 var styles = {
@@ -63,10 +64,12 @@ var Day = function (_PureComponent) {
           originalDisabledDates = _this$props.originalDisabledDates;
 
 
+      var fromTop = ReactDOM.findDOMNode(_this).getBoundingClientRect().top;
+
       if (isDisabled) {
         onClear();
       } else if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onClick === 'function') {
-        onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
+        onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
       }
     }, _this.getDayColors = function (date, preselected) {
       if (!preselected || !preselected.length) {

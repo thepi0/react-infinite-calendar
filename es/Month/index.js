@@ -66,12 +66,12 @@ var Month = function (_PureComponent) {
             rows = _props.rows,
             selected = _props.selected,
             preselected = _props.preselected,
+            getDateOffset = _props.getDateOffset,
             today = _props.today,
             passThrough = _props.passThrough;
 
         var year = monthDate.getFullYear();
         var month = monthDate.getMonth();
-        var monthShort = format(monthDate, 'MMM', { locale: locale.locale });
         var monthRows = [];
         var lastDate = format(subDays(lastSelectableDate, 1), 'YYYY-MM-DD', { locale: locale.locale });
         var day = 0;
@@ -79,8 +79,6 @@ var Month = function (_PureComponent) {
         var nextDisabled = false;
         var beforeLastDisabled = false;
         var prevDisabled = false;
-        var nextSelected = false;
-        var prevSelected = false;
         var isToday = false;
         var dateDisabled = { date: null, type: null };
         var isDateVacation = false;
@@ -97,8 +95,6 @@ var Month = function (_PureComponent) {
             row = void 0;
         var nextDateObject = null;
         var prevDateObject = null;
-        //let preselectedDays = preselected.days;
-        //let preselectedColors = preselected.colors;
 
         // Used for faster comparisons
         var _today = format(today, 'YYYY-MM-DD');
@@ -157,7 +153,6 @@ var Month = function (_PureComponent) {
                 nextdow = dow + 1;
                 prevdow = dow === 1 ? 7 : dow - 1;
 
-                /* TODO: This should be passed from withRange */
                 for (var x = 0, _len2 = initialDisabledDatesArray.length; x < _len2; x++) {
                     if (initialDisabledDatesArray[x].date === date && initialDisabledDatesArray[x].type === 'vacation' && !isBefore(date, lastDate)) {
                         isDateVacation = true;

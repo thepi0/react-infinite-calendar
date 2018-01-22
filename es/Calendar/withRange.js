@@ -19,7 +19,6 @@ import differenceInDays from 'date-fns/difference_in_days';
 import differenceInCalendarDays from 'date-fns/difference_in_calendar_days';
 import isWithinRange from 'date-fns/is_within_range';
 import isWeekend from 'date-fns/is_weekend';
-import enhanceHeader from '../Header/withRange';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 var styles = {
@@ -135,8 +134,8 @@ var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDa
                 onClear: function onClear() {
                     return clearSelect(_extends({ selected: selected }, props));
                 },
-                onClick: function onClick(date, beforeLastDisabled, isPreSelected, originalDisabledDates) {
-                    return handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, _extends({ selected: selected, preselected: preselected }, props));
+                onClick: function onClick(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop) {
+                    return handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, _extends({ selected: selected, preselected: preselected }, props));
                 },
                 handlers: {
                     onMouseOver: !isTouchDevice && props.selectionStart ? function (e) {
@@ -308,9 +307,6 @@ function areArraysEqual(a, b) {
         return false;
     }
 
-    // If you don't care about the order of the elements inside
-    // the array, you should sort both arrays here.
-
     for (var i = 0; i < a.length; ++i) {
         if (a[i] !== b[i]) {
             return false;
@@ -346,7 +342,7 @@ function clearSelect(_ref5) {
     });
 }
 
-function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, _ref6) {
+function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, _ref6) {
     var onSelect = _ref6.onSelect,
         selected = _ref6.selected,
         preselected = _ref6.preselected,
@@ -384,6 +380,7 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
         }), {
             before_last: true,
             selections: getPreselectedWithinDate(date, preselected),
+            date_offset: fromTop,
             eventProp: 'click'
         }));
         setSelectionStart(null);
@@ -397,6 +394,7 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
         }), {
             before_last: beforeLastDisabled,
             selections: getPreselectedWithinRange(selectionStart, date, preselected, selected, originalDisabledDates),
+            date_offset: fromTop,
             eventProp: 'click'
         }));
         setSelectionStart(null);
