@@ -27,7 +27,7 @@ export default class Today extends PureComponent {
     return (
       <div
         className={classNames(styles.root, {
-          [styles.hide]: showObject.hide === true,
+          [styles.show]: showObject.show === true,
           [styles.chevronUp]: showObject.direction === DIRECTION_UP,
           [styles.chevronDown]: showObject.direction === DIRECTION_DOWN,
         })}
