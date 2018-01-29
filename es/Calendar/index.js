@@ -223,7 +223,7 @@ var Calendar = function (_Component) {
 
     _this.state = {
       display: props.display,
-      showToday: { hide: false, direction: null }
+      showToday: { show: false, direction: null }
     };
     return _this;
   }
@@ -337,72 +337,6 @@ var Calendar = function (_Component) {
   Calendar.prototype.getTheme = function getTheme() {
     return Object.assign(this._theme, defaultTheme, this.props.theme);
   };
-  /*setInitialTodayHelperPosition = (props = this.props) => {
-    const today = this.today;
-    const scrollTop = props.scrollOffset;
-    const {showToday} = this.state;
-    const {height, rowHeight} = this.props;
-    const {todayHelperRowOffset} = this.getDisplayOptions();
-    let newState = { hide: false, direction: null};
-     if (!this._todayOffset) {
-      this._todayOffset = this.getDateOffset(today);
-    }
-     if (scrollTop >= this._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset) {
-      if (showToday.direction !== DIRECTION_UP ) {
-          newState = {hide: false, direction: DIRECTION_UP};
-      }
-    }
-     else if (scrollTop <= this._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1)) {
-      if (showToday.direction !== DIRECTION_DOWN) {
-          newState = {hide: false, direction: DIRECTION_DOWN};
-      }
-    } else if (
-      showToday &&
-      (
-          scrollTop >= this._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1) ||
-          scrollTop <= this._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset
-      )
-    )  {
-       newState = {hide: true, direction: null};
-    }
-     if (newState != null) {
-      this.setState({showToday: newState});
-    }
-  };
-  updateTodayHelperPosition = (scrollSpeed) => {
-    const today = this.today;
-    const scrollTop = this.scrollTop;
-    const {showToday} = this.state;
-    const {height, rowHeight} = this.props;
-    const {todayHelperRowOffset} = this.getDisplayOptions();
-    let newState;
-     if (!this._todayOffset) {
-      this._todayOffset = this.getDateOffset(today);
-    }
-     if (scrollTop >= this._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset) {
-      if (showToday.direction !== DIRECTION_UP ) {
-          newState = {hide: false, direction: DIRECTION_UP};
-      }
-    }
-    // Today is below the fold
-    else if (scrollTop <= this._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1)) {
-      if (showToday.direction !== DIRECTION_DOWN) {
-          newState = {hide: false, direction: DIRECTION_DOWN};
-      }
-    } else if (
-      showToday &&
-      (
-          scrollTop >= this._todayOffset - height / 2 - rowHeight * (todayHelperRowOffset + 1) ||
-          scrollTop <= this._todayOffset + (height - rowHeight) / 2 + rowHeight * todayHelperRowOffset
-      )
-    )  {
-       newState = {hide: true, direction: null};
-    }
-     if (newState != null) {
-      this.setState({showToday: newState});
-    }
-  };*/
-
 
   Calendar.prototype.render = function render() {
     var _classNames,
