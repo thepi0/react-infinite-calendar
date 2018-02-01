@@ -55,6 +55,7 @@ var styles = {
 
 var isTouchDevice = false;
 var preSelectedSelected = false;
+var touchDate = null;
 
 export var EVENT_TYPE = {
     END: 3,
@@ -135,11 +136,20 @@ var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDa
                     return clearSelect(_extends({ selected: selected }, props));
                 },
                 onClick: function onClick(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop) {
-                    return handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, _extends({ selected: selected, preselected: preselected }, props));
+                    return !isTouchDevice ? handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, _extends({ selected: selected, preselected: preselected }, props)) : null;
+                },
+                onTouchStart: function onTouchStart(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop) {
+                    return isTouchDevice ? handleTouchStart(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, _extends({ selected: selected, preselected: preselected }, props)) : null;
+                },
+                onTouchEnd: function onTouchEnd(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop) {
+                    return isTouchDevice ? handleTouchEnd(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, _extends({ selected: selected, preselected: preselected }, props)) : null;
                 },
                 handlers: {
                     onMouseOver: !isTouchDevice && props.selectionStart ? function (e) {
                         return handleMouseOver(e, _extends({ selected: selected, preselected: preselected }, props));
+                    } : null,
+                    onTouchMove: isTouchDevice && props.selectionStart ? function (e) {
+                        return handleTouchMove(e, _extends({ selected: selected, preselected: preselected }, props));
                     } : null
                 }
             },
@@ -244,12 +254,6 @@ function handlePreselected(preselected) {
         var nextDayStart = format(addDays(dayStart, 1), 'YYYY-MM-DD');
         var prevDayStart = format(subDays(dayStart, 1), 'YYYY-MM-DD');
 
-        /*for (var m = 0, col = colorArray.length; m < col; ++m) {
-            if (days[x].start_time === colorArray[m].date) {
-                days[x].colors = colorArray[m].colors;
-            }
-        }*/
-
         if (starts.includes(nextDayStart)) {
             days[x].nextselected = true;
             var nextday = days.filter(function (date) {
@@ -330,6 +334,7 @@ function clearSelect(_ref5) {
         setSelectionStart = _ref5.setSelectionStart;
 
     selected = null;
+    touchDate = null;
     setSelectionStart(null);
     setSelectionType('none');
     setSelectionDone(true);
@@ -417,44 +422,140 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
     }
 }
 
-/*
-* TODO: Mouse down and touch support
-const EventListenerMode = {capture: true};
-
-function preventGlobalMouseEvents() {
-  document.body.style['pointer-events'] = 'none';
-}
-
-function restoreGlobalMouseEvents() {
-  document.body.style['pointer-events'] = 'auto';
-}
-
-function mousemoveListener(e) {
-  e.stopPropagation();
-  // do whatever is needed while the user is moving the cursor around
-}
-
-function mouseupListener(e) {
-  restoreGlobalMouseEvents();
-  document.removeEventListener('mouseup',   mouseupListener,   EventListenerMode);
-  document.removeEventListener('mousemove', mousemoveListener, EventListenerMode);
-  e.stopPropagation();
-}
-
-function handleMouseDown(e) {
-  preventGlobalMouseEvents();
-  document.addEventListener('mouseup',   mouseupListener,   EventListenerMode);
-  document.addEventListener('mousemove', mousemoveListener, EventListenerMode);
-  e.preventDefault();
-  e.stopPropagation();
-}
-*/
-
-var saveHoverDate = void 0;
-
-function handleMouseOver(e, _ref7) {
+function handleTouchStart(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, _ref7) {
     var onSelect = _ref7.onSelect,
-        selectionStart = _ref7.selectionStart;
+        selected = _ref7.selected,
+        preselected = _ref7.preselected,
+        preselectedDates = _ref7.preselectedDates,
+        setPreselectedDates = _ref7.setPreselectedDates,
+        selectionType = _ref7.selectionType,
+        setSelectionType = _ref7.setSelectionType,
+        selectionDone = _ref7.selectionDone,
+        setSelectionDone = _ref7.setSelectionDone,
+        selectionStart = _ref7.selectionStart,
+        setSelectionStart = _ref7.setSelectionStart;
+
+
+    if (!date) {
+        return;
+    }
+
+    touchDate = date;
+
+    preselected = preselected && preselected[0] ? preselected : [];
+
+    if (!isPreSelected) {
+        if (preselected && preselected[0]) {
+            var returnable = preselected.map(function (dateObj) {
+                return { date: format(dateObj.start_time, 'YYYY-MM-DD'), type: 'preselect' };
+            });
+            setPreselectedDates(returnable);
+        }
+        setSelectionType('not_preselected');
+    } else {
+        setPreselectedDates([]);
+        setSelectionType('preselected');
+    }
+
+    if (beforeLastDisabled) {
+        onSelect(_extends({
+            eventType: EVENT_TYPE.END
+        }, getSortedSelection({
+            start_time: date,
+            end_time: date
+        }), {
+            before_last: true,
+            selections: getPreselectedWithinDate(date, preselected),
+            date_offset: fromTop,
+            eventProp: 'touchend'
+        }));
+        setSelectionStart(null);
+        setSelectionDone(true);
+    } else {
+        onSelect(_extends({
+            eventType: EVENT_TYPE.START
+        }, getSortedSelection({
+            start_time: date,
+            end_time: date
+        }), {
+            before_last: beforeLastDisabled,
+            eventProp: 'touchstart'
+        }));
+        setSelectionStart(date);
+
+        if (isPreSelected) {
+            preSelectedSelected = true;
+        } else {
+            preSelectedSelected = false;
+        }
+        setSelectionDone(false);
+    }
+}
+
+function handleTouchMove(e, _ref8) {
+    var onSelect = _ref8.onSelect,
+        selectionStart = _ref8.selectionStart;
+
+
+    var target = document.elementFromPoint(e.touches[0].pageX, e.touches[0].pageY);
+
+    if (!target) {
+        return;
+    }
+
+    var targetDate = parse(target.getAttribute('data-date'));
+    var isDisabled = target.getAttribute('data-disabled');
+
+    var lastDate = format(touchDate, 'YYYY-MM-DD');
+    var thisDate = format(targetDate, 'YYYY-MM-DD');
+
+    if (lastDate !== thisDate && isDisabled != 'true') {
+
+        touchDate = targetDate;
+
+        onSelect(_extends({
+            eventType: EVENT_TYPE.HOVER
+        }, getSortedSelection({
+            start_time: selectionStart,
+            end_time: touchDate
+        }), {
+            eventProp: 'touchmove'
+        }));
+    }
+}
+
+function handleTouchEnd(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, _ref9) {
+    var onSelect = _ref9.onSelect,
+        selected = _ref9.selected,
+        preselected = _ref9.preselected,
+        preselectedDates = _ref9.preselectedDates,
+        setPreselectedDates = _ref9.setPreselectedDates,
+        selectionType = _ref9.selectionType,
+        setSelectionType = _ref9.setSelectionType,
+        selectionDone = _ref9.selectionDone,
+        setSelectionDone = _ref9.setSelectionDone,
+        selectionStart = _ref9.selectionStart,
+        setSelectionStart = _ref9.setSelectionStart;
+
+
+    onSelect(_extends({
+        eventType: EVENT_TYPE.END
+    }, getSortedSelection({
+        start_time: selectionStart,
+        end_time: touchDate
+    }), {
+        before_last: beforeLastDisabled,
+        selections: getPreselectedWithinRange(selectionStart, touchDate, preselected, selected, originalDisabledDates),
+        date_offset: fromTop,
+        eventProp: 'touchend'
+    }));
+    setSelectionStart(null);
+    setSelectionDone(true);
+}
+
+function handleMouseOver(e, _ref10) {
+    var onSelect = _ref10.onSelect,
+        selectionStart = _ref10.selectionStart;
 
     var dateStr = e.target.getAttribute('data-date');
     var isDisabled = e.target.getAttribute('data-disabled');
@@ -464,7 +565,6 @@ function handleMouseOver(e, _ref7) {
         return;
     }
 
-    //if (saveHoverDate !== dateStr && isDisabled != 'true') {
     if (isDisabled != 'true') {
         onSelect(_extends({
             eventType: EVENT_TYPE.HOVER
@@ -475,7 +575,6 @@ function handleMouseOver(e, _ref7) {
             eventProp: 'hover'
         }));
     }
-    saveHoverDate = dateStr;
 }
 
 function getPreselectedWithinDate(date, preselected) {
@@ -551,10 +650,10 @@ function getPreselectedWithinRange(start_date, end_date, preselected, selected, 
     return { days_count: days, data: returnableDates };
 }
 
-function getInitialDate(_ref8) {
-    var selected = _ref8.selected,
-        initialSelectedDate = _ref8.initialSelectedDate,
-        scrollOffset = _ref8.scrollOffset;
+function getInitialDate(_ref11) {
+    var selected = _ref11.selected,
+        initialSelectedDate = _ref11.initialSelectedDate,
+        scrollOffset = _ref11.scrollOffset;
 
     if (scrollOffset !== null) {
         return scrollOffset;

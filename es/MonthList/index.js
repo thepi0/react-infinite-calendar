@@ -12,6 +12,7 @@ import VirtualList from 'react-tiny-virtual-list';
 import classNames from 'classnames';
 import { emptyFn, getMonth, getWeek, getWeeksInMonth, animate } from '../utils';
 import parse from 'date-fns/parse';
+import differenceInCalendarMonths from 'date-fns/difference_in_calendar_months';
 import startOfMonth from 'date-fns/start_of_month';
 import Month from '../Month';
 var styles = {

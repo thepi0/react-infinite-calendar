@@ -71,6 +71,42 @@ var Day = function (_PureComponent) {
       } else if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onClick === 'function') {
         onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
       }
+    }, _this.handleTouchStart = function () {
+      var _this$props2 = _this.props,
+          date = _this$props2.date,
+          beforeLastDisabled = _this$props2.beforeLastDisabled,
+          isDisabled = _this$props2.isDisabled,
+          isPreSelected = _this$props2.isPreSelected,
+          onTouchStart = _this$props2.onTouchStart,
+          onClear = _this$props2.onClear,
+          originalDisabledDates = _this$props2.originalDisabledDates;
+
+
+      var fromTop = ReactDOM.findDOMNode(_this).getBoundingClientRect().top;
+
+      if (isDisabled) {
+        onClear();
+      } else if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onTouchStart === 'function') {
+        onTouchStart(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
+      }
+    }, _this.handleTouchEnd = function () {
+      var _this$props3 = _this.props,
+          date = _this$props3.date,
+          beforeLastDisabled = _this$props3.beforeLastDisabled,
+          isDisabled = _this$props3.isDisabled,
+          isPreSelected = _this$props3.isPreSelected,
+          onTouchEnd = _this$props3.onTouchEnd,
+          onClear = _this$props3.onClear,
+          originalDisabledDates = _this$props3.originalDisabledDates;
+
+
+      var fromTop = ReactDOM.findDOMNode(_this).getBoundingClientRect().top;
+
+      if (isDisabled) {
+        onClear();
+      } else if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onTouchEnd === 'function') {
+        onTouchEnd(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
+      }
     }, _this.getDayColors = function (date, preselected) {
       if (!preselected || !preselected.length) {
         return;
@@ -103,13 +139,6 @@ var Day = function (_PureComponent) {
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
-  /*handleMouseDown = () => {
-      let {date, beforeLastDisabled, isDisabled, isPreSelected, onMouseDown, originalDisabledDates} = this.props;
-       if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onMouseDown === 'function') {
-        onMouseDown(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
-      }
-  };*/
-
   Day.prototype.renderSelection = function renderSelection(selectionColor) {
     var _props = this.props,
         day = _props.day,
@@ -139,7 +168,6 @@ var Day = function (_PureComponent) {
         selected = _props2.selected,
         preselected = _props2.preselected,
         isDisabled = _props2.isDisabled,
-        isHighlighted = _props2.isHighlighted,
         isToday = _props2.isToday,
         isSelected = _props2.isSelected,
         isPreSelected = _props2.isPreSelected,
@@ -158,8 +186,10 @@ var Day = function (_PureComponent) {
     return React.createElement(
       'li',
       _extends({
-        className: classNames(styles.root, (_classNames = {}, _classNames[styles.today] = isToday, _classNames[styles.highlighted] = isHighlighted, _classNames[styles.selected] = isSelected, _classNames[styles.preselected] = isPreSelected, _classNames[styles.prevdisabled] = prevDisabled, _classNames[styles.nextdisabled] = nextDisabled, _classNames[styles.disabled] = isDisabled || beforeLastDisabled && !isPreSelected, _classNames[styles.enabled] = !isDisabled, _classNames[styles.beforelast] = beforeLastDisabled, _classNames[styles.purple] = isPreSelected && colors.purple, _classNames[styles.blue] = isPreSelected && colors.blue, _classNames[styles.green] = isPreSelected && colors.green, _classNames[styles.orange] = isPreSelected && colors.orange, _classNames), className),
+        className: classNames(styles.root, (_classNames = {}, _classNames[styles.today] = isToday, _classNames[styles.selected] = isSelected, _classNames[styles.preselected] = isPreSelected, _classNames[styles.prevdisabled] = prevDisabled, _classNames[styles.nextdisabled] = nextDisabled, _classNames[styles.disabled] = isDisabled || beforeLastDisabled && !isPreSelected, _classNames[styles.enabled] = !isDisabled, _classNames[styles.beforelast] = beforeLastDisabled, _classNames[styles.purple] = isPreSelected && colors.purple, _classNames[styles.blue] = isPreSelected && colors.blue, _classNames[styles.green] = isPreSelected && colors.green, _classNames[styles.orange] = isPreSelected && colors.orange, _classNames), className),
         onClick: this.handleClick,
+        onTouchStart: this.handleTouchStart,
+        onTouchEnd: this.handleTouchEnd,
         'data-date': date,
         'data-disabled': isDisabled ? isDisabled : false
       }, handlers),
