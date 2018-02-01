@@ -15,7 +15,7 @@ import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 import styles from '../Day/Day.scss';
 
-let isTouchDevice = false;
+let isTouchDevice = is_touch_device();
 let preSelectedSelected = false;
 let touchDate = null;
 
@@ -291,7 +291,7 @@ function clearSelect({onSelect, selected, setSelectionType, setSelectionDone, se
     touchDate = null;
     setSelectionStart(null);
     setSelectionType('none');
-    setSelectionDone(true);
+    setSelectionDone(false);
     onSelect({
         eventType:EVENT_TYPE.END,
         start_time: null,
@@ -362,6 +362,25 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
     }
 }
 
+function handleMouseOver(e, {onSelect, selectionStart}) {
+  const dateStr = e.target.getAttribute('data-date');
+  const isDisabled = e.target.getAttribute('data-disabled');
+  const date = dateStr && parse(dateStr);
+
+  if (!date) { return; }
+
+  if (isDisabled != 'true') {
+      onSelect({
+        eventType: EVENT_TYPE.HOVER,
+        ...getSortedSelection({
+          start_time: selectionStart,
+          end_time: date
+        }),
+        eventProp: 'hover'
+      });
+  }
+}
+
 function handleTouchStart(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, {onSelect, selected, preselected, preselectedDates, setPreselectedDates, selectionType, setSelectionType, selectionDone, setSelectionDone, selectionStart, setSelectionStart}) {
 
     if (!date) { return; }
@@ -417,7 +436,6 @@ function handleTouchStart(date, beforeLastDisabled, isPreSelected, originalDisab
 }
 
 function handleTouchMove(e, {onSelect, selectionStart}) {
-
     let target = document.elementFromPoint(e.touches[0].pageX, e.touches[0].pageY);
 
     if (!target) { return; }
@@ -448,39 +466,22 @@ function handleTouchMove(e, {onSelect, selectionStart}) {
 
 function handleTouchEnd(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, {onSelect, selected, preselected, preselectedDates, setPreselectedDates, selectionType, setSelectionType, selectionDone, setSelectionDone, selectionStart, setSelectionStart}) {
 
-    onSelect({
-      eventType: EVENT_TYPE.END,
-      ...getSortedSelection({
-        start_time: selectionStart,
-        end_time: touchDate,
-      }),
-      before_last: beforeLastDisabled,
-      selections: getPreselectedWithinRange(selectionStart, touchDate, preselected, selected, originalDisabledDates),
-      date_offset: fromTop,
-      eventProp: 'touchend'
-    });
-    setSelectionStart(null);
-    setSelectionDone(true);
+    if (!beforeLastDisabled) {
+        onSelect({
+          eventType: EVENT_TYPE.END,
+          ...getSortedSelection({
+            start_time: selectionStart,
+            end_time: touchDate,
+          }),
+          before_last: beforeLastDisabled,
+          selections: getPreselectedWithinRange(selectionStart, touchDate, preselected, selected, originalDisabledDates),
+          date_offset: fromTop,
+          eventProp: 'touchend'
+        });
+        setSelectionStart(null);
+        setSelectionDone(true);
+    }
 
-}
-
-function handleMouseOver(e, {onSelect, selectionStart}) {
-  const dateStr = e.target.getAttribute('data-date');
-  const isDisabled = e.target.getAttribute('data-disabled');
-  const date = dateStr && parse(dateStr);
-
-  if (!date) { return; }
-
-  if (isDisabled != 'true') {
-      onSelect({
-        eventType: EVENT_TYPE.HOVER,
-        ...getSortedSelection({
-          start_time: selectionStart,
-          end_time: date
-        }),
-        eventProp: 'hover'
-      });
-  }
 }
 
 function getPreselectedWithinDate(date, preselected) {
@@ -601,10 +602,8 @@ function determineIfDateAlreadySelected(date, selected) {
   return returnVal;
 }
 
-if (typeof window !== 'undefined') {
-  window.addEventListener('touchstart', function onTouch() {
-    isTouchDevice = true;
-
-    window.removeEventListener('touchstart', onTouch, false);
-  });
+function is_touch_device() {
+ return (('ontouchstart' in window)
+      || (navigator.MaxTouchPoints > 0)
+      || (navigator.msMaxTouchPoints > 0));
 }

@@ -27,7 +27,7 @@ export default class Day extends PureComponent {
 
     if (isDisabled) {
       onClear();
-  } else if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onTouchStart === 'function') {
+  } else if (!isDisabled && typeof onTouchStart === 'function') {
       onTouchStart(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
     }
   };
