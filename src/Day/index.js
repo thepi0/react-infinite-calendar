@@ -19,13 +19,31 @@ export default class Day extends PureComponent {
     }
   };
 
-  /*handleMouseDown = () => {
-      let {date, beforeLastDisabled, isDisabled, isPreSelected, onMouseDown, originalDisabledDates} = this.props;
+  handleTouchStart = () => {
+    let {date, beforeLastDisabled, isDisabled, isPreSelected, onTouchStart, onClear, originalDisabledDates} = this.props;
 
-      if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onMouseDown === 'function') {
-        onMouseDown(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates);
-      }
-  };*/
+    var fromTop = ReactDOM.findDOMNode(this)
+      .getBoundingClientRect().top;
+
+    if (isDisabled) {
+      onClear();
+  } else if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onTouchStart === 'function') {
+      onTouchStart(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
+    }
+  };
+
+  handleTouchEnd = () => {
+    let {date, beforeLastDisabled, isDisabled, isPreSelected, onTouchEnd, onClear, originalDisabledDates} = this.props;
+
+    var fromTop = ReactDOM.findDOMNode(this)
+      .getBoundingClientRect().top;
+
+    if (isDisabled) {
+      onClear();
+  } else if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onTouchEnd === 'function') {
+      onTouchEnd(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
+    }
+  };
 
   getDayColors = (date, preselected) => {
       if (!preselected || !preselected.length) {
@@ -88,7 +106,6 @@ export default class Day extends PureComponent {
       selected,
       preselected,
       isDisabled,
-      isHighlighted,
       isToday,
       isSelected,
       isPreSelected,
@@ -108,7 +125,6 @@ export default class Day extends PureComponent {
       <li
         className={classNames(styles.root, {
           [styles.today]: isToday,
-          [styles.highlighted]: isHighlighted,
           [styles.selected]: isSelected,
           [styles.preselected]: isPreSelected,
           [styles.prevdisabled]: prevDisabled,
@@ -122,6 +138,8 @@ export default class Day extends PureComponent {
           [styles.orange]: (isPreSelected && colors.orange)
       }, className)}
         onClick={this.handleClick}
+        onTouchStart={this.handleTouchStart}
+        onTouchEnd={this.handleTouchEnd}
         data-date={date}
         data-disabled={isDisabled ? isDisabled : false}
         {...handlers}

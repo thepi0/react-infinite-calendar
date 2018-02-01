@@ -32,7 +32,7 @@ storiesOf('Higher Order Components', module)
       rowHeight={74}
       selected={null}
       lastSelectableDate={new Date(2018, 0, 29)}
-      scrollOffset={6100}
+      scrollOffset={3800}
       lastUpdate={new Date()}
       autoFocus={false}
       originalDisabledDates={[
@@ -58,7 +58,7 @@ storiesOf('Higher Order Components', module)
       displayOptions={{
           hideYearsOnSelect: false,
           layout: 'portrait',
-          overscanMonthCount: 1,
+          overscanMonthCount: 0,
           showHeader: false,
           showMonthsForYears: false,
           showOverlay: false,
@@ -79,7 +79,53 @@ storiesOf('Higher Order Components', module)
       theme={{
           weekdaysHeight: '64px'
       }}
-      preselected={[]}
+      preselected={[
+          {
+              start_time: "2018-01-23",
+              end_time: "2018-01-23",
+              child: 100,
+              color: '#ca569a'
+          }, {
+              start_time: "2018-01-24",
+              end_time: "2018-01-24",
+              child: 100,
+              color: '#ca569a'
+          }, {
+              start_time: "2018-02-13",
+              end_time: "2018-02-13",
+              child: 100,
+              color: '#ca569a'
+          },
+          {
+              start_time: "2018-02-14",
+              end_time: "2018-02-14",
+              child: 100,
+              color: '#ca569a'
+          },
+          {
+              start_time: "2018-02-16",
+              end_time: "2018-02-16",
+              child: 100,
+              color: '#ca569a'
+          },{
+              start_time: "2018-02-20",
+              end_time: "2018-02-20",
+              child: 100,
+              color: '#ca569a'
+          },
+          {
+              start_time: "2018-02-20",
+              end_time: "2018-02-20",
+              child: 101,
+              color: '#2cb1d8'
+          },
+          {
+              start_time: "2018-02-20",
+              end_time: "2018-02-20",
+              child: 102,
+              color: '#85bd4c'
+          }
+      ]}
       onSelect={(date) => console.log(date)}
       onScrollEnd={(date) => console.log(date)}
       Component={withRange(Calendar)}

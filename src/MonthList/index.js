@@ -10,6 +10,7 @@ import {
   animate,
 } from '../utils';
 import parse from 'date-fns/parse';
+import differenceInCalendarMonths from 'date-fns/difference_in_calendar_months'
 import startOfMonth from 'date-fns/start_of_month';
 import Month from '../Month';
 import styles from './MonthList.scss';
@@ -17,6 +18,7 @@ import styles from './MonthList.scss';
 const AVERAGE_ROWS_PER_MONTH = 5;
 
 export default class MonthList extends Component {
+
   static propTypes = {
     lastSelectableDate: PropTypes.instanceOf(Date),
     disabledDates: PropTypes.oneOfType([
