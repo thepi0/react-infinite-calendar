@@ -19,8 +19,9 @@ export default class Month extends PureComponent {
 
     shouldComponentUpdate(nextProps, nextState) {
         const differentLastUpdate = nextProps.lastUpdate !== this.props.lastUpdate;
-        const differentSelection = nextProps.selected.end_time !== this.props.selected.end_time;
-        return differentLastUpdate || differentSelection;
+        const differentSelectionStart = nextProps.selected.start_time !== this.props.selected.start_time;
+        const differentSelectionEnd = nextProps.selected.end_time !== this.props.selected.end_time;
+        return differentLastUpdate || differentSelectionStart || differentSelectionEnd;
     }
 
   renderRows() {
