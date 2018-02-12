@@ -218,6 +218,32 @@
                 background: #ca569a;
             }
         }
+
+        &.beforelast {
+            &:before {
+                background: rgb(228, 170, 204);
+            }
+
+            &.nextselected {
+
+                &:after {
+                    background: rgb(228, 170, 204);
+                }
+            }
+
+            &.prevselected {
+
+                &:after {
+                    background: rgb(228, 170, 204);
+                }
+            }
+
+            &.prevselected.nextselected {
+                &:after {
+                    background: rgb(228, 170, 204);
+                }
+            }
+        }
     }
 
     &.blue {
@@ -243,6 +269,32 @@
         &.prevselected.nextselected {
             &:after {
                 background: #2cb1d8;
+            }
+        }
+
+        &.beforelast {
+            &:before {
+                background: rgb(149, 216, 234);
+            }
+
+            &.nextselected {
+
+                &:after {
+                    background: rgb(149, 216, 234);
+                }
+            }
+
+            &.prevselected {
+
+                &:after {
+                    background: rgb(149, 216, 234);
+                }
+            }
+
+            &.prevselected.nextselected {
+                &:after {
+                    background: rgb(149, 216, 234);
+                }
             }
         }
     }
@@ -272,6 +324,33 @@
                 background: #85bd4c;
             }
         }
+
+        &.beforelast {
+
+            &:before {
+                background: rgb(194, 222, 167);
+            }
+
+            &.nextselected {
+
+                &:after {
+                    background: rgb(194, 222, 167);
+                }
+            }
+
+            &.prevselected {
+
+                &:after {
+                    background: rgb(194, 222, 167);
+                }
+            }
+
+            &.prevselected.nextselected {
+                &:after {
+                    background: rgb(194, 222, 167);
+                }
+            }
+        }
     }
 
     &.orange {
@@ -297,6 +376,33 @@
         &.prevselected.nextselected {
             &:after {
                 background: #ea992f;
+            }
+        }
+
+        &.beforelast {
+
+            &:before {
+                background: rgb(245, 204, 151);
+            }
+
+            &.nextselected {
+
+                &:after {
+                    background: rgb(245, 204, 151);
+                }
+            }
+
+            &.prevselected {
+
+                &:after {
+                    background: rgb(245, 204, 151);
+                }
+            }
+
+            &.prevselected.nextselected {
+                &:after {
+                    background: rgb(245, 204, 151);
+                }
             }
         }
     }
@@ -326,6 +432,32 @@
                 background: linear-gradient(to bottom, #ca569a 50%, #2cb1d8 50%);
             }
         }
+
+        &.beforelast {
+            &:before {
+                background: linear-gradient(to bottom, rgb(228, 170, 204) 50%, rgb(149, 216, 234) 50%);
+            }
+
+            &.nextselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 50%, rgb(149, 216, 234) 50%);
+                }
+            }
+
+            &.prevselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 50%, rgb(149, 216, 234) 50%);
+                }
+            }
+
+            &.prevselected.nextselected {
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 50%, rgb(149, 216, 234) 50%);
+                }
+            }
+        }
     }
 
     &.purple.green {
@@ -351,6 +483,32 @@
         &.prevselected.nextselected {
             &:after {
                 background: linear-gradient(to bottom, #ca569a 50%, #85bd4c 50%);
+            }
+        }
+
+        &.beforelast {
+            &:before {
+                background: linear-gradient(to bottom, rgb(228, 170, 204) 50%, rgb(194, 222, 167) 50%);
+            }
+
+            &.nextselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 50%, rgb(194, 222, 167) 50%);
+                }
+            }
+
+            &.prevselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 50%, rgb(194, 222, 167) 50%);
+                }
+            }
+
+            &.prevselected.nextselected {
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 50%, rgb(194, 222, 167) 50%);
+                }
             }
         }
     }
@@ -380,6 +538,32 @@
                 background: linear-gradient(to bottom, #ca569a 50%, #ea992f 50%);
             }
         }
+
+        &.beforelast {
+            &:before {
+                background: linear-gradient(to bottom, rgb(228, 170, 204) 50%, rgb(245, 204, 151) 50%);
+            }
+
+            &.nextselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 50%, rgb(245, 204, 151) 50%);
+                }
+            }
+
+            &.prevselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 50%, rgb(245, 204, 151) 50%);
+                }
+            }
+
+            &.prevselected.nextselected {
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 50%, rgb(245, 204, 151) 50%);
+                }
+            }
+        }
     }
 
     &.blue.green {
@@ -405,6 +589,32 @@
         &.prevselected.nextselected {
             &:after {
                 background: linear-gradient(to bottom, #2cb1d8 50%, #85bd4c 50%);
+            }
+        }
+
+        &.beforelast {
+            &:before {
+                background: linear-gradient(to bottom, rgb(149, 216, 234) 50%, rgb(194, 222, 167) 50%);
+            }
+
+            &.nextselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(149, 216, 234) 50%, rgb(194, 222, 167) 50%);
+                }
+            }
+
+            &.prevselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(149, 216, 234) 50%, rgb(194, 222, 167) 50%);
+                }
+            }
+
+            &.prevselected.nextselected {
+                &:after {
+                    background: linear-gradient(to bottom, rgb(149, 216, 234) 50%, rgb(194, 222, 167) 50%);
+                }
             }
         }
     }
@@ -434,6 +644,33 @@
                 background: linear-gradient(to bottom, #2cb1d8 50%, #ea992f 50%);
             }
         }
+
+        &.beforelast {
+            &:before {
+                background: linear-gradient(to bottom, rgb(149, 216, 234) 50%, rgb(245, 204, 151) 50%);
+            }
+
+            &.nextselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(149, 216, 234) 50%, rgb(245, 204, 151) 50%);
+                }
+            }
+
+            &.prevselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(149, 216, 234) 50%, rgb(245, 204, 151) 50%);
+                }
+            }
+
+            &.prevselected.nextselected {
+                &:after {
+                    background: linear-gradient(to bottom, rgb(149, 216, 234) 50%, rgb(245, 204, 151) 50%);
+                }
+            }
+
+        }
     }
 
     &.green.orange {
@@ -459,6 +696,32 @@
         &.prevselected.nextselected {
             &:after {
                 background: linear-gradient(to bottom, #85bd4c 50%, #ea992f 50%);
+            }
+        }
+
+        &.beforelast {
+            &:before {
+                background: linear-gradient(to bottom, rgb(194, 222, 167) 50%, rgb(245, 204, 151) 50%);
+            }
+
+            &.nextselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(194, 222, 167) 50%, rgb(245, 204, 151) 50%);
+                }
+            }
+
+            &.prevselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(194, 222, 167) 50%, rgb(245, 204, 151) 50%);
+                }
+            }
+
+            &.prevselected.nextselected {
+                &:after {
+                    background: linear-gradient(to bottom, rgb(194, 222, 167) 50%, rgb(245, 204, 151) 50%);
+                }
             }
         }
     }
@@ -488,6 +751,32 @@
                 background: linear-gradient(to bottom, #ca569a 0%, #ca569a 33.333333%, #2cb1d8 33.333333%, #2cb1d8 66.666666%,#85bd4c 66.666666%, #85bd4c 100%);
             }
         }
+
+        &.beforelast {
+            &:before {
+                background: linear-gradient(to bottom, rgb(228, 170, 204) 0%, rgb(228, 170, 204) 33.333333%, rgb(149, 216, 234) 33.333333%, rgb(149, 216, 234) 66.666666%,rgb(194, 222, 167) 66.666666%, rgb(194, 222, 167) 100%);
+            }
+
+            &.nextselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 0%, rgb(228, 170, 204) 33.333333%, rgb(149, 216, 234) 33.333333%, rgb(149, 216, 234) 66.666666%,rgb(194, 222, 167) 66.666666%, rgb(194, 222, 167) 100%);
+                }
+            }
+
+            &.prevselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 0%, rgb(228, 170, 204) 33.333333%, rgb(149, 216, 234) 33.333333%, rgb(149, 216, 234) 66.666666%,rgb(194, 222, 167) 66.666666%, rgb(194, 222, 167) 100%);
+                }
+            }
+
+            &.prevselected.nextselected {
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 0%, rgb(228, 170, 204) 33.333333%, rgb(149, 216, 234) 33.333333%, rgb(149, 216, 234) 66.666666%,rgb(194, 222, 167) 66.666666%, rgb(194, 222, 167) 100%);
+                }
+            }
+        }
     }
 
     &.purple.blue.orange {
@@ -513,6 +802,32 @@
         &.prevselected.nextselected {
             &:after {
                 background: linear-gradient(to bottom, #ca569a 0%, #ca569a 33.333333%, #2cb1d8 33.333333%, #2cb1d8 66.666666%,#ea992f 66.666666%, #ea992f 100%);
+            }
+        }
+
+        &.beforelast {
+            &:before {
+                background: linear-gradient(to bottom, rgb(228, 170, 204) 0%, rgb(228, 170, 204) 33.333333%, rgb(149, 216, 234) 33.333333%, rgb(149, 216, 234) 66.666666%,rgb(245, 204, 151) 66.666666%, rgb(245, 204, 151) 100%);
+            }
+
+            &.nextselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 0%, rgb(228, 170, 204) 33.333333%, rgb(149, 216, 234) 33.333333%, rgb(149, 216, 234) 66.666666%,rgb(245, 204, 151) 66.666666%, rgb(245, 204, 151) 100%);
+                }
+            }
+
+            &.prevselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 0%, rgb(228, 170, 204) 33.333333%, rgb(149, 216, 234) 33.333333%, rgb(149, 216, 234) 66.666666%,rgb(245, 204, 151) 66.666666%, rgb(245, 204, 151) 100%);
+                }
+            }
+
+            &.prevselected.nextselected {
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 0%, rgb(228, 170, 204) 33.333333%, rgb(149, 216, 234) 33.333333%, rgb(149, 216, 234) 66.666666%,rgb(245, 204, 151) 66.666666%, rgb(245, 204, 151) 100%);
+                }
             }
         }
     }
@@ -542,6 +857,32 @@
                 background: linear-gradient(to bottom, #ca569a 0%, #ca569a 33.333333%, #85bd4c 33.333333%, #85bd4c 66.666666%,#ea992f 66.666666%, #ea992f 100%);
             }
         }
+
+        &.beforelast {
+            &:before {
+                background: linear-gradient(to bottom, rgb(228, 170, 204) 0%, rgb(228, 170, 204) 33.333333%, rgb(194, 222, 167) 33.333333%, rgb(194, 222, 167) 66.666666%,rgb(245, 204, 151) 66.666666%, rgb(245, 204, 151) 100%);
+            }
+
+            &.nextselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 0%, rgb(228, 170, 204) 33.333333%, rgb(194, 222, 167) 33.333333%, rgb(194, 222, 167) 66.666666%,rgb(245, 204, 151) 66.666666%, rgb(245, 204, 151) 100%);
+                }
+            }
+
+            &.prevselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 0%, rgb(228, 170, 204) 33.333333%, rgb(194, 222, 167) 33.333333%, rgb(194, 222, 167) 66.666666%,rgb(245, 204, 151) 66.666666%, rgb(245, 204, 151) 100%);
+                }
+            }
+
+            &.prevselected.nextselected {
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 0%, rgb(228, 170, 204) 33.333333%, rgb(194, 222, 167) 33.333333%, rgb(194, 222, 167) 66.666666%,rgb(245, 204, 151) 66.666666%, rgb(245, 204, 151) 100%);
+                }
+            }
+        }
     }
 
     &.blue.green.orange {
@@ -569,6 +910,32 @@
                 background: linear-gradient(to bottom, #2cb1d8 0%, #2cb1d8 33.333333%, #85bd4c 33.333333%, #85bd4c 66.666666%,#ea992f 66.666666%, #ea992f 100%);
             }
         }
+
+        &.beforelast {
+            &:before {
+                background: linear-gradient(to bottom, rgb(149, 216, 234) 0%, rgb(149, 216, 234) 33.333333%, rgb(194, 222, 167) 33.333333%, rgb(194, 222, 167) 66.666666%,rgb(245, 204, 151) 66.666666%, rgb(245, 204, 151) 100%);
+            }
+
+            &.nextselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(149, 216, 234) 0%, rgb(149, 216, 234) 33.333333%, rgb(194, 222, 167) 33.333333%, rgb(194, 222, 167) 66.666666%,rgb(245, 204, 151) 66.666666%, rgb(245, 204, 151) 100%);
+                }
+            }
+
+            &.prevselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(149, 216, 234) 0%, rgb(149, 216, 234) 33.333333%, rgb(194, 222, 167) 33.333333%, rgb(194, 222, 167) 66.666666%,rgb(245, 204, 151) 66.666666%, rgb(245, 204, 151) 100%);
+                }
+            }
+
+            &.prevselected.nextselected {
+                &:after {
+                    background: linear-gradient(to bottom, rgb(149, 216, 234) 0%, rgb(149, 216, 234) 33.333333%, rgb(194, 222, 167) 33.333333%, rgb(194, 222, 167) 66.666666%,rgb(245, 204, 151) 66.666666%, rgb(245, 204, 151) 100%);
+                }
+            }
+        }
     }
 
     &.purple.blue.green.orange {
@@ -594,6 +961,32 @@
         &.prevselected.nextselected {
             &:after {
                 background: linear-gradient(to bottom, #ca569a 0%, #ca569a 25%, #2cb1d8 25%, #2cb1d8 50%,#85bd4c 50%, #85bd4c 75%, #ea992f 75%, #ea992f 100%);
+            }
+        }
+
+        &.beforelast {
+            &:before {
+                background: linear-gradient(to bottom, rgb(228, 170, 204) 0%, rgb(228, 170, 204) 25%, rgb(149, 216, 234) 25%, rgb(149, 216, 234) 50%,rgb(194, 222, 167) 50%, rgb(194, 222, 167) 75%, rgb(245, 204, 151) 75%, rgb(245, 204, 151) 100%);
+            }
+
+            &.nextselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 0%, rgb(228, 170, 204) 25%, rgb(149, 216, 234) 25%, rgb(149, 216, 234) 50%,rgb(194, 222, 167) 50%, rgb(194, 222, 167) 75%, rgb(245, 204, 151) 75%, rgb(245, 204, 151) 100%);
+                }
+            }
+
+            &.prevselected {
+
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 0%, rgb(228, 170, 204) 25%, rgb(149, 216, 234) 25%, rgb(149, 216, 234) 50%,rgb(194, 222, 167) 50%, rgb(194, 222, 167) 75%, rgb(245, 204, 151) 75%, rgb(245, 204, 151) 100%);
+                }
+            }
+
+            &.prevselected.nextselected {
+                &:after {
+                    background: linear-gradient(to bottom, rgb(228, 170, 204) 0%, rgb(228, 170, 204) 25%, rgb(149, 216, 234) 25%, rgb(149, 216, 234) 50%,rgb(194, 222, 167) 50%, rgb(194, 222, 167) 75%, rgb(245, 204, 151) 75%, rgb(245, 204, 151) 100%);
+                }
             }
         }
     }

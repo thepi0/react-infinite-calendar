@@ -85,11 +85,41 @@ storiesOf('Higher Order Components', module)
               end_time: "2018-01-23",
               child: 100,
               color: '#ca569a'
+          },{
+              start_time: "2018-01-23",
+              end_time: "2018-01-23",
+              child: 101,
+              color: '#2cb1d8'
+          },{
+              start_time: "2018-01-23",
+              end_time: "2018-01-23",
+              child: 102,
+              color: '#85bd4c'
+          },{
+              start_time: "2018-01-23",
+              end_time: "2018-01-23",
+              child: 103,
+              color: '#ea992f'
           }, {
               start_time: "2018-01-24",
               end_time: "2018-01-24",
               child: 100,
               color: '#ca569a'
+          },{
+              start_time: "2018-01-24",
+              end_time: "2018-01-24",
+              child: 101,
+              color: '#2cb1d8'
+          },{
+              start_time: "2018-01-24",
+              end_time: "2018-01-24",
+              child: 102,
+              color: '#85bd4c'
+          },{
+              start_time: "2018-01-24",
+              end_time: "2018-01-24",
+              child: 103,
+              color: '#ea992f'
           }, {
               start_time: "2018-02-13",
               end_time: "2018-02-13",

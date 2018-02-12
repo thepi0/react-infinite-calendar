@@ -373,6 +373,7 @@ export default class Calendar extends Component {
             }
             {  this.months && this.months.length &&
             <MonthList
+              id="monthlist"
               ref={instance => {
                 this._MonthList = instance;
               }}
