@@ -51,6 +51,9 @@ storiesOf('Higher Order Components', module)
           }, {
               date: "2018-01-16",
               type: "vacation"
+          }, {
+              date: "2018-02-20",
+              type: "vacation"
           }
       ]}
       disabledDates={null}
@@ -154,6 +157,11 @@ storiesOf('Higher Order Components', module)
               end_time: "2018-02-20",
               child: 102,
               color: '#85bd4c'
+          },{
+              start_time: "2018-02-20",
+              end_time: "2018-02-20",
+              child: 103,
+              color: '#ea992f'
           }
       ]}
       onSelect={(date) => console.log(date)}
