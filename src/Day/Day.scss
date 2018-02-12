@@ -405,10 +405,6 @@
                 }
             }
         }
-
-        .vacationCircle {
-            background-color: #FFFFFF;
-        }
     }
 
     &.purple.blue {
@@ -568,10 +564,6 @@
                 }
             }
         }
-
-        .vacationCircle {
-            background-color: #FFFFFF;
-        }
     }
 
     &.blue.green {
@@ -679,10 +671,6 @@
             }
 
         }
-
-        .vacationCircle {
-            background-color: #FFFFFF;
-        }
     }
 
     &.green.orange {
@@ -735,10 +723,6 @@
                     background: linear-gradient(to bottom, rgb(194, 222, 167) 50%, rgb(245, 204, 151) 50%);
                 }
             }
-        }
-
-        .vacationCircle {
-            background-color: #FFFFFF;
         }
     }
 
@@ -846,10 +830,6 @@
                 }
             }
         }
-
-        .vacationCircle {
-            background-color: #FFFFFF;
-        }
     }
 
     &.purple.green.orange {
@@ -902,10 +882,6 @@
                     background: linear-gradient(to bottom, rgb(228, 170, 204) 0%, rgb(228, 170, 204) 33.333333%, rgb(194, 222, 167) 33.333333%, rgb(194, 222, 167) 66.666666%,rgb(245, 204, 151) 66.666666%, rgb(245, 204, 151) 100%);
                 }
             }
-        }
-
-        .vacationCircle {
-            background-color: #FFFFFF;
         }
     }
 
@@ -960,10 +936,6 @@
                 }
             }
         }
-
-        .vacationCircle {
-            background-color: #FFFFFF;
-        }
     }
 
     &.purple.blue.green.orange {
@@ -1017,10 +989,6 @@
                 }
             }
         }
-
-        .vacationCircle {
-            background-color: #FFFFFF;
-        }
     }
 
     /*
@@ -1068,37 +1036,6 @@
       &.disabled:before {
 
       }
-
-      /*
-
-      &.two {
-          &.preselected {
-
-              &:before {
-                  background: linear-gradient(to bottom, #ca569a 50%, #2cb1d8 50%);
-              }
-          }
-      }
-
-      &.three {
-          &.preselected {
-
-              &:before {
-                  background: linear-gradient(to bottom, #ca569a 0%, #ca569a 33.333333%, #2cb1d8 33.333333%, #2cb1d8 66.666666%,#85bd4c 66.666666%, #85bd4c 100%);
-              }
-          }
-      }
-
-      &.foreorMore {
-          &.preselected {
-
-              &:before {
-                 background: linear-gradient(to bottom, #ca569a 0%, #ca569a 25%, #2cb1d8 25%, #2cb1d8 50%,#85bd4c 50%, #85bd4c 75%, #ea992f 75%, #ea992f 100%);
-              }
-          }
-      }*/
-
-
   }
   &.selected {
     position: relative;
@@ -1146,6 +1083,10 @@
   }
 
   &.preselected {
+
+      .vacationCircle {
+          background-color: #FFFFFF;
+      }
 
       &:before {
           //content: attr(data-style);
