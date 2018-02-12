@@ -205,8 +205,6 @@
       background: #f5cc97; }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__orange.Cal__Day__beforelast.Cal__Day__prevselected.Cal__Day__nextselected:after {
       background: #f5cc97; }
-    .Cal__Day__root.Cal__Day__preselected.Cal__Day__orange .Cal__Day__vacationCircle {
-      background-color: #FFFFFF; }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__purple.Cal__Day__blue:before {
       background: linear-gradient(to bottom, #ca569a 50%, #2cb1d8 50%); }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__purple.Cal__Day__blue.Cal__Day__nextselected:after {
@@ -255,8 +253,6 @@
       background: linear-gradient(to bottom, #e4aacc 50%, #f5cc97 50%); }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__purple.Cal__Day__orange.Cal__Day__beforelast.Cal__Day__prevselected.Cal__Day__nextselected:after {
       background: linear-gradient(to bottom, #e4aacc 50%, #f5cc97 50%); }
-    .Cal__Day__root.Cal__Day__preselected.Cal__Day__purple.Cal__Day__orange .Cal__Day__vacationCircle {
-      background-color: #FFFFFF; }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__blue.Cal__Day__green:before {
       background: linear-gradient(to bottom, #2cb1d8 50%, #85bd4c 50%); }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__blue.Cal__Day__green.Cal__Day__nextselected:after {
@@ -289,8 +285,6 @@
       background: linear-gradient(to bottom, #95d8ea 50%, #f5cc97 50%); }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__blue.Cal__Day__orange.Cal__Day__beforelast.Cal__Day__prevselected.Cal__Day__nextselected:after {
       background: linear-gradient(to bottom, #95d8ea 50%, #f5cc97 50%); }
-    .Cal__Day__root.Cal__Day__preselected.Cal__Day__blue.Cal__Day__orange .Cal__Day__vacationCircle {
-      background-color: #FFFFFF; }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__green.Cal__Day__orange:before {
       background: linear-gradient(to bottom, #85bd4c 50%, #ea992f 50%); }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__green.Cal__Day__orange.Cal__Day__nextselected:after {
@@ -307,8 +301,6 @@
       background: linear-gradient(to bottom, #c2dea7 50%, #f5cc97 50%); }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__green.Cal__Day__orange.Cal__Day__beforelast.Cal__Day__prevselected.Cal__Day__nextselected:after {
       background: linear-gradient(to bottom, #c2dea7 50%, #f5cc97 50%); }
-    .Cal__Day__root.Cal__Day__preselected.Cal__Day__green.Cal__Day__orange .Cal__Day__vacationCircle {
-      background-color: #FFFFFF; }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__purple.Cal__Day__blue.Cal__Day__green:before {
       background: linear-gradient(to bottom, #ca569a 0%, #ca569a 33.33333%, #2cb1d8 33.33333%, #2cb1d8 66.66667%, #85bd4c 66.66667%, #85bd4c 100%); }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__purple.Cal__Day__blue.Cal__Day__green.Cal__Day__nextselected:after {
@@ -341,8 +333,6 @@
       background: linear-gradient(to bottom, #e4aacc 0%, #e4aacc 33.33333%, #95d8ea 33.33333%, #95d8ea 66.66667%, #f5cc97 66.66667%, #f5cc97 100%); }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__purple.Cal__Day__blue.Cal__Day__orange.Cal__Day__beforelast.Cal__Day__prevselected.Cal__Day__nextselected:after {
       background: linear-gradient(to bottom, #e4aacc 0%, #e4aacc 33.33333%, #95d8ea 33.33333%, #95d8ea 66.66667%, #f5cc97 66.66667%, #f5cc97 100%); }
-    .Cal__Day__root.Cal__Day__preselected.Cal__Day__purple.Cal__Day__blue.Cal__Day__orange .Cal__Day__vacationCircle {
-      background-color: #FFFFFF; }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__purple.Cal__Day__green.Cal__Day__orange:before {
       background: linear-gradient(to bottom, #ca569a 0%, #ca569a 33.33333%, #85bd4c 33.33333%, #85bd4c 66.66667%, #ea992f 66.66667%, #ea992f 100%); }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__purple.Cal__Day__green.Cal__Day__orange.Cal__Day__nextselected:after {
@@ -359,8 +349,6 @@
       background: linear-gradient(to bottom, #e4aacc 0%, #e4aacc 33.33333%, #c2dea7 33.33333%, #c2dea7 66.66667%, #f5cc97 66.66667%, #f5cc97 100%); }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__purple.Cal__Day__green.Cal__Day__orange.Cal__Day__beforelast.Cal__Day__prevselected.Cal__Day__nextselected:after {
       background: linear-gradient(to bottom, #e4aacc 0%, #e4aacc 33.33333%, #c2dea7 33.33333%, #c2dea7 66.66667%, #f5cc97 66.66667%, #f5cc97 100%); }
-    .Cal__Day__root.Cal__Day__preselected.Cal__Day__purple.Cal__Day__green.Cal__Day__orange .Cal__Day__vacationCircle {
-      background-color: #FFFFFF; }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__blue.Cal__Day__green.Cal__Day__orange:before {
       background: linear-gradient(to bottom, #2cb1d8 0%, #2cb1d8 33.33333%, #85bd4c 33.33333%, #85bd4c 66.66667%, #ea992f 66.66667%, #ea992f 100%); }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__blue.Cal__Day__green.Cal__Day__orange.Cal__Day__nextselected:after {
@@ -377,8 +365,6 @@
       background: linear-gradient(to bottom, #95d8ea 0%, #95d8ea 33.33333%, #c2dea7 33.33333%, #c2dea7 66.66667%, #f5cc97 66.66667%, #f5cc97 100%); }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__blue.Cal__Day__green.Cal__Day__orange.Cal__Day__beforelast.Cal__Day__prevselected.Cal__Day__nextselected:after {
       background: linear-gradient(to bottom, #95d8ea 0%, #95d8ea 33.33333%, #c2dea7 33.33333%, #c2dea7 66.66667%, #f5cc97 66.66667%, #f5cc97 100%); }
-    .Cal__Day__root.Cal__Day__preselected.Cal__Day__blue.Cal__Day__green.Cal__Day__orange .Cal__Day__vacationCircle {
-      background-color: #FFFFFF; }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__purple.Cal__Day__blue.Cal__Day__green.Cal__Day__orange:before {
       background: linear-gradient(to bottom, #ca569a 0%, #ca569a 25%, #2cb1d8 25%, #2cb1d8 50%, #85bd4c 50%, #85bd4c 75%, #ea992f 75%, #ea992f 100%); }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__purple.Cal__Day__blue.Cal__Day__green.Cal__Day__orange.Cal__Day__nextselected:after {
@@ -395,43 +381,13 @@
       background: linear-gradient(to bottom, #e4aacc 0%, #e4aacc 25%, #95d8ea 25%, #95d8ea 50%, #c2dea7 50%, #c2dea7 75%, #f5cc97 75%, #f5cc97 100%); }
     .Cal__Day__root.Cal__Day__preselected.Cal__Day__purple.Cal__Day__blue.Cal__Day__green.Cal__Day__orange.Cal__Day__beforelast.Cal__Day__prevselected.Cal__Day__nextselected:after {
       background: linear-gradient(to bottom, #e4aacc 0%, #e4aacc 25%, #95d8ea 25%, #95d8ea 50%, #c2dea7 50%, #c2dea7 75%, #f5cc97 75%, #f5cc97 100%); }
-    .Cal__Day__root.Cal__Day__preselected.Cal__Day__purple.Cal__Day__blue.Cal__Day__green.Cal__Day__orange .Cal__Day__vacationCircle {
-      background-color: #FFFFFF; }
   .Cal__Day__root.Cal__Day__enabled.Cal__Day__highlighted, .Cal__Day__root.Cal__Day__enabled:active, .Cal__Day__root.Cal__Day__enabled:hover {
     position: relative; }
   .Cal__Day__root:first-child {
     position: relative; }
   .Cal__Day__root.Cal__Day__today {
     position: relative;
-    z-index: 2;
-    /*
-
-      &.two {
-          &.preselected {
-
-              &:before {
-                  background: linear-gradient(to bottom, #ca569a 50%, #2cb1d8 50%);
-              }
-          }
-      }
-
-      &.three {
-          &.preselected {
-
-              &:before {
-                  background: linear-gradient(to bottom, #ca569a 0%, #ca569a 33.333333%, #2cb1d8 33.333333%, #2cb1d8 66.666666%,#85bd4c 66.666666%, #85bd4c 100%);
-              }
-          }
-      }
-
-      &.foreorMore {
-          &.preselected {
-
-              &:before {
-                 background: linear-gradient(to bottom, #ca569a 0%, #ca569a 25%, #2cb1d8 25%, #2cb1d8 50%,#85bd4c 50%, #85bd4c 75%, #ea992f 75%, #ea992f 100%);
-              }
-          }
-      }*/ }
+    z-index: 2; }
     .Cal__Day__root.Cal__Day__today:before {
       content: '';
       position: absolute;
@@ -468,6 +424,8 @@
   .Cal__Day__root.Cal__Day__prevdisabled.Cal__Day__enabled.Cal__Day__highlighted:before, .Cal__Day__root.Cal__Day__prevdisabled.Cal__Day__enabled:active:before, .Cal__Day__root.Cal__Day__prevdisabled.Cal__Day__enabled:hover:before {
     border-top: 0;
     border-bottom: 0; }
+  .Cal__Day__root.Cal__Day__preselected .Cal__Day__vacationCircle {
+    background-color: #FFFFFF; }
   .Cal__Day__root.Cal__Day__disabled {
     color: #a4d8e8;
     box-shadow: none;
