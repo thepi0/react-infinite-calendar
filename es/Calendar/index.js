@@ -406,6 +406,7 @@ var Calendar = function (_Component) {
             todayLabel: locale.todayLabel.long
           }),
           this.months && this.months.length && React.createElement(MonthList, {
+            id: 'monthlist',
             ref: function ref(instance) {
               _this2._MonthList = instance;
             },
