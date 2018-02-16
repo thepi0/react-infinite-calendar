@@ -108,6 +108,7 @@ export default class Day extends PureComponent {
       isDisabled,
       isToday,
       isSelected,
+      isArraySelected,
       isPreSelected,
       prevDisabled,
       nextDisabled,
@@ -125,7 +126,7 @@ export default class Day extends PureComponent {
       <li
         className={classNames(styles.root, {
           [styles.today]: isToday,
-          [styles.selected]: isSelected,
+          [styles.selected]: isSelected || isArraySelected,
           [styles.preselected]: isPreSelected,
           [styles.prevdisabled]: prevDisabled,
           [styles.nextdisabled]: nextDisabled,
@@ -146,7 +147,7 @@ export default class Day extends PureComponent {
       >
         {day}
         {!beforeLastDisabled && isVacation ? <div className={styles.vacationCircle}></div> : null}
-        {isSelected && this.renderSelection()}
+        {(isSelected || isArraySelected) && this.renderSelection()}
       </li>
     );
   }

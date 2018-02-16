@@ -57,6 +57,7 @@ export default class Month extends PureComponent {
     let isToday = false;
     let dateDisabled = { date: null, type: null };
     let isDateVacation = false;
+    let selectedArray = passThrough.selectedArray;
     let preselectedDates = passThrough.preselectedDates;
     let selectionType = passThrough.selectionType;
     let selectionDone = passThrough.selectionDone;
@@ -189,6 +190,7 @@ export default class Month extends PureComponent {
                         originalDisabledDates={originalDisabledDates}
                         beforeLastDisabled={beforeLastDisabled}
                         selected={selected}
+                        selectedArray={selectedArray}
                         preselected={preselected}
                         nextDisabled={nextDisabled}
                         prevDisabled={prevDisabled}

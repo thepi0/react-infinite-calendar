@@ -11,6 +11,8 @@ import differenceInDays from 'date-fns/difference_in_days';
 import differenceInCalendarDays from 'date-fns/difference_in_calendar_days'
 import isWithinRange from 'date-fns/is_within_range';
 import isWeekend from 'date-fns/is_weekend';
+import isSaturday from 'date-fns/is_saturday';
+import isSunday from 'date-fns/is_sunday';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 import styles from '../Day/Day.scss';
@@ -18,6 +20,7 @@ import styles from '../Day/Day.scss';
 let isTouchDevice = is_touch_device();
 let preSelectedSelected = false;
 let touchDate = null;
+let selectedArrayFinal = [];
 
 export const EVENT_TYPE = {
   END: 3,
@@ -32,24 +35,31 @@ const PositionTypes = {
 };
 
 // Enhance Day component to display selected state based on an array of selected dates
-export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, preselected}) => {
+export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, selectedArray, preselected}) => {
     let isSelected = false;
+    let isArraySelected = false;
     let isStart = false;
     let isEnd = false;
     let isRange = false;
+    let isArrayStart = false;
+    let isArrayEnd = false;
+    let isArrayRange = false;
     if (selected && selected.start_time && selected.end_time) {
         isSelected = date >= selected.start_time && date <= selected.end_time;
         isStart = date === selected.start_time;
         isEnd = date === selected.end_time;
         isRange = !(isStart && isEnd);
     }
+    if (selectedArray && selectedArray.length) {
+        isArraySelected = selectedArray.includes(format(date, 'YYYY-MM-DD'));
+        isArrayStart = !selectedArray.includes(format(subDays(date, 1), 'YYYY-MM-DD'));
+        isArrayEnd = !selectedArray.includes(format(addDays(date, 1), 'YYYY-MM-DD'));
+        isArrayRange = !(isArrayStart && isArrayEnd);
+    }
   const positionOfDate = determineIfDateAlreadySelected(date, preselected);
   const isPreSelected = !!positionOfDate.value;
   const isPreStart = positionOfDate.value === PositionTypes.START;
   const isPreEnd = positionOfDate.value === PositionTypes.END;
-  const twoChildren = positionOfDate.count > 1 && positionOfDate.count < 3;
-  const threeChildren = positionOfDate.count > 2 && positionOfDate.count < 4;
-  const foreOrMore = positionOfDate.count > 3;
   const isNextSelected = positionOfDate.nextselected;
   const isPrevSelected = positionOfDate.prevselected;
   const isNextPreSelected = positionOfDate.nextpreselected;
@@ -75,6 +85,20 @@ export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, pres
       [styles.prevnotpreselected]: (isPreSelectedValue && !isPrevPreDifferent)
     })
     ||
+    isArraySelected && isArrayRange && classNames(styles.range, {
+      [styles.start]: isArrayStart,
+      [styles.betweenRange]: !isArrayStart && !isArrayEnd,
+      [styles.end]: isArrayEnd,
+      [styles.nextselected]: isNextSelected,
+      [styles.prevselected]: isPrevSelected,
+      [styles.nextdifferentiates]: isNextCountDifferent,
+      [styles.prevdifferentiates]: isPrevCountDifferent,
+      [styles.nextpreselected]: (isPreSelectedValue && isNextPreDifferent),
+      [styles.prevpreselected]: (isPreSelectedValue && isPrevPreDifferent),
+      [styles.nextnotpreselected]: (isPreSelectedValue && !isNextPreDifferent),
+      [styles.prevnotpreselected]: (isPreSelectedValue && !isPrevPreDifferent)
+    })
+    ||
     isPreSelected && classNames(styles.range, {
       [styles.prestart]: isPreStart,
       [styles.preend]: isPreEnd,
@@ -87,7 +111,8 @@ export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, pres
   return {
     className: dayClasses,
     isPreSelected,
-    isSelected
+    isSelected,
+    isArraySelected
   };
 });
 
@@ -123,6 +148,7 @@ export const withRange = compose(
             : null,
         },
       },
+      selectedArray: selectedArrayFinal,
       preselectedDates: props.preselectedDates,
       selectionType: props.selectionType,
       selectionDone: props.selectionDone,
@@ -344,6 +370,42 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
         });
         setSelectionStart(null);
         setSelectionDone(true);
+
+        let daysArray = [];
+
+        let daysBetween = isBefore(date, selectionStart) ? eachDay(date, selectionStart, 1) : eachDay(selectionStart, date, 1);
+        for (var i = 0, length = daysBetween.length; i < length; ++i) {
+            let shouldRemove = isSaturday(daysBetween[i]) || isSunday(daysBetween[i]);
+            daysBetween[i] = format(daysBetween[i], 'YYYY-MM-DD');
+            if (!shouldRemove) {
+                //daysBetween.splice(i, 1);
+                //--i;
+                daysArray.push(daysBetween[i]);
+            }
+        }
+
+        selectedArrayFinal = selectedArrayFinal.concat(daysArray);
+
+        selectedArrayFinal.sort((a, b) => {
+            return a.replace(/-/g,"") - b.replace(/-/g,"");
+        });
+
+        console.log(selectedArrayFinal);
+
+        selected = null;
+        touchDate = null;
+        setSelectionStart(null);
+        setSelectionType('none');
+        setSelectionDone(false);
+        onSelect({
+            eventType:EVENT_TYPE.END,
+            start_time: null,
+            end_time: null,
+            before_last: false,
+            eventProp: 'click'
+        });
+
+
     } else {
         onSelect({
             eventType:EVENT_TYPE.START,
