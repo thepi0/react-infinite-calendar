@@ -21,6 +21,7 @@ let isTouchDevice = is_touch_device();
 let preSelectedSelected = false;
 let touchDate = null;
 let selectedArrayFinal = [];
+let lastSelectionBeforeLastDisabled = false;
 
 export const EVENT_TYPE = {
   END: 3,
@@ -35,7 +36,7 @@ const PositionTypes = {
 };
 
 // Enhance Day component to display selected state based on an array of selected dates
-export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, selectedArray, preselected}) => {
+export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, selectionArray, originalDisabledDates, preselected}) => {
     let isSelected = false;
     let isArraySelected = false;
     let isStart = false;
@@ -44,19 +45,21 @@ export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, sele
     let isArrayStart = false;
     let isArrayEnd = false;
     let isArrayRange = false;
+    let isWeekend = false;
     if (selected && selected.start_time && selected.end_time) {
         isSelected = date >= selected.start_time && date <= selected.end_time;
         isStart = date === selected.start_time;
         isEnd = date === selected.end_time;
         isRange = !(isStart && isEnd);
     }
-    if (selectedArray && selectedArray.length) {
-        isArraySelected = selectedArray.includes(format(date, 'YYYY-MM-DD'));
-        isArrayStart = !selectedArray.includes(format(subDays(date, 1), 'YYYY-MM-DD'));
-        isArrayEnd = !selectedArray.includes(format(addDays(date, 1), 'YYYY-MM-DD'));
+    if (selectionArray && selectionArray.length) {
+        isArraySelected = selectionArray.includes(format(date, 'YYYY-MM-DD'));
+        isArrayStart = !selectionArray.includes(format(subDays(date, 1), 'YYYY-MM-DD'));
+        isArrayEnd = !selectionArray.includes(format(addDays(date, 1), 'YYYY-MM-DD'));
         isArrayRange = !(isArrayStart && isArrayEnd);
     }
-  const positionOfDate = determineIfDateAlreadySelected(date, preselected);
+    isWeekend = isSaturday(date) || isSunday(date);
+  const positionOfDate = determineIfDateAlreadySelected(date, preselected, originalDisabledDates);
   const isPreSelected = !!positionOfDate.value;
   const isPreStart = positionOfDate.value === PositionTypes.START;
   const isPreEnd = positionOfDate.value === PositionTypes.END;
@@ -69,6 +72,10 @@ export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, sele
   const isPreSelectedValue = preSelectedSelected;
   const isNextPreDifferent = isNextPreSelected;
   const isPrevPreDifferent = isPrevPreSelected;
+  const vacationObject = {
+      vacation: positionOfDate.vacation,
+      vacation_type: positionOfDate.vacation_type,
+  }
 
   const dayClasses =
     isSelected && isRange && classNames(styles.range, {
@@ -112,7 +119,9 @@ export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, sele
     className: dayClasses,
     isPreSelected,
     isSelected,
-    isArraySelected
+    isArraySelected,
+    isWeekend,
+    vacationObject
   };
 });
 
@@ -121,7 +130,9 @@ export const withRange = compose(
   withDefaultProps,
   withState('scrollDate', 'setScrollDate', getInitialDate),
   withState('displayKey', 'setDisplayKey', getInitialDate),
+  withState('updateFromController', 'setUpdateFromController', new Date()),
   withState('selectionStart', 'setSelectionStart', null),
+  withState('selectionArray', 'setSelectionArray', []),
   withState('preselectedDates', 'setPreselectedDates', []),
   withState('selectionType', 'setSelectionType', 'none'),
   withState('selectionDone', 'setSelectionDone', false),
@@ -135,7 +146,7 @@ export const withRange = compose(
     passThrough: {
       ...passThrough,
       Day: {
-        onClear: () => clearSelect({selected, ...props}),
+        onClear: (date) => clearSelect(date, {selected, ...props}),
         onClick: (date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop) => !isTouchDevice ? handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, {selected, preselected, ...props}) : null,
         onTouchStart: (date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop) => isTouchDevice ? handleTouchStart(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, {selected, preselected, ...props}) : null,
         onTouchEnd: (date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop) => isTouchDevice ? handleTouchEnd(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, {selected, preselected, ...props}) : null,
@@ -148,10 +159,11 @@ export const withRange = compose(
             : null,
         },
       },
-      selectedArray: selectedArrayFinal,
+      selectionArray: props.selectionArray,
       preselectedDates: props.preselectedDates,
       selectionType: props.selectionType,
       selectionDone: props.selectionDone,
+      updateFromController: props.updateFromController
     },
     preselected: preselected && preselected.length ? handlePreselected(preselected) : [],
     startDays: preselected && preselected.length ? getStartDays(preselected) : [],
@@ -312,24 +324,83 @@ function getSortedSelection({start_time, end_time}) {
     : {start_time: end_time, end_time: start_time};
 }
 
-function clearSelect({onSelect, selected, setSelectionType, setSelectionDone, setSelectionStart}) {
+function clearSelect(date, {onSelect, selected, setSelectionType, setSelectionDone, setSelectionStart, setSelectionArray}) {
+    console.log('clearSelect');
     selected = null;
     touchDate = null;
+    selectedArrayFinal = [];
     setSelectionStart(null);
     setSelectionType('none');
     setSelectionDone(false);
-    onSelect({
+    setSelectionArray([]);
+    /*onSelect({
         eventType:EVENT_TYPE.END,
         start_time: null,
         end_time: null,
         before_last: false,
         eventProp: 'click'
-    });
+    });*/
 }
 
-function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, {onSelect, selected, preselected, preselectedDates, setPreselectedDates, selectionType, setSelectionType, selectionDone, setSelectionDone, selectionStart, setSelectionStart}) {
+function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, {onSelect, selected, preselected, preselectedDates, setPreselectedDates, selectionType, setSelectionType, selectionDone, setSelectionDone, selectionStart, setSelectionStart, setSelectionArray, setUpdateFromController}) {
+
+    if (lastSelectionBeforeLastDisabled) {
+        selected = null;
+        touchDate = null;
+        selectedArrayFinal = [];
+        setSelectionStart(null);
+        setSelectionType('none');
+        setSelectionDone(false);
+        setSelectionArray([]);
+        /*onSelect({
+            eventType:EVENT_TYPE.END,
+            start_time: null,
+            end_time: null,
+            before_last: false,
+            eventProp: 'click'
+        });*/
+        lastSelectionBeforeLastDisabled = false;
+    }
 
     preselected = preselected && preselected[0] ? preselected : [];
+
+    let includeDate = selectedArrayFinal.indexOf(format(date, 'YYYY-MM-DD'));
+
+    if (includeDate !== -1 && !beforeLastDisabled) {
+        if (selectionType === 'preselected') {
+            selectedArrayFinal.splice(includeDate, 1);
+            setUpdateFromController(new Date());
+            onSelect({
+                eventType:EVENT_TYPE.END,
+                ...getSortedSelection({
+                  start_time: null,
+                  end_time: null,
+                }),
+                before_last: false,
+                selected_array: selectedArrayFinal,
+                selections: getPreselectedWithinRange(selectedArrayFinal, preselected),
+                date_offset: fromTop,
+                eventProp: 'click'
+            });
+            return;
+        } else {
+            selectedArrayFinal.splice(includeDate, 1);
+            setUpdateFromController(new Date());
+            onSelect({
+                eventType:EVENT_TYPE.END,
+                ...getSortedSelection({
+                  start_time: null,
+                  end_time: null,
+                }),
+                before_last: false,
+                selected_array: selectedArrayFinal,
+                selections: null,
+                date_offset: fromTop,
+                eventProp: 'click'
+            });
+            return;
+        }
+    }
 
     if (!isPreSelected) {
         if (preselected && preselected[0]) {
@@ -343,68 +414,139 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
     }
 
     if (beforeLastDisabled) {
-        onSelect({
-            eventType:EVENT_TYPE.END,
-            ...getSortedSelection({
-              start_time: date,
-              end_time: date,
-            }),
-            before_last: true,
-            selections: getPreselectedWithinDate(date, preselected),
-            date_offset: fromTop,
-            eventProp: 'click'
-        });
-        setSelectionStart(null);
-        setSelectionDone(true);
-    } else if (selectionStart) {
-        onSelect({
-          eventType: EVENT_TYPE.END,
-          ...getSortedSelection({
-            start_time: selectionStart,
-            end_time: date,
-          }),
-          before_last: beforeLastDisabled,
-          selections: getPreselectedWithinRange(selectionStart, date, preselected, selected, originalDisabledDates),
-          date_offset: fromTop,
-          eventProp: 'click'
-        });
-        setSelectionStart(null);
-        setSelectionDone(true);
 
-        let daysArray = [];
-
-        let daysBetween = isBefore(date, selectionStart) ? eachDay(date, selectionStart, 1) : eachDay(selectionStart, date, 1);
-        for (var i = 0, length = daysBetween.length; i < length; ++i) {
-            let shouldRemove = isSaturday(daysBetween[i]) || isSunday(daysBetween[i]);
-            daysBetween[i] = format(daysBetween[i], 'YYYY-MM-DD');
-            if (!shouldRemove) {
-                //daysBetween.splice(i, 1);
-                //--i;
-                daysArray.push(daysBetween[i]);
-            }
-        }
-
-        selectedArrayFinal = selectedArrayFinal.concat(daysArray);
-
-        selectedArrayFinal.sort((a, b) => {
-            return a.replace(/-/g,"") - b.replace(/-/g,"");
-        });
-
-        console.log(selectedArrayFinal);
 
         selected = null;
         touchDate = null;
+        selectedArrayFinal = [];
         setSelectionStart(null);
         setSelectionType('none');
         setSelectionDone(false);
-        onSelect({
+        setSelectionArray([]);
+        /*onSelect({
             eventType:EVENT_TYPE.END,
             start_time: null,
             end_time: null,
             before_last: false,
             eventProp: 'click'
+        });*/
+
+
+        /* TODO: This doesn't work */
+        selectedArrayFinal = selectedArrayFinal.concat(format(date, 'YYYY-MM-DD'));
+        setSelectionArray(selectedArrayFinal);
+        selected = null;
+        touchDate = null;
+        setSelectionStart(null);
+        setSelectionDone(true);
+        setSelectionType('none');
+        onSelect({
+            eventType:EVENT_TYPE.END,
+            start_time: null,
+            end_time: null,
+            before_last: false,
+            selections: getPreselectedWithinRange(selectedArrayFinal, preselected),
+            selected_array: selectedArrayFinal,
+            eventProp: 'click'
         });
 
+        lastSelectionBeforeLastDisabled = true;
+
+        setUpdateFromController(new Date());
+    } else if (selectionStart) {
+
+        if (selectionType === 'preselected') {
+            let daysArray = [];
+            let daysBetween = isBefore(date, selectionStart) ? eachDay(date, selectionStart, 1) : eachDay(selectionStart, date, 1);
+            for (var i = 0, length = daysBetween.length; i < length; ++i) {
+                let shouldRemove = isSaturday(daysBetween[i]) || isSunday(daysBetween[i]);
+                daysBetween[i] = format(daysBetween[i], 'YYYY-MM-DD');
+                let alreadyIncluded = selectedArrayFinal.includes(daysBetween[i]);
+                if (!shouldRemove && !alreadyIncluded) {
+                    for (var b = 0, length = preselected.length; b < length; ++b) {
+                        if (preselected[b].start_time === daysBetween[i]) {
+                            daysArray.push(daysBetween[i]);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            selectedArrayFinal = selectedArrayFinal.concat(daysArray);
+
+            selectedArrayFinal.sort((a, b) => {
+                return a.replace(/-/g,"") - b.replace(/-/g,"");
+            });
+
+            setSelectionArray(selectedArrayFinal);
+
+            selected = null;
+            touchDate = null;
+            setSelectionStart(null);
+            setSelectionDone(true);
+            onSelect({
+                eventType:EVENT_TYPE.END,
+                start_time: null,
+                end_time: null,
+                before_last: false,
+                selections: getPreselectedWithinRange(selectedArrayFinal, preselected),
+                selected_array: selectedArrayFinal,
+                eventProp: 'click'
+            });
+
+        } else {
+
+            let daysArray = [];
+            let daysBetween = isBefore(date, selectionStart) ? eachDay(date, selectionStart, 1) : eachDay(selectionStart, date, 1);
+            for (var i = 0, length = daysBetween.length; i < length; ++i) {
+                let shouldRemove = isSaturday(daysBetween[i]) || isSunday(daysBetween[i]);
+                let formattedDate = format(daysBetween[i], 'YYYY-MM-DD');
+                let alreadyIncluded = selectedArrayFinal.includes(formattedDate);
+                if (!shouldRemove && !alreadyIncluded) {
+                    daysArray.push(formattedDate);
+                }
+            }
+
+            for (var y = 0, length = daysArray.length; y < length; ++y) {
+                for (var j = 0, length = preselectedDates.length; j < length; ++j) {
+                    if (daysArray[y] === preselectedDates[j].date) {
+                        daysArray.splice(y, 1);
+                        --y;
+                    }
+                }
+            }
+
+            for (var y = 0, length = daysArray.length; y < length; ++y) {
+                for (var j = 0, length = originalDisabledDates.length; j < length; ++j) {
+                    if (daysArray[y] === originalDisabledDates[j].date && originalDisabledDates[j].type === 'holiday') {
+                        daysArray.splice(y, 1);
+                        --y;
+                    }
+                }
+            }
+
+            selectedArrayFinal = selectedArrayFinal.concat(daysArray);
+
+            selectedArrayFinal.sort((a, b) => {
+                return a.replace(/-/g,"") - b.replace(/-/g,"");
+            });
+
+            setSelectionArray(selectedArrayFinal);
+
+            selected = null;
+            touchDate = null;
+            setSelectionStart(null);
+            setSelectionDone(true);
+            onSelect({
+                eventType:EVENT_TYPE.END,
+                start_time: null,
+                end_time: null,
+                before_last: false,
+                selections: null,
+                selected_array: selectedArrayFinal,
+                eventProp: 'click'
+            });
+        }
 
     } else {
         onSelect({
@@ -559,7 +701,20 @@ function getPreselectedWithinDate(date, preselected) {
     return {days_count: 1, data: returnableDates};
 }
 
-function getPreselectedWithinRange(start_date, end_date, preselected, selected, originalDisabledDates) {
+function getPreselectedWithinRange(selectedArray, preselected) {
+    let returnableDates = [];
+    let days;
+
+    for (var i = 0, preselect = preselected.length; i < preselect; ++i) {
+        if (selectedArray.includes(preselected[i].start_time)) {
+            returnableDates.push(preselected[i]);
+        }
+    }
+
+    return {days_count: selectedArray.length, data: returnableDates};
+}
+
+/*function getPreselectedWithinRange(start_date, end_date, preselected, selected, originalDisabledDates) {
     let returnableDates;
     let startDate = format(start_date, 'YYYY-MM-DD');
     let endDate = format(end_date, 'YYYY-MM-DD');
@@ -617,7 +772,7 @@ function getPreselectedWithinRange(start_date, end_date, preselected, selected, 
     }
 
     return {days_count: days, data: returnableDates};
-}
+}*/
 
 function getInitialDate({selected, initialSelectedDate, scrollOffset}) {
     if (scrollOffset !== null) {
@@ -627,7 +782,7 @@ function getInitialDate({selected, initialSelectedDate, scrollOffset}) {
     }
 }
 
-function determineIfDateAlreadySelected(date, selected) {
+function determineIfDateAlreadySelected(date, selected, originalDisabledDates) {
   let returnVal ={
     index: -1,
     value: '',
@@ -640,6 +795,8 @@ function determineIfDateAlreadySelected(date, selected) {
     nextpreselecteddifferentiates: false,
     prevpreselecteddifferentiates: false,
     preselected: false,
+    vacation: false,
+    vacation_type: ''
   };
 
   let selected_date = date;
@@ -659,6 +816,13 @@ function determineIfDateAlreadySelected(date, selected) {
             returnVal.nextpreselecteddifferentiates = selected_array[i].nextpreselecteddifferentiates;
             returnVal.prevpreselecteddifferentiates = selected_array[i].prevpreselecteddifferentiates;
     }
+  }
+
+  for (var j = 0, len = originalDisabledDates.length; j < len; ++j) {
+      if (date === originalDisabledDates[j].date) {
+          returnVal.vacation = true;
+          returnVal.vacation_type = originalDisabledDates[j].type;
+      }
   }
 
   return returnVal;

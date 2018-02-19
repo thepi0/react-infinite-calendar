@@ -22,7 +22,8 @@ export default class Month extends PureComponent {
         const differentSelectionStart = nextProps.selected.start_time !== this.props.selected.start_time;
         const differentSelectionEnd = nextProps.selected.end_time !== this.props.selected.end_time;
         const differentSelectionDone = nextProps.passThrough.selectionDone !== this.props.passThrough.selectionDone;
-        return differentLastUpdate || differentSelectionStart || differentSelectionEnd || differentSelectionDone;
+        const differentUpdateFromController = nextProps.passThrough.updateFromController !== this.props.passThrough.updateFromController;
+        return differentLastUpdate || differentSelectionStart || differentSelectionEnd || differentSelectionDone || differentUpdateFromController;
     }
 
   renderRows() {
@@ -57,7 +58,7 @@ export default class Month extends PureComponent {
     let isToday = false;
     let dateDisabled = { date: null, type: null };
     let isDateVacation = false;
-    let selectedArray = passThrough.selectedArray;
+    let selectionArray = passThrough.selectionArray;
     let preselectedDates = passThrough.preselectedDates;
     let selectionType = passThrough.selectionType;
     let selectionDone = passThrough.selectionDone;
@@ -72,12 +73,13 @@ export default class Month extends PureComponent {
     const initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : [];
 
     /* TODO: These can be moved to withRange and return from there */
-    let disabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : [];
+    //let disabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : [];
     let enabledDatesArray = preselected && preselected[0] ? preselected.map((dateObj) => ({ date: format(dateObj.start_time, 'YYYY-MM-DD'), type: 'preselect' })) : null;
     let reallyDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.filter((object) => object.type === 'holiday') : [];
 
-    if (selectionType === 'not_preselected' && disabledDatesArray != null && disabledDatesArray.length) {
-        disabledDatesArray = disabledDatesArray.concat(preselectedDates);
+    //if (selectionType === 'not_preselected' && disabledDatesArray != null && disabledDatesArray.length) {
+    if (selectionType === 'not_preselected') {
+        //disabledDatesArray = disabledDatesArray.concat(preselectedDates);
         reallyDisabledDatesArray = reallyDisabledDatesArray.concat(preselectedDates);
     } else if (selectionType === 'preselected' && enabledDatesArray != null && enabledDatesArray.length) {
         enabledDatesArray =  enabledDatesArray.concat(preselectedDates);
@@ -92,7 +94,7 @@ export default class Month extends PureComponent {
             });
         }
     } else {
-        disabledDatesArray = disabledDatesArray;
+        //disabledDatesArray = disabledDatesArray;
     }
 
     for (let i = 0, len = rows.length; i < len; i++) {
@@ -117,7 +119,7 @@ export default class Month extends PureComponent {
         prevdow = dow === 1 ? 7 : dow - 1;
 
         for (let x = 0, len = initialDisabledDatesArray.length; x < len; x++) {
-            if (initialDisabledDatesArray[x].date === date && initialDisabledDatesArray[x].type === 'vacation' && !isBefore(date, lastDate)) {
+            if (initialDisabledDatesArray[x].date === date) {
                 isDateVacation = true;
                 break;
             }
@@ -142,25 +144,30 @@ export default class Month extends PureComponent {
         isDisabled = (
 					minDate && date < _minDate ||
 					maxDate && date > _maxDate ||
+                    //selectionArray.includes(format(date, 'YYYY-MM-DD')) ||
 					disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 ||
                     initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(dateDisabled) !== -1 ||
-                    disabledDatesArray && selectionType === 'not_preselected' &&
+                    //disabledDatesArray && selectionType === 'not_preselected' &&
+                    initialDisabledDatesArray && selectionType === 'not_preselected' &&
                     (
                         (
-                        disabledDatesArray.map((e) => { return e.date; }).indexOf(dateDisabled.date) !== -1
-                        ||
+                        /*disabledDatesArray.map((e) => { return e.date; }).indexOf(dateDisabled.date) !== -1
+                        ||*/
                         initialDisabledDatesArray.map((e) => { return e.date; }).indexOf(dateDisabled.date) !== -1
-                        ||
+                        /*||
                         reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map((e) => { return e.date; }).indexOf(date) !== -1
                         ||
-                        isDate(lastSelectableDate) && isBefore(date, lastDate)
+                        isDate(lastSelectableDate) && isBefore(date, lastDate)*/
                         )
                     )
                     ||
-                    enabledDatesArray && selectionType === 'preselected' &&
+                    //enabledDatesArray && selectionType === 'preselected' &&
+                    initialDisabledDatesArray && selectionType === 'preselected' &&
                     (
                         (
-                        enabledDatesArray.map((e) => { return e.date; }).indexOf(dateDisabled.date) === -1
+                        /*enabledDatesArray.map((e) => { return e.date; }).indexOf(dateDisabled.date) === -1
+                        ||*/
+                        isDate(lastSelectableDate) && isBefore(date, lastDate)
                         ||
                         initialDisabledDatesArray.map((e) => { return {date: e.date, type: e.type}; }).indexOf(dateDisabled) !== -1
                         )
@@ -190,11 +197,12 @@ export default class Month extends PureComponent {
                         originalDisabledDates={originalDisabledDates}
                         beforeLastDisabled={beforeLastDisabled}
                         selected={selected}
-                        selectedArray={selectedArray}
+                        selectionArray={selectionArray}
                         preselected={preselected}
                         nextDisabled={nextDisabled}
                         prevDisabled={prevDisabled}
 						isDisabled={isDisabled}
+                        selectionType={selectionType}
 						isToday={isToday}
                         {...passThrough.Day}
 					/>

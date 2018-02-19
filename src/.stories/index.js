@@ -37,23 +37,29 @@ storiesOf('Higher Order Components', module)
       autoFocus={false}
       originalDisabledDates={[
           {
-              date: "2017-11-28",
+              date: "2018-01-17",
               type: "vacation"
           },{
-              date: "2017-12-28",
+              date: "2018-01-18",
               type: "vacation"
           },{
-              date: "2017-12-25",
+              date: "2018-01-19",
+              type: "holiday"
+          },{
+              date: "2018-03-20",
               type: "vacation"
           },{
-              date: "2018-01-15",
+              date: "2018-03-21",
               type: "vacation"
+          },{
+              date: "2018-03-22",
+              type: "vacation"
+          },{
+              date: "2018-03-27",
+              type: "holiday"
           }, {
-              date: "2018-01-16",
-              type: "vacation"
-          }, {
-              date: "2018-02-20",
-              type: "vacation"
+              date: "2018-03-28",
+              type: "holiday"
           }
       ]}
       disabledDates={null}
@@ -160,6 +166,16 @@ storiesOf('Higher Order Components', module)
           },{
               start_time: "2018-02-20",
               end_time: "2018-02-20",
+              child: 103,
+              color: '#ea992f'
+          },{
+              start_time: "2018-02-27",
+              end_time: "2018-02-27",
+              child: 103,
+              color: '#ea992f'
+          },{
+              start_time: "2018-02-28",
+              end_time: "2018-02-28",
               child: 103,
               color: '#ea992f'
           }
