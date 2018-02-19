@@ -90,92 +90,92 @@ storiesOf('Higher Order Components', module)
       }}
       preselected={[
           {
-              start_time: "2018-01-23",
-              end_time: "2018-01-23",
+              start_time: "2018-01-23T14:00:00Z",
+              end_time: "2018-01-23T14:00:00Z",
               child: 100,
               color: '#ca569a'
           },{
-              start_time: "2018-01-23",
-              end_time: "2018-01-23",
+              start_time: "2018-01-23T14:00:00Z",
+              end_time: "2018-01-23T14:00:00Z",
               child: 101,
               color: '#2cb1d8'
           },{
-              start_time: "2018-01-23",
-              end_time: "2018-01-23",
+              start_time: "2018-01-23T14:00:00Z",
+              end_time: "2018-01-23T14:00:00Z",
               child: 102,
               color: '#85bd4c'
           },{
-              start_time: "2018-01-23",
-              end_time: "2018-01-23",
+              start_time: "2018-01-23T14:00:00Z",
+              end_time: "2018-01-23T14:00:00Z",
               child: 103,
               color: '#ea992f'
           }, {
-              start_time: "2018-01-24",
-              end_time: "2018-01-24",
+              start_time: "2018-01-24T14:00:00Z",
+              end_time: "2018-01-24T14:00:00Z",
               child: 100,
               color: '#ca569a'
           },{
-              start_time: "2018-01-24",
-              end_time: "2018-01-24",
+              start_time: "2018-01-24T14:00:00Z",
+              end_time: "2018-01-24T14:00:00Z",
               child: 101,
               color: '#2cb1d8'
           },{
-              start_time: "2018-01-24",
-              end_time: "2018-01-24",
+              start_time: "2018-01-24T14:00:00Z",
+              end_time: "2018-01-24T14:00:00Z",
               child: 102,
               color: '#85bd4c'
           },{
-              start_time: "2018-01-24",
-              end_time: "2018-01-24",
+              start_time: "2018-01-24T14:00:00Z",
+              end_time: "2018-01-24T14:00:00Z",
               child: 103,
               color: '#ea992f'
           }, {
-              start_time: "2018-02-13",
-              end_time: "2018-02-13",
+              start_time: "2018-02-13T14:00:00Z",
+              end_time: "2018-02-13T14:00:00Z",
               child: 100,
               color: '#ca569a'
           },
           {
-              start_time: "2018-02-14",
-              end_time: "2018-02-14",
+              start_time: "2018-02-14T14:00:00Z",
+              end_time: "2018-02-14T14:00:00Z",
               child: 100,
               color: '#ca569a'
           },
           {
-              start_time: "2018-02-16",
-              end_time: "2018-02-16",
+              start_time: "2018-02-16T14:00:00Z",
+              end_time: "2018-02-16T14:00:00Z",
               child: 100,
               color: '#ca569a'
           },{
-              start_time: "2018-02-20",
-              end_time: "2018-02-20",
+              start_time: "2018-02-20T14:00:00Z",
+              end_time: "2018-02-20T14:00:00Z",
               child: 100,
               color: '#ca569a'
           },
           {
-              start_time: "2018-02-20",
-              end_time: "2018-02-20",
+              start_time: "2018-02-20T14:00:00Z",
+              end_time: "2018-02-20T14:00:00Z",
               child: 101,
               color: '#2cb1d8'
           },
           {
-              start_time: "2018-02-20",
-              end_time: "2018-02-20",
+              start_time: "2018-02-20T14:00:00Z",
+              end_time: "2018-02-20T14:00:00Z",
               child: 102,
               color: '#85bd4c'
           },{
-              start_time: "2018-02-20",
-              end_time: "2018-02-20",
+              start_time: "2018-02-20T14:00:00Z",
+              end_time: "2018-02-20T14:00:00Z",
               child: 103,
               color: '#ea992f'
           },{
-              start_time: "2018-02-27",
-              end_time: "2018-02-27",
+              start_time: "2018-02-27T14:00:00Z",
+              end_time: "2018-02-27T14:00:00Z",
               child: 103,
               color: '#ea992f'
           },{
-              start_time: "2018-02-28",
-              end_time: "2018-02-28",
+              start_time: "2018-02-28T14:00:00Z",
+              end_time: "2018-02-28T14:00:00Z",
               child: 103,
               color: '#ea992f'
           }
