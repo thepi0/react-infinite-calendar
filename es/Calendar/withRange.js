@@ -437,18 +437,16 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
         } else {
             selectedArrayFinal.splice(includeDate, 1);
             setUpdateFromController(new Date());
-            onSelect(_extends({
-                eventType: EVENT_TYPE.END
-            }, getSortedSelection({
+            onSelect({
+                eventType: EVENT_TYPE.END,
                 start_time: null,
-                end_time: null
-            }), {
+                end_time: null,
                 before_last: false,
                 selected_array: selectedArrayFinal,
                 selections: null,
                 date_offset: fromTop,
                 eventProp: 'click'
-            }));
+            });
             return;
         }
     }
@@ -498,6 +496,7 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
             before_last: false,
             selections: getPreselectedWithinRange(selectedArrayFinal, preselected),
             selected_array: selectedArrayFinal,
+            date_offset: fromTop,
             eventProp: 'click'
         });
 
@@ -542,6 +541,7 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
                 before_last: false,
                 selections: getPreselectedWithinRange(selectedArrayFinal, preselected),
                 selected_array: selectedArrayFinal,
+                date_offset: fromTop,
                 eventProp: 'click'
             });
         } else {
@@ -594,6 +594,7 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
                 before_last: false,
                 selections: null,
                 selected_array: selectedArrayFinal,
+                date_offset: fromTop,
                 eventProp: 'click'
             });
         }
