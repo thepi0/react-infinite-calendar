@@ -515,7 +515,7 @@ function handleSelect(date, beforeLastDisabled, isPreSelected, originalDisabledD
                 var alreadyIncluded = selectedArrayFinal.includes(daysBetween[i]);
                 if (!shouldRemove && !alreadyIncluded) {
                     for (var b = 0, length = preselected.length; b < length; ++b) {
-                        if (preselected[b].start_time === daysBetween[i]) {
+                        if (format(preselected[b].start_time, 'YYYY-MM-DD') === daysBetween[i]) {
                             daysArray.push(daysBetween[i]);
                             break;
                         }
@@ -789,7 +789,7 @@ function getPreselectedWithinRange(selectedArray, preselected) {
     var days = void 0;
 
     for (var i = 0, preselect = preselected.length; i < preselect; ++i) {
-        if (selectedArray.includes(preselected[i].start_time)) {
+        if (selectedArray.includes(format(preselected[i].start_time, 'YYYY-MM-DD'))) {
             returnableDates.push(preselected[i]);
         }
     }
