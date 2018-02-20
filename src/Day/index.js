@@ -7,11 +7,11 @@ import styles from './Day.scss';
 export default class Day extends PureComponent {
 
   onSelectionStart = () => {
-    let {date, beforeLastDisabled, isDisabled, isPreSelected, onSelectionStart, onClear, selectionType, originalDisabledDates} = this.props;
+    let {date, beforeLastDisabled, isDisabled, isPreSelected, vacationObject, onSelectionStart, onClear, selectionType, originalDisabledDates} = this.props;
 
     var fromTop = ReactDOM.findDOMNode(this).getBoundingClientRect().top;
 
-    if ((isDisabled && selectionType === 'preselected' && !isPreSelected) || (isDisabled && selectionType === 'not_preselected' && isPreSelected) || (beforeLastDisabled && !isPreSelected) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected')) {
+    if ((vacationObject.vacation === true && vacationObject.vacation_type === 'holiday') || (isDisabled && selectionType === 'preselected' && !isPreSelected) || (isDisabled && selectionType === 'not_preselected' && isPreSelected) || (beforeLastDisabled && !isPreSelected) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected')) {
         onClear();
     } else if (typeof onSelectionStart === 'function') {
         onSelectionStart(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
