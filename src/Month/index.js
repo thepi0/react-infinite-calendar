@@ -23,11 +23,6 @@ export default class Month extends PureComponent {
         const differentSelectionEnd = nextProps.selected.end_time !== this.props.selected.end_time;
         const differentSelectionDone = nextProps.passThrough.selectionDone !== this.props.passThrough.selectionDone;
         const differentUpdateFromController = nextProps.passThrough.updateFromController !== this.props.passThrough.updateFromController;
-
-        if (differentLastUpdate) {
-            this.props.passThrough.clearSelections();
-        }
-
         return differentLastUpdate || differentSelectionStart || differentSelectionEnd || differentSelectionDone || differentUpdateFromController;
     }
 
