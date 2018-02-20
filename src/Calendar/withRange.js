@@ -372,6 +372,15 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
                 date_offset: fromTop,
                 eventProp: 'click'
             });
+            if (!selectedArrayFinal.length) {
+                selected = null;
+                selectedArrayFinal = [];
+                setSelectionStart(null);
+                setSelectionType('none');
+                setSelectionDone(false);
+                setSelectionArray([]);
+                lastSelectionBeforeLastDisabled = false;
+            }
             return;
         } else {
             selectedArrayFinal.splice(includeDate, 1);
@@ -386,6 +395,15 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
                 date_offset: fromTop,
                 eventProp: 'click'
             });
+            if (!selectedArrayFinal.length) {
+                selected = null;
+                selectedArrayFinal = [];
+                setSelectionStart(null);
+                setSelectionType('none');
+                setSelectionDone(false);
+                setSelectionArray([]);
+                lastSelectionBeforeLastDisabled = false;
+            }
             return;
         }
     }
