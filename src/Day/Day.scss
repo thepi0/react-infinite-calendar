@@ -42,9 +42,9 @@
 
   -webkit-tap-highlight-color: transparent;
 
-  &.disabled {
+  /*&.disabled {
       color: red !important;
-  }
+  }*/
 
   .vacationCircle {
       position: absolute;
@@ -1118,6 +1118,34 @@
     }
   }
 
+  &.preselected {
+      &.beforelast.disabled {
+          color: #FFFFFF;
+      }
+  }
+
+  &.selected {
+
+    &.beforelast.disabled {
+
+        .selection.selection {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: $rowHeight;
+            height: $rowHeight;
+            margin-top: -0.5 * ($rowHeight);
+            margin-left: -0.5 * ($rowHeight);
+            border-top: 3px solid $selectionBorderColor;
+            border-right: 3px solid $selectionBorderColor;
+            border-bottom: 3px solid $selectionBorderColor;
+            border-left: 3px solid $selectionBorderColor;
+            border-radius: $rowHeight / 2;
+            line-height: $rowHeight - 6px;
+        }
+    }
+  }
+
   /*&.disabled {
     //color: $textColorDisabled;
     box-shadow: none;
@@ -1331,6 +1359,30 @@
       .day, .month {
         color: $textColorDisabled;
       }
+    }
+  }
+
+  &.selected {
+
+    &.beforelast.disabled {
+        color: #FFFFFF;
+        cursor: pointer;
+
+        .selection.selection {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: $rowHeight;
+            height: $rowHeight;
+            margin-top: -0.5 * ($rowHeight);
+            margin-left: -0.5 * ($rowHeight);
+            border-top: 3px solid $selectionBorderColor;
+            border-right: 3px solid $selectionBorderColor;
+            border-bottom: 3px solid $selectionBorderColor;
+            border-left: 3px solid $selectionBorderColor;
+            border-radius: $rowHeight / 2;
+            line-height: $rowHeight - 6px;
+        }
     }
   }
   /*&.disabled {

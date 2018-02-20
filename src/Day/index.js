@@ -12,9 +12,9 @@ export default class Day extends PureComponent {
     var fromTop = ReactDOM.findDOMNode(this)
       .getBoundingClientRect().top;
 
-    if (isDisabled || (beforeLastDisabled && !isPreSelected) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected')) {
+    if ((isDisabled && selectionType === 'preselected' && !isPreSelected) || (isDisabled && selectionType === 'not_preselected' && isPreSelected) || (beforeLastDisabled && !isPreSelected) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected')) {
       onClear();
-    } else if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onClick === 'function') {
+  } else if (typeof onClick === 'function') {
       onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
     }
   };
@@ -25,9 +25,9 @@ export default class Day extends PureComponent {
     var fromTop = ReactDOM.findDOMNode(this)
       .getBoundingClientRect().top;
 
-    if (isDisabled || (beforeLastDisabled && !isPreSelected) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected')) {
+    if ((isDisabled && selectionType === 'preselected' && !isPreSelected) || (isDisabled && selectionType === 'not_preselected' && isPreSelected) || (beforeLastDisabled && !isPreSelected) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected')) {
       onClear();
-  } else if (!isDisabled && typeof onTouchStart === 'function') {
+  } else if (typeof onTouchStart === 'function') {
       onTouchStart(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
     }
   };
@@ -38,9 +38,9 @@ export default class Day extends PureComponent {
     var fromTop = ReactDOM.findDOMNode(this)
       .getBoundingClientRect().top;
 
-    if (isDisabled || (beforeLastDisabled && !isPreSelected) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected')) {
+    if ((isDisabled && selectionType === 'preselected' && !isPreSelected) || (isDisabled && selectionType === 'not_preselected' && isPreSelected) || (beforeLastDisabled && !isPreSelected) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected')) {
       onClear();
-  } else if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onTouchEnd === 'function') {
+  } else if (typeof onTouchEnd === 'function') {
       onTouchEnd(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
     }
   };

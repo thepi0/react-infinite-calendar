@@ -144,7 +144,7 @@ export default class Month extends PureComponent {
         isDisabled = (
 					minDate && date < _minDate ||
 					maxDate && date > _maxDate ||
-                    //selectionArray.includes(format(date, 'YYYY-MM-DD')) ||
+                    selectionArray.includes(format(date, 'YYYY-MM-DD')) ||
 					disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 ||
                     initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(dateDisabled) !== -1 ||
                     //disabledDatesArray && selectionType === 'not_preselected' &&
