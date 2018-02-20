@@ -12,9 +12,9 @@ import classNames from 'classnames';
 import parse from 'date-fns/parse';
 var styles = {
   'root': 'Cal__Day__root',
-  'disabled': 'Cal__Day__disabled',
   'vacationCircle': 'Cal__Day__vacationCircle',
   'beforelast': 'Cal__Day__beforelast',
+  'disabled': 'Cal__Day__disabled',
   'preselected': 'Cal__Day__preselected',
   'nextselected': 'Cal__Day__nextselected',
   'prevselected': 'Cal__Day__prevselected',
@@ -57,13 +57,13 @@ var Day = function (_PureComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _PureComponent.call.apply(_PureComponent, [this].concat(args))), _this), _this.handleClick = function () {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _PureComponent.call.apply(_PureComponent, [this].concat(args))), _this), _this.onSelectionStart = function () {
       var _this$props = _this.props,
           date = _this$props.date,
           beforeLastDisabled = _this$props.beforeLastDisabled,
           isDisabled = _this$props.isDisabled,
           isPreSelected = _this$props.isPreSelected,
-          onClick = _this$props.onClick,
+          onSelectionStart = _this$props.onSelectionStart,
           onClear = _this$props.onClear,
           selectionType = _this$props.selectionType,
           originalDisabledDates = _this$props.originalDisabledDates;
@@ -71,18 +71,18 @@ var Day = function (_PureComponent) {
 
       var fromTop = ReactDOM.findDOMNode(_this).getBoundingClientRect().top;
 
-      if (isDisabled || beforeLastDisabled && !isPreSelected || !isPreSelected && selectionType === 'preselected' || isPreSelected && selectionType === 'not_preselected') {
+      if (isDisabled && selectionType === 'preselected' && !isPreSelected || isDisabled && selectionType === 'not_preselected' && isPreSelected || beforeLastDisabled && !isPreSelected || !isPreSelected && selectionType === 'preselected' || isPreSelected && selectionType === 'not_preselected') {
         onClear();
-      } else if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onClick === 'function') {
-        onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
+      } else if (typeof onSelectionStart === 'function') {
+        onSelectionStart(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
       }
-    }, _this.handleTouchStart = function () {
+    }, _this.onSelectionEnd = function (e) {
       var _this$props2 = _this.props,
           date = _this$props2.date,
           beforeLastDisabled = _this$props2.beforeLastDisabled,
           isDisabled = _this$props2.isDisabled,
           isPreSelected = _this$props2.isPreSelected,
-          onTouchStart = _this$props2.onTouchStart,
+          onSelectionEnd = _this$props2.onSelectionEnd,
           onClear = _this$props2.onClear,
           selectionType = _this$props2.selectionType,
           originalDisabledDates = _this$props2.originalDisabledDates;
@@ -90,29 +90,8 @@ var Day = function (_PureComponent) {
 
       var fromTop = ReactDOM.findDOMNode(_this).getBoundingClientRect().top;
 
-      if (isDisabled || beforeLastDisabled && !isPreSelected || !isPreSelected && selectionType === 'preselected' || isPreSelected && selectionType === 'not_preselected') {
-        onClear();
-      } else if (!isDisabled && typeof onTouchStart === 'function') {
-        onTouchStart(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
-      }
-    }, _this.handleTouchEnd = function () {
-      var _this$props3 = _this.props,
-          date = _this$props3.date,
-          beforeLastDisabled = _this$props3.beforeLastDisabled,
-          isDisabled = _this$props3.isDisabled,
-          isPreSelected = _this$props3.isPreSelected,
-          onTouchEnd = _this$props3.onTouchEnd,
-          onClear = _this$props3.onClear,
-          selectionType = _this$props3.selectionType,
-          originalDisabledDates = _this$props3.originalDisabledDates;
-
-
-      var fromTop = ReactDOM.findDOMNode(_this).getBoundingClientRect().top;
-
-      if (isDisabled || beforeLastDisabled && !isPreSelected || !isPreSelected && selectionType === 'preselected' || isPreSelected && selectionType === 'not_preselected') {
-        onClear();
-      } else if (!(beforeLastDisabled && !isPreSelected) && !isDisabled && typeof onTouchEnd === 'function') {
-        onTouchEnd(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
+      if (typeof onSelectionEnd === 'function') {
+        onSelectionEnd(e, parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
       }
     }, _this.getDayColors = function (date, preselected) {
       if (!preselected || !preselected.length) {
@@ -198,9 +177,10 @@ var Day = function (_PureComponent) {
       'li',
       _extends({
         className: classNames(styles.root, (_classNames = {}, _classNames[styles.today] = isToday, _classNames[styles.selected] = isSelected || isArraySelected, _classNames[styles.preselected] = isPreSelected, _classNames[styles.prevdisabled] = prevDisabled, _classNames[styles.nextdisabled] = nextDisabled, _classNames[styles.disabled] = isDisabled || beforeLastDisabled && !isPreSelected || !isPreSelected && selectionType === 'preselected' || isPreSelected && selectionType === 'not_preselected', _classNames[styles.holiday] = vacationObject.vacation === true && vacationObject.vacation_type === 'holiday', _classNames[styles.enabled] = !isDisabled, _classNames[styles.beforelast] = beforeLastDisabled, _classNames[styles.purple] = isPreSelected && colors.purple, _classNames[styles.blue] = isPreSelected && colors.blue, _classNames[styles.green] = isPreSelected && colors.green, _classNames[styles.orange] = isPreSelected && colors.orange, _classNames[styles.weekend] = isWeekend, _classNames[styles.preselecteddisabled] = isPreSelected && selectionType === 'not_preselected', _classNames[styles.preselectedenabled] = !isPreSelected && selectionType === 'preselected', _classNames), className),
-        onClick: this.handleClick,
-        onTouchStart: this.handleTouchStart,
-        onTouchEnd: this.handleTouchEnd,
+        onMouseDown: this.onSelectionStart,
+        onMouseUp: this.onSelectionEnd,
+        onTouchStart: this.onSelectionStart,
+        onTouchEnd: this.onSelectionEnd,
         'data-date': date,
         'data-disabled': isDisabled || beforeLastDisabled && !isPreSelected || !isPreSelected && selectionType === 'preselected' || isPreSelected && selectionType === 'not_preselected' ? true : false
       }, handlers),

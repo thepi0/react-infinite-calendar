@@ -106,8 +106,6 @@ var Month = function (_PureComponent) {
         var _maxDate = format(maxDate, 'YYYY-MM-DD');
         var initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : [];
 
-        /* TODO: These can be moved to withRange and return from there */
-        //let disabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : [];
         var enabledDatesArray = preselected && preselected[0] ? preselected.map(function (dateObj) {
             return { date: format(dateObj.start_time, 'YYYY-MM-DD'), type: 'preselect' };
         }) : null;
@@ -115,9 +113,7 @@ var Month = function (_PureComponent) {
             return object.type === 'holiday';
         }) : [];
 
-        //if (selectionType === 'not_preselected' && disabledDatesArray != null && disabledDatesArray.length) {
         if (selectionType === 'not_preselected') {
-            //disabledDatesArray = disabledDatesArray.concat(preselectedDates);
             reallyDisabledDatesArray = reallyDisabledDatesArray.concat(preselectedDates);
         } else if (selectionType === 'preselected' && enabledDatesArray != null && enabledDatesArray.length) {
             enabledDatesArray = enabledDatesArray.concat(preselectedDates);
@@ -131,8 +127,6 @@ var Month = function (_PureComponent) {
                     return isBefore(lastDate, date.date);
                 });
             }
-        } else {
-            //disabledDatesArray = disabledDatesArray;
         }
 
         for (var i = 0, len = rows.length; i < len; i++) {
@@ -181,26 +175,9 @@ var Month = function (_PureComponent) {
                     }
                 }
 
-                isDisabled = minDate && date < _minDate || maxDate && date > _maxDate ||
-                //selectionArray.includes(format(date, 'YYYY-MM-DD')) ||
-                disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 || initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(dateDisabled) !== -1 ||
-                //disabledDatesArray && selectionType === 'not_preselected' &&
-                initialDisabledDatesArray && selectionType === 'not_preselected' &&
-                /*disabledDatesArray.map((e) => { return e.date; }).indexOf(dateDisabled.date) !== -1
-                ||*/
-                initialDisabledDatesArray.map(function (e) {
+                isDisabled = minDate && date < _minDate || maxDate && date > _maxDate || selectionArray.includes(format(date, 'YYYY-MM-DD')) || disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 || initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(dateDisabled) !== -1 || initialDisabledDatesArray && selectionType === 'not_preselected' && initialDisabledDatesArray.map(function (e) {
                     return e.date;
-                }).indexOf(dateDisabled.date) !== -1
-                /*||
-                reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map((e) => { return e.date; }).indexOf(date) !== -1
-                ||
-                isDate(lastSelectableDate) && isBefore(date, lastDate)*/
-                ||
-                //enabledDatesArray && selectionType === 'preselected' &&
-                initialDisabledDatesArray && selectionType === 'preselected' && (
-                /*enabledDatesArray.map((e) => { return e.date; }).indexOf(dateDisabled.date) === -1
-                ||*/
-                isDate(lastSelectableDate) && isBefore(date, lastDate) || initialDisabledDatesArray.map(function (e) {
+                }).indexOf(dateDisabled.date) !== -1 || initialDisabledDatesArray && selectionType === 'preselected' && (isDate(lastSelectableDate) && isBefore(date, lastDate) || initialDisabledDatesArray.map(function (e) {
                     return { date: e.date, type: e.type };
                 }).indexOf(dateDisabled) !== -1);
 
