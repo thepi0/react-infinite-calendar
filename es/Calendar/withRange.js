@@ -27,6 +27,8 @@ var styles = {
     'root': 'Cal__Day__root',
     'vacationCircle': 'Cal__Day__vacationCircle',
     'beforelast': 'Cal__Day__beforelast',
+    'weekend': 'Cal__Day__weekend',
+    'holiday': 'Cal__Day__holiday',
     'disabled': 'Cal__Day__disabled',
     'preselected': 'Cal__Day__preselected',
     'nextselected': 'Cal__Day__nextselected',
@@ -44,10 +46,8 @@ var styles = {
     'selection': 'Cal__Day__selection',
     'nextdisabled': 'Cal__Day__nextdisabled',
     'prevdisabled': 'Cal__Day__prevdisabled',
-    'weekend': 'Cal__Day__weekend',
     'preselecteddisabled': 'Cal__Day__preselecteddisabled',
     'preselectedenabled': 'Cal__Day__preselectedenabled',
-    'holiday': 'Cal__Day__holiday',
     'day': 'Cal__Day__day',
     'month': 'Cal__Day__month',
     'range': 'Cal__Day__range',
@@ -422,6 +422,15 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
                 date_offset: fromTop,
                 eventProp: 'click'
             }));
+            if (!selectedArrayFinal.length) {
+                selected = null;
+                selectedArrayFinal = [];
+                setSelectionStart(null);
+                setSelectionType('none');
+                setSelectionDone(false);
+                setSelectionArray([]);
+                lastSelectionBeforeLastDisabled = false;
+            }
             return;
         } else {
             selectedArrayFinal.splice(includeDate, 1);
@@ -436,6 +445,15 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
                 date_offset: fromTop,
                 eventProp: 'click'
             });
+            if (!selectedArrayFinal.length) {
+                selected = null;
+                selectedArrayFinal = [];
+                setSelectionStart(null);
+                setSelectionType('none');
+                setSelectionDone(false);
+                setSelectionArray([]);
+                lastSelectionBeforeLastDisabled = false;
+            }
             return;
         }
     }
