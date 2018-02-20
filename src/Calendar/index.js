@@ -323,6 +323,7 @@ export default class Calendar extends Component {
         scrollDate,
         selected,
         preselected,
+        lastUpdate,
 		tabIndex,
 		width,
         YearsComponent,
