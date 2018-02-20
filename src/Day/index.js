@@ -6,44 +6,27 @@ import styles from './Day.scss';
 
 export default class Day extends PureComponent {
 
-  handleClick = () => {
-    let {date, beforeLastDisabled, isDisabled, isPreSelected, onClick, onClear, selectionType, originalDisabledDates} = this.props;
+  onSelectionStart = () => {
+    let {date, beforeLastDisabled, isDisabled, isPreSelected, onSelectionStart, onClear, selectionType, originalDisabledDates} = this.props;
 
-    var fromTop = ReactDOM.findDOMNode(this)
-      .getBoundingClientRect().top;
-
-    if ((isDisabled && selectionType === 'preselected' && !isPreSelected) || (isDisabled && selectionType === 'not_preselected' && isPreSelected) || (beforeLastDisabled && !isPreSelected) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected')) {
-      onClear();
-  } else if (typeof onClick === 'function') {
-      onClick(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
-    }
-  };
-
-  handleTouchStart = () => {
-    let {date, beforeLastDisabled, isDisabled, isPreSelected, onTouchStart, onClear, selectionType, originalDisabledDates} = this.props;
-
-    var fromTop = ReactDOM.findDOMNode(this)
-      .getBoundingClientRect().top;
+    var fromTop = ReactDOM.findDOMNode(this).getBoundingClientRect().top;
 
     if ((isDisabled && selectionType === 'preselected' && !isPreSelected) || (isDisabled && selectionType === 'not_preselected' && isPreSelected) || (beforeLastDisabled && !isPreSelected) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected')) {
-      onClear();
-  } else if (typeof onTouchStart === 'function') {
-      onTouchStart(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
+        onClear();
+    } else if (typeof onSelectionStart === 'function') {
+        onSelectionStart(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
     }
-  };
+  }
 
-  handleTouchEnd = () => {
-    let {date, beforeLastDisabled, isDisabled, isPreSelected, onTouchEnd, onClear, selectionType, originalDisabledDates} = this.props;
+  onSelectionEnd = (e) => {
+    let {date, beforeLastDisabled, isDisabled, isPreSelected, onSelectionEnd, onClear, selectionType, originalDisabledDates} = this.props;
 
-    var fromTop = ReactDOM.findDOMNode(this)
-      .getBoundingClientRect().top;
+    var fromTop = ReactDOM.findDOMNode(this).getBoundingClientRect().top;
 
-    if ((isDisabled && selectionType === 'preselected' && !isPreSelected) || (isDisabled && selectionType === 'not_preselected' && isPreSelected) || (beforeLastDisabled && !isPreSelected) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected')) {
-      onClear();
-  } else if (typeof onTouchEnd === 'function') {
-      onTouchEnd(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
+    if (typeof onSelectionEnd === 'function') {
+        onSelectionEnd(e, parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
     }
-  };
+  }
 
   getDayColors = (date, preselected) => {
       if (!preselected || !preselected.length) {
@@ -145,9 +128,10 @@ export default class Day extends PureComponent {
           [styles.preselecteddisabled]: isPreSelected && selectionType === 'not_preselected',
           [styles.preselectedenabled]: !isPreSelected && selectionType === 'preselected'
       }, className)}
-        onClick={this.handleClick}
-        onTouchStart={this.handleTouchStart}
-        onTouchEnd={this.handleTouchEnd}
+        onMouseDown={this.onSelectionStart}
+        onMouseUp={this.onSelectionEnd}
+        onTouchStart={this.onSelectionStart}
+        onTouchEnd={this.onSelectionEnd}
         data-date={date}
         data-disabled={isDisabled || (beforeLastDisabled && !isPreSelected) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected') ? true : false}
         {...handlers}

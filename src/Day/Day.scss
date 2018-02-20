@@ -42,10 +42,6 @@
 
   -webkit-tap-highlight-color: transparent;
 
-  /*&.disabled {
-      color: red !important;
-  }*/
-
   .vacationCircle {
       position: absolute;
       bottom: 17px;
@@ -55,13 +51,6 @@
       width: 8px;
       border-radius: 50%;
       background-color: $selectionBorderColor;
-  }
-
-  &.disabled {
-
-      .vacationCircle {
-        //display: none;
-      }
   }
 
   &.beforelast {
@@ -101,7 +90,6 @@
             height: $rowHeight - 18px;
             margin-top: -0.5 * ($rowHeight - 18px);
             margin-left: 0;
-            //background: #ca569a;
             z-index: -1;
         }
     }
@@ -117,7 +105,6 @@
             height: $rowHeight - 18px;
             margin-top: -0.5 * ($rowHeight - 18px);
             margin-left: 0;
-            //background: #ca569a;;
             z-index: -1;
         }
     }
@@ -132,7 +119,6 @@
             height: $rowHeight - 18px;
             margin-top: -0.5 * ($rowHeight - 18px);
             margin-left: 0;
-            //background: #ca569a;
             z-index: -1;
         }
     }
@@ -1032,14 +1018,6 @@
           z-index: -1;
           border-radius: 50%;
       }
-
-      /*&.disabled > span {
-          color: $textColorDisabled;
-      }*/
-
-      &.disabled:before {
-
-      }
   }
   &.selected {
     position: relative;
@@ -1091,15 +1069,9 @@
       .vacationCircle {
           background-color: #FFFFFF;
       }
-
-      &:before {
-          //content: attr(data-style);
-      }
-
   }
 
   &.weekend, &.preselecteddisabled, &.preselectedenabled, &.beforelast.disabled, &.holiday {
-      color: $textColorDisabled;
       box-shadow: none;
       cursor: not-allowed;
       border: 0;
@@ -1145,13 +1117,6 @@
         }
     }
   }
-
-  /*&.disabled {
-    //color: $textColorDisabled;
-    box-shadow: none;
-    cursor: not-allowed;
-}*/
-
 }
 
 /*
@@ -1248,13 +1213,6 @@
                   border-radius: 0;
               }
           }
-
-          /*&.disabled {
-              border: 0;
-              .selection {
-                  border-radius: 0;
-              }
-          }*/
       }
 
       &.prevdisabled {
@@ -1273,16 +1231,6 @@
                   border-radius: 0;
               }
           }
-
-          /*&.disabled {
-              border: 0;
-              border-radius: 0;
-
-              .selection {
-                  border: 0;
-                  border-radius: 0;
-              }
-          }*/
       }
   }
   &.end {
@@ -1329,21 +1277,10 @@
                 border-radius: 0;
             }
         }
-
-        /*&.disabled {
-            border: 0;
-            border-radius: 0;
-
-            .selection {
-                border: 0;
-                border-radius: 0;
-            }
-        }*/
     }
   }
 
   &.weekend, &.preselecteddisabled, &.preselectedenabled, &.beforelast.disabled, &.holiday {
-      color: $textColorDisabled;
       box-shadow: none;
       cursor: not-allowed;
       border: 0;
@@ -1385,20 +1322,4 @@
         }
     }
   }
-  /*&.disabled {
-      border: 0;
-      border-radius: 0;
-
-      .selection {
-          border: 0;
-          border-radius: 0;
-      }
-    .selection.selection {
-        border: 0;
-
-      .day, .month {
-        color: $textColorDisabled;
-      }
-    }
-}*/
 }
