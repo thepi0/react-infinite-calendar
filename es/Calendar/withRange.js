@@ -158,8 +158,8 @@ var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDa
         /* eslint-disable sort-keys */
         passThrough: _extends({}, passThrough, {
             Day: {
-                onClear: function onClear(date) {
-                    return clearSelect(date, _extends({ selected: selected }, props));
+                onClear: function onClear() {
+                    return clearSelection(_extends({ selected: selected }, props));
                 },
                 onSelectionStart: function onSelectionStart(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop) {
                     return handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, _extends({ selected: selected, preselected: preselected }, props));
@@ -175,6 +175,9 @@ var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDa
                         return handleSelectionMove(e, _extends({ selected: selected, preselected: preselected }, props));
                     } : null
                 }
+            },
+            clearSelections: function clearSelections() {
+                return clearSelection(_extends({ selected: selected }, props));
             },
             selectionArray: props.selectionArray,
             preselectedDates: props.preselectedDates,
@@ -351,9 +354,8 @@ function getSortedSelection(_ref4) {
     return isBefore(start_time, end_time) ? { start_time: start_time, end_time: end_time } : { start_time: end_time, end_time: start_time };
 }
 
-function clearSelect(date, _ref5) {
-    var onSelect = _ref5.onSelect,
-        selected = _ref5.selected,
+function clearSelection(_ref5) {
+    var selected = _ref5.selected,
         setSelectionType = _ref5.setSelectionType,
         setSelectionDone = _ref5.setSelectionDone,
         setSelectionStart = _ref5.setSelectionStart,
