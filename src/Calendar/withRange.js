@@ -22,6 +22,7 @@ let preSelectedSelected = false;
 let touchDate = null;
 let selectedArrayFinal = [];
 let lastSelectionBeforeLastDisabled = false;
+let latestUpdate = new Date();
 
 export const EVENT_TYPE = {
   END: 3,
@@ -336,11 +337,13 @@ function clearSelection({selected, setSelectionType, setSelectionDone, setSelect
     setSelectionArray([]);
 }
 
-function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, {onSelect, selected, preselected, preselectedDates, setPreselectedDates, selectionType, setSelectionType, selectionDone, setSelectionDone, selectionStart, setSelectionStart, setSelectionArray, setUpdateFromController, setStopPropagation}) {
+function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, {onSelect, lastUpdate, selected, preselected, preselectedDates, setPreselectedDates, selectionType, setSelectionType, selectionDone, setSelectionDone, selectionStart, setSelectionStart, setSelectionArray, setUpdateFromController, setStopPropagation}) {
     setStopPropagation(false);
     touchDate = date;
 
-    if (lastSelectionBeforeLastDisabled) {
+    console.log(lastUpdate);
+
+    if (lastSelectionBeforeLastDisabled || (latestUpdate !== lastUpdate)) {
         selected = null;
         selectedArrayFinal = [];
         setSelectionStart(null);
