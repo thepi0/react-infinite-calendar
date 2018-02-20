@@ -61,6 +61,7 @@ var Day = function (_PureComponent) {
       var _this$props = _this.props,
           date = _this$props.date,
           beforeLastDisabled = _this$props.beforeLastDisabled,
+          isWeekend = _this$props.isWeekend,
           isDisabled = _this$props.isDisabled,
           isPreSelected = _this$props.isPreSelected,
           vacationObject = _this$props.vacationObject,
@@ -72,7 +73,7 @@ var Day = function (_PureComponent) {
 
       var fromTop = ReactDOM.findDOMNode(_this).getBoundingClientRect().top;
 
-      if (vacationObject.vacation === true && vacationObject.vacation_type === 'holiday' || isDisabled && selectionType === 'preselected' && !isPreSelected || isDisabled && selectionType === 'not_preselected' && isPreSelected || beforeLastDisabled && !isPreSelected || !isPreSelected && selectionType === 'preselected' || isPreSelected && selectionType === 'not_preselected') {
+      if (isWeekend || vacationObject.vacation === true && vacationObject.vacation_type === 'holiday' || isDisabled && selectionType === 'preselected' && !isPreSelected || isDisabled && selectionType === 'not_preselected' && isPreSelected || beforeLastDisabled && !isPreSelected || !isPreSelected && selectionType === 'preselected' || isPreSelected && selectionType === 'not_preselected') {
         onClear();
       } else if (typeof onSelectionStart === 'function') {
         onSelectionStart(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
