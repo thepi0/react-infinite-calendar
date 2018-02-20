@@ -64,6 +64,7 @@ var preSelectedSelected = false;
 var touchDate = null;
 var selectedArrayFinal = [];
 var lastSelectionBeforeLastDisabled = false;
+var latestUpdate = new Date();
 
 export var EVENT_TYPE = {
     END: 3,
@@ -374,6 +375,7 @@ function clearSelection(_ref5) {
 
 function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, _ref6) {
     var onSelect = _ref6.onSelect,
+        lastUpdate = _ref6.lastUpdate,
         selected = _ref6.selected,
         preselected = _ref6.preselected,
         preselectedDates = _ref6.preselectedDates,
@@ -391,7 +393,9 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
     setStopPropagation(false);
     touchDate = date;
 
-    if (lastSelectionBeforeLastDisabled) {
+    console.log(lastUpdate);
+
+    if (lastSelectionBeforeLastDisabled || latestUpdate !== lastUpdate) {
         selected = null;
         selectedArrayFinal = [];
         setSelectionStart(null);
