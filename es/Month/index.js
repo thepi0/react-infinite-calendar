@@ -206,6 +206,7 @@ var Month = function (_PureComponent) {
                     selected: selected,
                     selectionArray: selectionArray,
                     preselected: preselected,
+                    lastUpdate: lastUpdate,
                     nextDisabled: nextDisabled,
                     prevDisabled: prevDisabled,
                     isDisabled: isDisabled,

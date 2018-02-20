@@ -359,6 +359,7 @@ var Calendar = function (_Component) {
         scrollDate = _props.scrollDate,
         selected = _props.selected,
         preselected = _props.preselected,
+        lastUpdate = _props.lastUpdate,
         tabIndex = _props.tabIndex,
         width = _props.width,
         YearsComponent = _props.YearsComponent;
