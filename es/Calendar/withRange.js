@@ -353,7 +353,8 @@ function getSortedSelection(_ref4) {
 }
 
 function clearSelection(_ref5) {
-    var selected = _ref5.selected,
+    var onSelect = _ref5.onSelect,
+        selected = _ref5.selected,
         setSelectionType = _ref5.setSelectionType,
         setSelectionDone = _ref5.setSelectionDone,
         setSelectionStart = _ref5.setSelectionStart,
@@ -368,6 +369,16 @@ function clearSelection(_ref5) {
     setSelectionType('none');
     setSelectionDone(false);
     setSelectionArray([]);
+    onSelect({
+        eventType: EVENT_TYPE.END,
+        start_time: null,
+        end_time: null,
+        before_last: false,
+        selected_array: [],
+        selections: null,
+        date_offset: 0,
+        eventProp: 'clear'
+    });
 }
 
 function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, _ref6) {
@@ -410,18 +421,16 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
         if (selectionType === 'preselected') {
             selectedArrayFinal.splice(includeDate, 1);
             setUpdateFromController(new Date());
-            onSelect(_extends({
-                eventType: EVENT_TYPE.END
-            }, getSortedSelection({
+            onSelect({
+                eventType: EVENT_TYPE.END,
                 start_time: null,
-                end_time: null
-            }), {
+                end_time: null,
                 before_last: false,
                 selected_array: selectedArrayFinal,
                 selections: getPreselectedWithinRange(selectedArrayFinal, preselected),
                 date_offset: fromTop,
-                eventProp: 'click'
-            }));
+                eventProp: 'remove'
+            });
             if (!selectedArrayFinal.length) {
                 selected = null;
                 selectedArrayFinal = [];
@@ -443,7 +452,7 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
                 selected_array: selectedArrayFinal,
                 selections: null,
                 date_offset: fromTop,
-                eventProp: 'click'
+                eventProp: 'remove'
             });
             if (!selectedArrayFinal.length) {
                 selected = null;
