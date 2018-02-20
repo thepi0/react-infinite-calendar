@@ -147,7 +147,7 @@ export const withRange = compose(
     passThrough: {
       ...passThrough,
       Day: {
-        onClear: (date) => clearSelect(date, {selected, ...props}),
+        onClear: () => clearSelection({selected, ...props}),
         onSelectionStart: (date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop) => handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, {selected, preselected, ...props}),
         onSelectionEnd: (e, date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop) => handleSelectionEnd(e, date, beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop, {selected, preselected, ...props}),
         handlers: {
@@ -159,6 +159,7 @@ export const withRange = compose(
             : null,
         },
       },
+      clearSelections: () => clearSelection({selected, ...props}),
       selectionArray: props.selectionArray,
       preselectedDates: props.preselectedDates,
       selectionType: props.selectionType,
@@ -324,7 +325,7 @@ function getSortedSelection({start_time, end_time}) {
     : {start_time: end_time, end_time: start_time};
 }
 
-function clearSelect(date, {onSelect, selected, setSelectionType, setSelectionDone, setSelectionStart, setSelectionArray, setStopPropagation}) {
+function clearSelection({selected, setSelectionType, setSelectionDone, setSelectionStart, setSelectionArray, setStopPropagation}) {
     setStopPropagation(true);
     selected = null;
     touchDate = null;
