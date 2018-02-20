@@ -177,9 +177,6 @@ var withRange = _compose(withDefaultProps, _withState('scrollDate', 'setScrollDa
                     } : null
                 }
             },
-            clearSelections: function clearSelections() {
-                return clearSelection(_extends({ selected: selected }, props));
-            },
             selectionArray: props.selectionArray,
             preselectedDates: props.preselectedDates,
             selectionType: props.selectionType,
@@ -393,8 +390,6 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
     setStopPropagation(false);
     touchDate = date;
 
-    console.log(lastUpdate);
-
     if (lastSelectionBeforeLastDisabled || latestUpdate !== lastUpdate) {
         selected = null;
         selectedArrayFinal = [];
@@ -403,6 +398,7 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
         setSelectionDone(false);
         setSelectionArray([]);
         lastSelectionBeforeLastDisabled = false;
+        latestUpdate = lastUpdate;
     }
 
     preselected = preselected && preselected[0] ? preselected : [];
