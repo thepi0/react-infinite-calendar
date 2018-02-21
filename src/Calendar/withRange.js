@@ -472,7 +472,7 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
     }
 }
 
-function handleSelectionMove(e, {onSelect, selectionStart, setSelectionArray, testSelectionStart, testSetSelectionStart, testSelectionEnd, testSetSelectionEnd, testSetSelectedArray, stopPropagation, selectionType, setUpdateFromController, setSelectionStart, setSelectionType, setSelectionDone}) {
+function handleSelectionMove(e, {onSelect, preselected, selectionStart, setSelectionArray, testSelectionStart, testSetSelectionStart, testSelectionEnd, testSetSelectionEnd, testSetSelectedArray, stopPropagation, selectionType, setUpdateFromController, setSelectionStart, setSelectionType, setSelectionDone}) {
 
     if (stopPropagation) { return; }
 
@@ -498,6 +498,8 @@ function handleSelectionMove(e, {onSelect, selectionStart, setSelectionArray, te
 
         if (includeDate >= 0) {
 
+            preselected = preselected && preselected[0] ? preselected : [];
+
             selectedArrayFinal.splice(includeDate, 1);
 
             setUpdateFromController(new Date());
@@ -508,6 +510,18 @@ function handleSelectionMove(e, {onSelect, selectionStart, setSelectionArray, te
                 setSelectionArray([]);
                 lastSelectionBeforeLastDisabled = false;
             }
+
+            onSelect({
+                eventType:EVENT_TYPE.END,
+                start_time: null,
+                end_time: null,
+                before_last: false,
+                selections: null,
+                selections: getPreselectedWithinRange(selectedArrayFinal, preselected),
+                selected_array: selectedArrayFinal,
+                date_offset: null,
+                eventProp: 'end'
+            });
 
             touchDate = targetDate;
         }
@@ -562,7 +576,6 @@ function handleSelectionEnd(e, date, beforeLastDisabled, isPreSelected, original
             start_time: null,
             end_time: null,
             before_last: false,
-            selections: null,
             selections: getPreselectedWithinRange(selectedArrayFinal, preselected),
             selected_array: selectedArrayFinal,
             date_offset: fromTop,
