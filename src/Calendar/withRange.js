@@ -23,6 +23,7 @@ let touchDate = null;
 let selectedArrayFinal = [];
 let lastSelectionBeforeLastDisabled = false;
 let latestUpdate = new Date();
+let savedSelectionType = null;
 
 export const EVENT_TYPE = {
   END: 3,
@@ -359,6 +360,7 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
         setSelectionArray([]);
         lastSelectionBeforeLastDisabled = false;
         latestUpdate = lastUpdate;
+        savedSelectionType = null;
     }
 
     preselected = preselected && preselected[0] ? preselected : [];
@@ -376,7 +378,25 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
 
     let includeDate = selectedArrayFinal.indexOf(format(date, 'YYYY-MM-DD'));
 
+    /*if (includeDate === -1 && !beforeLastDisabled) {
+        selected = null;
+        selectedArrayFinal = [];
+        setSelectionStart(null);
+        setSelectionType('none');
+        setSelectionDone(false);
+        setSelectionArray([]);
+        lastSelectionBeforeLastDisabled = false;
+        selectedArrayFinal = selectedArrayFinal.concat(format(date, 'YYYY-MM-DD'));
+
+        if (!isPreSelected) {
+            setSelectionType('not_preselected');
+        } else {
+            setSelectionType('preselected');
+        }
+    }*/
+
     if (includeDate !== -1 && !beforeLastDisabled) {
+        savedSelectionType = selectionType;
         setSelectionType('selected');
         selectedArrayFinal.splice(includeDate, 1);
 
@@ -614,6 +634,8 @@ function handleSelectionEnd(e, date, beforeLastDisabled, isPreSelected, original
             date_offset: fromTop,
             eventProp: 'end'
         });
+
+        setSelectionType(savedSelectionType);
     } else if (selectionType === 'preselected') {
         let daysArray = [];
         let daysBetween = isBefore(date, selectionStart) ? eachDay(date, selectionStart, 1) : eachDay(selectionStart, date, 1);
