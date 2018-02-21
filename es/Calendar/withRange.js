@@ -430,6 +430,8 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
     var includeDate = selectedArrayFinal.indexOf(format(date, 'YYYY-MM-DD'));
 
     if (includeDate !== -1 && !beforeLastDisabled) {
+        var _onSelect;
+
         setSelectionType('selected');
         selectedArrayFinal.splice(includeDate, 1);
 
@@ -455,6 +457,14 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
             setUpdateFromController(new Date());
             return;
         }
+
+        onSelect((_onSelect = {
+            eventType: EVENT_TYPE.END,
+            start_time: null,
+            end_time: null,
+            before_last: false,
+            selections: null
+        }, _onSelect['selections'] = getPreselectedWithinRange(selectedArrayFinal, preselected), _onSelect.selected_array = selectedArrayFinal, _onSelect.date_offset = null, _onSelect.eventProp = 'end', _onSelect));
 
         setUpdateFromController(new Date());
     }
@@ -569,7 +579,7 @@ function handleSelectionMove(e, _ref7) {
         var includeDate = selectedArrayFinal.indexOf(thisDate);
 
         if (includeDate >= 0) {
-            var _onSelect;
+            var _onSelect2;
 
             preselected = preselected && preselected[0] ? preselected : [];
 
@@ -584,13 +594,13 @@ function handleSelectionMove(e, _ref7) {
                 lastSelectionBeforeLastDisabled = false;
             }
 
-            onSelect((_onSelect = {
+            onSelect((_onSelect2 = {
                 eventType: EVENT_TYPE.END,
                 start_time: null,
                 end_time: null,
                 before_last: false,
                 selections: null
-            }, _onSelect['selections'] = getPreselectedWithinRange(selectedArrayFinal, preselected), _onSelect.selected_array = selectedArrayFinal, _onSelect.date_offset = null, _onSelect.eventProp = 'end', _onSelect));
+            }, _onSelect2['selections'] = getPreselectedWithinRange(selectedArrayFinal, preselected), _onSelect2.selected_array = selectedArrayFinal, _onSelect2.date_offset = null, _onSelect2.eventProp = 'end', _onSelect2));
 
             touchDate = targetDate;
         }
