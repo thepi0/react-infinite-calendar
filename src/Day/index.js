@@ -11,7 +11,7 @@ export default class Day extends PureComponent {
 
     var fromTop = ReactDOM.findDOMNode(this).getBoundingClientRect().top;
 
-    if (isWeekend || (vacationObject.vacation === true && vacationObject.vacation_type === 'holiday') || (isDisabled && selectionType === 'preselected' && !isPreSelected) || (isDisabled && selectionType === 'not_preselected' && isPreSelected) || (beforeLastDisabled && !isPreSelected) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected')) {
+    if (isWeekend || (beforeLastDisabled && !isPreSelected) || (vacationObject && vacationObject.vacation_type === 'holiday') || (selectionType === 'not_preselected' && isPreSelected && isDisabled) || (selectionType === 'preselected' && !isPreSelected && isDisabled) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected')) {
         onClear();
     } else if (typeof onSelectionStart === 'function') {
         onSelectionStart(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
