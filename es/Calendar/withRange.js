@@ -524,6 +524,7 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
 
 function handleSelectionMove(e, _ref7) {
     var onSelect = _ref7.onSelect,
+        preselected = _ref7.preselected,
         selectionStart = _ref7.selectionStart,
         setSelectionArray = _ref7.setSelectionArray,
         testSelectionStart = _ref7.testSelectionStart,
@@ -568,6 +569,9 @@ function handleSelectionMove(e, _ref7) {
         var includeDate = selectedArrayFinal.indexOf(thisDate);
 
         if (includeDate >= 0) {
+            var _onSelect;
+
+            preselected = preselected && preselected[0] ? preselected : [];
 
             selectedArrayFinal.splice(includeDate, 1);
 
@@ -579,6 +583,14 @@ function handleSelectionMove(e, _ref7) {
                 setSelectionArray([]);
                 lastSelectionBeforeLastDisabled = false;
             }
+
+            onSelect((_onSelect = {
+                eventType: EVENT_TYPE.END,
+                start_time: null,
+                end_time: null,
+                before_last: false,
+                selections: null
+            }, _onSelect['selections'] = getPreselectedWithinRange(selectedArrayFinal, preselected), _onSelect.selected_array = selectedArrayFinal, _onSelect.date_offset = null, _onSelect.eventProp = 'end', _onSelect));
 
             touchDate = targetDate;
         }
@@ -639,21 +651,22 @@ function handleSelectionEnd(e, date, beforeLastDisabled, isPreSelected, original
     preselected = preselected && preselected[0] ? preselected : [];
 
     if (selectionType === 'selected') {
-        var _onSelect;
-
         setSelectionArray(selectedArrayFinal);
         selected = null;
         setSelectionStart(null);
         setSelectionDone(true);
         setSelectionType('none');
 
-        onSelect((_onSelect = {
+        onSelect({
             eventType: EVENT_TYPE.END,
             start_time: null,
             end_time: null,
             before_last: false,
-            selections: null
-        }, _onSelect['selections'] = getPreselectedWithinRange(selectedArrayFinal, preselected), _onSelect.selected_array = selectedArrayFinal, _onSelect.date_offset = fromTop, _onSelect.eventProp = 'end', _onSelect));
+            selections: getPreselectedWithinRange(selectedArrayFinal, preselected),
+            selected_array: selectedArrayFinal,
+            date_offset: fromTop,
+            eventProp: 'end'
+        });
     } else if (selectionType === 'preselected') {
         var daysArray = [];
         var daysBetween = isBefore(date, selectionStart) ? eachDay(date, selectionStart, 1) : eachDay(selectionStart, date, 1);
