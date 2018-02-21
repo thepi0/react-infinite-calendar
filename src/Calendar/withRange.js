@@ -403,6 +403,18 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
             return;
         }
 
+        onSelect({
+            eventType:EVENT_TYPE.END,
+            start_time: null,
+            end_time: null,
+            before_last: false,
+            selections: null,
+            selections: getPreselectedWithinRange(selectedArrayFinal, preselected),
+            selected_array: selectedArrayFinal,
+            date_offset: null,
+            eventProp: 'end'
+        });
+
         setUpdateFromController(new Date());
     }
 
