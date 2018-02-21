@@ -25,11 +25,11 @@ import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 var styles = {
     'root': 'Cal__Day__root',
+    'disabled': 'Cal__Day__disabled',
     'vacationCircle': 'Cal__Day__vacationCircle',
     'beforelast': 'Cal__Day__beforelast',
     'weekend': 'Cal__Day__weekend',
     'holiday': 'Cal__Day__holiday',
-    'disabled': 'Cal__Day__disabled',
     'preselected': 'Cal__Day__preselected',
     'nextselected': 'Cal__Day__nextselected',
     'prevselected': 'Cal__Day__prevselected',
@@ -361,6 +361,7 @@ function clearSelection(_ref5) {
         setSelectionArray = _ref5.setSelectionArray,
         setStopPropagation = _ref5.setStopPropagation;
 
+    console.log('clearSelection');
     setStopPropagation(true);
     selected = null;
     touchDate = null;
@@ -401,7 +402,13 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
     setStopPropagation(false);
     touchDate = date;
 
+    console.log('handleSelectionStart');
+
+    console.log(beforeLastDisabled);
+    console.log(isPreSelected);
+
     if (lastSelectionBeforeLastDisabled || latestUpdate !== lastUpdate) {
+        console.log('selection start - last selection was beforelast');
         selected = null;
         selectedArrayFinal = [];
         setSelectionStart(null);
@@ -417,6 +424,7 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
     var includeDate = selectedArrayFinal.indexOf(format(date, 'YYYY-MM-DD'));
 
     if (includeDate !== -1 && !beforeLastDisabled) {
+        console.log('selection start - already selected');
         setStopPropagation(true);
         if (selectionType === 'preselected') {
             selectedArrayFinal.splice(includeDate, 1);
@@ -480,8 +488,12 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
         setSelectionType('preselected');
     }
 
-    if (beforeLastDisabled) {
-
+    if (beforeLastDisabled && !isPreSelected) {
+        console.log('selection start - before last and is not preselected');
+        setStopPropagation(true);
+        return;
+    } else if (beforeLastDisabled && isPreSelected) {
+        console.log('selection start - before last and is preselected');
         setStopPropagation(true);
         selected = null;
         selectedArrayFinal = [];
@@ -507,7 +519,7 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
         lastSelectionBeforeLastDisabled = true;
         setUpdateFromController(new Date());
     } else if (selectionStart) {
-
+        console.log('selection start - has selection start');
         if (selectionType === 'preselected') {
             setSelectionStart(date);
             onSelect({
@@ -526,6 +538,7 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
             });
         }
     } else {
+        console.log('selection start - else');
         onSelect({
             eventType: EVENT_TYPE.START,
             start_time: date,
@@ -556,6 +569,8 @@ function handleSelectionMove(e, _ref7) {
 
     e.preventDefault();
 
+    console.log('handleSelectionMove');
+
     if (stopPropagation) {
         return;
     }
@@ -581,7 +596,9 @@ function handleSelectionMove(e, _ref7) {
         return;
     }
 
-    if (isDisabled != 'true') {
+    if (isDisabled !== 'true') {
+
+        console.log('selection move - gets through');
 
         touchDate = targetDate;
 
@@ -614,6 +631,8 @@ function handleSelectionEnd(e, date, beforeLastDisabled, isPreSelected, original
         stopPropagation = _ref8.stopPropagation;
 
 
+    console.log('handleSelectionEnd');
+
     var target = void 0;
     if (e.changedTouches && e.changedTouches[0]) {
         target = document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY);
@@ -633,11 +652,9 @@ function handleSelectionEnd(e, date, beforeLastDisabled, isPreSelected, original
         return;
     }
 
-    if (!selectedArrayFinal) {
-        return;
-    }
-
     preselected = preselected && preselected[0] ? preselected : [];
+
+    console.log('selection end - gets through');
 
     if (selectionType === 'preselected') {
         var daysArray = [];
