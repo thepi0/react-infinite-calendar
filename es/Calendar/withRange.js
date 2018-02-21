@@ -660,6 +660,27 @@ function handleSelectionEnd(e, date, beforeLastDisabled, isPreSelected, original
 
     preselected = preselected && preselected[0] ? preselected : [];
 
+    if (beforeLastDisabled) {
+        setSelectionArray([]);
+        selected = null;
+        setSelectionStart(null);
+        setSelectionDone(true);
+        setSelectionType('none');
+
+        onSelect({
+            eventType: EVENT_TYPE.END,
+            start_time: null,
+            end_time: null,
+            before_last: false,
+            selections: getPreselectedWithinRange(selectedArrayFinal, preselected),
+            selected_array: [],
+            date_offset: null,
+            eventProp: 'end'
+        });
+
+        return;
+    }
+
     if (selectionType === 'selected') {
         setSelectionArray(selectedArrayFinal);
         selected = null;
