@@ -414,59 +414,6 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
 
     preselected = preselected && preselected[0] ? preselected : [];
 
-    var includeDate = selectedArrayFinal.indexOf(format(date, 'YYYY-MM-DD'));
-
-    if (includeDate !== -1 && !beforeLastDisabled) {
-        setStopPropagation(true);
-        if (selectionType === 'preselected') {
-            selectedArrayFinal.splice(includeDate, 1);
-            setUpdateFromController(new Date());
-            onSelect({
-                eventType: EVENT_TYPE.END,
-                start_time: null,
-                end_time: null,
-                before_last: false,
-                selected_array: selectedArrayFinal,
-                selections: getPreselectedWithinRange(selectedArrayFinal, preselected),
-                date_offset: fromTop,
-                eventProp: 'remove'
-            });
-            if (!selectedArrayFinal.length) {
-                selected = null;
-                selectedArrayFinal = [];
-                setSelectionStart(null);
-                setSelectionType('none');
-                setSelectionDone(false);
-                setSelectionArray([]);
-                lastSelectionBeforeLastDisabled = false;
-            }
-            return;
-        } else {
-            selectedArrayFinal.splice(includeDate, 1);
-            setUpdateFromController(new Date());
-            onSelect({
-                eventType: EVENT_TYPE.END,
-                start_time: null,
-                end_time: null,
-                before_last: false,
-                selected_array: selectedArrayFinal,
-                selections: null,
-                date_offset: fromTop,
-                eventProp: 'remove'
-            });
-            if (!selectedArrayFinal.length) {
-                selected = null;
-                selectedArrayFinal = [];
-                setSelectionStart(null);
-                setSelectionType('none');
-                setSelectionDone(false);
-                setSelectionArray([]);
-                lastSelectionBeforeLastDisabled = false;
-            }
-            return;
-        }
-    }
-
     if (!isPreSelected) {
         if (preselected && preselected[0]) {
             var returnable = preselected.map(function (dateObj) {
@@ -478,6 +425,38 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
     } else {
         setPreselectedDates([]);
         setSelectionType('preselected');
+    }
+
+    var includeDate = selectedArrayFinal.indexOf(format(date, 'YYYY-MM-DD'));
+
+    if (includeDate !== -1 && !beforeLastDisabled) {
+        setSelectionType('selected');
+        selectedArrayFinal.splice(includeDate, 1);
+
+        if (!selectedArrayFinal.length) {
+            selectedArrayFinal = [];
+            setSelectionStart(null);
+            setSelectionType('none');
+            setSelectionDone(true);
+            setSelectionArray([]);
+
+            onSelect({
+                eventType: EVENT_TYPE.END,
+                start_time: null,
+                end_time: null,
+                before_last: false,
+                selected_array: [],
+                selections: { data: [], days_count: 0 },
+                date_offset: 0,
+                eventProp: 'clear'
+            });
+
+            setStopPropagation(true);
+            setUpdateFromController(new Date());
+            return;
+        }
+
+        setUpdateFromController(new Date());
     }
 
     if (beforeLastDisabled && !isPreSelected) {
@@ -546,16 +525,19 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
 function handleSelectionMove(e, _ref7) {
     var onSelect = _ref7.onSelect,
         selectionStart = _ref7.selectionStart,
-        preselected = _ref7.preselected,
         setSelectionArray = _ref7.setSelectionArray,
         testSelectionStart = _ref7.testSelectionStart,
         testSetSelectionStart = _ref7.testSetSelectionStart,
         testSelectionEnd = _ref7.testSelectionEnd,
         testSetSelectionEnd = _ref7.testSetSelectionEnd,
         testSetSelectedArray = _ref7.testSetSelectedArray,
-        stopPropagation = _ref7.stopPropagation;
+        stopPropagation = _ref7.stopPropagation,
+        selectionType = _ref7.selectionType,
+        setUpdateFromController = _ref7.setUpdateFromController,
+        setSelectionStart = _ref7.setSelectionStart,
+        setSelectionType = _ref7.setSelectionType,
+        setSelectionDone = _ref7.setSelectionDone;
 
-    e.preventDefault();
 
     if (stopPropagation) {
         return;
@@ -582,7 +564,27 @@ function handleSelectionMove(e, _ref7) {
         return;
     }
 
-    if (isDisabled !== 'true') {
+    if (selectionType === 'selected') {
+        var includeDate = selectedArrayFinal.indexOf(thisDate);
+
+        if (includeDate >= 0) {
+
+            selectedArrayFinal.splice(includeDate, 1);
+
+            setUpdateFromController(new Date());
+            if (!selectedArrayFinal.length) {
+                selectedArrayFinal = [];
+                setSelectionStart(null);
+                setSelectionDone(false);
+                setSelectionArray([]);
+                lastSelectionBeforeLastDisabled = false;
+            }
+
+            touchDate = targetDate;
+        }
+
+        return;
+    } else if (isDisabled !== 'true') {
 
         touchDate = targetDate;
 
@@ -636,7 +638,23 @@ function handleSelectionEnd(e, date, beforeLastDisabled, isPreSelected, original
 
     preselected = preselected && preselected[0] ? preselected : [];
 
-    if (selectionType === 'preselected') {
+    if (selectionType === 'selected') {
+        var _onSelect;
+
+        setSelectionArray(selectedArrayFinal);
+        selected = null;
+        setSelectionStart(null);
+        setSelectionDone(true);
+        setSelectionType('none');
+
+        onSelect((_onSelect = {
+            eventType: EVENT_TYPE.END,
+            start_time: null,
+            end_time: null,
+            before_last: false,
+            selections: null
+        }, _onSelect['selections'] = getPreselectedWithinRange(selectedArrayFinal, preselected), _onSelect.selected_array = selectedArrayFinal, _onSelect.date_offset = fromTop, _onSelect.eventProp = 'end', _onSelect));
+    } else if (selectionType === 'preselected') {
         var daysArray = [];
         var daysBetween = isBefore(date, selectionStart) ? eachDay(date, selectionStart, 1) : eachDay(selectionStart, date, 1);
         for (var i = 0, length = daysBetween.length; i < length; ++i) {
@@ -721,7 +739,7 @@ function handleSelectionEnd(e, date, beforeLastDisabled, isPreSelected, original
             start_time: null,
             end_time: null,
             before_last: false,
-            selections: null,
+            selections: { data: [], days_count: selectedArrayFinal.length },
             selected_array: selectedArrayFinal,
             date_offset: fromTop,
             eventProp: 'end'
