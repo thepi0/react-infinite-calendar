@@ -65,6 +65,7 @@ var touchDate = null;
 var selectedArrayFinal = [];
 var lastSelectionBeforeLastDisabled = false;
 var latestUpdate = new Date();
+var savedSelectionType = null;
 
 export var EVENT_TYPE = {
     END: 3,
@@ -410,6 +411,7 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
         setSelectionArray([]);
         lastSelectionBeforeLastDisabled = false;
         latestUpdate = lastUpdate;
+        savedSelectionType = null;
     }
 
     preselected = preselected && preselected[0] ? preselected : [];
@@ -429,9 +431,26 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
 
     var includeDate = selectedArrayFinal.indexOf(format(date, 'YYYY-MM-DD'));
 
+    /*if (includeDate === -1 && !beforeLastDisabled) {
+        selected = null;
+        selectedArrayFinal = [];
+        setSelectionStart(null);
+        setSelectionType('none');
+        setSelectionDone(false);
+        setSelectionArray([]);
+        lastSelectionBeforeLastDisabled = false;
+        selectedArrayFinal = selectedArrayFinal.concat(format(date, 'YYYY-MM-DD'));
+         if (!isPreSelected) {
+            setSelectionType('not_preselected');
+        } else {
+            setSelectionType('preselected');
+        }
+    }*/
+
     if (includeDate !== -1 && !beforeLastDisabled) {
         var _onSelect;
 
+        savedSelectionType = selectionType;
         setSelectionType('selected');
         selectedArrayFinal.splice(includeDate, 1);
 
@@ -698,6 +717,8 @@ function handleSelectionEnd(e, date, beforeLastDisabled, isPreSelected, original
             date_offset: fromTop,
             eventProp: 'end'
         });
+
+        setSelectionType(savedSelectionType);
     } else if (selectionType === 'preselected') {
         var daysArray = [];
         var daysBetween = isBefore(date, selectionStart) ? eachDay(date, selectionStart, 1) : eachDay(selectionStart, date, 1);
