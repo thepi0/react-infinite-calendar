@@ -112,7 +112,7 @@ export default class Day extends PureComponent {
       <li
         className={classNames(styles.root, {
           [styles.today]: isToday,
-          [styles.selected]: isSelected || isArraySelected,
+          [styles.selected]: (isSelected && selectionType !== 'selected') || isArraySelected,
           [styles.preselected]: isPreSelected,
           [styles.prevdisabled]: prevDisabled,
           [styles.nextdisabled]: nextDisabled,
