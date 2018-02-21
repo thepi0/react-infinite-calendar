@@ -45,8 +45,6 @@
   max-width: 70px;
   width: 70px;
   -webkit-tap-highlight-color: transparent; }
-  .Cal__Day__root.Cal__Day__disabled {
-    color: red !important; }
   .Cal__Day__root .Cal__Day__vacationCircle {
     position: absolute;
     bottom: 17px;
