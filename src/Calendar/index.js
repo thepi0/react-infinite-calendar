@@ -30,6 +30,7 @@ export const withDefaultProps = defaultProps({
   displayOptions: {},
   HeaderComponent: Header,
   scrollOffset: null,
+  miniCalendar: false,
   height: 500,
   keyboardSupport: true,
   max: new Date(2050, 11, 31),
@@ -92,7 +93,10 @@ export default class Calendar extends Component {
   		showWeekdays: PropTypes.bool,
       todayHelperRowOffset: PropTypes.number,
     }),
-    height: PropTypes.number,
+    height: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string
+    ]),
     keyboardSupport: PropTypes.bool,
     locale: PropTypes.shape({
       blank: PropTypes.string,
@@ -104,6 +108,7 @@ export default class Calendar extends Component {
       weekdays: PropTypes.arrayOf(PropTypes.string),
       weekStartsOn: PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6]),
     }),
+    miniCalendar: PropTypes.bool,
     max: PropTypes.instanceOf(Date),
     maxDate: PropTypes.instanceOf(Date),
     min: PropTypes.instanceOf(Date),
@@ -191,7 +196,7 @@ export default class Calendar extends Component {
     const minMonth = this._min.getMonth();
     const max = this._max.getFullYear();
     const maxMonth = this._max.getMonth();
-
+    
     const months = [];
     let year, month;
     for (year = min; year <= max; year++) {
@@ -323,6 +328,7 @@ export default class Calendar extends Component {
         scrollDate,
         selected,
         preselected,
+        miniCalendar,
         lastUpdate,
 		tabIndex,
 		width,
@@ -360,7 +366,7 @@ export default class Calendar extends Component {
       >
         <div className={styles.container.wrapper}>
           {showWeekdays &&
-            <Weekdays weekdays={locale.weekdays} weekStartsOn={locale.weekStartsOn} theme={theme} />
+            <Weekdays weekdays={locale.weekdays} miniCalendar={miniCalendar} weekStartsOn={locale.weekStartsOn} theme={theme} />
           }
           <div className={styles.container.listWrapper}>
             {showTodayHelper &&
@@ -388,7 +394,9 @@ export default class Calendar extends Component {
               isScrolling={isScrolling}
               locale={locale}
               maxDate={this._maxDate}
+              miniCalendar={miniCalendar}
               min={this._min}
+              max={this._max}
               minDate={this._minDate}
               months={this.months}
               onScroll={this.handleScroll}

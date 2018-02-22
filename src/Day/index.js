@@ -11,7 +11,7 @@ export default class Day extends PureComponent {
 
     var fromTop = ReactDOM.findDOMNode(this).getBoundingClientRect().top;
 
-    if (isWeekend || (beforeLastDisabled && !isPreSelected) || (vacationObject && vacationObject.vacation_type === 'holiday') || (selectionType === 'not_preselected' && isPreSelected && isDisabled) || (selectionType === 'preselected' && !isPreSelected && isDisabled) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected')) {
+    if (isWeekend || (beforeLastDisabled && !isPreSelected) || (vacationObject && vacationObject.vacation_type === 'holiday') || (vacationObject && vacationObject.vacation_type === 'no-reservation') || (selectionType === 'not_preselected' && isPreSelected && isDisabled) || (selectionType === 'preselected' && !isPreSelected && isDisabled) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected')) {
         onClear();
     } else if (typeof onSelectionStart === 'function') {
         onSelectionStart(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
@@ -118,6 +118,7 @@ export default class Day extends PureComponent {
           [styles.nextdisabled]: nextDisabled,
           [styles.disabled]: isDisabled || (beforeLastDisabled && !isPreSelected) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected'),
           [styles.holiday]: (vacationObject.vacation === true && vacationObject.vacation_type === 'holiday'),
+          [styles.noReservation]: (vacationObject.vacation === true && vacationObject.vacation_type === 'no-reservation'),
           [styles.enabled]: !isDisabled,
           [styles.beforelast]: beforeLastDisabled,
           [styles.purple]: (isPreSelected && colors.purple),

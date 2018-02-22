@@ -697,10 +697,10 @@ function handleSelectionEnd(e, date, beforeLastDisabled, isPreSelected, original
             }
         }
 
-        for (var y = 0, length = daysArray.length; y < length; ++y) {
-            for (var j = 0, length = originalDisabledDates.length; j < length; ++j) {
-                if (daysArray[y] === originalDisabledDates[j].date && originalDisabledDates[j].type === 'holiday') {
-                    daysArray.splice(y, 1);
+        for (var t = 0, lengthdays = daysArray.length; t < lengthdays; ++t) {
+            for (var j = 0, lengthdis = originalDisabledDates.length; j < lengthdis; ++j) {
+                if (daysArray[t] === originalDisabledDates[j].date && (originalDisabledDates[j].type === 'holiday' || originalDisabledDates[j].type === 'no-reservation')) {
+                    daysArray.splice(t, 1);
                     --y;
                 }
             }

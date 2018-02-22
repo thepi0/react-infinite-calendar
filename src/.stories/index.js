@@ -22,8 +22,8 @@ addDecorator(CenterDecorator);
 const today = new Date();
 
 
-storiesOf('Higher Order Components', module)
-  .add('With Range selection', () => (
+storiesOf('Calendar examples', module)
+  .add('With dragging range and reservations', () => (
     <InfiniteCalendar
       width={Math.min(window.innerWidth, 900)}
       height={Math.min(window.innerHeight, 900)}
@@ -184,4 +184,57 @@ storiesOf('Higher Order Components', module)
       onScrollEnd={(date) => console.log(date)}
       Component={withRange(Calendar)}
     />
+    ))
+    .add('With two weeks selection without reservations', () => (
+        <InfiniteCalendar
+          width="100%"
+          height={152}
+          miniCalendar={true}
+          min={new Date(2018, 1, 19)}
+          max={new Date(2018, 2, 2)}
+          rowHeight={74}
+          selected={null}
+          lastSelectableDate={null}
+          scrollOffset={0}
+          lastUpdate={new Date()}
+          autoFocus={false}
+          originalDisabledDates={[
+              {
+                  date: "2018-02-27",
+                  type: "no-reservation"
+              },{
+                  date: "2018-02-28",
+                  type: "no-reservation"
+              }
+          ]}
+          disabledDates={null}
+          disabledDays={[6,7]}
+          displayOptions={{
+              hideYearsOnSelect: false,
+              layout: 'portrait',
+              overscanMonthCount: 0,
+              showHeader: false,
+              showMonthsForYears: false,
+              showOverlay: false,
+              showTodayHelper: false,
+              showWeekdays: true,
+              todayHelperRowOffset: 4,
+          }}
+          locale={{
+              locale: require('date-fns/locale/fi'),
+              blank: 'Valitse päivämäärä(t)',
+              headerFormat: 'ddd, MMM Do',
+              todayLabel: {
+                long: 'Tänään',
+              },
+              weekdays: ['Su', 'Ma', 'Ti', 'Ke', 'To', 'Pe', 'La'],
+              weekStartsOn: 1,
+          }}
+          theme={{
+              weekdaysHeight: '64px'
+          }}
+          onSelect={(date) => console.log(date)}
+          onScrollEnd={(date) => console.log(date)}
+          Component={withRange(Calendar)}
+        />
   ));

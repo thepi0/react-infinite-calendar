@@ -34,7 +34,10 @@ export default class MonthList extends Component {
       PropTypes.object,
       PropTypes.array
     ]),
-    height: PropTypes.number,
+    height: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string
+    ]),
     isScrolling: PropTypes.bool,
     locale: PropTypes.object,
     maxDate: PropTypes.instanceOf(Date),
@@ -69,13 +72,28 @@ export default class MonthList extends Component {
   _getRef = (instance) => { this.VirtualList = instance; }
 
   getMonthHeight = (index) => {
-    if (!this.monthHeights[index]) {
-      let {locale: {weekStartsOn}, months, rowHeight} = this.props;
-      let {month, year} = months[index];
-      let weeks = getWeeksInMonth(month, year, weekStartsOn, index === months.length - 1);
-      let height = weeks * rowHeight;
-      this.monthHeights[index] = height;
-    }
+      if (this.props.miniCalendar) {          
+          let {min, max, rowHeight} = this.props;
+          let monthCount = differenceInCalendarMonths(max, min);
+          let height;
+          
+          if (monthCount > 0) {
+              height = rowHeight;
+          } else {
+              height = rowHeight * 2;
+          }
+          
+          this.monthHeights[index] = height;
+      } else {
+          if (!this.monthHeights[index]) {
+            let {locale: {weekStartsOn}, months, rowHeight} = this.props;
+            let {month, year} = months[index];
+            let weeks = getWeeksInMonth(month, year, weekStartsOn, index === months.length - 1);
+            let height = weeks * rowHeight;
+            this.monthHeights[index] = height;
+          }
+      }
+    
 
     return this.monthHeights[index];
   };
@@ -138,7 +156,10 @@ export default class MonthList extends Component {
       maxDate,
       minDate,
       months,
+      min,
+      max,
       passThrough,
+      miniCalendar,
       rowHeight,
       selected,
       preselected,
@@ -164,7 +185,10 @@ export default class MonthList extends Component {
         lastSelectableDate={lastSelectableDate}
         disabledDates={disabledDates}
         originalDisabledDates={originalDisabledDates}
+        miniCalendar={miniCalendar}
         disabledDays={disabledDays}
+        min={min}
+        max={max}
         maxDate={maxDate}
         minDate={minDate}
         rows={rows}
@@ -189,6 +213,7 @@ export default class MonthList extends Component {
       overscanMonthCount,
       months,
       rowHeight,
+      miniCalendar,
       width,
     } = this.props;
 
@@ -199,7 +224,7 @@ export default class MonthList extends Component {
         height={height}
         itemCount={months.length}
         itemSize={this.getMonthHeight}
-        estimatedItemSize={rowHeight * AVERAGE_ROWS_PER_MONTH}
+        estimatedItemSize={(miniCalendar ? rowHeight : rowHeight * AVERAGE_ROWS_PER_MONTH)}
         renderItem={this.renderMonth}
         onScroll={onScroll}
         scrollOffset={this.state.scrollTop}

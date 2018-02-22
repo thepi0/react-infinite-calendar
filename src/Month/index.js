@@ -28,37 +28,6 @@ export default class Month extends PureComponent {
         const differentUpdateFromController = nextProps.passThrough.updateFromController !== this.props.passThrough.updateFromController;
         return differentLastUpdate || differentSelectionStart || differentSelectionEnd || differentSelectionDone || differentUpdateFromController;
     }
-    
-    /*function endFirstWeek(firstDate, firstDay) {
-    if (! firstDay) {
-        return 7 - firstDate.getDay();
-    }
-    if (firstDate.getDay() < firstDay) {
-        return firstDay - firstDate.getDay();
-    } else {
-        return 7 - firstDate.getDay() + firstDay;
-    }
-}
-
-function getWeeksStartAndEndInMonth(month, year, start) {
-    let weeks = [],
-        firstDate = new Date(year, month, 1),
-        lastDate = new Date(year, month + 1, 0),
-        numDays = lastDate.getDate();
-
-    let start = 1;
-    let end = endFirstWeek(firstDate, 2);
-    while (start <= numDays) {
-        weeks.push({start: start, end: end});
-        start = end + 1;
-        end = end + 7;
-        end = start === 1 && end === 8 ? 1 : end;
-        if (end > numDays) {
-            end = numDays;
-        }
-    }
-    return weeks;
-}*/
 
   renderRows() {
     const {
@@ -72,9 +41,12 @@ function getWeeksStartAndEndInMonth(month, year, start) {
       locale,
       maxDate,
       minDate,
+      min,
+      max,
       rowHeight,
       rows,
       selected,
+      miniCalendar,
       preselected,
       getDateOffset,
       today,
@@ -101,6 +73,8 @@ function getWeeksStartAndEndInMonth(month, year, start) {
     let isoWeek = null;
     let weekNumber = null;
     let dayDow = 0;
+    let absoluteMin = format(min, 'YYYY-MM-DD');
+    let absoluteMax = format(max, 'YYYY-MM-DD');
 
     // Used for faster comparisons
     const _today = format(today, 'YYYY-MM-DD');
@@ -110,7 +84,7 @@ function getWeeksStartAndEndInMonth(month, year, start) {
 
 
     let enabledDatesArray = preselected && preselected[0] ? preselected.map((dateObj) => ({ date: format(dateObj.start_time, 'YYYY-MM-DD'), type: 'preselect' })) : null;
-    let reallyDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.filter((object) => object.type === 'holiday') : [];
+    let reallyDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.filter((object) => (object.type === 'holiday' || object.type === 'no-reservation')) : [];
 
     if (selectionType === 'not_preselected') {
         reallyDisabledDatesArray = reallyDisabledDatesArray.concat(preselectedDates);
@@ -215,29 +189,59 @@ function getWeeksStartAndEndInMonth(month, year, start) {
 					isDate(lastSelectableDate) && isBefore(date, lastDate)
 				);
 
-        days[k] = (
-					<DayComponent
-						key={`day-${day}`}
-						date={date}
-						day={day}
-                        originalDisabledDates={originalDisabledDates}
-                        beforeLastDisabled={beforeLastDisabled}
-                        selected={selected}
-                        selectionArray={selectionArray}
-                        preselected={preselected}
-                        lastUpdate={lastUpdate}
-                        nextDisabled={nextDisabled}
-                        prevDisabled={prevDisabled}
-						isDisabled={isDisabled}
-                        selectionType={selectionType}
-						isToday={isToday}
-                        {...passThrough.Day}
-					/>
-				);
+        if (miniCalendar) {
+            if (!isBefore(date, absoluteMin) && !isAfter(date, absoluteMax) && dow !== 6 && dow !== 7) {
+                days[k] = (
+        					<DayComponent
+        						key={`day-${day}`}
+        						date={date}
+        						day={day}
+                                originalDisabledDates={originalDisabledDates}
+                                beforeLastDisabled={beforeLastDisabled}
+                                selected={selected}
+                                selectionArray={selectionArray}
+                                preselected={preselected}
+                                lastUpdate={lastUpdate}
+                                nextDisabled={nextDisabled}
+                                prevDisabled={prevDisabled}
+        						isDisabled={isDisabled}
+                                selectionType={selectionType}
+        						isToday={isToday}
+                                {...passThrough.Day}
+        					/>
+        				);
 
-        dow += 1;
+                
+            }
+            dow += 1;
+        } else {
+            days[k] = (
+    					<DayComponent
+    						key={`day-${day}`}
+    						date={date}
+    						day={day}
+                            originalDisabledDates={originalDisabledDates}
+                            beforeLastDisabled={beforeLastDisabled}
+                            selected={selected}
+                            selectionArray={selectionArray}
+                            preselected={preselected}
+                            lastUpdate={lastUpdate}
+                            nextDisabled={nextDisabled}
+                            prevDisabled={prevDisabled}
+    						isDisabled={isDisabled}
+                            selectionType={selectionType}
+    						isToday={isToday}
+                            {...passThrough.Day}
+    					/>
+    				);
+
+            dow += 1;
+        }
+
       }
+       {days.length ?
       monthRows[i] = (
+        
         <ul
           key={`Row-${i}`}
           className={classNames(styles.row, {[styles.partial]: row.length !== 7})}
@@ -245,10 +249,13 @@ function getWeeksStartAndEndInMonth(month, year, start) {
           role="row"
           aria-label={`Week ${i + 1}`}
         >
-          {weekNumber}
+          {!miniCalendar ? weekNumber : null}
           {days}
         </ul>
-      );
+        
+      )
+      :
+      null}
 
     }
 
@@ -256,19 +263,23 @@ function getWeeksStartAndEndInMonth(month, year, start) {
   }
 
   render() {
-    const {locale: {locale}, monthDate, today, rows, rowHeight, style} = this.props;
+    const {locale: {locale}, miniCalendar, monthDate, today, rows, rowHeight, style} = this.props;
     const dateFormat = isSameYear(monthDate, today) ? 'MMMM' : 'MMMM YYYY';
     const isCurrentMonth = isThisMonth(monthDate) && isThisYear(monthDate);
 
     return (
         <div className={styles.root} style={{...style, lineHeight: `${rowHeight}px`}}>
-            <div className={classNames(styles.indicator, {[styles.indicatorCurrent] : isCurrentMonth })}>
-                <div className={styles.display}>
-                    <span className="month">{format(monthDate, 'MMMM', {locale})}</span>
-                    <span className="year">{format(monthDate, 'YYYY', {locale})}</span>
+            {!miniCalendar ?
+                <div className={classNames(styles.indicator, {[styles.indicatorCurrent] : isCurrentMonth })}>
+                    <div className={styles.display}>
+                        <span className="month">{format(monthDate, 'MMMM', {locale})}</span>
+                        <span className="year">{format(monthDate, 'YYYY', {locale})}</span>
+                    </div>
                 </div>
-            </div>
-  		    <div className={styles.rows}>
+            :
+            null
+            }
+  		    <div className={classNames(styles.rows, {[styles.mini]: miniCalendar})}>
   				{this.renderRows()}
   		    </div>
   		</div>

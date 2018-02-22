@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import {scrollbarSize} from '../utils';
 import styles from './Weekdays.scss';
 
@@ -10,15 +11,20 @@ export default class Weekdays extends PureComponent {
   };
 
   render() {
-    const {weekdays, weekStartsOn, theme} = this.props;
-    const orderedWeekdays = [...weekdays.slice(weekStartsOn, 7), ...weekdays.slice(0, weekStartsOn)];
-
+    const {weekdays, weekStartsOn, theme, miniCalendar} = this.props;
+    let orderedWeekdays;
+    if (miniCalendar) {
+        orderedWeekdays = [...weekdays.slice(weekStartsOn, 6), ...weekdays.slice(1, weekStartsOn)];
+    } else {
+        orderedWeekdays = [...weekdays.slice(weekStartsOn, 7), ...weekdays.slice(0, weekStartsOn)];
+    }
+    
     return (
-        <div className={styles.wrapper} style={{backgroundColor: theme.weekdayBackground, height: theme.weekdaysHeight}}>
+        <div className={styles.wrapper} style={{backgroundColor: (miniCalendar ? theme.miniweekdayBackground : theme.weekdayBackground), height:  (miniCalendar ? theme.miniWeekdaysHeight : theme.weekdaysHeight)}}>
           <ul
-            className={styles.root}
+            className={classNames(styles.root, {[styles.mini]: miniCalendar})}
             style={{
-              backgroundColor: theme.weekdayColor,
+              backgroundColor: (miniCalendar ? theme.miniWeekdayColor : theme.weekdayColor),
               color: theme.textColor.weekday,
               paddingRight: scrollbarSize,
             }}
