@@ -39,6 +39,7 @@ var styles = {
     'beforelast': 'Cal__Day__beforelast',
     'weekend': 'Cal__Day__weekend',
     'holiday': 'Cal__Day__holiday',
+    'noReservation': 'Cal__Day__noReservation',
     'disabled': 'Cal__Day__disabled',
     'preselected': 'Cal__Day__preselected',
     'nextselected': 'Cal__Day__nextselected',
@@ -78,6 +79,7 @@ export var withDefaultProps = _defaultProps({
   displayOptions: {},
   HeaderComponent: Header,
   scrollOffset: null,
+  miniCalendar: false,
   height: 500,
   keyboardSupport: true,
   max: new Date(2050, 11, 31),
@@ -359,6 +361,7 @@ var Calendar = function (_Component) {
         scrollDate = _props.scrollDate,
         selected = _props.selected,
         preselected = _props.preselected,
+        miniCalendar = _props.miniCalendar,
         lastUpdate = _props.lastUpdate,
         tabIndex = _props.tabIndex,
         width = _props.width,
@@ -399,7 +402,7 @@ var Calendar = function (_Component) {
       React.createElement(
         'div',
         { className: styles.container.wrapper },
-        showWeekdays && React.createElement(Weekdays, { weekdays: locale.weekdays, weekStartsOn: locale.weekStartsOn, theme: theme }),
+        showWeekdays && React.createElement(Weekdays, { weekdays: locale.weekdays, miniCalendar: miniCalendar, weekStartsOn: locale.weekStartsOn, theme: theme }),
         React.createElement(
           'div',
           { className: styles.container.listWrapper },
@@ -425,7 +428,9 @@ var Calendar = function (_Component) {
             isScrolling: isScrolling,
             locale: locale,
             maxDate: this._maxDate,
+            miniCalendar: miniCalendar,
             min: this._min,
+            max: this._max,
             minDate: this._minDate,
             months: this.months,
             onScroll: this.handleScroll,
@@ -470,7 +475,7 @@ process.env.NODE_ENV !== "production" ? Calendar.propTypes = {
     showWeekdays: PropTypes.bool,
     todayHelperRowOffset: PropTypes.number
   }),
-  height: PropTypes.number,
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   keyboardSupport: PropTypes.bool,
   locale: PropTypes.shape({
     blank: PropTypes.string,
@@ -482,6 +487,7 @@ process.env.NODE_ENV !== "production" ? Calendar.propTypes = {
     weekdays: PropTypes.arrayOf(PropTypes.string),
     weekStartsOn: PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6])
   }),
+  miniCalendar: PropTypes.bool,
   max: PropTypes.instanceOf(Date),
   maxDate: PropTypes.instanceOf(Date),
   min: PropTypes.instanceOf(Date),

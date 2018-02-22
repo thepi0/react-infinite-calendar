@@ -52,18 +52,36 @@ var MonthList = function (_Component) {
     }, _this.monthHeights = [], _this._getRef = function (instance) {
       _this.VirtualList = instance;
     }, _this.getMonthHeight = function (index) {
-      if (!_this.monthHeights[index]) {
+      if (_this.props.miniCalendar) {
         var _this$props = _this.props,
-            weekStartsOn = _this$props.locale.weekStartsOn,
-            months = _this$props.months,
+            min = _this$props.min,
+            max = _this$props.max,
             rowHeight = _this$props.rowHeight;
-        var _months$index = months[index],
-            month = _months$index.month,
-            year = _months$index.year;
 
-        var weeks = getWeeksInMonth(month, year, weekStartsOn, index === months.length - 1);
-        var height = weeks * rowHeight;
+        var monthCount = differenceInCalendarMonths(max, min);
+        var height = void 0;
+
+        if (monthCount > 0) {
+          height = rowHeight;
+        } else {
+          height = rowHeight * 2;
+        }
+
         _this.monthHeights[index] = height;
+      } else {
+        if (!_this.monthHeights[index]) {
+          var _this$props2 = _this.props,
+              weekStartsOn = _this$props2.locale.weekStartsOn,
+              months = _this$props2.months,
+              _rowHeight = _this$props2.rowHeight;
+          var _months$index = months[index],
+              month = _months$index.month,
+              year = _months$index.year;
+
+          var weeks = getWeeksInMonth(month, year, weekStartsOn, index === months.length - 1);
+          var _height = weeks * _rowHeight;
+          _this.monthHeights[index] = _height;
+        }
       }
 
       return _this.monthHeights[index];
@@ -112,25 +130,28 @@ var MonthList = function (_Component) {
     }, _this.renderMonth = function (_ref) {
       var index = _ref.index,
           style = _ref.style;
-      var _this$props2 = _this.props,
-          DayComponent = _this$props2.DayComponent,
-          lastSelectableDate = _this$props2.lastSelectableDate,
-          disabledDates = _this$props2.disabledDates,
-          lastUpdate = _this$props2.lastUpdate,
-          originalDisabledDates = _this$props2.originalDisabledDates,
-          disabledDays = _this$props2.disabledDays,
-          locale = _this$props2.locale,
-          maxDate = _this$props2.maxDate,
-          minDate = _this$props2.minDate,
-          months = _this$props2.months,
-          passThrough = _this$props2.passThrough,
-          rowHeight = _this$props2.rowHeight,
-          selected = _this$props2.selected,
-          preselected = _this$props2.preselected,
-          startDays = _this$props2.startDays,
-          showOverlay = _this$props2.showOverlay,
-          theme = _this$props2.theme,
-          today = _this$props2.today;
+      var _this$props3 = _this.props,
+          DayComponent = _this$props3.DayComponent,
+          lastSelectableDate = _this$props3.lastSelectableDate,
+          disabledDates = _this$props3.disabledDates,
+          lastUpdate = _this$props3.lastUpdate,
+          originalDisabledDates = _this$props3.originalDisabledDates,
+          disabledDays = _this$props3.disabledDays,
+          locale = _this$props3.locale,
+          maxDate = _this$props3.maxDate,
+          minDate = _this$props3.minDate,
+          months = _this$props3.months,
+          min = _this$props3.min,
+          max = _this$props3.max,
+          passThrough = _this$props3.passThrough,
+          miniCalendar = _this$props3.miniCalendar,
+          rowHeight = _this$props3.rowHeight,
+          selected = _this$props3.selected,
+          preselected = _this$props3.preselected,
+          startDays = _this$props3.startDays,
+          showOverlay = _this$props3.showOverlay,
+          theme = _this$props3.theme,
+          today = _this$props3.today;
       var _months$index2 = months[index],
           month = _months$index2.month,
           year = _months$index2.year;
@@ -152,7 +173,10 @@ var MonthList = function (_Component) {
         lastSelectableDate: lastSelectableDate,
         disabledDates: disabledDates,
         originalDisabledDates: originalDisabledDates,
+        miniCalendar: miniCalendar,
         disabledDays: disabledDays,
+        min: min,
+        max: max,
         maxDate: maxDate,
         minDate: minDate,
         rows: rows,
@@ -198,6 +222,7 @@ var MonthList = function (_Component) {
         overscanMonthCount = _props2.overscanMonthCount,
         months = _props2.months,
         rowHeight = _props2.rowHeight,
+        miniCalendar = _props2.miniCalendar,
         width = _props2.width;
 
 
@@ -207,7 +232,7 @@ var MonthList = function (_Component) {
       height: height,
       itemCount: months.length,
       itemSize: this.getMonthHeight,
-      estimatedItemSize: rowHeight * AVERAGE_ROWS_PER_MONTH,
+      estimatedItemSize: miniCalendar ? rowHeight : rowHeight * AVERAGE_ROWS_PER_MONTH,
       renderItem: this.renderMonth,
       onScroll: onScroll,
       scrollOffset: this.state.scrollTop,
@@ -227,7 +252,7 @@ process.env.NODE_ENV !== "production" ? MonthList.propTypes = {
   originalDisabledDates: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   disabledDays: PropTypes.arrayOf(PropTypes.number),
   preselected: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  height: PropTypes.number,
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   isScrolling: PropTypes.bool,
   locale: PropTypes.object,
   maxDate: PropTypes.instanceOf(Date),

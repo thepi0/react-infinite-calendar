@@ -56,7 +56,7 @@
     background-color: #ea992f; }
   .Cal__Day__root.Cal__Day__beforelast {
     color: #a4d8e8; }
-  .Cal__Day__root.Cal__Day__weekend, .Cal__Day__root.Cal__Day__holiday {
+  .Cal__Day__root.Cal__Day__weekend, .Cal__Day__root.Cal__Day__holiday, .Cal__Day__root.Cal__Day__noReservation {
     color: #a4d8e8; }
   .Cal__Day__root.Cal__Day__disabled.Cal__Day__beforelast {
     cursor: not-allowed; }
@@ -426,17 +426,19 @@
     border-bottom: 0; }
   .Cal__Day__root.Cal__Day__preselected .Cal__Day__vacationCircle {
     background-color: #FFFFFF; }
-  .Cal__Day__root.Cal__Day__weekend, .Cal__Day__root.Cal__Day__preselecteddisabled, .Cal__Day__root.Cal__Day__preselectedenabled, .Cal__Day__root.Cal__Day__beforelast.Cal__Day__disabled, .Cal__Day__root.Cal__Day__holiday {
+  .Cal__Day__root.Cal__Day__noReservation .Cal__Day__vacationCircle {
+    display: none; }
+  .Cal__Day__root.Cal__Day__weekend, .Cal__Day__root.Cal__Day__preselecteddisabled, .Cal__Day__root.Cal__Day__preselectedenabled, .Cal__Day__root.Cal__Day__beforelast.Cal__Day__disabled, .Cal__Day__root.Cal__Day__holiday, .Cal__Day__root.Cal__Day__noReservation {
     box-shadow: none;
     cursor: not-allowed;
     border: 0;
     border-radius: 0; }
-    .Cal__Day__root.Cal__Day__weekend .Cal__Day__selection, .Cal__Day__root.Cal__Day__preselecteddisabled .Cal__Day__selection, .Cal__Day__root.Cal__Day__preselectedenabled .Cal__Day__selection, .Cal__Day__root.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection, .Cal__Day__root.Cal__Day__holiday .Cal__Day__selection {
+    .Cal__Day__root.Cal__Day__weekend .Cal__Day__selection, .Cal__Day__root.Cal__Day__preselecteddisabled .Cal__Day__selection, .Cal__Day__root.Cal__Day__preselectedenabled .Cal__Day__selection, .Cal__Day__root.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection, .Cal__Day__root.Cal__Day__holiday .Cal__Day__selection, .Cal__Day__root.Cal__Day__noReservation .Cal__Day__selection {
       border: 0;
       border-radius: 0; }
-    .Cal__Day__root.Cal__Day__weekend .Cal__Day__selection.Cal__Day__selection, .Cal__Day__root.Cal__Day__preselecteddisabled .Cal__Day__selection.Cal__Day__selection, .Cal__Day__root.Cal__Day__preselectedenabled .Cal__Day__selection.Cal__Day__selection, .Cal__Day__root.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection.Cal__Day__selection, .Cal__Day__root.Cal__Day__holiday .Cal__Day__selection.Cal__Day__selection {
+    .Cal__Day__root.Cal__Day__weekend .Cal__Day__selection.Cal__Day__selection, .Cal__Day__root.Cal__Day__preselecteddisabled .Cal__Day__selection.Cal__Day__selection, .Cal__Day__root.Cal__Day__preselectedenabled .Cal__Day__selection.Cal__Day__selection, .Cal__Day__root.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection.Cal__Day__selection, .Cal__Day__root.Cal__Day__holiday .Cal__Day__selection.Cal__Day__selection, .Cal__Day__root.Cal__Day__noReservation .Cal__Day__selection.Cal__Day__selection {
       border: 0; }
-      .Cal__Day__root.Cal__Day__weekend .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__root.Cal__Day__weekend .Cal__Day__selection.Cal__Day__selection .Cal__Day__month, .Cal__Day__root.Cal__Day__preselecteddisabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__root.Cal__Day__preselecteddisabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__month, .Cal__Day__root.Cal__Day__preselectedenabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__root.Cal__Day__preselectedenabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__month, .Cal__Day__root.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__root.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__month, .Cal__Day__root.Cal__Day__holiday .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__root.Cal__Day__holiday .Cal__Day__selection.Cal__Day__selection .Cal__Day__month {
+      .Cal__Day__root.Cal__Day__weekend .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__root.Cal__Day__weekend .Cal__Day__selection.Cal__Day__selection .Cal__Day__month, .Cal__Day__root.Cal__Day__preselecteddisabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__root.Cal__Day__preselecteddisabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__month, .Cal__Day__root.Cal__Day__preselectedenabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__root.Cal__Day__preselectedenabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__month, .Cal__Day__root.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__root.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__month, .Cal__Day__root.Cal__Day__holiday .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__root.Cal__Day__holiday .Cal__Day__selection.Cal__Day__selection .Cal__Day__month, .Cal__Day__root.Cal__Day__noReservation .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__root.Cal__Day__noReservation .Cal__Day__selection.Cal__Day__selection .Cal__Day__month {
         color: #a4d8e8; }
   .Cal__Day__root.Cal__Day__preselected.Cal__Day__beforelast.Cal__Day__disabled {
     color: #FFFFFF; }
@@ -505,9 +507,9 @@
   border-top-right-radius: 35px;
   border-bottom-right-radius: 35px; }
 
-.Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__weekend, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__preselecteddisabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__preselectedenabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__beforelast.Cal__Day__disabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__holiday {
+.Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__weekend, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__preselecteddisabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__preselectedenabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__beforelast.Cal__Day__disabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__holiday, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__noReservation {
   border: 0; }
-  .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__weekend .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__preselecteddisabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__preselectedenabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__holiday .Cal__Day__selection {
+  .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__weekend .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__preselecteddisabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__preselectedenabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__holiday .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__nextdisabled.Cal__Day__noReservation .Cal__Day__selection {
     border-radius: 0; }
 
 .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled .Cal__Day__selection {
@@ -515,10 +517,10 @@
   border-top-left-radius: 35px;
   border-bottom-left-radius: 35px; }
 
-.Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__weekend, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__preselecteddisabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__preselectedenabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__beforelast.Cal__Day__disabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__holiday {
+.Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__weekend, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__preselecteddisabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__preselectedenabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__beforelast.Cal__Day__disabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__holiday, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__noReservation {
   border: 0;
   border-radius: 0; }
-  .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__weekend .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__preselecteddisabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__preselectedenabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__holiday .Cal__Day__selection {
+  .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__weekend .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__preselecteddisabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__preselectedenabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__holiday .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__betweenRange.Cal__Day__prevdisabled.Cal__Day__noReservation .Cal__Day__selection {
     border: 0;
     border-radius: 0; }
 
@@ -547,24 +549,24 @@
   border-top-left-radius: 35px;
   border-bottom-left-radius: 35px; }
 
-.Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__weekend, .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__preselecteddisabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__preselectedenabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__beforelast.Cal__Day__disabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__holiday {
+.Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__weekend, .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__preselecteddisabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__preselectedenabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__beforelast.Cal__Day__disabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__holiday, .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__noReservation {
   border: 0;
   border-radius: 0; }
-  .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__weekend .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__preselecteddisabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__preselectedenabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__holiday .Cal__Day__selection {
+  .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__weekend .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__preselecteddisabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__preselectedenabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__holiday .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__end.Cal__Day__prevdisabled.Cal__Day__noReservation .Cal__Day__selection {
     border: 0;
     border-radius: 0; }
 
-.Cal__Day__range.Cal__Day__selected.Cal__Day__weekend, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselecteddisabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselectedenabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__beforelast.Cal__Day__disabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__holiday {
+.Cal__Day__range.Cal__Day__selected.Cal__Day__weekend, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselecteddisabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselectedenabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__beforelast.Cal__Day__disabled, .Cal__Day__range.Cal__Day__selected.Cal__Day__holiday, .Cal__Day__range.Cal__Day__selected.Cal__Day__noReservation {
   box-shadow: none;
   cursor: not-allowed;
   border: 0;
   border-radius: 0; }
-  .Cal__Day__range.Cal__Day__selected.Cal__Day__weekend .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselecteddisabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselectedenabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__holiday .Cal__Day__selection {
+  .Cal__Day__range.Cal__Day__selected.Cal__Day__weekend .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselecteddisabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselectedenabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__holiday .Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__noReservation .Cal__Day__selection {
     border: 0;
     border-radius: 0; }
-  .Cal__Day__range.Cal__Day__selected.Cal__Day__weekend .Cal__Day__selection.Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselecteddisabled .Cal__Day__selection.Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselectedenabled .Cal__Day__selection.Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection.Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__holiday .Cal__Day__selection.Cal__Day__selection {
+  .Cal__Day__range.Cal__Day__selected.Cal__Day__weekend .Cal__Day__selection.Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselecteddisabled .Cal__Day__selection.Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselectedenabled .Cal__Day__selection.Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection.Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__holiday .Cal__Day__selection.Cal__Day__selection, .Cal__Day__range.Cal__Day__selected.Cal__Day__noReservation .Cal__Day__selection.Cal__Day__selection {
     border: 0; }
-    .Cal__Day__range.Cal__Day__selected.Cal__Day__weekend .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__range.Cal__Day__selected.Cal__Day__weekend .Cal__Day__selection.Cal__Day__selection .Cal__Day__month, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselecteddisabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselecteddisabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__month, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselectedenabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselectedenabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__month, .Cal__Day__range.Cal__Day__selected.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__range.Cal__Day__selected.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__month, .Cal__Day__range.Cal__Day__selected.Cal__Day__holiday .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__range.Cal__Day__selected.Cal__Day__holiday .Cal__Day__selection.Cal__Day__selection .Cal__Day__month {
+    .Cal__Day__range.Cal__Day__selected.Cal__Day__weekend .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__range.Cal__Day__selected.Cal__Day__weekend .Cal__Day__selection.Cal__Day__selection .Cal__Day__month, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselecteddisabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselecteddisabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__month, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselectedenabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__range.Cal__Day__selected.Cal__Day__preselectedenabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__month, .Cal__Day__range.Cal__Day__selected.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__range.Cal__Day__selected.Cal__Day__beforelast.Cal__Day__disabled .Cal__Day__selection.Cal__Day__selection .Cal__Day__month, .Cal__Day__range.Cal__Day__selected.Cal__Day__holiday .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__range.Cal__Day__selected.Cal__Day__holiday .Cal__Day__selection.Cal__Day__selection .Cal__Day__month, .Cal__Day__range.Cal__Day__selected.Cal__Day__noReservation .Cal__Day__selection.Cal__Day__selection .Cal__Day__day, .Cal__Day__range.Cal__Day__selected.Cal__Day__noReservation .Cal__Day__selection.Cal__Day__selection .Cal__Day__month {
       color: #a4d8e8; }
 
 .Cal__Day__range.Cal__Day__selected.Cal__Day__selected.Cal__Day__beforelast.Cal__Day__disabled {
@@ -753,6 +755,9 @@
   width: 490px;
   float: right; }
 
+.Cal__Month__mini {
+  width: 350px; }
+
 .Cal__Month__row {
   padding: 0;
   margin: 0;
@@ -890,6 +895,9 @@
   list-style: none;
   box-shadow: inset 0 -1px rgba(0, 0, 0, 0.04);
   max-width: 490px; }
+  .Cal__Weekdays__root.Cal__Weekdays__mini {
+    max-width: 350px;
+    box-shadow: none; }
 
 .Cal__Weekdays__day {
   padding: 15px 0;
@@ -900,6 +908,9 @@
   color: #89d5ed;
   text-transform: uppercase;
   font-weight: bold; }
+
+.Cal__Weekdays__root.Cal__Weekdays__mini .Cal__Weekdays__day {
+  padding: 10px 0; }
 /*  imported from Years.scss  */
 
 .Cal__Years__root {

@@ -6,10 +6,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { scrollbarSize } from '../utils';
 var styles = {
   'wrapper': 'Cal__Weekdays__wrapper',
   'root': 'Cal__Weekdays__root',
+  'mini': 'Cal__Weekdays__mini',
   'day': 'Cal__Weekdays__day'
 };
 
@@ -23,22 +25,30 @@ var Weekdays = function (_PureComponent) {
   }
 
   Weekdays.prototype.render = function render() {
+    var _classNames;
+
     var _props = this.props,
         weekdays = _props.weekdays,
         weekStartsOn = _props.weekStartsOn,
-        theme = _props.theme;
+        theme = _props.theme,
+        miniCalendar = _props.miniCalendar;
 
-    var orderedWeekdays = [].concat(weekdays.slice(weekStartsOn, 7), weekdays.slice(0, weekStartsOn));
+    var orderedWeekdays = void 0;
+    if (miniCalendar) {
+      orderedWeekdays = [].concat(weekdays.slice(weekStartsOn, 6), weekdays.slice(1, weekStartsOn));
+    } else {
+      orderedWeekdays = [].concat(weekdays.slice(weekStartsOn, 7), weekdays.slice(0, weekStartsOn));
+    }
 
     return React.createElement(
       'div',
-      { className: styles.wrapper, style: { backgroundColor: theme.weekdayBackground, height: theme.weekdaysHeight } },
+      { className: styles.wrapper, style: { backgroundColor: miniCalendar ? theme.miniweekdayBackground : theme.weekdayBackground, height: miniCalendar ? theme.miniWeekdaysHeight : theme.weekdaysHeight } },
       React.createElement(
         'ul',
         {
-          className: styles.root,
+          className: classNames(styles.root, (_classNames = {}, _classNames[styles.mini] = miniCalendar, _classNames)),
           style: {
-            backgroundColor: theme.weekdayColor,
+            backgroundColor: miniCalendar ? theme.miniWeekdayColor : theme.weekdayColor,
             color: theme.textColor.weekday,
             paddingRight: scrollbarSize
           },

@@ -29,6 +29,7 @@ var styles = {
     'beforelast': 'Cal__Day__beforelast',
     'weekend': 'Cal__Day__weekend',
     'holiday': 'Cal__Day__holiday',
+    'noReservation': 'Cal__Day__noReservation',
     'disabled': 'Cal__Day__disabled',
     'preselected': 'Cal__Day__preselected',
     'nextselected': 'Cal__Day__nextselected',
@@ -779,10 +780,10 @@ function handleSelectionEnd(e, date, beforeLastDisabled, isPreSelected, original
             }
         }
 
-        for (var y = 0, length = _daysArray.length; y < length; ++y) {
-            for (var j = 0, length = originalDisabledDates.length; j < length; ++j) {
-                if (_daysArray[y] === originalDisabledDates[j].date && originalDisabledDates[j].type === 'holiday') {
-                    _daysArray.splice(y, 1);
+        for (var t = 0, lengthdays = _daysArray.length; t < lengthdays; ++t) {
+            for (var j = 0, lengthdis = originalDisabledDates.length; j < lengthdis; ++j) {
+                if (_daysArray[t] === originalDisabledDates[j].date && (originalDisabledDates[j].type === 'holiday' || originalDisabledDates[j].type === 'no-reservation')) {
+                    _daysArray.splice(t, 1);
                     --y;
                 }
             }

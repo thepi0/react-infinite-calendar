@@ -14,6 +14,9 @@ module.exports = {
   },
   todayColor: '#FFA726',
   weekdayColor: '#2cb1d8',
+  miniWeekdayColor: '#FFFFFF',
   weekdayBackground: '#2cb1d8',
-  weekdaysHeight: '50px'
+  miniweekdayBackground: '#FFFFFF',
+  weekdaysHeight: '50px',
+  miniWeekdaysHeight: '40px'
 };

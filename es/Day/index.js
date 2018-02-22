@@ -16,6 +16,7 @@ var styles = {
   'beforelast': 'Cal__Day__beforelast',
   'weekend': 'Cal__Day__weekend',
   'holiday': 'Cal__Day__holiday',
+  'noReservation': 'Cal__Day__noReservation',
   'disabled': 'Cal__Day__disabled',
   'preselected': 'Cal__Day__preselected',
   'nextselected': 'Cal__Day__nextselected',
@@ -73,7 +74,7 @@ var Day = function (_PureComponent) {
 
       var fromTop = ReactDOM.findDOMNode(_this).getBoundingClientRect().top;
 
-      if (isWeekend || beforeLastDisabled && !isPreSelected || vacationObject && vacationObject.vacation_type === 'holiday' || selectionType === 'not_preselected' && isPreSelected && isDisabled || selectionType === 'preselected' && !isPreSelected && isDisabled || !isPreSelected && selectionType === 'preselected' || isPreSelected && selectionType === 'not_preselected') {
+      if (isWeekend || beforeLastDisabled && !isPreSelected || vacationObject && vacationObject.vacation_type === 'holiday' || vacationObject && vacationObject.vacation_type === 'no-reservation' || selectionType === 'not_preselected' && isPreSelected && isDisabled || selectionType === 'preselected' && !isPreSelected && isDisabled || !isPreSelected && selectionType === 'preselected' || isPreSelected && selectionType === 'not_preselected') {
         onClear();
       } else if (typeof onSelectionStart === 'function') {
         onSelectionStart(parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
@@ -178,7 +179,7 @@ var Day = function (_PureComponent) {
     return React.createElement(
       'li',
       _extends({
-        className: classNames(styles.root, (_classNames = {}, _classNames[styles.today] = isToday, _classNames[styles.selected] = isSelected && selectionType !== 'selected' || isArraySelected, _classNames[styles.preselected] = isPreSelected, _classNames[styles.prevdisabled] = prevDisabled, _classNames[styles.nextdisabled] = nextDisabled, _classNames[styles.disabled] = isDisabled || beforeLastDisabled && !isPreSelected || !isPreSelected && selectionType === 'preselected' || isPreSelected && selectionType === 'not_preselected', _classNames[styles.holiday] = vacationObject.vacation === true && vacationObject.vacation_type === 'holiday', _classNames[styles.enabled] = !isDisabled, _classNames[styles.beforelast] = beforeLastDisabled, _classNames[styles.purple] = isPreSelected && colors.purple, _classNames[styles.blue] = isPreSelected && colors.blue, _classNames[styles.green] = isPreSelected && colors.green, _classNames[styles.orange] = isPreSelected && colors.orange, _classNames[styles.weekend] = isWeekend, _classNames[styles.preselecteddisabled] = isPreSelected && selectionType === 'not_preselected', _classNames[styles.preselectedenabled] = !isPreSelected && selectionType === 'preselected', _classNames), className),
+        className: classNames(styles.root, (_classNames = {}, _classNames[styles.today] = isToday, _classNames[styles.selected] = isSelected && selectionType !== 'selected' || isArraySelected, _classNames[styles.preselected] = isPreSelected, _classNames[styles.prevdisabled] = prevDisabled, _classNames[styles.nextdisabled] = nextDisabled, _classNames[styles.disabled] = isDisabled || beforeLastDisabled && !isPreSelected || !isPreSelected && selectionType === 'preselected' || isPreSelected && selectionType === 'not_preselected', _classNames[styles.holiday] = vacationObject.vacation === true && vacationObject.vacation_type === 'holiday', _classNames[styles.noReservation] = vacationObject.vacation === true && vacationObject.vacation_type === 'no-reservation', _classNames[styles.enabled] = !isDisabled, _classNames[styles.beforelast] = beforeLastDisabled, _classNames[styles.purple] = isPreSelected && colors.purple, _classNames[styles.blue] = isPreSelected && colors.blue, _classNames[styles.green] = isPreSelected && colors.green, _classNames[styles.orange] = isPreSelected && colors.orange, _classNames[styles.weekend] = isWeekend, _classNames[styles.preselecteddisabled] = isPreSelected && selectionType === 'not_preselected', _classNames[styles.preselectedenabled] = !isPreSelected && selectionType === 'preselected', _classNames), className),
         onMouseDown: this.onSelectionStart,
         onMouseUp: this.onSelectionEnd,
         onTouchStart: this.onSelectionStart,

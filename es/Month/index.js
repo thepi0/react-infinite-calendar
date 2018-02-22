@@ -22,6 +22,7 @@ import isThisMonth from 'date-fns/is_this_month';
 import isThisYear from 'date-fns/is_this_year';
 var styles = {
     'rows': 'Cal__Month__rows',
+    'mini': 'Cal__Month__mini',
     'row': 'Cal__Month__row',
     'partial': 'Cal__Month__partial',
     'indicator': 'Cal__Month__indicator',
@@ -57,35 +58,6 @@ var Month = function (_PureComponent) {
         return differentLastUpdate || differentSelectionStart || differentSelectionEnd || differentSelectionDone || differentUpdateFromController;
     };
 
-    /*function endFirstWeek(firstDate, firstDay) {
-    if (! firstDay) {
-        return 7 - firstDate.getDay();
-    }
-    if (firstDate.getDay() < firstDay) {
-        return firstDay - firstDate.getDay();
-    } else {
-        return 7 - firstDate.getDay() + firstDay;
-    }
-    }
-    function getWeeksStartAndEndInMonth(month, year, start) {
-    let weeks = [],
-        firstDate = new Date(year, month, 1),
-        lastDate = new Date(year, month + 1, 0),
-        numDays = lastDate.getDate();
-     let start = 1;
-    let end = endFirstWeek(firstDate, 2);
-    while (start <= numDays) {
-        weeks.push({start: start, end: end});
-        start = end + 1;
-        end = end + 7;
-        end = start === 1 && end === 8 ? 1 : end;
-        if (end > numDays) {
-            end = numDays;
-        }
-    }
-    return weeks;
-    }*/
-
     Month.prototype.renderRows = function renderRows() {
         var _props = this.props,
             DayComponent = _props.DayComponent,
@@ -98,9 +70,12 @@ var Month = function (_PureComponent) {
             locale = _props.locale,
             maxDate = _props.maxDate,
             minDate = _props.minDate,
+            min = _props.min,
+            max = _props.max,
             rowHeight = _props.rowHeight,
             rows = _props.rows,
             selected = _props.selected,
+            miniCalendar = _props.miniCalendar,
             preselected = _props.preselected,
             getDateOffset = _props.getDateOffset,
             today = _props.today,
@@ -134,6 +109,8 @@ var Month = function (_PureComponent) {
         var isoWeek = null;
         var weekNumber = null;
         var dayDow = 0;
+        var absoluteMin = format(min, 'YYYY-MM-DD');
+        var absoluteMax = format(max, 'YYYY-MM-DD');
 
         // Used for faster comparisons
         var _today = format(today, 'YYYY-MM-DD');
@@ -145,7 +122,7 @@ var Month = function (_PureComponent) {
             return { date: format(dateObj.start_time, 'YYYY-MM-DD'), type: 'preselect' };
         }) : null;
         var reallyDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.filter(function (object) {
-            return object.type === 'holiday';
+            return object.type === 'holiday' || object.type === 'no-reservation';
         }) : [];
 
         if (selectionType === 'not_preselected') {
@@ -165,8 +142,6 @@ var Month = function (_PureComponent) {
         }
 
         for (var i = 0, len = rows.length; i < len; i++) {
-            var _classNames;
-
             row = rows[i];
             days = [];
             dow = getDay(new Date(year, month, row[0]));
@@ -246,47 +221,74 @@ var Month = function (_PureComponent) {
 
                 beforeLastDisabled = isDate(lastSelectableDate) && isBefore(date, lastDate);
 
-                days[k] = React.createElement(DayComponent, _extends({
-                    key: 'day-' + day,
-                    date: date,
-                    day: day,
-                    originalDisabledDates: originalDisabledDates,
-                    beforeLastDisabled: beforeLastDisabled,
-                    selected: selected,
-                    selectionArray: selectionArray,
-                    preselected: preselected,
-                    lastUpdate: lastUpdate,
-                    nextDisabled: nextDisabled,
-                    prevDisabled: prevDisabled,
-                    isDisabled: isDisabled,
-                    selectionType: selectionType,
-                    isToday: isToday
-                }, passThrough.Day));
+                if (miniCalendar) {
+                    if (!isBefore(date, absoluteMin) && !isAfter(date, absoluteMax) && dow !== 6 && dow !== 7) {
+                        days[k] = React.createElement(DayComponent, _extends({
+                            key: 'day-' + day,
+                            date: date,
+                            day: day,
+                            originalDisabledDates: originalDisabledDates,
+                            beforeLastDisabled: beforeLastDisabled,
+                            selected: selected,
+                            selectionArray: selectionArray,
+                            preselected: preselected,
+                            lastUpdate: lastUpdate,
+                            nextDisabled: nextDisabled,
+                            prevDisabled: prevDisabled,
+                            isDisabled: isDisabled,
+                            selectionType: selectionType,
+                            isToday: isToday
+                        }, passThrough.Day));
+                    }
+                    dow += 1;
+                } else {
+                    days[k] = React.createElement(DayComponent, _extends({
+                        key: 'day-' + day,
+                        date: date,
+                        day: day,
+                        originalDisabledDates: originalDisabledDates,
+                        beforeLastDisabled: beforeLastDisabled,
+                        selected: selected,
+                        selectionArray: selectionArray,
+                        preselected: preselected,
+                        lastUpdate: lastUpdate,
+                        nextDisabled: nextDisabled,
+                        prevDisabled: prevDisabled,
+                        isDisabled: isDisabled,
+                        selectionType: selectionType,
+                        isToday: isToday
+                    }, passThrough.Day));
 
-                dow += 1;
+                    dow += 1;
+                }
             }
-            monthRows[i] = React.createElement(
-                'ul',
-                {
-                    key: 'Row-' + i,
-                    className: classNames(styles.row, (_classNames = {}, _classNames[styles.partial] = row.length !== 7, _classNames)),
-                    style: { height: rowHeight },
-                    role: 'row',
-                    'aria-label': 'Week ' + (i + 1)
-                },
-                weekNumber,
-                days
-            );
+            {
+                var _classNames;
+
+                days.length ? monthRows[i] = React.createElement(
+                    'ul',
+                    {
+                        key: 'Row-' + i,
+                        className: classNames(styles.row, (_classNames = {}, _classNames[styles.partial] = row.length !== 7, _classNames)),
+                        style: { height: rowHeight },
+                        role: 'row',
+                        'aria-label': 'Week ' + (i + 1)
+                    },
+                    !miniCalendar ? weekNumber : null,
+                    days
+                ) : null;
+            }
         }
 
         return monthRows;
     };
 
     Month.prototype.render = function render() {
-        var _classNames2;
+        var _classNames2, _classNames3;
 
         var _props2 = this.props,
             locale = _props2.locale.locale,
+            miniCalendar = _props2.miniCalendar,
             monthDate = _props2.monthDate,
             today = _props2.today,
             rows = _props2.rows,
@@ -299,7 +301,7 @@ var Month = function (_PureComponent) {
         return React.createElement(
             'div',
             { className: styles.root, style: _extends({}, style, { lineHeight: rowHeight + 'px' }) },
-            React.createElement(
+            !miniCalendar ? React.createElement(
                 'div',
                 { className: classNames(styles.indicator, (_classNames2 = {}, _classNames2[styles.indicatorCurrent] = isCurrentMonth, _classNames2)) },
                 React.createElement(
@@ -316,10 +318,10 @@ var Month = function (_PureComponent) {
                         format(monthDate, 'YYYY', { locale: locale })
                     )
                 )
-            ),
+            ) : null,
             React.createElement(
                 'div',
-                { className: styles.rows },
+                { className: classNames(styles.rows, (_classNames3 = {}, _classNames3[styles.mini] = miniCalendar, _classNames3)) },
                 this.renderRows()
             )
         );
