@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import classNames from 'classnames';
-import {getDateString} from '../utils';
+import {getDateString, getWeek} from '../utils';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 import getDay from 'date-fns/get_day';
@@ -14,6 +14,9 @@ import isThisMonth from 'date-fns/is_this_month';
 import isThisYear from 'date-fns/is_this_year';
 import styles from './Month.scss';
 import isWithinRange from 'date-fns/is_within_range';
+import getISOWeek from 'date-fns/get_iso_week';
+import startOfYear from 'date-fns/start_of_year';
+import startOfWeek from 'date-fns/start_of_week';
 
 export default class Month extends PureComponent {
 
@@ -25,6 +28,37 @@ export default class Month extends PureComponent {
         const differentUpdateFromController = nextProps.passThrough.updateFromController !== this.props.passThrough.updateFromController;
         return differentLastUpdate || differentSelectionStart || differentSelectionEnd || differentSelectionDone || differentUpdateFromController;
     }
+    
+    /*function endFirstWeek(firstDate, firstDay) {
+    if (! firstDay) {
+        return 7 - firstDate.getDay();
+    }
+    if (firstDate.getDay() < firstDay) {
+        return firstDay - firstDate.getDay();
+    } else {
+        return 7 - firstDate.getDay() + firstDay;
+    }
+}
+
+function getWeeksStartAndEndInMonth(month, year, start) {
+    let weeks = [],
+        firstDate = new Date(year, month, 1),
+        lastDate = new Date(year, month + 1, 0),
+        numDays = lastDate.getDate();
+
+    let start = 1;
+    let end = endFirstWeek(firstDate, 2);
+    while (start <= numDays) {
+        weeks.push({start: start, end: end});
+        start = end + 1;
+        end = end + 7;
+        end = start === 1 && end === 8 ? 1 : end;
+        if (end > numDays) {
+            end = numDays;
+        }
+    }
+    return weeks;
+}*/
 
   renderRows() {
     const {
@@ -57,7 +91,6 @@ export default class Month extends PureComponent {
     let prevDisabled = false;
     let isToday = false;
     let dateDisabled = { date: null, type: null };
-    let isDateVacation = false;
     let selectionArray = passThrough.selectionArray;
     let preselectedDates = passThrough.preselectedDates;
     let selectionType = passThrough.selectionType;
@@ -65,6 +98,9 @@ export default class Month extends PureComponent {
     let date, nextDate, prevDate, days, dow, nextdow, prevdow, row;
     let nextDateObject = null;
     let prevDateObject = null;
+    let isoWeek = null;
+    let weekNumber = null;
+    let dayDow = 0;
 
     // Used for faster comparisons
     const _today = format(today, 'YYYY-MM-DD');
@@ -97,9 +133,9 @@ export default class Month extends PureComponent {
       days = [];
       dow = getDay(new Date(year, month, row[0]));
       dow === 0 ? dow = 7 : dow;
+      weekNumber = null;
 
       for (let k = 0, len = row.length; k < len; k++) {
-        isDateVacation = false;
         dateDisabled = { date: null, type: null };
         day = row[k];
         nextDateObject = null;
@@ -112,15 +148,21 @@ export default class Month extends PureComponent {
         isToday = (date === _today);
         nextdow = dow + 1;
         prevdow = dow === 1 ? 7 : dow - 1;
+        isoWeek = null;
+        
+        if (dow === 4) {
+            isoWeek = getISOWeek(date);
+            weekNumber = <div className={styles.weekNumber}> {isoWeek} </div>;
+        }
 
-        for (let x = 0, len = initialDisabledDatesArray.length; x < len; x++) {
+        /*for (let x = 0, len = initialDisabledDatesArray.length; x < len; x++) {
             if (initialDisabledDatesArray[x].date === date) {
                 isDateVacation = true;
                 break;
             }
-        }
+        }*/
 
-        if (selectionType === 'none' || selectionType === 'not_preselected') {
+        /*if (selectionType === 'none' || selectionType === 'not_preselected') {
             for (let j = 0, len = initialDisabledDatesArray.length; j < len; j++) {
                 if (format(initialDisabledDatesArray[j].date, 'YYYY-MM-DD', {locale: locale.locale}) === format(date, 'YYYY-MM-DD') && initialDisabledDatesArray[j].type === 'holiday') {
                     dateDisabled = initialDisabledDatesArray[j];
@@ -134,27 +176,27 @@ export default class Month extends PureComponent {
                     break;
                 }
             }
-        }
+        }*/
 
         isDisabled = (
 					minDate && date < _minDate ||
 					maxDate && date > _maxDate ||
                     selectionArray.includes(format(date, 'YYYY-MM-DD')) ||
 					disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 ||
-                    initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(dateDisabled) !== -1 ||
-                    initialDisabledDatesArray && selectionType === 'not_preselected' &&
+                    //initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(dateDisabled) !== -1 ||
+                    /*initialDisabledDatesArray && selectionType === 'not_preselected' &&
                     (
                         (
                         initialDisabledDatesArray.map((e) => { return e.date; }).indexOf(dateDisabled.date) !== -1
                         )
                     )
-                    ||
+                    ||*/
                     initialDisabledDatesArray && selectionType === 'preselected' &&
                     (
                         (
                         isDate(lastSelectableDate) && isBefore(date, lastDate)
-                        ||
-                        initialDisabledDatesArray.map((e) => { return {date: e.date, type: e.type}; }).indexOf(dateDisabled) !== -1
+                        /*||
+                        initialDisabledDatesArray.map((e) => { return {date: e.date, type: e.type}; }).indexOf(dateDisabled) !== -1*/
                         )
                     )
 				);
@@ -178,7 +220,6 @@ export default class Month extends PureComponent {
 						key={`day-${day}`}
 						date={date}
 						day={day}
-                        isVacation={isDateVacation}
                         originalDisabledDates={originalDisabledDates}
                         beforeLastDisabled={beforeLastDisabled}
                         selected={selected}
@@ -204,6 +245,7 @@ export default class Month extends PureComponent {
           role="row"
           aria-label={`Week ${i + 1}`}
         >
+          {weekNumber}
           {days}
         </ul>
       );

@@ -137,7 +137,7 @@ export default class Day extends PureComponent {
         {...handlers}
       >
         {day}
-        {isVacation ? <div className={styles.vacationCircle}></div> : null}
+        {vacationObject.vacation ? <div className={styles.vacationCircle}></div> : null}
         {(isSelected || isArraySelected) && this.renderSelection()}
       </li>
     );
