@@ -51,6 +51,7 @@ var styles = {
     'preselectedenabled': 'Cal__Day__preselectedenabled',
     'day': 'Cal__Day__day',
     'month': 'Cal__Day__month',
+    'hide': 'Cal__Day__hide',
     'range': 'Cal__Day__range',
     'start': 'Cal__Day__start',
     'nextnotpreselected': 'Cal__Day__nextnotpreselected',
@@ -127,7 +128,8 @@ export var enhanceDay = _withPropsOnChange(['selected'], function (_ref) {
     var isPrevPreDifferent = isPrevPreSelected;
     var vacationObject = {
         vacation: positionOfDate.vacation,
-        vacation_type: positionOfDate.vacation_type
+        vacation_type: positionOfDate.vacation_type,
+        hide: positionOfDate.hide
     };
 
     var dayClasses = isSelected && isRange && classNames(styles.range, (_classNames = {}, _classNames[styles.start] = isStart, _classNames[styles.betweenRange] = !isStart && !isEnd, _classNames[styles.end] = isEnd, _classNames[styles.nextselected] = isNextSelected, _classNames[styles.prevselected] = isPrevSelected, _classNames[styles.nextdifferentiates] = isNextCountDifferent, _classNames[styles.prevdifferentiates] = isPrevCountDifferent, _classNames[styles.nextpreselected] = isPreSelectedValue && isNextPreDifferent, _classNames[styles.prevpreselected] = isPreSelectedValue && isPrevPreDifferent, _classNames[styles.nextnotpreselected] = isPreSelectedValue && !isNextPreDifferent, _classNames[styles.prevnotpreselected] = isPreSelectedValue && !isPrevPreDifferent, _classNames)) || isArraySelected && isArrayRange && classNames(styles.range, (_classNames2 = {}, _classNames2[styles.start] = isArrayStart, _classNames2[styles.betweenRange] = !isArrayStart && !isArrayEnd, _classNames2[styles.end] = isArrayEnd, _classNames2[styles.nextselected] = isNextSelected, _classNames2[styles.prevselected] = isPrevSelected, _classNames2[styles.nextdifferentiates] = isNextCountDifferent, _classNames2[styles.prevdifferentiates] = isPrevCountDifferent, _classNames2[styles.nextpreselected] = isPreSelectedValue && isNextPreDifferent, _classNames2[styles.prevpreselected] = isPreSelectedValue && isPrevPreDifferent, _classNames2[styles.nextnotpreselected] = isPreSelectedValue && !isNextPreDifferent, _classNames2[styles.prevnotpreselected] = isPreSelectedValue && !isPrevPreDifferent, _classNames2)) || isPreSelected && classNames(styles.range, (_classNames3 = {}, _classNames3[styles.prestart] = isPreStart, _classNames3[styles.preend] = isPreEnd, _classNames3[styles.nextselected] = isNextSelected, _classNames3[styles.prevselected] = isPrevSelected, _classNames3[styles.nextdifferentiates] = isNextCountDifferent, _classNames3[styles.prevdifferentiates] = isPrevCountDifferent, _classNames3));
@@ -893,6 +895,7 @@ function determineIfDateAlreadySelected(date, selected, originalDisabledDates) {
         if (date === originalDisabledDates[j].date) {
             returnVal.vacation = true;
             returnVal.vacation_type = originalDisabledDates[j].type;
+            returnVal.hide = originalDisabledDates[j].hide;
         }
     }
 

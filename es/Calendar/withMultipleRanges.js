@@ -42,6 +42,7 @@ var styles = {
   'preselectedenabled': 'Cal__Day__preselectedenabled',
   'day': 'Cal__Day__day',
   'month': 'Cal__Day__month',
+  'hide': 'Cal__Day__hide',
   'range': 'Cal__Day__range',
   'start': 'Cal__Day__start',
   'nextnotpreselected': 'Cal__Day__nextnotpreselected',

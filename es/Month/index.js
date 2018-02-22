@@ -116,6 +116,17 @@ var Month = function (_PureComponent) {
         var _today = format(today, 'YYYY-MM-DD');
         var _minDate = format(minDate, 'YYYY-MM-DD');
         var _maxDate = format(maxDate, 'YYYY-MM-DD');
+
+        console.log(originalDisabledDates);
+
+        /*if (miniCalendar && isBefore(date, _today)) {
+            
+        }
+        
+        if (miniCalendar) {
+            originalDisabledDates.push({date: '2018-02-20', type: 'no-reservation'})
+        }*/
+
         var initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : [];
 
         var enabledDatesArray = preselected && preselected[0] ? preselected.map(function (dateObj) {
@@ -174,29 +185,6 @@ var Month = function (_PureComponent) {
                     );
                 }
 
-                /*for (let x = 0, len = initialDisabledDatesArray.length; x < len; x++) {
-                    if (initialDisabledDatesArray[x].date === date) {
-                        isDateVacation = true;
-                        break;
-                    }
-                }*/
-
-                /*if (selectionType === 'none' || selectionType === 'not_preselected') {
-                    for (let j = 0, len = initialDisabledDatesArray.length; j < len; j++) {
-                        if (format(initialDisabledDatesArray[j].date, 'YYYY-MM-DD', {locale: locale.locale}) === format(date, 'YYYY-MM-DD') && initialDisabledDatesArray[j].type === 'holiday') {
-                            dateDisabled = initialDisabledDatesArray[j];
-                            break;
-                        }
-                    }
-                } else if (selectionType === 'preselected') {
-                    for (let j = 0, len = enabledDatesArray.length; j < len; j++) {
-                        if (format(enabledDatesArray[j].date, 'YYYY-MM-DD', {locale: locale.locale}) === format(date, 'YYYY-MM-DD')) {
-                            dateDisabled = enabledDatesArray[j];
-                            break;
-                        }
-                    }
-                }*/
-
                 isDisabled = minDate && date < _minDate || maxDate && date > _maxDate || selectionArray.includes(format(date, 'YYYY-MM-DD')) || disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 ||
                 //initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(dateDisabled) !== -1 ||
                 /*initialDisabledDatesArray && selectionType === 'not_preselected' &&
@@ -219,7 +207,9 @@ var Month = function (_PureComponent) {
                     return e.date;
                 }).indexOf(nextDateObject.date) !== -1;
 
-                beforeLastDisabled = isDate(lastSelectableDate) && isBefore(date, lastDate);
+                beforeLastDisabled =
+                //miniCalendar && isBefore(date, _today) ||
+                isDate(lastSelectableDate) && isBefore(date, lastDate);
 
                 if (miniCalendar) {
                     if (!isBefore(date, absoluteMin) && !isAfter(date, absoluteMax) && dow !== 6 && dow !== 7) {

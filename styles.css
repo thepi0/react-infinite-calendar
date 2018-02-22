@@ -456,6 +456,9 @@
     border-left: 3px solid #ea992f;
     border-radius: 35px;
     line-height: 64px; }
+  .Cal__Day__root.Cal__Day__hide {
+    display: none;
+    cursor: default; }
 
 /*
  * Range selection styles

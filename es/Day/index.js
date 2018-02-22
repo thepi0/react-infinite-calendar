@@ -38,6 +38,7 @@ var styles = {
   'preselectedenabled': 'Cal__Day__preselectedenabled',
   'day': 'Cal__Day__day',
   'month': 'Cal__Day__month',
+  'hide': 'Cal__Day__hide',
   'range': 'Cal__Day__range',
   'start': 'Cal__Day__start',
   'nextnotpreselected': 'Cal__Day__nextnotpreselected',
@@ -62,6 +63,7 @@ var Day = function (_PureComponent) {
       var _this$props = _this.props,
           date = _this$props.date,
           beforeLastDisabled = _this$props.beforeLastDisabled,
+          miniCalendar = _this$props.miniCalendar,
           isWeekend = _this$props.isWeekend,
           isDisabled = _this$props.isDisabled,
           isPreSelected = _this$props.isPreSelected,
@@ -179,7 +181,7 @@ var Day = function (_PureComponent) {
     return React.createElement(
       'li',
       _extends({
-        className: classNames(styles.root, (_classNames = {}, _classNames[styles.today] = isToday, _classNames[styles.selected] = isSelected && selectionType !== 'selected' || isArraySelected, _classNames[styles.preselected] = isPreSelected, _classNames[styles.prevdisabled] = prevDisabled, _classNames[styles.nextdisabled] = nextDisabled, _classNames[styles.disabled] = isDisabled || beforeLastDisabled && !isPreSelected || !isPreSelected && selectionType === 'preselected' || isPreSelected && selectionType === 'not_preselected', _classNames[styles.holiday] = vacationObject.vacation === true && vacationObject.vacation_type === 'holiday', _classNames[styles.noReservation] = vacationObject.vacation === true && vacationObject.vacation_type === 'no-reservation', _classNames[styles.enabled] = !isDisabled, _classNames[styles.beforelast] = beforeLastDisabled, _classNames[styles.purple] = isPreSelected && colors.purple, _classNames[styles.blue] = isPreSelected && colors.blue, _classNames[styles.green] = isPreSelected && colors.green, _classNames[styles.orange] = isPreSelected && colors.orange, _classNames[styles.weekend] = isWeekend, _classNames[styles.preselecteddisabled] = isPreSelected && selectionType === 'not_preselected', _classNames[styles.preselectedenabled] = !isPreSelected && selectionType === 'preselected', _classNames), className),
+        className: classNames(styles.root, (_classNames = {}, _classNames[styles.today] = isToday, _classNames[styles.selected] = isSelected && selectionType !== 'selected' || isArraySelected, _classNames[styles.preselected] = isPreSelected, _classNames[styles.prevdisabled] = prevDisabled, _classNames[styles.nextdisabled] = nextDisabled, _classNames[styles.disabled] = isDisabled || beforeLastDisabled && !isPreSelected || !isPreSelected && selectionType === 'preselected' || isPreSelected && selectionType === 'not_preselected', _classNames[styles.holiday] = vacationObject.vacation === true && vacationObject.vacation_type === 'holiday', _classNames[styles.noReservation] = vacationObject.vacation === true && vacationObject.vacation_type === 'no-reservation', _classNames[styles.hide] = vacationObject.vacation === true && vacationObject.hide, _classNames[styles.enabled] = !isDisabled, _classNames[styles.beforelast] = beforeLastDisabled, _classNames[styles.purple] = isPreSelected && colors.purple, _classNames[styles.blue] = isPreSelected && colors.blue, _classNames[styles.green] = isPreSelected && colors.green, _classNames[styles.orange] = isPreSelected && colors.orange, _classNames[styles.weekend] = isWeekend, _classNames[styles.preselecteddisabled] = isPreSelected && selectionType === 'not_preselected', _classNames[styles.preselectedenabled] = !isPreSelected && selectionType === 'preselected', _classNames), className),
         onMouseDown: this.onSelectionStart,
         onMouseUp: this.onSelectionEnd,
         onTouchStart: this.onSelectionStart,
