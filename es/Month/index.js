@@ -8,7 +8,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import React, { PureComponent } from 'react';
 import classNames from 'classnames';
-import { getDateString } from '../utils';
+import { getDateString, getWeek } from '../utils';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 import getDay from 'date-fns/get_day';
@@ -30,10 +30,14 @@ var styles = {
     'year': 'Cal__Month__year',
     'indicatorCurrent': 'Cal__Month__indicatorCurrent',
     'label': 'Cal__Month__label',
-    'partialFirstRow': 'Cal__Month__partialFirstRow'
+    'partialFirstRow': 'Cal__Month__partialFirstRow',
+    'weekNumber': 'Cal__Month__weekNumber'
 };
 
 import isWithinRange from 'date-fns/is_within_range';
+import getISOWeek from 'date-fns/get_iso_week';
+import startOfYear from 'date-fns/start_of_year';
+import startOfWeek from 'date-fns/start_of_week';
 
 var Month = function (_PureComponent) {
     _inherits(Month, _PureComponent);
@@ -52,6 +56,35 @@ var Month = function (_PureComponent) {
         var differentUpdateFromController = nextProps.passThrough.updateFromController !== this.props.passThrough.updateFromController;
         return differentLastUpdate || differentSelectionStart || differentSelectionEnd || differentSelectionDone || differentUpdateFromController;
     };
+
+    /*function endFirstWeek(firstDate, firstDay) {
+    if (! firstDay) {
+        return 7 - firstDate.getDay();
+    }
+    if (firstDate.getDay() < firstDay) {
+        return firstDay - firstDate.getDay();
+    } else {
+        return 7 - firstDate.getDay() + firstDay;
+    }
+    }
+    function getWeeksStartAndEndInMonth(month, year, start) {
+    let weeks = [],
+        firstDate = new Date(year, month, 1),
+        lastDate = new Date(year, month + 1, 0),
+        numDays = lastDate.getDate();
+     let start = 1;
+    let end = endFirstWeek(firstDate, 2);
+    while (start <= numDays) {
+        weeks.push({start: start, end: end});
+        start = end + 1;
+        end = end + 7;
+        end = start === 1 && end === 8 ? 1 : end;
+        if (end > numDays) {
+            end = numDays;
+        }
+    }
+    return weeks;
+    }*/
 
     Month.prototype.renderRows = function renderRows() {
         var _props = this.props,
@@ -84,7 +117,6 @@ var Month = function (_PureComponent) {
         var prevDisabled = false;
         var isToday = false;
         var dateDisabled = { date: null, type: null };
-        var isDateVacation = false;
         var selectionArray = passThrough.selectionArray;
         var preselectedDates = passThrough.preselectedDates;
         var selectionType = passThrough.selectionType;
@@ -99,6 +131,9 @@ var Month = function (_PureComponent) {
             row = void 0;
         var nextDateObject = null;
         var prevDateObject = null;
+        var isoWeek = null;
+        var weekNumber = null;
+        var dayDow = 0;
 
         // Used for faster comparisons
         var _today = format(today, 'YYYY-MM-DD');
@@ -136,9 +171,9 @@ var Month = function (_PureComponent) {
             days = [];
             dow = getDay(new Date(year, month, row[0]));
             dow === 0 ? dow = 7 : dow;
+            weekNumber = null;
 
             for (var k = 0, _len = row.length; k < _len; k++) {
-                isDateVacation = false;
                 dateDisabled = { date: null, type: null };
                 day = row[k];
                 nextDateObject = null;
@@ -151,35 +186,55 @@ var Month = function (_PureComponent) {
                 isToday = date === _today;
                 nextdow = dow + 1;
                 prevdow = dow === 1 ? 7 : dow - 1;
+                isoWeek = null;
 
-                for (var x = 0, _len2 = initialDisabledDatesArray.length; x < _len2; x++) {
+                if (dow === 4) {
+                    isoWeek = getISOWeek(date);
+                    weekNumber = React.createElement(
+                        'div',
+                        { className: styles.weekNumber },
+                        ' ',
+                        isoWeek,
+                        ' '
+                    );
+                }
+
+                /*for (let x = 0, len = initialDisabledDatesArray.length; x < len; x++) {
                     if (initialDisabledDatesArray[x].date === date) {
                         isDateVacation = true;
                         break;
                     }
-                }
+                }*/
 
-                if (selectionType === 'none' || selectionType === 'not_preselected') {
-                    for (var j = 0, _len3 = initialDisabledDatesArray.length; j < _len3; j++) {
-                        if (format(initialDisabledDatesArray[j].date, 'YYYY-MM-DD', { locale: locale.locale }) === format(date, 'YYYY-MM-DD') && initialDisabledDatesArray[j].type === 'holiday') {
+                /*if (selectionType === 'none' || selectionType === 'not_preselected') {
+                    for (let j = 0, len = initialDisabledDatesArray.length; j < len; j++) {
+                        if (format(initialDisabledDatesArray[j].date, 'YYYY-MM-DD', {locale: locale.locale}) === format(date, 'YYYY-MM-DD') && initialDisabledDatesArray[j].type === 'holiday') {
                             dateDisabled = initialDisabledDatesArray[j];
                             break;
                         }
                     }
                 } else if (selectionType === 'preselected') {
-                    for (var _j = 0, _len4 = enabledDatesArray.length; _j < _len4; _j++) {
-                        if (format(enabledDatesArray[_j].date, 'YYYY-MM-DD', { locale: locale.locale }) === format(date, 'YYYY-MM-DD')) {
-                            dateDisabled = enabledDatesArray[_j];
+                    for (let j = 0, len = enabledDatesArray.length; j < len; j++) {
+                        if (format(enabledDatesArray[j].date, 'YYYY-MM-DD', {locale: locale.locale}) === format(date, 'YYYY-MM-DD')) {
+                            dateDisabled = enabledDatesArray[j];
                             break;
                         }
                     }
-                }
+                }*/
 
-                isDisabled = minDate && date < _minDate || maxDate && date > _maxDate || selectionArray.includes(format(date, 'YYYY-MM-DD')) || disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 || initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(dateDisabled) !== -1 || initialDisabledDatesArray && selectionType === 'not_preselected' && initialDisabledDatesArray.map(function (e) {
-                    return e.date;
-                }).indexOf(dateDisabled.date) !== -1 || initialDisabledDatesArray && selectionType === 'preselected' && (isDate(lastSelectableDate) && isBefore(date, lastDate) || initialDisabledDatesArray.map(function (e) {
-                    return { date: e.date, type: e.type };
-                }).indexOf(dateDisabled) !== -1);
+                isDisabled = minDate && date < _minDate || maxDate && date > _maxDate || selectionArray.includes(format(date, 'YYYY-MM-DD')) || disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 ||
+                //initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(dateDisabled) !== -1 ||
+                /*initialDisabledDatesArray && selectionType === 'not_preselected' &&
+                (
+                    (
+                    initialDisabledDatesArray.map((e) => { return e.date; }).indexOf(dateDisabled.date) !== -1
+                    )
+                )
+                ||*/
+                initialDisabledDatesArray && selectionType === 'preselected' && isDate(lastSelectableDate) && isBefore(date, lastDate)
+                /*||
+                initialDisabledDatesArray.map((e) => { return {date: e.date, type: e.type}; }).indexOf(dateDisabled) !== -1*/
+                ;
 
                 prevDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(prevdow) !== -1 || reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map(function (e) {
                     return e.date;
@@ -195,7 +250,6 @@ var Month = function (_PureComponent) {
                     key: 'day-' + day,
                     date: date,
                     day: day,
-                    isVacation: isDateVacation,
                     originalDisabledDates: originalDisabledDates,
                     beforeLastDisabled: beforeLastDisabled,
                     selected: selected,
@@ -220,6 +274,7 @@ var Month = function (_PureComponent) {
                     role: 'row',
                     'aria-label': 'Week ' + (i + 1)
                 },
+                weekNumber,
                 days
             );
         }

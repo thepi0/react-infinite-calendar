@@ -755,7 +755,8 @@
 
 .Cal__Month__row {
   padding: 0;
-  margin: 0; }
+  margin: 0;
+  position: relative; }
   .Cal__Month__row:first-child {
     text-align: right; }
   .Cal__Month__row.Cal__Month__partial:last-of-type li {
@@ -811,6 +812,17 @@
     text-transform: capitalize; }
   .Cal__Month__label.Cal__Month__partialFirstRow {
     top: 70px; }
+
+.Cal__Month__weekNumber {
+  position: absolute;
+  left: -25px;
+  bottom: 10px;
+  color: #a4d8e8;
+  width: 40px;
+  height: 40px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: bold; }
 /*  imported from MonthList.scss  */
 
 .Cal__MonthList__root {

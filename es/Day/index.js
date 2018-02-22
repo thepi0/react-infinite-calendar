@@ -187,7 +187,7 @@ var Day = function (_PureComponent) {
         'data-disabled': isDisabled || beforeLastDisabled && !isPreSelected || !isPreSelected && selectionType === 'preselected' || isPreSelected && selectionType === 'not_preselected' ? true : false
       }, handlers),
       day,
-      isVacation ? React.createElement('div', { className: styles.vacationCircle }) : null,
+      vacationObject.vacation ? React.createElement('div', { className: styles.vacationCircle }) : null,
       (isSelected || isArraySelected) && this.renderSelection()
     );
   };
