@@ -117,16 +117,6 @@ var Month = function (_PureComponent) {
         var _minDate = format(minDate, 'YYYY-MM-DD');
         var _maxDate = format(maxDate, 'YYYY-MM-DD');
 
-        console.log(originalDisabledDates);
-
-        /*if (miniCalendar && isBefore(date, _today)) {
-            
-        }
-        
-        if (miniCalendar) {
-            originalDisabledDates.push({date: '2018-02-20', type: 'no-reservation'})
-        }*/
-
         var initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : [];
 
         var enabledDatesArray = preselected && preselected[0] ? preselected.map(function (dateObj) {
