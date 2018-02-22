@@ -7,10 +7,10 @@ import styles from './Day.scss';
 export default class Day extends PureComponent {
 
   onSelectionStart = () => {
-    let {date, beforeLastDisabled, isWeekend, isDisabled, isPreSelected, vacationObject, onSelectionStart, onClear, selectionType, originalDisabledDates} = this.props;
-
-    var fromTop = ReactDOM.findDOMNode(this).getBoundingClientRect().top;
-
+    let {date, beforeLastDisabled, miniCalendar, isWeekend, isDisabled, isPreSelected, vacationObject, onSelectionStart, onClear, selectionType, originalDisabledDates} = this.props;
+    
+    let fromTop = ReactDOM.findDOMNode(this).getBoundingClientRect().top;
+    
     if (isWeekend || (beforeLastDisabled && !isPreSelected) || (vacationObject && vacationObject.vacation_type === 'holiday') || (vacationObject && vacationObject.vacation_type === 'no-reservation') || (selectionType === 'not_preselected' && isPreSelected && isDisabled) || (selectionType === 'preselected' && !isPreSelected && isDisabled) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected')) {
         onClear();
     } else if (typeof onSelectionStart === 'function') {
@@ -21,7 +21,7 @@ export default class Day extends PureComponent {
   onSelectionEnd = (e) => {
     let {date, beforeLastDisabled, isDisabled, isPreSelected, onSelectionEnd, onClear, selectionType, originalDisabledDates} = this.props;
 
-    var fromTop = ReactDOM.findDOMNode(this).getBoundingClientRect().top;
+    let fromTop = ReactDOM.findDOMNode(this).getBoundingClientRect().top;
 
     if (typeof onSelectionEnd === 'function') {
         onSelectionEnd(e, parse(date), beforeLastDisabled, isPreSelected, originalDisabledDates, fromTop);
@@ -119,6 +119,7 @@ export default class Day extends PureComponent {
           [styles.disabled]: isDisabled || (beforeLastDisabled && !isPreSelected) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected'),
           [styles.holiday]: (vacationObject.vacation === true && vacationObject.vacation_type === 'holiday'),
           [styles.noReservation]: (vacationObject.vacation === true && vacationObject.vacation_type === 'no-reservation'),
+          [styles.hide]: (vacationObject.vacation === true && vacationObject.hide),
           [styles.enabled]: !isDisabled,
           [styles.beforelast]: beforeLastDisabled,
           [styles.purple]: (isPreSelected && colors.purple),

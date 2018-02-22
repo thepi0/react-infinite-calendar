@@ -1128,6 +1128,11 @@
         }
     }
   }
+
+  &.hide {
+      display: none;
+      cursor: default;
+  }
 }
 
 /*

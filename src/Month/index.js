@@ -80,6 +80,18 @@ export default class Month extends PureComponent {
     const _today = format(today, 'YYYY-MM-DD');
     const _minDate = format(minDate, 'YYYY-MM-DD');
     const _maxDate = format(maxDate, 'YYYY-MM-DD');
+    
+    console.log(originalDisabledDates);
+    
+    
+    /*if (miniCalendar && isBefore(date, _today)) {
+        
+    }
+    
+    if (miniCalendar) {
+        originalDisabledDates.push({date: '2018-02-20', type: 'no-reservation'})
+    }*/
+    
     const initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : [];
 
 
@@ -129,29 +141,6 @@ export default class Month extends PureComponent {
             weekNumber = <div className={styles.weekNumber}> {isoWeek} </div>;
         }
 
-        /*for (let x = 0, len = initialDisabledDatesArray.length; x < len; x++) {
-            if (initialDisabledDatesArray[x].date === date) {
-                isDateVacation = true;
-                break;
-            }
-        }*/
-
-        /*if (selectionType === 'none' || selectionType === 'not_preselected') {
-            for (let j = 0, len = initialDisabledDatesArray.length; j < len; j++) {
-                if (format(initialDisabledDatesArray[j].date, 'YYYY-MM-DD', {locale: locale.locale}) === format(date, 'YYYY-MM-DD') && initialDisabledDatesArray[j].type === 'holiday') {
-                    dateDisabled = initialDisabledDatesArray[j];
-                    break;
-                }
-            }
-        } else if (selectionType === 'preselected') {
-            for (let j = 0, len = enabledDatesArray.length; j < len; j++) {
-                if (format(enabledDatesArray[j].date, 'YYYY-MM-DD', {locale: locale.locale}) === format(date, 'YYYY-MM-DD')) {
-                    dateDisabled = enabledDatesArray[j];
-                    break;
-                }
-            }
-        }*/
-
         isDisabled = (
 					minDate && date < _minDate ||
 					maxDate && date > _maxDate ||
@@ -186,7 +175,8 @@ export default class Month extends PureComponent {
 				);
 
         beforeLastDisabled = (
-					isDate(lastSelectableDate) && isBefore(date, lastDate)
+					//miniCalendar && isBefore(date, _today) ||
+                    isDate(lastSelectableDate) && isBefore(date, lastDate)
 				);
 
         if (miniCalendar) {

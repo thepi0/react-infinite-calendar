@@ -77,6 +77,7 @@ export const enhanceDay = withPropsOnChange(['selected'], ({date, selected, sele
   const vacationObject = {
       vacation: positionOfDate.vacation,
       vacation_type: positionOfDate.vacation_type,
+      hide: positionOfDate.hide
   }
 
   const dayClasses =
@@ -806,6 +807,7 @@ function determineIfDateAlreadySelected(date, selected, originalDisabledDates) {
       if (date === originalDisabledDates[j].date) {
           returnVal.vacation = true;
           returnVal.vacation_type = originalDisabledDates[j].type;
+          returnVal.hide = originalDisabledDates[j].hide;
       }
   }
 

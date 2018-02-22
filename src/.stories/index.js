@@ -200,6 +200,18 @@ storiesOf('Calendar examples', module)
           autoFocus={false}
           originalDisabledDates={[
               {
+                  date: "2018-02-19",
+                  type: "no-reservation",
+                  hide: true
+              },{
+                  date: "2018-02-20",
+                  type: "no-reservation",
+                  hide: true
+              },{
+                  date: "2018-02-21",
+                  type: "no-reservation",
+                  hide: true
+              },{
                   date: "2018-02-27",
                   type: "no-reservation"
               },{
