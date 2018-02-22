@@ -81,17 +81,6 @@ export default class Month extends PureComponent {
     const _minDate = format(minDate, 'YYYY-MM-DD');
     const _maxDate = format(maxDate, 'YYYY-MM-DD');
     
-    console.log(originalDisabledDates);
-    
-    
-    /*if (miniCalendar && isBefore(date, _today)) {
-        
-    }
-    
-    if (miniCalendar) {
-        originalDisabledDates.push({date: '2018-02-20', type: 'no-reservation'})
-    }*/
-    
     const initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : [];
 
 
