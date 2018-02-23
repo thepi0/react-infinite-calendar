@@ -8,9 +8,7 @@
   width: 490px;
   float: right;
 }
-.mini {
-    width: 350px;
-}
+
 .row {
   padding: 0;
   margin: 0;
@@ -27,6 +25,63 @@
       }
     }
   }
+}
+
+.mini {
+    width: 350px;
+
+    .row {
+      padding: 0;
+      margin: 0;
+      position: relative;
+
+      &:first-child {
+        text-align: right;
+      }
+
+      &.partial {
+
+        &:first-child {
+            text-align: right;
+          li {
+            position: relative;
+            z-index: 1;
+          }
+        }
+      }
+    }
+}
+
+.root {
+
+    &.multiple {
+
+        .mini {
+            .row {
+              padding: 0;
+              margin: 0;
+              position: relative;
+
+              &:first-child {
+                text-align: right;
+              }
+
+              &.partial {
+
+                &:first-child {
+                    text-align: left;
+                  li {
+                    position: relative;
+                    z-index: 1;
+                  }
+                }
+              }
+              &:last-of-type {
+                  text-align: right;
+              }
+            }
+        }
+    }
 }
 
 .indicator {

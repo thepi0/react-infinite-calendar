@@ -6,6 +6,10 @@ import isBefore from 'date-fns/is_before';
 import isSameDay from 'date-fns/is_same_day';
 import endOfDay from 'date-fns/end_of_day';
 import startOfDay from 'date-fns/start_of_day';
+import endOfMonth from 'date-fns/end_of_month';
+import startOfMonth from 'date-fns/start_of_month';
+import format from 'date-fns/format';
+import differenceInCalendarDays from 'date-fns/difference_in_calendar_days';
 import {withPropsOnChange} from 'recompose';
 
 export const keyCodes = {
@@ -42,6 +46,70 @@ export function getMonth(year, month, weekStartsOn) {
     }
 
     rows[week].push(day);
+
+    if (dow === weekEndsOn) {
+      week++;
+    }
+
+    dow = dow < 6 ? dow + 1 : 0;
+  }
+
+  return {
+    date: monthDate,
+    rows,
+  };
+}
+
+export function getMiniMonth(year, month, weekStartsOn, min, max) {
+  const rows = [];
+  const monthDate = new Date(year, month, 1);
+  const daysInMonth = getDaysInMonth(monthDate);
+  const weekEndsOn = getEndOfWeekIndex(weekStartsOn);
+
+  let minDay = format(min, 'D');
+  let maxDay = format(max, 'D');
+  let minMonth = (format(min, 'M') - 1).toString();
+  let maxMonth = (format(max, 'M') - 1).toString();
+
+  let intMonth = parseInt(month, 10);
+  minMonth = parseInt(minMonth, 10);
+  maxMonth = parseInt(maxMonth, 10);
+
+  //console.log('month: ' + intMonth);
+  //console.log('minMonth: ' + minMonth);
+  //console.log('maxMonth: ' + maxMonth);
+
+  let endOfMin;
+  let startOfMax;
+  let monthStartDate;
+  let monthEndDate;
+
+  let dow = getDay(new Date(year, intMonth, 1));
+  let week = 0;
+
+  if (minMonth === maxMonth) {
+      monthEndDate = maxDay;
+      monthStartDate = minDay;
+  } else {
+      if (intMonth <= maxMonth && minMonth >= intMonth) {
+          monthEndDate = format(endOfMonth(new Date(year, month, minDay)), 'D');
+          monthEndDate = parseInt(monthEndDate, 10);
+          monthStartDate = minDay;
+      } else if (intMonth >= minMonth && intMonth <= maxMonth) {
+          monthStartDate = format(startOfMonth(new Date(year, month, maxDay)), 'D');
+          monthStartDate = parseInt(monthStartDate, 10);
+          monthEndDate = maxDay;
+      }
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    if (!rows[week]) {
+      rows[week] = [];
+    }
+
+    if (day >= monthStartDate && day <= monthEndDate && dow !== 6 && dow !== 0) {
+        rows[week].push(day);
+    }
 
     if (dow === weekEndsOn) {
       week++;
@@ -96,6 +164,75 @@ export function getWeeksInMonth(
 
   return rowCount;
 }
+
+export function getWeeksInMiniMonth(
+  month,
+  year = new Date().getFullYear(),
+  weekStartsOn,
+  isLastDisplayedMonth,
+  max,
+  min
+) {
+  const weekEndsOn = getEndOfWeekIndex(weekStartsOn);
+
+  const firstOfMonth = new Date(year, month, 1);
+  const firstWeekNumber = getWeek(year, firstOfMonth, weekStartsOn);
+
+  const lastOfMonth = new Date(year, month + 1, 0); // Last date of the Month
+  const lastWeekNumber = getWeek(year, lastOfMonth, weekStartsOn);
+
+  let rowCount = 2;
+
+  let minDay = format(min, 'D');
+  let maxDay = format(max, 'D');
+  let minMonth = (format(min, 'M') - 1).toString();
+  let maxMonth = (format(max, 'M') - 1).toString();
+
+  let endOfMin;
+  let startOfMax;
+  let monthStartDate;
+  let monthEndDate;
+  let totalDaysBetween;
+
+  let intMonth = parseInt(month, 10);
+  minMonth = parseInt(minMonth, 10);
+  maxMonth = parseInt(maxMonth, 10);
+
+  if (minMonth === maxMonth) {
+      rowCount = 2;
+  } else {
+
+      if (intMonth <= maxMonth && minMonth >= intMonth) {
+          monthEndDate = format(endOfMonth(new Date(year, month, minDay)), 'D');
+          monthEndDate = parseInt(monthEndDate, 10);
+          monthStartDate = minDay;
+          totalDaysBetween = differenceInCalendarDays(new Date(year, month, monthEndDate), new Date(year, month, monthStartDate));
+      } else if (intMonth >= minMonth && intMonth <= maxMonth) {
+          monthStartDate = format(startOfMonth(new Date(year, month, maxDay)), 'D');
+          monthStartDate = parseInt(monthStartDate, 10);
+          monthEndDate = maxDay;
+          totalDaysBetween = differenceInCalendarDays(new Date(year, month, monthEndDate), new Date(year, month, monthStartDate));
+      }
+
+      totalDaysBetween = totalDaysBetween + 1;
+
+      if (totalDaysBetween < 6) {
+          rowCount = 0;
+      } else {
+          rowCount = 1;
+      }
+  }
+
+
+
+  // If the last week contains 7 days, we need to add an extra row
+  /*if (lastOfMonth.getDay() === weekEndsOn || isLastDisplayedMonth) {
+    rowCount++;
+}*/
+
+  return rowCount;
+}
+
 
 /**
  * Helper to find out what day the week ends on given the localized start of the week

@@ -5,8 +5,10 @@ import classNames from 'classnames';
 import {
   emptyFn,
   getMonth,
+  getMiniMonth,
   getWeek,
   getWeeksInMonth,
+  getWeeksInMiniMonth,
   animate,
 } from '../utils';
 import parse from 'date-fns/parse';
@@ -60,10 +62,19 @@ export default class MonthList extends Component {
   cache = {};
   memoize = function(param) {
     if (!this.cache[param]) {
-      const {locale: {weekStartsOn}} = this.props;
-      const [year, month] = param.split(':');
-      const result = getMonth(year, month, weekStartsOn);
-      this.cache[param] = result;
+        if (this.props.miniCalendar) {
+            const {locale: {weekStartsOn}, min, max} = this.props;
+            const [year, month] = param.split(':');
+            const result = getMiniMonth(year, month, weekStartsOn, min, max);
+            let finalRows = result.rows.filter(value => Object.keys(value).length !== 0);
+            let returnable = {date: result.date, rows: finalRows};
+            this.cache[param] = returnable;
+        } else {
+            const {locale: {weekStartsOn}} = this.props;
+            const [year, month] = param.split(':');
+            const result = getMonth(year, month, weekStartsOn);
+            this.cache[param] = result;
+        }
     }
     return this.cache[param];
   };
@@ -73,15 +84,22 @@ export default class MonthList extends Component {
 
   getMonthHeight = (index) => {
       if (this.props.miniCalendar) {          
-          let {min, max, rowHeight} = this.props;
+          let {locale: {weekStartsOn}, months, rowHeight, max, min} = this.props;
+          let {month, year} = months[index];
           let monthCount = differenceInCalendarMonths(max, min);
-          let height;
           
-          if (monthCount > 0) {
-              height = rowHeight;
-          } else {
-              height = rowHeight * 2;
-          }
+          let weeks = getWeeksInMiniMonth(month, year, weekStartsOn, index === months.length - 1, max, min);
+          let height = weeks * rowHeight;
+          
+          //if (monthCount > 0) {
+              /*if (index === 0) {
+                  height = 0;
+              } else {*/
+                  //height = rowHeight;
+              //}
+          //} else {
+              //height = rowHeight * 2;
+          //}
           
           this.monthHeights[index] = height;
       } else {
@@ -216,6 +234,10 @@ export default class MonthList extends Component {
       miniCalendar,
       width,
     } = this.props;
+    
+    const itemSizes = miniCalendar ? rowHeight : rowHeight * AVERAGE_ROWS_PER_MONTH;
+    
+    //console.log(itemSizes);
 
     return (
       <VirtualList
@@ -224,7 +246,7 @@ export default class MonthList extends Component {
         height={height}
         itemCount={months.length}
         itemSize={this.getMonthHeight}
-        estimatedItemSize={(miniCalendar ? rowHeight : rowHeight * AVERAGE_ROWS_PER_MONTH)}
+        estimatedItemSize={itemSizes}
         renderItem={this.renderMonth}
         onScroll={onScroll}
         scrollOffset={this.state.scrollTop}

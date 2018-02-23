@@ -168,7 +168,7 @@ export default class Month extends PureComponent {
                     isDate(lastSelectableDate) && isBefore(date, lastDate)
 				);
 
-        if (miniCalendar) {
+        /*if (miniCalendar) {
             if (!isBefore(date, absoluteMin) && !isAfter(date, absoluteMax) && dow !== 6 && dow !== 7) {
                 days[k] = (
         					<DayComponent
@@ -193,7 +193,7 @@ export default class Month extends PureComponent {
                 
             }
             dow += 1;
-        } else {
+        } else {*/
             days[k] = (
     					<DayComponent
     						key={`day-${day}`}
@@ -215,7 +215,7 @@ export default class Month extends PureComponent {
     				);
 
             dow += 1;
-        }
+        //}
 
       }
        {days.length ?
@@ -223,7 +223,7 @@ export default class Month extends PureComponent {
         
         <ul
           key={`Row-${i}`}
-          className={classNames(styles.row, {[styles.partial]: row.length !== 7})}
+          className={classNames(styles.row, {[styles.partial]: !miniCalendar && row.length !== 7}, {[styles.partial]: miniCalendar && row.length !== 5})}
           style={{height: rowHeight}}
           role="row"
           aria-label={`Week ${i + 1}`}
@@ -245,9 +245,11 @@ export default class Month extends PureComponent {
     const {locale: {locale}, miniCalendar, monthDate, today, rows, rowHeight, style} = this.props;
     const dateFormat = isSameYear(monthDate, today) ? 'MMMM' : 'MMMM YYYY';
     const isCurrentMonth = isThisMonth(monthDate) && isThisYear(monthDate);
+    
+    console.log(this.props);
 
     return (
-        <div className={styles.root} style={{...style, lineHeight: `${rowHeight}px`}}>
+        <div className={classNames(styles.root, {[styles.multiple]: miniCalendar && this.props.rows.length > 1})} style={{...style, lineHeight: `${rowHeight}px`}}>
             {!miniCalendar ?
                 <div className={classNames(styles.indicator, {[styles.indicatorCurrent] : isCurrentMonth })}>
                     <div className={styles.display}>
