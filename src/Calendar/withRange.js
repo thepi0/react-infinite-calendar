@@ -379,23 +379,6 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
 
     let includeDate = selectedArrayFinal.indexOf(format(date, 'YYYY-MM-DD'));
 
-    /*if (includeDate === -1 && !beforeLastDisabled) {
-        selected = null;
-        selectedArrayFinal = [];
-        setSelectionStart(null);
-        setSelectionType('none');
-        setSelectionDone(false);
-        setSelectionArray([]);
-        lastSelectionBeforeLastDisabled = false;
-        selectedArrayFinal = selectedArrayFinal.concat(format(date, 'YYYY-MM-DD'));
-
-        if (!isPreSelected) {
-            setSelectionType('not_preselected');
-        } else {
-            setSelectionType('preselected');
-        }
-    }*/
-
     if (includeDate !== -1 && !beforeLastDisabled) {
         savedSelectionType = selectionType;
         setSelectionType('selected');

@@ -91,16 +91,6 @@ export default class MonthList extends Component {
           let weeks = getWeeksInMiniMonth(month, year, weekStartsOn, index === months.length - 1, max, min);
           let height = weeks * rowHeight;
           
-          //if (monthCount > 0) {
-              /*if (index === 0) {
-                  height = 0;
-              } else {*/
-                  //height = rowHeight;
-              //}
-          //} else {
-              //height = rowHeight * 2;
-          //}
-          
           this.monthHeights[index] = height;
       } else {
           if (!this.monthHeights[index]) {
@@ -236,8 +226,6 @@ export default class MonthList extends Component {
     } = this.props;
     
     const itemSizes = miniCalendar ? rowHeight : rowHeight * AVERAGE_ROWS_PER_MONTH;
-    
-    //console.log(itemSizes);
 
     return (
       <VirtualList

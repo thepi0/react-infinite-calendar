@@ -50,38 +50,13 @@
       margin: 0;
       position: relative;
 
-      &:first-child {
-        //text-align: right;
-      }
-
       &.partial {
 
         &:first-child {
-            //text-align: left;
           li {
             position: relative;
             z-index: 1;
           }
-        }
-
-        &.first {
-            //text-align: right;
-        }
-
-        &.second {
-            //text-align: left;
-        }
-
-        &:last-of-type {
-            //text-align: left;
-        }
-
-        &:last-child {
-            //text-align: right;
-        }
-
-        &:last-of-type {
-            //text-align: left;
         }
       }
     }
@@ -97,41 +72,13 @@
               padding: 0;
               margin: 0;
               position: relative;
-
-              &:first-child {
-                //text-align: right;
-              }
-
               &.partial {
-
-                  &.first {
-                      //text-align: left;
-                  }
-
-                  &.second {
-                      //text-align: right;
-                  }
-
-
                 &:first-child {
-                    //text-align: right;
                   li {
                     position: relative;
                     z-index: 1;
                   }
                 }
-
-                &:last-child {
-                    //text-align: left;
-                }
-
-                &:last-of-type {
-                    //text-align: left;
-                }
-              }
-
-              &:last-of-type {
-                  //text-align: right;
               }
             }
         }

@@ -135,20 +135,10 @@ export default class Month extends PureComponent {
 					maxDate && date > _maxDate ||
                     selectionArray.includes(format(date, 'YYYY-MM-DD')) ||
 					disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 ||
-                    //initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(dateDisabled) !== -1 ||
-                    /*initialDisabledDatesArray && selectionType === 'not_preselected' &&
-                    (
-                        (
-                        initialDisabledDatesArray.map((e) => { return e.date; }).indexOf(dateDisabled.date) !== -1
-                        )
-                    )
-                    ||*/
                     initialDisabledDatesArray && selectionType === 'preselected' &&
                     (
                         (
                         isDate(lastSelectableDate) && isBefore(date, lastDate)
-                        /*||
-                        initialDisabledDatesArray.map((e) => { return {date: e.date, type: e.type}; }).indexOf(dateDisabled) !== -1*/
                         )
                     )
 				);
@@ -164,58 +154,30 @@ export default class Month extends PureComponent {
 				);
 
         beforeLastDisabled = (
-					//miniCalendar && isBefore(date, _today) ||
                     isDate(lastSelectableDate) && isBefore(date, lastDate)
 				);
 
-        /*if (miniCalendar) {
-            if (!isBefore(date, absoluteMin) && !isAfter(date, absoluteMax) && dow !== 6 && dow !== 7) {
-                days[k] = (
-        					<DayComponent
-        						key={`day-${day}`}
-        						date={date}
-        						day={day}
-                                originalDisabledDates={originalDisabledDates}
-                                beforeLastDisabled={beforeLastDisabled}
-                                selected={selected}
-                                selectionArray={selectionArray}
-                                preselected={preselected}
-                                lastUpdate={lastUpdate}
-                                nextDisabled={nextDisabled}
-                                prevDisabled={prevDisabled}
-        						isDisabled={isDisabled}
-                                selectionType={selectionType}
-        						isToday={isToday}
-                                {...passThrough.Day}
-        					/>
-        				);
+        days[k] = (
+					<DayComponent
+						key={`day-${day}`}
+						date={date}
+						day={day}
+                        originalDisabledDates={originalDisabledDates}
+                        beforeLastDisabled={beforeLastDisabled}
+                        selected={selected}
+                        selectionArray={selectionArray}
+                        preselected={preselected}
+                        lastUpdate={lastUpdate}
+                        nextDisabled={nextDisabled}
+                        prevDisabled={prevDisabled}
+						isDisabled={isDisabled}
+                        selectionType={selectionType}
+						isToday={isToday}
+                        {...passThrough.Day}
+					/>
+				);
 
-                
-            }
-            dow += 1;
-        } else {*/
-            days[k] = (
-    					<DayComponent
-    						key={`day-${day}`}
-    						date={date}
-    						day={day}
-                            originalDisabledDates={originalDisabledDates}
-                            beforeLastDisabled={beforeLastDisabled}
-                            selected={selected}
-                            selectionArray={selectionArray}
-                            preselected={preselected}
-                            lastUpdate={lastUpdate}
-                            nextDisabled={nextDisabled}
-                            prevDisabled={prevDisabled}
-    						isDisabled={isDisabled}
-                            selectionType={selectionType}
-    						isToday={isToday}
-                            {...passThrough.Day}
-    					/>
-    				);
-
-            dow += 1;
-        //}
+        dow += 1;
 
       }
        {days.length ?
