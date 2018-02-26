@@ -177,19 +177,7 @@ var Month = function (_PureComponent) {
                     );
                 }
 
-                isDisabled = minDate && date < _minDate || maxDate && date > _maxDate || selectionArray.includes(format(date, 'YYYY-MM-DD')) || disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 ||
-                //initialDisabledDatesArray && selectionType === 'none' && initialDisabledDatesArray.indexOf(dateDisabled) !== -1 ||
-                /*initialDisabledDatesArray && selectionType === 'not_preselected' &&
-                (
-                    (
-                    initialDisabledDatesArray.map((e) => { return e.date; }).indexOf(dateDisabled.date) !== -1
-                    )
-                )
-                ||*/
-                initialDisabledDatesArray && selectionType === 'preselected' && isDate(lastSelectableDate) && isBefore(date, lastDate)
-                /*||
-                initialDisabledDatesArray.map((e) => { return {date: e.date, type: e.type}; }).indexOf(dateDisabled) !== -1*/
-                ;
+                isDisabled = minDate && date < _minDate || maxDate && date > _maxDate || selectionArray.includes(format(date, 'YYYY-MM-DD')) || disabledDays && disabledDays.length && disabledDays.indexOf(dow) !== -1 || initialDisabledDatesArray && selectionType === 'preselected' && isDate(lastSelectableDate) && isBefore(date, lastDate);
 
                 prevDisabled = disabledDays && disabledDays.length && disabledDays.indexOf(prevdow) !== -1 || reallyDisabledDatesArray && reallyDisabledDatesArray.length && reallyDisabledDatesArray.map(function (e) {
                     return e.date;
@@ -199,35 +187,8 @@ var Month = function (_PureComponent) {
                     return e.date;
                 }).indexOf(nextDateObject.date) !== -1;
 
-                beforeLastDisabled =
-                //miniCalendar && isBefore(date, _today) ||
-                isDate(lastSelectableDate) && isBefore(date, lastDate);
+                beforeLastDisabled = isDate(lastSelectableDate) && isBefore(date, lastDate);
 
-                /*if (miniCalendar) {
-                    if (!isBefore(date, absoluteMin) && !isAfter(date, absoluteMax) && dow !== 6 && dow !== 7) {
-                        days[k] = (
-                					<DayComponent
-                						key={`day-${day}`}
-                						date={date}
-                						day={day}
-                                        originalDisabledDates={originalDisabledDates}
-                                        beforeLastDisabled={beforeLastDisabled}
-                                        selected={selected}
-                                        selectionArray={selectionArray}
-                                        preselected={preselected}
-                                        lastUpdate={lastUpdate}
-                                        nextDisabled={nextDisabled}
-                                        prevDisabled={prevDisabled}
-                						isDisabled={isDisabled}
-                                        selectionType={selectionType}
-                						isToday={isToday}
-                                        {...passThrough.Day}
-                					/>
-                				);
-                         
-                    }
-                    dow += 1;
-                } else {*/
                 days[k] = React.createElement(DayComponent, _extends({
                     key: 'day-' + day,
                     date: date,
@@ -246,7 +207,6 @@ var Month = function (_PureComponent) {
                 }, passThrough.Day));
 
                 dow += 1;
-                //}
             }
             {
                 var _classNames, _classNames2, _classNames3, _classNames4;

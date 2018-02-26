@@ -86,16 +86,6 @@ var MonthList = function (_Component) {
         var weeks = getWeeksInMiniMonth(month, year, weekStartsOn, index === months.length - 1, max, min);
         var height = weeks * rowHeight;
 
-        //if (monthCount > 0) {
-        /*if (index === 0) {
-            height = 0;
-        } else {*/
-        //height = rowHeight;
-        //}
-        //} else {
-        //height = rowHeight * 2;
-        //}
-
         _this.monthHeights[index] = height;
       } else {
         if (!_this.monthHeights[index]) {
@@ -256,8 +246,6 @@ var MonthList = function (_Component) {
 
 
     var itemSizes = miniCalendar ? rowHeight : rowHeight * AVERAGE_ROWS_PER_MONTH;
-
-    //console.log(itemSizes);
 
     return React.createElement(VirtualList, {
       ref: this._getRef,

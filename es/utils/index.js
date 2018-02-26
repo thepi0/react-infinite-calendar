@@ -79,10 +79,6 @@ export function getMiniMonth(year, month, weekStartsOn, min, max) {
   minMonth = parseInt(minMonth, 10);
   maxMonth = parseInt(maxMonth, 10);
 
-  //console.log('month: ' + intMonth);
-  //console.log('minMonth: ' + minMonth);
-  //console.log('maxMonth: ' + maxMonth);
-
   var endOfMin = void 0;
   var startOfMax = void 0;
   var monthStartDate = void 0;
@@ -221,11 +217,6 @@ export function getWeeksInMiniMonth(month) {
       rowCount = 1;
     }
   }
-
-  // If the last week contains 7 days, we need to add an extra row
-  /*if (lastOfMonth.getDay() === weekEndsOn || isLastDisplayedMonth) {
-    rowCount++;
-  }*/
 
   return rowCount;
 }
