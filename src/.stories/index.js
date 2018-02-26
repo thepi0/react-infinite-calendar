@@ -90,22 +90,22 @@ storiesOf('Calendar examples', module)
       }}
       preselected={[
           {
-              start_time: "2018-01-23T14:00:00Z",
+              start_time: "2018-01-23T07:00:00Z",
               end_time: "2018-01-23T14:00:00Z",
               child: 100,
               color: '#ca569a'
           },{
-              start_time: "2018-01-23T14:00:00Z",
+              start_time: "2018-01-23T07:00:00Z",
               end_time: "2018-01-23T14:00:00Z",
               child: 101,
               color: '#2cb1d8'
           },{
-              start_time: "2018-01-23T14:00:00Z",
+              start_time: "2018-01-23T07:00:00Z",
               end_time: "2018-01-23T14:00:00Z",
               child: 102,
               color: '#85bd4c'
           },{
-              start_time: "2018-01-23T14:00:00Z",
+              start_time: "2018-01-23T07:00:00Z",
               end_time: "2018-01-23T14:00:00Z",
               child: 103,
               color: '#ea992f'
@@ -115,67 +115,82 @@ storiesOf('Calendar examples', module)
               child: 100,
               color: '#ca569a'
           },{
-              start_time: "2018-01-24T14:00:00Z",
+              start_time: "2018-01-24T07:00:00Z",
               end_time: "2018-01-24T14:00:00Z",
               child: 101,
               color: '#2cb1d8'
           },{
-              start_time: "2018-01-24T14:00:00Z",
+              start_time: "2018-01-24T07:00:00Z",
               end_time: "2018-01-24T14:00:00Z",
               child: 102,
               color: '#85bd4c'
           },{
-              start_time: "2018-01-24T14:00:00Z",
+              start_time: "2018-01-24T07:00:00Z",
               end_time: "2018-01-24T14:00:00Z",
               child: 103,
               color: '#ea992f'
           }, {
-              start_time: "2018-02-13T14:00:00Z",
+              start_time: "2018-02-13T07:00:00Z",
               end_time: "2018-02-13T14:00:00Z",
               child: 100,
               color: '#ca569a'
           },
           {
-              start_time: "2018-02-14T14:00:00Z",
+              start_time: "2018-02-14T07:00:00Z",
               end_time: "2018-02-14T14:00:00Z",
               child: 100,
               color: '#ca569a'
           },
           {
-              start_time: "2018-02-16T14:00:00Z",
+              start_time: "2018-02-16T07:00:00Z",
               end_time: "2018-02-16T14:00:00Z",
               child: 100,
               color: '#ca569a'
           },{
-              start_time: "2018-02-20T14:00:00Z",
+              start_time: "2018-02-20T07:00:00Z",
               end_time: "2018-02-20T14:00:00Z",
               child: 100,
               color: '#ca569a'
           },
           {
-              start_time: "2018-02-20T14:00:00Z",
+              start_time: "2018-02-20T07:00:00Z",
               end_time: "2018-02-20T14:00:00Z",
               child: 101,
               color: '#2cb1d8'
           },
           {
-              start_time: "2018-02-20T14:00:00Z",
+              start_time: "2018-02-20T07:00:00Z",
               end_time: "2018-02-20T14:00:00Z",
               child: 102,
               color: '#85bd4c'
           },{
-              start_time: "2018-02-20T14:00:00Z",
+              start_time: "2018-02-20T07:00:00Z",
               end_time: "2018-02-20T14:00:00Z",
               child: 103,
               color: '#ea992f'
           },{
-              start_time: "2018-02-27T14:00:00Z",
+              start_time: "2018-02-26T07:00:00Z",
+              end_time: "2018-02-26T14:00:00Z",
+              child: 103,
+              color: '#ea992f'
+          },{
+              start_time: "2018-02-27T07:00:00Z",
               end_time: "2018-02-27T14:00:00Z",
               child: 103,
               color: '#ea992f'
           },{
-              start_time: "2018-02-28T14:00:00Z",
+              start_time: "2018-02-28T07:00:00Z",
               end_time: "2018-02-28T14:00:00Z",
+              child: 103,
+              color: '#ea992f'
+          },{
+              start_time: "2018-03-21T07:00:00Z",
+              end_time: "2018-03-21T14:00:00Z",
+              child: 103,
+              color: '#ea992f'
+          },{
+              start_time: "2018-03-22T07:00:00Z",
+              end_time: "2018-03-22T14:00:00Z",
               child: 103,
               color: '#ea992f'
           }
@@ -245,6 +260,74 @@ storiesOf('Calendar examples', module)
           miniCalendar={true}
           min={new Date(2018, 1, 19)}
           max={new Date(2018, 2, 2)}
+          rowHeight={74}
+          selected={null}
+          lastSelectableDate={null}
+          scrollOffset={0}
+          lastUpdate={new Date()}
+          autoFocus={false}
+          originalDisabledDates={[
+              {
+                  date: "2018-02-19",
+                  type: "no-reservation",
+                  hide: true
+              },{
+                  date: "2018-02-20",
+                  type: "no-reservation",
+                  hide: true
+              },{
+                  date: "2018-02-21",
+                  type: "no-reservation",
+                  hide: true
+              },{
+                  date: "2018-02-22",
+                  type: "no-reservation",
+                  hide: true
+              },{
+                  date: "2018-02-27",
+                  type: "no-reservation"
+              },{
+                  date: "2018-02-28",
+                  type: "no-reservation"
+              }
+          ]}
+          disabledDates={null}
+          disabledDays={[6,7]}
+          displayOptions={{
+              hideYearsOnSelect: false,
+              layout: 'portrait',
+              overscanMonthCount: 0,
+              showHeader: false,
+              showMonthsForYears: false,
+              showOverlay: false,
+              showTodayHelper: false,
+              showWeekdays: true,
+              todayHelperRowOffset: 4,
+          }}
+          locale={{
+              locale: require('date-fns/locale/fi'),
+              blank: 'Valitse päivämäärä(t)',
+              headerFormat: 'ddd, MMM Do',
+              todayLabel: {
+                long: 'Tänään',
+              },
+              weekdays: ['Su', 'Ma', 'Ti', 'Ke', 'To', 'Pe', 'La'],
+              weekStartsOn: 1,
+          }}
+          theme={{
+              weekdaysHeight: '64px'
+          }}
+          onSelect={(date) => console.log(date)}
+          onScrollEnd={(date) => console.log(date)}
+          Component={withRange(Calendar)}
+        />
+        <div style={{width: '100%', height: '20px'}}></div>
+        <InfiniteCalendar
+          width="100%"
+          height={152}
+          miniCalendar={true}
+          min={new Date(2018, 4, 28)}
+          max={new Date(2018, 5, 8)}
           rowHeight={74}
           selected={null}
           lastSelectableDate={null}

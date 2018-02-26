@@ -5,7 +5,7 @@
 }
 .rows {
   position: relative;
-  width: 490px;
+  width: 518px;
   float: right;
 }
 
@@ -27,8 +27,23 @@
   }
 }
 
+.root {
+
+    &:first-child {
+
+        .row {
+            &.partial {
+
+                &:first-child {
+                    text-align: left;
+                }
+            }
+        }
+    }
+}
+
 .mini {
-    width: 350px;
+    width: 370px;
 
     .row {
       padding: 0;
@@ -36,23 +51,44 @@
       position: relative;
 
       &:first-child {
-        text-align: right;
+        //text-align: right;
       }
 
       &.partial {
 
         &:first-child {
-            text-align: right;
+            //text-align: left;
           li {
             position: relative;
             z-index: 1;
           }
+        }
+
+        &.first {
+            //text-align: right;
+        }
+
+        &.second {
+            //text-align: left;
+        }
+
+        &:last-of-type {
+            //text-align: left;
+        }
+
+        &:last-child {
+            //text-align: right;
+        }
+
+        &:last-of-type {
+            //text-align: left;
         }
       }
     }
 }
 
 .root {
+
 
     &.multiple {
 
@@ -63,21 +99,39 @@
               position: relative;
 
               &:first-child {
-                text-align: right;
+                //text-align: right;
               }
 
               &.partial {
 
+                  &.first {
+                      //text-align: left;
+                  }
+
+                  &.second {
+                      //text-align: right;
+                  }
+
+
                 &:first-child {
-                    text-align: left;
+                    //text-align: right;
                   li {
                     position: relative;
                     z-index: 1;
                   }
                 }
+
+                &:last-child {
+                    //text-align: left;
+                }
+
+                &:last-of-type {
+                    //text-align: left;
+                }
               }
+
               &:last-of-type {
-                  text-align: right;
+                  //text-align: right;
               }
             }
         }
@@ -162,11 +216,11 @@
 
 .weekNumber {
     position: absolute;
-    left: -25px;
-    bottom: 10px;
+    left: -5px;
+    bottom: 25px;
     color: $textColorDisabled;
-    width: 40px;
-    height: 40px;
+    width: 20px;
+    height: 20px;
     text-align: left;
     font-size: 10px;
     font-weight: bold;

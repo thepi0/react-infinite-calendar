@@ -37,18 +37,18 @@
   cursor: pointer;
   user-select: none;
 
-  max-width: 70px;
-  width: 70px;
+  max-width: $rowHeight;
+  width: $rowHeight;
 
   -webkit-tap-highlight-color: transparent;
 
   .vacationCircle {
       position: absolute;
-      bottom: 17px;
+      bottom: 21px;
       left: 50%;
-      margin-left: -4px;
-      height: 8px;
-      width: 8px;
+      margin-left: -3px;
+      height: 6px;
+      width: 6px;
       border-radius: 50%;
       background-color: $selectionBorderColor;
   }
@@ -74,10 +74,10 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: $rowHeight - 18px;
-        height: $rowHeight - 18px;
-        margin-top: -0.5 * ($rowHeight - 18px);
-        margin-left: -0.5 * ($rowHeight - 18px);
+        width: $rowHeight - 34;
+        height: $rowHeight - 34;
+        margin-top: -($rowHeight - 34) / 2;
+        margin-left: -($rowHeight - 34) / 2;
         background: #CCC;
         z-index: -1;
         border-radius: 50%;
@@ -91,8 +91,8 @@
             top: 50%;
             right: 0;
             width: $rowHeight / 2;
-            height: $rowHeight - 18px;
-            margin-top: -0.5 * ($rowHeight - 18px);
+            height: $rowHeight - 34;
+            margin-top: -($rowHeight - 34) / 2;
             margin-left: 0;
             z-index: -1;
         }
@@ -106,8 +106,8 @@
             top: 50%;
             left: 0;
             width: $rowHeight / 2;
-            height: $rowHeight - 18px;
-            margin-top: -0.5 * ($rowHeight - 18px);
+            height: $rowHeight - 34;
+            margin-top: -($rowHeight - 34) / 2;
             margin-left: 0;
             z-index: -1;
         }
@@ -120,8 +120,8 @@
             top: 50%;
             right: 0;
             width: 100%;
-            height: $rowHeight - 18px;
-            margin-top: -0.5 * ($rowHeight - 18px);
+            height: $rowHeight - 34;
+            margin-top: -($rowHeight - 34) / 2;
             margin-left: 0;
             z-index: -1;
         }
@@ -139,8 +139,8 @@
                 left: 0;
                 right: auto;
                 width: $rowHeight / 2;
-                height: $rowHeight - 18px;
-                margin-top: -0.5 * ($rowHeight - 18px);
+                height: $rowHeight - 34;
+                margin-top: -($rowHeight - 34) / 2;
                 margin-left: 0;
                 border-radius: 0;
                 opacity: 1;
@@ -160,9 +160,9 @@
                 left: auto;
                 right: 0;
                 width: $rowHeight / 2;
-                height: $rowHeight - 18px;
-                margin-top: -0.5 * ($rowHeight - 18px);
-                margin-left: -0.5 * ($rowHeight - 18px);
+                height: $rowHeight - 34;
+                margin-top: -($rowHeight - 34) / 2;
+                margin-left: -($rowHeight - 34) / 2;
                 border-radius: 0;
                 opacity: 1;
             }
@@ -1014,10 +1014,10 @@
           position: absolute;
           top: 50%;
           left: 50%;
-          width: $rowHeight - 18px;
-          height: $rowHeight - 18px;
-          margin-top: -0.5 * ($rowHeight - 18px);
-          margin-left: -0.5 * ($rowHeight - 18px);
+          width: $rowHeight - 34;
+          height: $rowHeight - 34;
+          margin-top: -($rowHeight - 34) / 2;
+          margin-left: -($rowHeight - 34) / 2;
           background: rgba(44, 177, 216, 0.2);
           z-index: -1;
           border-radius: 50%;
@@ -1030,16 +1030,16 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: $rowHeight;
-        height: $rowHeight;
-        margin-top: -0.5 * ($rowHeight);
-        margin-left: -0.5 * ($rowHeight);
+        width: $rowHeight - 20;
+        height: $rowHeight - 20;
+        margin-top: -($rowHeight - 20) / 2;
+        margin-left: -($rowHeight - 20) / 2;
         border-top: 3px solid $selectionBorderColor;
         border-right: 3px solid $selectionBorderColor;
         border-bottom: 3px solid $selectionBorderColor;
         border-left: 3px solid $selectionBorderColor;
         border-radius: $rowHeight / 2;
-        line-height: $rowHeight - 6px;
+        line-height: $rowHeight - 20;
     }
 
   }
@@ -1130,7 +1130,7 @@
   }
 
   &.hide {
-      display: none;
+      opacity: 0;
       cursor: default;
   }
 }
@@ -1162,6 +1162,7 @@
           border-bottom-left-radius: $rowHeight / 2;
           border-top-right-radius: 0;
           border-bottom-right-radius: 0;
+          width: $rowHeight - 10;
       }
 
       &.nextnotpreselected {
@@ -1169,6 +1170,8 @@
               border-right: 3px solid $selectionBorderColor;
               border-top-right-radius: $rowHeight / 2;
               border-bottom-right-radius: $rowHeight / 2;
+              width: $rowHeight - 20;
+              margin-left: -($rowHeight - 20) / 2;
           }
       }
 
@@ -1177,6 +1180,7 @@
               border-left: 3px solid $selectionBorderColor;
               border-top-left-radius: $rowHeight / 2;
               border-bottom-left-radius: $rowHeight / 2;
+
           }
       }
 
@@ -1186,6 +1190,8 @@
               border-right: 3px solid $selectionBorderColor;
               border-top-right-radius: $rowHeight / 2;
               border-bottom-right-radius: $rowHeight / 2;
+              width: $rowHeight - 20;
+              margin-left: -($rowHeight - 20) / 2;
           }
       }
 
@@ -1198,6 +1204,8 @@
           border-bottom: 3px solid $selectionBorderColor;
           border-left: 0;
           border-radius: 0;
+          width: $rowHeight;
+          margin-left: -($rowHeight) / 2;
       }
 
       &.nextnotpreselected {
@@ -1205,6 +1213,8 @@
               border-right: 3px solid $selectionBorderColor;
               border-top-right-radius: $rowHeight / 2;
               border-bottom-right-radius: $rowHeight / 2;
+              width: $rowHeight - 10;
+              margin-left: -($rowHeight) / 2;
           }
       }
 
@@ -1213,6 +1223,15 @@
               border-left: 3px solid $selectionBorderColor;
               border-top-left-radius: $rowHeight / 2;
               border-bottom-left-radius: $rowHeight / 2;
+              width: $rowHeight - 10;
+              margin-left: -($rowHeight - 20) / 2;
+          }
+      }
+
+      &.nextnotpreselected.prevnotpreselected {
+          .selection {
+              width: $rowHeight - 20;
+              margin-left: -($rowHeight - 20) / 2;
           }
       }
 
@@ -1221,6 +1240,8 @@
               border-right: 3px solid $selectionBorderColor;
               border-top-right-radius: $rowHeight / 2;
               border-bottom-right-radius: $rowHeight / 2;
+              width: $rowHeight - 10;
+              margin-left: -($rowHeight) / 2;
           }
 
           &.weekend, &.preselecteddisabled, &.preselectedenabled, &.beforelast.disabled, &.holiday, &.noReservation {
@@ -1236,6 +1257,8 @@
               border-left: 3px solid $selectionBorderColor;
               border-top-left-radius: $rowHeight / 2;
               border-bottom-left-radius: $rowHeight / 2;
+              width: $rowHeight - 10;
+              margin-left: -($rowHeight - 20) / 2;
           }
 
           &.weekend, &.preselecteddisabled, &.preselectedenabled, &.beforelast.disabled, &.holiday, &.noReservation {
@@ -1246,6 +1269,13 @@
                   border: 0;
                   border-radius: 0;
               }
+          }
+      }
+
+      &.nextdisabled.prevdisabled {
+          .selection {
+              width: $rowHeight - 20;
+              margin-left: -($rowHeight - 20) / 2;
           }
       }
   }
@@ -1259,6 +1289,8 @@
         border-bottom-right-radius: $rowHeight / 2;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
+        width: $rowHeight - 10;
+        margin-left: -($rowHeight) / 2;
     }
 
     &.nextnotpreselected {
@@ -1274,6 +1306,8 @@
             border-left: 3px solid $selectionBorderColor;
             border-top-left-radius: $rowHeight / 2;
             border-bottom-left-radius: $rowHeight / 2;
+            width: $rowHeight - 20;
+            margin-left: -($rowHeight - 20) / 2;
         }
     }
 
@@ -1282,6 +1316,8 @@
             border-left: 3px solid $selectionBorderColor;
             border-top-left-radius: $rowHeight / 2;
             border-bottom-left-radius: $rowHeight / 2;
+            width: $rowHeight - 20;
+            margin-left: -($rowHeight - 20) / 2;
         }
 
         &.weekend, &.preselecteddisabled, &.preselectedenabled, &.beforelast.disabled, &.holiday, &.noReservation {

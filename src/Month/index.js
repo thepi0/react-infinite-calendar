@@ -220,10 +220,9 @@ export default class Month extends PureComponent {
       }
        {days.length ?
       monthRows[i] = (
-        
         <ul
           key={`Row-${i}`}
-          className={classNames(styles.row, {[styles.partial]: !miniCalendar && row.length !== 7}, {[styles.partial]: miniCalendar && row.length !== 5})}
+          className={classNames(styles.row, {[styles.partial]: !miniCalendar && row.length !== 7}, {[styles.partial]: miniCalendar && row.length !== 5}, {[styles.first]: miniCalendar && i == 0}, {[styles.second]: miniCalendar && i == 1})}
           style={{height: rowHeight}}
           role="row"
           aria-label={`Week ${i + 1}`}
@@ -245,8 +244,6 @@ export default class Month extends PureComponent {
     const {locale: {locale}, miniCalendar, monthDate, today, rows, rowHeight, style} = this.props;
     const dateFormat = isSameYear(monthDate, today) ? 'MMMM' : 'MMMM YYYY';
     const isCurrentMonth = isThisMonth(monthDate) && isThisYear(monthDate);
-    
-    console.log(this.props);
 
     return (
         <div className={classNames(styles.root, {[styles.multiple]: miniCalendar && this.props.rows.length > 1})} style={{...style, lineHeight: `${rowHeight}px`}}>
