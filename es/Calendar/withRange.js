@@ -279,52 +279,52 @@ function handlePreselected(preselected) {
         }
     }
 
-    var _loop = function _loop() {
-        var dayStart = format(days[x].start_time, 'YYYY-MM-DD');
+    var _loop = function _loop(k, _day) {
+        var dayStart = format(days[k].start_time, 'YYYY-MM-DD');
         var nextDayStart = format(addDays(dayStart, 1), 'YYYY-MM-DD');
         var prevDayStart = format(subDays(dayStart, 1), 'YYYY-MM-DD');
 
         if (starts.includes(nextDayStart)) {
-            days[x].nextselected = true;
+            days[k].nextselected = true;
             var nextday = days.filter(function (date) {
                 return date.start_time === nextDayStart;
             });
 
-            if (nextday && nextday[0] && nextday[0].count && (nextday[0].count !== days[x].count || !areArraysEqual(nextday[0].colors, days[x].colors))) {
-                days[x].nextcountdifferentiates = true;
+            if (nextday && nextday[0] && nextday[0].count && (nextday[0].count !== days[k].count || !areArraysEqual(nextday[0].colors, days[k].colors))) {
+                days[k].nextcountdifferentiates = true;
             }
 
             if (nextday && nextday[0] && nextday[0].preselected) {
-                days[x].nextpreselected = true;
+                days[k].nextpreselected = true;
             }
 
-            if (nextday && nextday[0] && nextday[0].preselected && nextday[0].preselected !== days[x].preselected) {
-                days[x].nextpreselecteddifferentiates = true;
+            if (nextday && nextday[0] && nextday[0].preselected && nextday[0].preselected !== days[k].preselected) {
+                days[k].nextpreselecteddifferentiates = true;
             }
         }
 
         if (starts.includes(prevDayStart)) {
-            days[x].prevselected = true;
+            days[k].prevselected = true;
             var prevday = days.filter(function (date) {
                 return date.end_time === prevDayStart;
             });
 
-            if (prevday && prevday[0] && prevday[0].count && (prevday[0].count !== days[x].count || !areArraysEqual(prevday[0].colors, days[x].colors))) {
-                days[x].prevcountdifferentiates = true;
+            if (prevday && prevday[0] && prevday[0].count && (prevday[0].count !== days[k].count || !areArraysEqual(prevday[0].colors, days[k].colors))) {
+                days[k].prevcountdifferentiates = true;
             }
 
             if (prevday && prevday[0] && prevday[0].preselected) {
-                days[x].prevpreselected = true;
+                days[k].prevpreselected = true;
             }
 
-            if (prevday && prevday[0] && prevday[0].preselected && prevday[0].preselected !== days[x].preselected) {
-                days[x].prevpreselecteddifferentiates = true;
+            if (prevday && prevday[0] && prevday[0].preselected && prevday[0].preselected !== days[k].preselected) {
+                days[k].prevpreselecteddifferentiates = true;
             }
         }
     };
 
-    for (var x = 0, day = days.length; x < day; ++x) {
-        _loop();
+    for (var k = 0, _day = days.length; k < _day; ++k) {
+        _loop(k, _day);
     }
 
     return days;
@@ -723,16 +723,17 @@ function handleSelectionEnd(e, date, beforeLastDisabled, isPreSelected, original
 
         setSelectionType(savedSelectionType);
     } else if (selectionType === 'preselected') {
+        selectionStart = format(selectionStart, 'YYYY-MM-DD');
         var daysArray = [];
         var daysBetween = isBefore(date, selectionStart) ? eachDay(date, selectionStart, 1) : eachDay(selectionStart, date, 1);
         for (var i = 0, length = daysBetween.length; i < length; ++i) {
-            var shouldRemove = isSaturday(daysBetween[i]) || isSunday(daysBetween[i]);
-            daysBetween[i] = format(daysBetween[i], 'YYYY-MM-DD');
-            var alreadyIncluded = selectedArrayFinal.includes(daysBetween[i]);
+            var dayBetween = format(daysBetween[i], 'YYYY-MM-DD');
+            var shouldRemove = isSaturday(dayBetween) || isSunday(dayBetween);
+            var alreadyIncluded = selectedArrayFinal.includes(dayBetween);
             if (!shouldRemove && !alreadyIncluded) {
-                for (var b = 0, length = preselected.length; b < length; ++b) {
-                    if (format(preselected[b].start_time, 'YYYY-MM-DD') === daysBetween[i]) {
-                        daysArray.push(daysBetween[i]);
+                for (var b = 0, _length = preselected.length; b < _length; ++b) {
+                    if (format(preselected[b].start_time, 'YYYY-MM-DD') === dayBetween) {
+                        daysArray.push(dayBetween);
                         break;
                     }
                 }
@@ -764,17 +765,17 @@ function handleSelectionEnd(e, date, beforeLastDisabled, isPreSelected, original
 
         var _daysArray = [];
         var _daysBetween = isBefore(date, selectionStart) ? eachDay(date, selectionStart, 1) : eachDay(selectionStart, date, 1);
-        for (var i = 0, length = _daysBetween.length; i < length; ++i) {
-            var _shouldRemove = isSaturday(_daysBetween[i]) || isSunday(_daysBetween[i]);
-            var formattedDate = format(_daysBetween[i], 'YYYY-MM-DD');
-            var _alreadyIncluded = selectedArrayFinal.includes(formattedDate);
+        for (var _i = 0, _length2 = _daysBetween.length; _i < _length2; ++_i) {
+            var _dayBetween = format(_daysBetween[_i], 'YYYY-MM-DD');
+            var _shouldRemove = isSaturday(_dayBetween) || isSunday(_dayBetween);
+            var _alreadyIncluded = selectedArrayFinal.includes(_dayBetween);
             if (!_shouldRemove && !_alreadyIncluded) {
-                _daysArray.push(formattedDate);
+                _daysArray.push(_dayBetween);
             }
         }
 
-        for (var y = 0, length = _daysArray.length; y < length; ++y) {
-            for (var j = 0, length = preselectedDates.length; j < length; ++j) {
+        for (var y = 0, lengthd = _daysArray.length; y < lengthd; ++y) {
+            for (var j = 0, lengthp = preselectedDates.length; j < lengthp; ++j) {
                 if (_daysArray[y] === preselectedDates[j].date) {
                     _daysArray.splice(y, 1);
                     --y;
@@ -783,10 +784,10 @@ function handleSelectionEnd(e, date, beforeLastDisabled, isPreSelected, original
         }
 
         for (var t = 0, lengthdays = _daysArray.length; t < lengthdays; ++t) {
-            for (var j = 0, lengthdis = originalDisabledDates.length; j < lengthdis; ++j) {
-                if (_daysArray[t] === originalDisabledDates[j].date && (originalDisabledDates[j].type === 'holiday' || originalDisabledDates[j].type === 'no-reservation')) {
+            for (var s = 0, lengthdis = originalDisabledDates.length; s < lengthdis; ++s) {
+                if (_daysArray[t] === originalDisabledDates[s].date && (originalDisabledDates[s].type === 'holiday' || originalDisabledDates[s].type === 'no-reservation')) {
                     _daysArray.splice(t, 1);
-                    --y;
+                    --t;
                 }
             }
         }
@@ -891,7 +892,7 @@ function determineIfDateAlreadySelected(date, selected, originalDisabledDates) {
         }
     }
 
-    for (var j = 0, len = originalDisabledDates.length; j < len; ++j) {
+    for (var j = 0, _len = originalDisabledDates.length; j < _len; ++j) {
         if (date === originalDisabledDates[j].date) {
             returnVal.vacation = true;
             returnVal.vacation_type = originalDisabledDates[j].type;
