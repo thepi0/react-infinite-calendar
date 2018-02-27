@@ -87,10 +87,8 @@ export default class MonthList extends Component {
           let {locale: {weekStartsOn}, months, rowHeight, max, min} = this.props;
           let {month, year} = months[index];
           let monthCount = differenceInCalendarMonths(max, min);
-          
           let weeks = getWeeksInMiniMonth(month, year, weekStartsOn, index === months.length - 1, max, min);
           let height = weeks * rowHeight;
-          
           this.monthHeights[index] = height;
       } else {
           if (!this.monthHeights[index]) {

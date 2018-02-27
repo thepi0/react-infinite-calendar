@@ -6,7 +6,7 @@ import isBefore from 'date-fns/is_before';
 import addDays from 'date-fns/add_days';
 import subDays from 'date-fns/sub_days';
 import addMonths from 'date-fns/add_months';
-import eachDay from 'date-fns/each_day'
+import eachDay from 'date-fns/each_day';
 import differenceInDays from 'date-fns/difference_in_days';
 import differenceInCalendarDays from 'date-fns/difference_in_calendar_days'
 import isWithinRange from 'date-fns/is_within_range';

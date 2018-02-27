@@ -6,6 +6,7 @@ import parse from 'date-fns/parse';
 import getDay from 'date-fns/get_day';
 import addDays from 'date-fns/add_days';
 import subDays from 'date-fns/sub_days';
+import eachDay from 'date-fns/each_day';
 import isBefore from 'date-fns/is_before';
 import isAfter from 'date-fns/is_after';
 import isDate from 'date-fns/is_date';
@@ -79,10 +80,8 @@ export default class Month extends PureComponent {
     // Used for faster comparisons
     const _today = format(today, 'YYYY-MM-DD');
     const _minDate = format(minDate, 'YYYY-MM-DD');
-    const _maxDate = format(maxDate, 'YYYY-MM-DD');
-    
+    const _maxDate = format(maxDate, 'YYYY-MM-DD');    
     const initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : [];
-
 
     let enabledDatesArray = preselected && preselected[0] ? preselected.map((dateObj) => ({ date: format(dateObj.start_time, 'YYYY-MM-DD'), type: 'preselect' })) : null;
     let reallyDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates.filter((object) => (object.type === 'holiday' || object.type === 'no-reservation')) : [];
@@ -184,7 +183,7 @@ export default class Month extends PureComponent {
       monthRows[i] = (
         <ul
           key={`Row-${i}`}
-          className={classNames(styles.row, {[styles.partial]: !miniCalendar && row.length !== 7}, {[styles.partial]: miniCalendar && row.length !== 5}, {[styles.first]: miniCalendar && i == 0}, {[styles.second]: miniCalendar && i == 1})}
+          className={classNames(styles.row, {[styles.partial]: !miniCalendar && row.length !== 7}, {[styles.partial]: miniCalendar && row.length !== 5})}
           style={{height: rowHeight}}
           role="row"
           aria-label={`Week ${i + 1}`}

@@ -119,7 +119,7 @@ export default class Day extends PureComponent {
           [styles.disabled]: isDisabled || (beforeLastDisabled && !isPreSelected) || (!isPreSelected && selectionType === 'preselected') || (isPreSelected && selectionType === 'not_preselected'),
           [styles.holiday]: (vacationObject.vacation === true && vacationObject.vacation_type === 'holiday'),
           [styles.noReservation]: (vacationObject.vacation === true && vacationObject.vacation_type === 'no-reservation'),
-          [styles.hide]: (vacationObject.vacation === true && vacationObject.hide),
+          [styles.hide]: (vacationObject.vacation === true && vacationObject.hide === true),
           [styles.enabled]: !isDisabled,
           [styles.beforelast]: beforeLastDisabled,
           [styles.purple]: (isPreSelected && colors.purple),

@@ -79,7 +79,6 @@ export function getMiniMonth(year, month, weekStartsOn, min, max) {
   let startOfMax;
   let monthStartDate;
   let monthEndDate;
-
   let dow = getDay(new Date(year, intMonth, 1));
   let week = 0;
 
@@ -99,6 +98,7 @@ export function getMiniMonth(year, month, weekStartsOn, min, max) {
   }
 
   for (let day = 1; day <= daysInMonth; day++) {
+
     if (!rows[week]) {
       rows[week] = [];
     }

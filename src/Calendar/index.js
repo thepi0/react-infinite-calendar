@@ -14,6 +14,9 @@ import Years from '../Years';
 import Day from '../Day';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
+import eachDay from 'date-fns/each_day';
+import isBefore from 'date-fns/is_before';
+import subDays from 'date-fns/sub_days';
 import startOfDay from 'date-fns/start_of_day';
 
 const styles = {
@@ -179,7 +182,21 @@ export default class Calendar extends Component {
     this.preselected = preselected;
   }
   updateOriginalDisabledDates(props = this.props) {
-    const originalDisabledDates = props.originalDisabledDates;
+    let originalDisabledDates = props.originalDisabledDates;
+    
+    if (props.miniCalendar && props.min) {
+        const today = startOfDay(new Date());
+        let absoluteMin = format(props.min, 'YYYY-MM-DD');
+        let beforeDays = isBefore(absoluteMin, today) ? eachDay(absoluteMin, subDays(today, 1), 1) : null;
+        
+        if (beforeDays && beforeDays.length) {
+            for (let p = 0, length = beforeDays.length; p < length; ++p) {
+                beforeDays[p] = {date: format(beforeDays[p], 'YYYY-MM-DD'), type: 'no-reservation', hide: true};
+                originalDisabledDates.push(beforeDays[p]);
+            }
+        }
+    }
+    
     this.originalDisabledDates = originalDisabledDates;
   }
   updatelastSelectableDate(props = this.props) {
