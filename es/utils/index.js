@@ -83,7 +83,6 @@ export function getMiniMonth(year, month, weekStartsOn, min, max) {
   var startOfMax = void 0;
   var monthStartDate = void 0;
   var monthEndDate = void 0;
-
   var dow = getDay(new Date(year, intMonth, 1));
   var week = 0;
 
@@ -103,6 +102,7 @@ export function getMiniMonth(year, month, weekStartsOn, min, max) {
   }
 
   for (var day = 1; day <= daysInMonth; day++) {
+
     if (!rows[week]) {
       rows[week] = [];
     }

@@ -14,6 +14,7 @@ import parse from 'date-fns/parse';
 import getDay from 'date-fns/get_day';
 import addDays from 'date-fns/add_days';
 import subDays from 'date-fns/sub_days';
+import eachDay from 'date-fns/each_day';
 import isBefore from 'date-fns/is_before';
 import isAfter from 'date-fns/is_after';
 import isDate from 'date-fns/is_date';
@@ -118,7 +119,6 @@ var Month = function (_PureComponent) {
         var _today = format(today, 'YYYY-MM-DD');
         var _minDate = format(minDate, 'YYYY-MM-DD');
         var _maxDate = format(maxDate, 'YYYY-MM-DD');
-
         var initialDisabledDatesArray = originalDisabledDates && originalDisabledDates[0] ? originalDisabledDates : [];
 
         var enabledDatesArray = preselected && preselected[0] ? preselected.map(function (dateObj) {
@@ -209,13 +209,13 @@ var Month = function (_PureComponent) {
                 dow += 1;
             }
             {
-                var _classNames, _classNames2, _classNames3, _classNames4;
+                var _classNames, _classNames2;
 
                 days.length ? monthRows[i] = React.createElement(
                     'ul',
                     {
                         key: 'Row-' + i,
-                        className: classNames(styles.row, (_classNames = {}, _classNames[styles.partial] = !miniCalendar && row.length !== 7, _classNames), (_classNames2 = {}, _classNames2[styles.partial] = miniCalendar && row.length !== 5, _classNames2), (_classNames3 = {}, _classNames3[styles.first] = miniCalendar && i == 0, _classNames3), (_classNames4 = {}, _classNames4[styles.second] = miniCalendar && i == 1, _classNames4)),
+                        className: classNames(styles.row, (_classNames = {}, _classNames[styles.partial] = !miniCalendar && row.length !== 7, _classNames), (_classNames2 = {}, _classNames2[styles.partial] = miniCalendar && row.length !== 5, _classNames2)),
                         style: { height: rowHeight },
                         role: 'row',
                         'aria-label': 'Week ' + (i + 1)
@@ -230,7 +230,7 @@ var Month = function (_PureComponent) {
     };
 
     Month.prototype.render = function render() {
-        var _classNames5, _classNames6, _classNames7;
+        var _classNames3, _classNames4, _classNames5;
 
         var _props2 = this.props,
             locale = _props2.locale.locale,
@@ -246,10 +246,10 @@ var Month = function (_PureComponent) {
 
         return React.createElement(
             'div',
-            { className: classNames(styles.root, (_classNames5 = {}, _classNames5[styles.multiple] = miniCalendar && this.props.rows.length > 1, _classNames5)), style: _extends({}, style, { lineHeight: rowHeight + 'px' }) },
+            { className: classNames(styles.root, (_classNames3 = {}, _classNames3[styles.multiple] = miniCalendar && this.props.rows.length > 1, _classNames3)), style: _extends({}, style, { lineHeight: rowHeight + 'px' }) },
             !miniCalendar ? React.createElement(
                 'div',
-                { className: classNames(styles.indicator, (_classNames6 = {}, _classNames6[styles.indicatorCurrent] = isCurrentMonth, _classNames6)) },
+                { className: classNames(styles.indicator, (_classNames4 = {}, _classNames4[styles.indicatorCurrent] = isCurrentMonth, _classNames4)) },
                 React.createElement(
                     'div',
                     { className: styles.display },
@@ -267,7 +267,7 @@ var Month = function (_PureComponent) {
             ) : null,
             React.createElement(
                 'div',
-                { className: classNames(styles.rows, (_classNames7 = {}, _classNames7[styles.mini] = miniCalendar, _classNames7)) },
+                { className: classNames(styles.rows, (_classNames5 = {}, _classNames5[styles.mini] = miniCalendar, _classNames5)) },
                 this.renderRows()
             )
         );

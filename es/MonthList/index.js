@@ -82,10 +82,8 @@ var MonthList = function (_Component) {
             year = _months$index.year;
 
         var monthCount = differenceInCalendarMonths(max, min);
-
         var weeks = getWeeksInMiniMonth(month, year, weekStartsOn, index === months.length - 1, max, min);
         var height = weeks * rowHeight;
-
         _this.monthHeights[index] = height;
       } else {
         if (!_this.monthHeights[index]) {

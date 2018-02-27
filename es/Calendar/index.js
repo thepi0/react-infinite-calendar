@@ -24,6 +24,9 @@ import Years from '../Years';
 import Day from '../Day';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
+import eachDay from 'date-fns/each_day';
+import isBefore from 'date-fns/is_before';
+import subDays from 'date-fns/sub_days';
 import startOfDay from 'date-fns/start_of_day';
 
 var styles = {
@@ -286,6 +289,20 @@ var Calendar = function (_Component) {
     var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 
     var originalDisabledDates = props.originalDisabledDates;
+
+    if (props.miniCalendar && props.min) {
+      var today = startOfDay(new Date());
+      var absoluteMin = format(props.min, 'YYYY-MM-DD');
+      var beforeDays = isBefore(absoluteMin, today) ? eachDay(absoluteMin, subDays(today, 1), 1) : null;
+
+      if (beforeDays && beforeDays.length) {
+        for (var p = 0, length = beforeDays.length; p < length; ++p) {
+          beforeDays[p] = { date: format(beforeDays[p], 'YYYY-MM-DD'), type: 'no-reservation', hide: true };
+          originalDisabledDates.push(beforeDays[p]);
+        }
+      }
+    }
+
     this.originalDisabledDates = originalDisabledDates;
   };
 
