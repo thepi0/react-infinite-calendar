@@ -4,11 +4,6 @@ This is a highly customized version of the Clauderic React Infinite Calendar and
 
 Original calendar: https://github.com/clauderic/react-infinite-calendar
 
-
-<div style="padding:30px">
-<img src="https://raw.githubusercontent.com/clauderic/react-infinite-calendar/master/.github/preview.gif" width="300" />
-</div>
-
 Getting Started
 ---------------
 
@@ -16,7 +11,6 @@ Install component to your project
 ```
 npm install https://github.com/thepi0/react-infinite-calendar.git#production --save
 ```
-
 
 Usage
 ------------
