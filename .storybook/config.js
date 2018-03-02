@@ -2,8 +2,8 @@ import {configure} from '@kadira/storybook';
 import {setOptions} from '@kadira/storybook-addon-options';
 
 setOptions({
-  name: 'INFINITE CALENDAR',
-  url: 'https://github.com/clauderic/react-infinite-calendar',
+  name: 'CUSTOM INFINITE CALENDAR',
+  url: 'https://github.com/',
   goFullScreen: false,
   showLeftPanel: true,
   showDownPanel: false,

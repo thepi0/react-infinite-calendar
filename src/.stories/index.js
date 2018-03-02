@@ -14,11 +14,15 @@ import endOfMonth from 'date-fns/end_of_month';
 import format from 'date-fns/format';
 import isBefore from 'date-fns/is_before';
 import subMonths from 'date-fns/sub_months';
+import startOfWeek from 'date-fns/start_of_week';
+import endOfWeek from 'date-fns/end_of_week';
 
 const CenterDecorator = story => <div className={styles.center}>{story()}</div>;
 addDecorator(CenterDecorator);
 
 const today = new Date();
+const minStart = startOfWeek(today);
+const maxStart = endOfWeek(addDays(today, 7));
 
 storiesOf('Calendar examples', module)
   .add('With dragging range and reservations', () => (
@@ -29,7 +33,7 @@ storiesOf('Calendar examples', module)
       max={addMonths(today, 12)}
       rowHeight={74}
       selected={null}
-      lastSelectableDate={new Date(2018, 0, 29)}
+      lastSelectableDate={new Date()}
       scrollOffset={3800}
       lastUpdate={new Date()}
       autoFocus={false}
@@ -196,176 +200,56 @@ storiesOf('Calendar examples', module)
     ))
     .add('With two weeks selection without reservations', () => (
         <div style={{width: '100%', height: '100%'}}>
-        <InfiniteCalendar
-          width="100%"
-          height={152}
-          miniCalendar={true}
-          min={new Date(2018, 3, 30)}
-          max={new Date(2018, 4, 11)}
-          rowHeight={74}
-          selected={null}
-          lastSelectableDate={null}
-          scrollOffset={0}
-          lastUpdate={new Date()}
-          autoFocus={false}
-          originalDisabledDates={[
-              {
-                  date: "2018-05-07",
-                  type: "no-reservation"
-              },{
-                  date: "2018-05-08",
-                  type: "no-reservation"
-              }
-          ]}
-          disabledDates={null}
-          disabledDays={[6,7]}
-          displayOptions={{
-              hideYearsOnSelect: false,
-              layout: 'portrait',
-              overscanMonthCount: 0,
-              showHeader: false,
-              showMonthsForYears: false,
-              showOverlay: false,
-              showTodayHelper: false,
-              showWeekdays: true,
-              todayHelperRowOffset: 4,
-          }}
-          locale={{
-              locale: require('date-fns/locale/fi'),
-              blank: 'Valitse päivämäärä(t)',
-              headerFormat: 'ddd, MMM Do',
-              todayLabel: {
-                long: 'Tänään',
-              },
-              weekdays: ['Su', 'Ma', 'Ti', 'Ke', 'To', 'Pe', 'La'],
-              weekStartsOn: 1,
-          }}
-          theme={{
-              weekdaysHeight: '64px'
-          }}
-          onSelect={(date) => console.log(date)}
-          onScrollEnd={(date) => console.log(date)}
-          Component={withRange(Calendar)}
-        />
-        <div style={{width: '100%', height: '20px'}}></div>
-        <InfiniteCalendar
-          width="100%"
-          height={152}
-          miniCalendar={true}
-          min={new Date(2018, 1, 19)}
-          max={new Date(2018, 2, 2)}
-          rowHeight={74}
-          selected={null}
-          lastSelectableDate={null}
-          scrollOffset={0}
-          lastUpdate={new Date()}
-          autoFocus={false}
-          originalDisabledDates={[
-              {
-                  date: "2018-02-28",
-                  type: "no-reservation",
-              },{
-                  date: "2018-02-27",
-                  type: "no-reservation",
-              }
-          ]}
-          disabledDates={null}
-          disabledDays={[6,7]}
-          displayOptions={{
-              hideYearsOnSelect: false,
-              layout: 'portrait',
-              overscanMonthCount: 0,
-              showHeader: false,
-              showMonthsForYears: false,
-              showOverlay: false,
-              showTodayHelper: false,
-              showWeekdays: true,
-              todayHelperRowOffset: 4,
-          }}
-          locale={{
-              locale: require('date-fns/locale/fi'),
-              blank: 'Valitse päivämäärä(t)',
-              headerFormat: 'ddd, MMM Do',
-              todayLabel: {
-                long: 'Tänään',
-              },
-              weekdays: ['Su', 'Ma', 'Ti', 'Ke', 'To', 'Pe', 'La'],
-              weekStartsOn: 1,
-          }}
-          theme={{
-              weekdaysHeight: '64px'
-          }}
-          onSelect={(date) => console.log(date)}
-          onScrollEnd={(date) => console.log(date)}
-          Component={withRange(Calendar)}
-        />
-        <div style={{width: '100%', height: '20px'}}></div>
-        <InfiniteCalendar
-          width="100%"
-          height={152}
-          miniCalendar={true}
-          min={new Date(2018, 4, 28)}
-          max={new Date(2018, 5, 8)}
-          rowHeight={74}
-          selected={null}
-          lastSelectableDate={null}
-          scrollOffset={0}
-          lastUpdate={new Date()}
-          autoFocus={false}
-          originalDisabledDates={[
-              {
-                  date: "2018-02-19",
-                  type: "no-reservation",
-                  hide: true
-              },{
-                  date: "2018-02-20",
-                  type: "no-reservation",
-                  hide: true
-              },{
-                  date: "2018-02-21",
-                  type: "no-reservation",
-                  hide: true
-              },{
-                  date: "2018-02-22",
-                  type: "no-reservation",
-                  hide: true
-              },{
-                  date: "2018-02-27",
-                  type: "no-reservation"
-              },{
-                  date: "2018-02-28",
-                  type: "no-reservation"
-              }
-          ]}
-          disabledDates={null}
-          disabledDays={[6,7]}
-          displayOptions={{
-              hideYearsOnSelect: false,
-              layout: 'portrait',
-              overscanMonthCount: 0,
-              showHeader: false,
-              showMonthsForYears: false,
-              showOverlay: false,
-              showTodayHelper: false,
-              showWeekdays: true,
-              todayHelperRowOffset: 4,
-          }}
-          locale={{
-              locale: require('date-fns/locale/fi'),
-              blank: 'Valitse päivämäärä(t)',
-              headerFormat: 'ddd, MMM Do',
-              todayLabel: {
-                long: 'Tänään',
-              },
-              weekdays: ['Su', 'Ma', 'Ti', 'Ke', 'To', 'Pe', 'La'],
-              weekStartsOn: 1,
-          }}
-          theme={{
-              weekdaysHeight: '64px'
-          }}
-          onSelect={(date) => console.log(date)}
-          onScrollEnd={(date) => console.log(date)}
-          Component={withRange(Calendar)}
-        />
+            <InfiniteCalendar
+              width="100%"
+              height={152}
+              miniCalendar={true}
+              min={minStart}
+              max={maxStart}
+              rowHeight={74}
+              selected={null}
+              lastSelectableDate={null}
+              scrollOffset={0}
+              lastUpdate={new Date()}
+              autoFocus={false}
+              originalDisabledDates={[
+                  {
+                      date: "2018-05-07",
+                      type: "no-reservation"
+                  },{
+                      date: "2018-05-08",
+                      type: "no-reservation"
+                  }
+              ]}
+              disabledDates={null}
+              disabledDays={[6,7]}
+              displayOptions={{
+                  hideYearsOnSelect: false,
+                  layout: 'portrait',
+                  overscanMonthCount: 0,
+                  showHeader: false,
+                  showMonthsForYears: false,
+                  showOverlay: false,
+                  showTodayHelper: false,
+                  showWeekdays: true,
+                  todayHelperRowOffset: 4,
+              }}
+              locale={{
+                  locale: require('date-fns/locale/fi'),
+                  blank: 'Valitse päivämäärä(t)',
+                  headerFormat: 'ddd, MMM Do',
+                  todayLabel: {
+                    long: 'Tänään',
+                  },
+                  weekdays: ['Su', 'Ma', 'Ti', 'Ke', 'To', 'Pe', 'La'],
+                  weekStartsOn: 1,
+              }}
+              theme={{
+                  weekdaysHeight: '64px'
+              }}
+              onSelect={(date) => console.log(date)}
+              onScrollEnd={(date) => console.log(date)}
+              Component={withRange(Calendar)}
+            />
         </div>
   ));
