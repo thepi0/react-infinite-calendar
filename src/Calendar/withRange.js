@@ -461,7 +461,7 @@ function handleSelectionStart(date, beforeLastDisabled, isPreSelected, originalD
                 eventProp: 'start'
             });
 
-        } else {
+        } else if (selectionType === 'not_preselected') {
             setSelectionStart(date);
             onSelect({
                 eventType:EVENT_TYPE.START,
@@ -602,11 +602,19 @@ function handleSelectionEnd(e, date, beforeLastDisabled, isPreSelected, original
     }
 
     if (selectionType === 'selected') {
-        setSelectionArray(selectedArrayFinal);
+
         selected = null;
         setSelectionStart(null);
         setSelectionDone(true);
-        setSelectionType('none');
+        //setSelectionType('none');
+
+        let includeDate = selectedArrayFinal.indexOf(touchDate);
+
+        if (includeDate >= 0) {
+            selectedArrayFinal.splice(includeDate, 1);
+        }
+
+        setSelectionArray(selectedArrayFinal);
 
         onSelect({
             eventType:EVENT_TYPE.END,
