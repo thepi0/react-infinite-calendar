@@ -17,10 +17,8 @@ import defaultDisplayOptions from '../utils/defaultDisplayOptions';
 import defaultLocale from '../utils/defaultLocale';
 import defaultTheme from '../utils/defaultTheme';
 import Today, { DIRECTION_UP, DIRECTION_DOWN } from '../Today';
-import Header from '../Header';
 import MonthList from '../MonthList';
 import Weekdays from '../Weekdays';
-import Years from '../Years';
 import Day from '../Day';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
@@ -81,7 +79,6 @@ export var withDefaultProps = _defaultProps({
   DayComponent: Day,
   display: 'days',
   displayOptions: {},
-  HeaderComponent: Header,
   scrollOffset: null,
   miniCalendar: false,
   height: 500,
@@ -102,8 +99,7 @@ export var withDefaultProps = _defaultProps({
   passThrough: {},
   rowHeight: 56,
   tabIndex: 1,
-  width: 400,
-  YearsComponent: Years
+  width: 400
 });
 
 var Calendar = function (_Component) {
@@ -374,7 +370,6 @@ var Calendar = function (_Component) {
         originalDisabledDates = _props.originalDisabledDates,
         displayDate = _props.displayDate,
         height = _props.height,
-        HeaderComponent = _props.HeaderComponent,
         rowHeight = _props.rowHeight,
         scrollDate = _props.scrollDate,
         selected = _props.selected,
@@ -382,15 +377,12 @@ var Calendar = function (_Component) {
         miniCalendar = _props.miniCalendar,
         lastUpdate = _props.lastUpdate,
         tabIndex = _props.tabIndex,
-        width = _props.width,
-        YearsComponent = _props.YearsComponent;
+        width = _props.width;
 
     var _getDisplayOptions = this.getDisplayOptions(),
         hideYearsOnSelect = _getDisplayOptions.hideYearsOnSelect,
         layout = _getDisplayOptions.layout,
         overscanMonthCount = _getDisplayOptions.overscanMonthCount,
-        shouldHeaderAnimate = _getDisplayOptions.shouldHeaderAnimate,
-        showHeader = _getDisplayOptions.showHeader,
         showMonthsForYears = _getDisplayOptions.showMonthsForYears,
         showOverlay = _getDisplayOptions.showOverlay,
         showTodayHelper = _getDisplayOptions.showTodayHelper,
@@ -485,8 +477,6 @@ process.env.NODE_ENV !== "production" ? Calendar.propTypes = {
     hideYearsOnSelect: PropTypes.bool,
     layout: PropTypes.oneOf(['portrait', 'landscape']),
     overscanMonthCount: PropTypes.number,
-    shouldHeaderAnimate: PropTypes.bool,
-    showHeader: PropTypes.bool,
     showMonthsForYears: PropTypes.bool,
     showOverlay: PropTypes.bool,
     showTodayHelper: PropTypes.bool,
@@ -497,7 +487,6 @@ process.env.NODE_ENV !== "production" ? Calendar.propTypes = {
   keyboardSupport: PropTypes.bool,
   locale: PropTypes.shape({
     blank: PropTypes.string,
-    headerFormat: PropTypes.string,
     todayLabel: PropTypes.shape({
       long: PropTypes.string,
       short: PropTypes.string
@@ -523,7 +512,6 @@ process.env.NODE_ENV !== "production" ? Calendar.propTypes = {
       chevron: PropTypes.string,
       color: PropTypes.string
     }),
-    headerColor: PropTypes.string,
     selectionColor: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     textColor: PropTypes.shape({
       active: PropTypes.string,
@@ -533,7 +521,6 @@ process.env.NODE_ENV !== "production" ? Calendar.propTypes = {
     weekdayColor: PropTypes.string,
     weekdaysHeight: PropTypes.string
   }),
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  YearsComponent: PropTypes.func
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 } : void 0;
 ;

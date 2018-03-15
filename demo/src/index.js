@@ -22,9 +22,6 @@ let preselected = [];
 let lastUpdated = new Date();
 let test = 'asd';
 
-console.log('before timeout run');
-console.log(lastUpdated);
-
 setTimeout(function() {
 
     console.log('timeout run');
@@ -199,9 +196,6 @@ preselected = [
 ];
 
 lastUpdated = new Date();
-
-console.log('after timeout run');
-console.log(lastUpdated);
 
 }.bind(this), 3000);
 

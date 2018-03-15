@@ -1,13 +1,10 @@
 import React, {Component} from 'react';
 import Calendar from './Calendar';
-import {withDateSelection} from './Calendar/withDateSelection';
+import {withRange} from './Calendar/withRange';
 
 export {default as Calendar} from './Calendar';
-export {withDateSelection} from './Calendar/withDateSelection';
-export {withKeyboardSupport} from './Calendar/withKeyboardSupport';
-export {withMultipleDates, defaultMultipleDateInterpolation} from './Calendar/withMultipleDates';
+
 export {withRange, EVENT_TYPE} from './Calendar/withRange';
-export {withMultipleRanges, EVENT_TYPES} from './Calendar/withMultipleRanges';
 
 /*
  * By default, Calendar is a controlled component.
@@ -15,7 +12,7 @@ export {withMultipleRanges, EVENT_TYPES} from './Calendar/withMultipleRanges';
  */
 export default class DefaultCalendar extends Component {
   static defaultProps = {
-    Component: withDateSelection(Calendar),
+    Component: withRange(Calendar),
     interpolateSelection: (selected) => selected,
   };
   state = {

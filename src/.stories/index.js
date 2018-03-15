@@ -3,7 +3,6 @@ import React from 'react';
 import {addDecorator, storiesOf} from '@kadira/storybook';
 import InfiniteCalendar, {
   Calendar,
-  defaultMultipleDateInterpolation,
   withRange,
 } from '../';
 import styles from './stories.scss';
@@ -20,7 +19,6 @@ const CenterDecorator = story => <div className={styles.center}>{story()}</div>;
 addDecorator(CenterDecorator);
 
 const today = new Date();
-
 
 storiesOf('Calendar examples', module)
   .add('With dragging range and reservations', () => (

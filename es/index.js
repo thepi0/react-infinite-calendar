@@ -12,14 +12,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import React, { Component } from 'react';
 import Calendar from './Calendar';
-import { withDateSelection } from './Calendar/withDateSelection';
+import { withRange } from './Calendar/withRange';
 
 export { default as Calendar } from './Calendar';
-export { withDateSelection } from './Calendar/withDateSelection';
-export { withKeyboardSupport } from './Calendar/withKeyboardSupport';
-export { withMultipleDates, defaultMultipleDateInterpolation } from './Calendar/withMultipleDates';
+
 export { withRange, EVENT_TYPE } from './Calendar/withRange';
-export { withMultipleRanges, EVENT_TYPES } from './Calendar/withMultipleRanges';
 
 /*
  * By default, Calendar is a controlled component.
@@ -76,7 +73,7 @@ var DefaultCalendar = (_temp2 = _class = function (_Component) {
 
   return DefaultCalendar;
 }(Component), _class.defaultProps = {
-  Component: withDateSelection(Calendar),
+  Component: withRange(Calendar),
   interpolateSelection: function interpolateSelection(selected) {
     return selected;
   }

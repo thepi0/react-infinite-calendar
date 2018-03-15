@@ -7,10 +7,8 @@ import defaultDisplayOptions from '../utils/defaultDisplayOptions';
 import defaultLocale from '../utils/defaultLocale';
 import defaultTheme from '../utils/defaultTheme';
 import Today, {DIRECTION_UP, DIRECTION_DOWN} from '../Today';
-import Header from '../Header';
 import MonthList from '../MonthList';
 import Weekdays from '../Weekdays';
-import Years from '../Years';
 import Day from '../Day';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
@@ -31,7 +29,6 @@ export const withDefaultProps = defaultProps({
   DayComponent: Day,
   display: 'days',
   displayOptions: {},
-  HeaderComponent: Header,
   scrollOffset: null,
   miniCalendar: false,
   height: 500,
@@ -53,7 +50,6 @@ export const withDefaultProps = defaultProps({
   rowHeight: 56,
   tabIndex: 1,
   width: 400,
-  YearsComponent: Years,
 });
 
 export default class Calendar extends Component {
@@ -88,8 +84,6 @@ export default class Calendar extends Component {
       hideYearsOnSelect: PropTypes.bool,
       layout: PropTypes.oneOf(['portrait', 'landscape']),
       overscanMonthCount: PropTypes.number,
-  		shouldHeaderAnimate: PropTypes.bool,
-      showHeader: PropTypes.bool,
       showMonthsForYears: PropTypes.bool,
   		showOverlay: PropTypes.bool,
   		showTodayHelper: PropTypes.bool,
@@ -103,7 +97,6 @@ export default class Calendar extends Component {
     keyboardSupport: PropTypes.bool,
     locale: PropTypes.shape({
       blank: PropTypes.string,
-      headerFormat: PropTypes.string,
       todayLabel: PropTypes.shape({
         long: PropTypes.string,
         short: PropTypes.string,
@@ -132,7 +125,6 @@ export default class Calendar extends Component {
         chevron: PropTypes.string,
         color: PropTypes.string,
       }),
-      headerColor: PropTypes.string,
       selectionColor: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
       textColor: PropTypes.shape({
         active: PropTypes.string,
@@ -143,7 +135,6 @@ export default class Calendar extends Component {
       weekdaysHeight: PropTypes.string,
     }),
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    YearsComponent: PropTypes.func,
   };
   componentDidMount() {
     let {autoFocus} = this.props;
@@ -340,7 +331,6 @@ export default class Calendar extends Component {
         originalDisabledDates,
         displayDate,
 		height,
-        HeaderComponent,
         rowHeight,
         scrollDate,
         selected,
@@ -349,14 +339,11 @@ export default class Calendar extends Component {
         lastUpdate,
 		tabIndex,
 		width,
-        YearsComponent,
 	} = this.props;
     const {
       hideYearsOnSelect,
       layout,
       overscanMonthCount,
-      shouldHeaderAnimate,
-      showHeader,
       showMonthsForYears,
       showOverlay,
       showTodayHelper,
